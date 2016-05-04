@@ -10,7 +10,8 @@ public class MainDeveloperPresenter extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(isDeveloper()){
+        // TODO: 5/4/16 Integrate settings 
+        if(true){
             startDeveloperOptions();
         }
         else

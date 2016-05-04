@@ -17,4 +17,5 @@
     <string name="dialog_title_dev_code_error">Sorry!</string>
     <string name="dialog_dev_code_error">Wrong code.</string>
     <string name="ok" translatable="false">Ok</string>
+    <string name="title_activity_log_information">LogInformationActivity</string>
 </resources>
