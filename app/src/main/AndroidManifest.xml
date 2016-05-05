@@ -10,7 +10,6 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <service android:name=".model.beacon.BeaconManagerAdapter"/>
-
         <activity
                 android:name=".presenter.MainActivity"
                 android:theme="@style/SplashTheme">
@@ -56,5 +55,6 @@
                 android:parentActivityName=".presenter.HomeActivity">
         </activity>
     </application>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

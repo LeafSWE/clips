@@ -8,6 +8,7 @@ package com.leaf.clips.model.navigator.graph.edge;
 
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
 import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoInformation;
+import com.leaf.clips.model.usersetting.Setting;
 
 /**
  *Interfaccia che serve per rappresentare un arco completo delle informazioni che possono aiutare a superarlo. Questo può rappresentare per esempio un corridoio di un edificio. Quest'interfaccia quindi espone i metodi per accedere a tali informazioni
@@ -55,5 +56,12 @@ public interface EnrichedEdge extends Edge {
      * @return  int
      */
     int getCoordinate();
+
+    /**
+     * Metodo che permette di impostare le preferenze di un utente per il calcolo del peso dell'arco
+     * @param setting Preferenze da impostare
+     * @return  void
+     */
+    void setUserPreference(Setting setting);
 
 }

@@ -15,9 +15,10 @@ import android.content.SharedPreferences;
 public class DeveloperCodeManager {
 
     /**
-     * Stringa rappresentante la chiave per recuperare le SharedPreferences riguardanti il codice sviluppatore
+     * Stringa rappresentante la chiave per recuperare le SharedPreferences riguardanti
+     * il codice sviluppatore
      */
-    private static final String DEVELOPER_CODE = "developerKey"; // TODO: 01/05/2016
+    private static final String DEVELOPER_CODE = "developerKey"; // TODO: 01/05/2016 decidere la stringa
 
     /**
      * SharedPreferences relative all'applicazione
@@ -28,13 +29,14 @@ public class DeveloperCodeManager {
         this.sharedPreferences = sharedPreferences;
     }
     /**
-    * Questo metodo permette di verificare se il codice inserito è valido per attivare la modalità sviluppatore
-    * @param code Questo parametro richiede il codice per attivare la modalità sviluppatore
-    * @return  boolean
-    */
+     * Questo metodo permette di verificare se il codice inserito è valido per attivare
+     * la modalità sviluppatore
+     * @param code Questo parametro richiede il codice per attivare la modalità sviluppatore
+     * @return  boolean
+     */
     public boolean isValid(String code){
         //dumb implementation
-        return code == sharedPreferences.getString(DEVELOPER_CODE, "");// TODO: 01/05/2016  
+        return code == sharedPreferences.getString(DEVELOPER_CODE, "");// TODO: 01/05/2016  decidere la stringa
     }
 
 }
