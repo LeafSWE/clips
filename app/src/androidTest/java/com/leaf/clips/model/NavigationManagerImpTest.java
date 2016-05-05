@@ -10,6 +10,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import com.leaf.clips.model.navigator.NavigationExceptions;
+import com.leaf.clips.model.navigator.NoNavigationInformationException;
 import com.leaf.clips.model.navigator.PathException;
 import com.leaf.clips.model.navigator.graph.MapGraph;
 
@@ -29,7 +30,8 @@ public class NavigationManagerImpTest {
 
     @Before
     public void init(){
-        navigationManager = new NavigationManagerImp(new MapGraph(), InstrumentationRegistry.getTargetContext());
+        navigationManager = new NavigationManagerImp(null, InstrumentationRegistry.getTargetContext());
+        // TODO: 05/05/2016 serve il mock? 
     }
 
     @Test(expected = NavigationExceptions.class)
@@ -38,7 +40,7 @@ public class NavigationManagerImpTest {
     }
 
     @Test(expected = NoBeaconSeenException.class)
-    public void shouldNotReturnNextNavigationInstruction() throws PathException {
+    public void shouldNotReturnNextNavigationInstruction() throws NoNavigationInformationException {
         navigationManager.getNextInstruction();
     }
 }
