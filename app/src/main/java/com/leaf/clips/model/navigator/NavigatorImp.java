@@ -176,15 +176,27 @@ public class NavigatorImp implements Navigator {
         if (progress.hasNext()) {
             correctGrade = progress.next().getCoordinate();
         } else {
-            //TODO: Attenzione cosa fare nel caso iterator sia alla fine o sia inizializzato???
+            //TODO: Attenzione cosa fare nel caso iterator sia alla fine o non sia inizializzato???
         }
-        if (Math.abs(deviceGrade - 90) % 360 > correctGrade &&
-                correctGrade > Math.abs(deviceGrade + 90) % 360) {// delta di 180
+        float negRange = correctGrade - 90;
+        float posRange = (correctGrade + 90) % 360;
+        if (negRange < 0) {
+            negRange = negRange + 360;
+        }
+        if (negRange < deviceGrade || deviceGrade < posRange) {
+            return "Direzione corretta";
+        }
+        else {
+            return "Direzione sbagliata, voltati";
+        }
+
+        /*if (Math.abs(deviceGrade - 90) % 360 > correctGrade &&
+                correctGrade < Math.abs(deviceGrade + 90) % 360) {// delta di 180
             // siamo all'interno dell'intervallo accettato
             return "Direzione sbagliata, voltati"; // TODO: usare una Android Resource
         } else {
             return "Direzione corretta";
-        }
+        }*/
     }
 
     /**
@@ -228,8 +240,6 @@ public class NavigatorImp implements Navigator {
      */
     @Override
     public ProcessedInformation toNextRegion(PriorityQueue<MyBeacon> visibleBeacons) throws NavigationExceptions {
-        EnrichedEdge nextEdge;
-        RegionOfInterest endEdgeROI;
         String startInformation = "";
         // Capisco se è la prima richiesta di informazioni
         if (progress == null) { // È all'inizio della navigazione
@@ -239,8 +249,8 @@ public class NavigatorImp implements Navigator {
         // Prelevo il beacon più potente per capire se l'utente è nel percorso previsto
         MyBeacon nearBeacon = this.getMostPowerfulBeacon(visibleBeacons);
         if (progress.hasNext()) {
-            nextEdge = progress.next();
-            endEdgeROI = nextEdge.getEndPoint();
+            EnrichedEdge nextEdge = progress.next();
+            RegionOfInterest endEdgeROI = nextEdge.getEndPoint();
             if (endEdgeROI.contains(nearBeacon)) { // OK: percorso corretto
                 //TODO: non si utilizza il metodo this.createInformation(edge)
                 return new ProcessedInformationImp(nextEdge, startInformation);
