@@ -93,8 +93,18 @@ public class MyBeaconImp extends Beacon implements MyBeacon, Comparable {
      */
     @Override
     public String toString(){
-        // TODO: 28/04/2016 decidere la stringa che rappresenta un beacon
-        return super.toString();
+        String s = "";
+        s += "UUID: " +  getUUID() +"\n";
+        s += "Major: " +  getMajor() +"\n";
+        s += "Minor: " +  getMinor() +"\n";
+        s += "RSSI: " +  getRssi() +"\n";
+        s += "Tx power: " + getTxPower() + "\n";
+        s += "Battery level: " + getBatteryLevel() + "%" + "\n";
+        s += "Distance: " + getDistance() + "\n";
+        s += "Beacon type code" + getBeaconTypeCode() + "\n";
+        s += "Bluetooth address: " + getBluetoothAddress();
+
+        return s;
     }
 
     /**
