@@ -89,7 +89,6 @@ public class NavigatorImp implements Navigator {
      *
      * @param startRoi Punto di partenza del percorso
      * @param endPoi   Punto di arrivo del percorso
-     * @return void
      */
     @Override
     public void calculatePath(RegionOfInterest startRoi, PointOfInterest endPoi) throws NavigationExceptions {
@@ -215,7 +214,6 @@ public class NavigatorImp implements Navigator {
      * Metodo per settare il grafo sul quale calcolare il percorso
      *
      * @param graph Grafo sul quale si vogliono calcolare dei percorsi
-     * @return void
      */
     @Override
     public void setGraph(MapGraph graph) {
