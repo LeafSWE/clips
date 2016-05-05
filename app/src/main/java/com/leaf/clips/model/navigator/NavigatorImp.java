@@ -68,6 +68,20 @@ public class NavigatorImp implements Navigator {
     }
 
     /**
+     * TODO: attenzione, costruttore non previsto dalla progettazione
+     * Costruttore presente solo a fini di testing
+     * @param compass
+     * @param dijkstraPathFinder
+     */
+    public NavigatorImp(Compass compass, PathFinder dijkstraPathFinder) {
+        this.compass = compass;
+        this.pathFinder = dijkstraPathFinder;
+        this.path = null;
+        this.buildingGraph = null;
+        this.progress = null;
+    }
+
+    /**
      * Metodo che calcola un percorso tra due RegionOfInterest viste come vertici di un grafo
      * MapGraph utilizzando un oggetto PathFinder. Il punto di partenza e il punto di arrivo sono i
      * parametri richiesti in input dal metodo mentre il grafo è un campo dati. Viene lanciata un
@@ -75,15 +89,14 @@ public class NavigatorImp implements Navigator {
      *
      * @param startRoi Punto di partenza del percorso
      * @param endPoi   Punto di arrivo del percorso
-     * @return void
      */
     @Override
     public void calculatePath(RegionOfInterest startRoi, PointOfInterest endPoi) throws NavigationExceptions {
         if (buildingGraph != null) {
             Collection<RegionOfInterest> endRois = endPoi.getAllBelongingROIs();
             Iterator<RegionOfInterest> endRoisIterator = endRois.iterator();
-            // prelevo il primo path considerandolo il migliore
             if (endRoisIterator.hasNext()) {
+                // prelevo il primo path considerandolo il migliore
                 RegionOfInterest endRoi = endRoisIterator.next();
                 List<EnrichedEdge> shortestPath = pathFinder.calculatePath(this.buildingGraph, startRoi, endRoi);
 
@@ -201,7 +214,6 @@ public class NavigatorImp implements Navigator {
      * Metodo per settare il grafo sul quale calcolare il percorso
      *
      * @param graph Grafo sul quale si vogliono calcolare dei percorsi
-     * @return void
      */
     @Override
     public void setGraph(MapGraph graph) {
