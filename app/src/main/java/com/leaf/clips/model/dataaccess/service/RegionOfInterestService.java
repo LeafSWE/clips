@@ -7,6 +7,9 @@ import com.leaf.clips.model.dataaccess.dao.RemoteRegionOfInterestDao;
 import com.leaf.clips.model.dataaccess.dao.RemoteRoiPoiDao;
 import com.leaf.clips.model.dataaccess.dao.SQLiteRegionOfInterestDao;
 import com.leaf.clips.model.dataaccess.dao.SQLiteRoiPoiDao;
+import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
+import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
+import com.leaf.clips.model.navigator.graph.area.RegionOfInterestImp;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -125,11 +128,11 @@ public class RegionOfInterestService {
         int minor = regionOfInterestTable.getMinor();
 
         // recupero i PointOfInterest vicini alla RegionOfInterest
-        Collection<PointOfInterest> pois = sqliteRoiPoiDao.findAllPointsWithRoi(id);
+        int[] pois = sqliteRoiPoiDao.findAllPointsWithRoi(id);
 
         // creo la RegionOfInterest e poi inserisco i POI vicini
         RegionOfInterest roi = new RegionOfInterestImp(id, uuid, major, minor);
-        roi.setNearbyPOIs(pois);
+        //roi.setNearbyPOIs(pois);
 
         // ritorno la RegionOfInterest costruita
         return roi;
