@@ -39,6 +39,9 @@ public class NavigatorImpTest {
 
     final static String FAKE_BASIC_INFO = "FakeBasicInfo";
     final static String FAKE_DETAILED_INFO = "FakeDetailedInfo";
+    final static String FAKE_WRONG_DIRECTION_INFO = "Direzione sbagliata, voltati";
+    final static String FAKE_CORRECT_DIRECTION_INFO = "Direzione corretta";
+
 
     @Mock
     private PhotoInformation mockEdgePhotos;
@@ -191,7 +194,11 @@ public class NavigatorImpTest {
         navigatorImp.calculatePath(mockStartRoi, mockEndPoi);
         ProcessedInformation resultProcessedInfo = navigatorImp.toNextRegion(mockVisibleBeacons);
         if (!resultProcessedInfo.getDetailedInstruction().equals(FAKE_DETAILED_INFO)) {
-            fail("Result processed info not equal as expected");
+            fail("Result processed detailed info not equal as expected");
+        }
+        if (!resultProcessedInfo.getProcessedBasicInstruction().equals(
+                FAKE_WRONG_DIRECTION_INFO + " " + FAKE_BASIC_INFO)) {
+            fail("Result processed basic info not equal as expected");
         }
     }
 }
