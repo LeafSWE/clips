@@ -8,26 +8,38 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.leaf.clips.R;
+import com.leaf.clips.view.LogInformationView;
+import com.leaf.clips.view.LogInformationViewImp;
 
 public class LogInformationActivity extends AppCompatActivity {
 
+    // TODO: 5/6/16 Aggiungere model
+    /**
+     * Oggetto del Model per la gestione dei log
+     */
+    //private InformationManager infoManager;
+
+    /**
+     * View associata a tale Activity
+     */
+    private LogInformationView view;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //TODO: Creare View e spostare relativa logica
+        //TODO: Leggere il log passato dall'Intendt e passarlo alla view
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_information);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        this.view = new LogInformationViewImp(this);
+    }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_delete_log);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    /**
+     * Metodo che viene utilizzato per rimuovere un log salvato
+     * @param name Nome del log da eliminare
+     * @return  void
+     */
+    public void deleteLog(String name){
+        // TODO: 5/6/16 Codifiy
     }
 
 }

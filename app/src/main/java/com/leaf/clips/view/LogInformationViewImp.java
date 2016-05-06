@@ -1,8 +1,11 @@
 package com.leaf.clips.view;
 
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
+import com.leaf.clips.R;
 import com.leaf.clips.presenter.LogInformationActivity;
 
 /**
@@ -30,8 +33,27 @@ public class LogInformationViewImp implements LogInformationView {
      * Costruttore della classe LogInformationViewImp
      * @param presenter Presenter della View che viene creata
      */
-    public LogInformationViewImp(LogInformationActivity presenter){
+    public LogInformationViewImp(final LogInformationActivity presenter){
+
+        //Associo il presenter
         this.presenter = presenter;
+
+        //Setto il layout XML
+        presenter.setContentView(R.layout.activity_log_information);
+        Toolbar toolbar = (Toolbar) presenter.findViewById(R.id.toolbar);
+        presenter.setSupportActionBar(toolbar);
+
+        //Setto il btnDelete + Listener
+        this.btnDeleteLog = (FloatingActionButton) presenter.findViewById(R.id.fab_delete_log);
+        this.btnDeleteLog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: 5/6/16 Capire quale sia il nome
+                presenter.deleteLog("NOME");
+            }
+        });
+
+        presenter.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     /**
@@ -41,6 +63,6 @@ public class LogInformationViewImp implements LogInformationView {
      */
     @Override
     public void setBeaconAdapter(String logInfo){
-        // TODO: 5/6/16 Codify 
+        // TODO: 5/6/16 Codify
     }
 }
