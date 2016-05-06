@@ -14,7 +14,6 @@ import com.leaf.clips.model.dataaccess.dao.SQLiteRoiPoiDao;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterestImp;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterestInformation;
-import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -136,7 +135,7 @@ public class PointOfInterestService {
         Collection<PointOfInterestTable> tables =
                 sqlitePointOfInterestDao.findAllPointsWithMajor(major);
         Iterator<PointOfInterestTable> iter = tables.iterator();
-        List<PointOfInterest> pois = new LinkedList<PointOfInterest>();
+        List<PointOfInterest> pois = new LinkedList<>();
         while(iter.hasNext()) {
             PointOfInterestTable table = iter.next();
             PointOfInterest poi = fromTableToBo(table);
@@ -146,14 +145,23 @@ public class PointOfInterestService {
     }
 
     /**
+     * Metodo per recuperare gli identificativi di tutte le RegionOfInterest associate ad uno
+     * specifico PointOfInterest
+     * @param poiId Identificativo numerico del PointOfInterest
+     * @return int[] Insieme degli identificativi di tutte le RegionOfInterest associate ad un POI
+     */
+    public int[] findAllRegionsWithPoi(int poiId) {
+        return sqliteRoiPoiDao.findAllRegionsWithPoi(poiId);
+    }
+
+    /**
      * Metodo per recuperare un PointOfInterest ricercandolo nel database locale
      * @param id Identificativo numerico del PointOfInterest da recuperare
      * @return  PointOfInterest
      */
     public PointOfInterest findPointOfInterest(int id) {
         PointOfInterestTable table = sqlitePointOfInterestDao.findPointOfInterest(id);
-        PointOfInterest poi = fromTableToBo(table);
-        return poi;
+        return fromTableToBo(table);
     }
 
     /**
@@ -177,14 +185,7 @@ public class PointOfInterestService {
                 new PointOfInterestInformation(name, description, category);
 
         // costruisco il PointOfInterest da restituire
-        PointOfInterest poi = new PointOfInterestImp(id, poiInfo);
-
-        // recupero le ROI vicine e le inserisco nel POI
-        Collection<RegionOfInterest> rois = sqliteRoiPoiDao.findAllRegionsWithPoi(id);
-        poi.setBelongingROIs(rois);
-
-        // ritorno il PointOfInterest costruito
-        return poi;
+        return new PointOfInterestImp(id, poiInfo);
     }
 
 }
