@@ -21,7 +21,7 @@ public class DaoFactoryHelper {
     /**
      * Costruttore della classe DaoFactoryHelper
      */
-    private DaoFactoryHelper(){}
+    public DaoFactoryHelper(){}
 
     /**
      * Metodo che ritorna un'istanza di DaoFactoryHelper

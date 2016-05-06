@@ -36,21 +36,8 @@ public class RemoteEdgeTypeDao {
      */
     public EdgeTypeTable fromJSONToTable(JsonObject object) {
         Gson gson = new Gson();
-        // TODO: 29/04/16 chiedere perchè no nomi uguali
-        GsonBuilder gsonBldr = new GsonBuilder();
-        JsonDeserializer<EdgeTypeTable> deserializer = new JsonDeserializer<EdgeTypeTable>() {
-            @Override
-            public EdgeTypeTable deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                JsonObject jObject = json.getAsJsonObject();
-                int deserializatedId = jObject.get("id").getAsInt();
-                String deserializedTypeName = jObject.get("description").getAsString();
-                Assert.assertNotNull(deserializedTypeName);
-                return new EdgeTypeTable(deserializatedId, deserializedTypeName);
-            }
-        };
-        gsonBldr.registerTypeAdapter(EdgeTypeTable.class, deserializer);
         EdgeTypeTable edgeTypeTable;
-        edgeTypeTable = gsonBldr.create().fromJson(object, EdgeTypeTable.class);
+        edgeTypeTable = gson.fromJson(object, EdgeTypeTable.class);
         return edgeTypeTable;
     }
 

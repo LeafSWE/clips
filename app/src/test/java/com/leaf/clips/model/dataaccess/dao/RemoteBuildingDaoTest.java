@@ -29,7 +29,7 @@ public class RemoteBuildingDaoTest {
             "\"openingHours\" : \"08:00-19:00\"," +
             "\"address\" : \"Via Trieste 63, 35121, Padova (PD)\"," +
             "\"mapVersion\" : 3," +
-            "\"dimension\" : \"5.2 KB\"" +
+            "\"mapSize\" : \"5.2 KB\"" +
             "}";
     private JsonParser parser;
 

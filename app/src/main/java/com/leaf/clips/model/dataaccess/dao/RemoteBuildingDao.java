@@ -32,31 +32,8 @@ public class RemoteBuildingDao {
      */
     public BuildingTable fromJSONToTable(JsonObject object){
         Gson gson = new Gson();
-        // TODO: 30/04/16 chiedere perchè no nomi uguali
-        GsonBuilder gsonBldr = new GsonBuilder();
-        JsonDeserializer<BuildingTable> deserializer = new JsonDeserializer<BuildingTable>() {
-            @Override
-            public BuildingTable deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-                    throws JsonParseException {
-                JsonObject jObject = json.getAsJsonObject();
-                int deserializatedId = jObject.get("id").getAsInt();
-                String deserializatedUuid = jObject.get("uuid").getAsString();
-                int deserializatedMajor = jObject.get("major").getAsInt();
-                String deserializatedName = jObject.get("name").getAsString();
-                String deserializedDescription = jObject.get("description").getAsString();
-                String deserializedOpeningHours = jObject.get("openingHours").getAsString();
-                String deserializedAddress = jObject.get("address").getAsString();
-                int deserializedMapVersion = jObject.get("mapVersion").getAsInt();
-                String deserializedMapSize = jObject.get("dimension").getAsString();
-
-                return new BuildingTable(deserializatedId, deserializatedUuid, deserializatedMajor,
-                        deserializatedName, deserializedDescription, deserializedOpeningHours,
-                        deserializedAddress, deserializedMapVersion, deserializedMapSize);
-            }
-        };
-        gsonBldr.registerTypeAdapter(BuildingTable.class, deserializer);
         BuildingTable buildingTable;
-        buildingTable = gsonBldr.create().fromJson(object, BuildingTable.class);
+        buildingTable = gson.fromJson(object, BuildingTable.class);
         return buildingTable;
     }
 

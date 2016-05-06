@@ -17,8 +17,6 @@ import java.util.PriorityQueue;
 /**
  *Classe che rappresenta un DAO per la tabella "Building" del database locale
  */
-
-// TODO: 30/04/16 controllare su tracy che ci siano entrambe le interfacce
 public class SQLiteBuildingDao implements BuildingDao, CursorConverter {
 
     /**
