@@ -147,11 +147,13 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
 
         if(dbService.isBuildingMapPresent(major)){
             if(!dbService.isBuildingMapUpdated(major))
+                // TODO: chiedere il permesso all'utente prima di aggiornare la mappa
                 dbService.updateBuildingMap(major);
 
             return dbService.findBuildingByMajor(major);
         }
         else
+            // TODO: chiedere il permesso all'utente prima di scaricare la mappa
             return dbService.findRemoteBuildingByMajor(major);
 
     }
@@ -164,6 +166,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
      */
     @Override
     public void onReceive(Context context, Intent intent){
+        // TODO: modificare l'add
         PriorityQueue<MyBeacon> p;
         p = ((PriorityQueue<MyBeacon>)intent.getSerializableExtra("queueOfBeacons"));
 
@@ -171,7 +174,8 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
             lastBeaconsSeen.add(oneBeacon);
 
         if(map == null)
-            loadMap();
+            map = loadMap();
+            // map =
 
         if(shouldLog){
             activeLog.add(lastBeaconsSeen);
