@@ -7,7 +7,6 @@ import com.leaf.clips.model.dataaccess.dao.RemoteRegionOfInterestDao;
 import com.leaf.clips.model.dataaccess.dao.RemoteRoiPoiDao;
 import com.leaf.clips.model.dataaccess.dao.SQLiteRegionOfInterestDao;
 import com.leaf.clips.model.dataaccess.dao.SQLiteRoiPoiDao;
-import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterestImp;
 
@@ -48,6 +47,12 @@ public class RegionOfInterestService {
     private SQLiteRoiPoiDao sqliteRoiPoiDao;
 
     /**
+     * Lista delle RegionOfInterest della mappa dell'edificio che si sta costruendo
+     * che sono già state associate ai PointOfInterest vicini
+     */
+    private Collection<RegionOfInterest> tracedRois;
+
+    /**
      * Costruttore della classe RegionOfInterestService
      * @param sqliteROI Oggetto che rappresenta un DAO per la tabella "ROI" del database locale
      * @param remoteROI Oggetto di utility per la conversione da JSON a RegionOfInterestTable
@@ -61,6 +66,23 @@ public class RegionOfInterestService {
         sqliteRoiPoiDao = sqliteRoiPoi;
         remoteRegionOfInterestDao = remoteROI;
         remoteRoiPoiDao = remoteRoiPoi;
+    }
+
+    /**
+     * Metodo per impostare le RegionOfInterest che sono già state associate ai POI vicini
+     * @param tracedRois Le RegionOfInterest che sono già state associate ai POI vicini
+     */
+    public void setTracedRois(Collection<RegionOfInterest> tracedRois) {
+        this.tracedRois = tracedRois;
+    }
+
+    /**
+     * Metodo per recuperare le RegionOfInterest che sono già state associate ai POI vicini
+     * @return Collection<RegionOfInterest> Le RegionOfInterest che sono già state associate ai
+     * POI vicini
+     */
+    public Collection<RegionOfInterest> getTracedRois() {
+        return tracedRois;
     }
 
     /**
@@ -111,8 +133,18 @@ public class RegionOfInterestService {
      */
     public RegionOfInterest findRegionOfInterest(int id) {
         RegionOfInterestTable table = sqliteRegionOfInterestDao.findRegionOfInterest(id);
-        RegionOfInterest roi = fromTableToBo(table);
-        return roi;
+        return fromTableToBo(table);
+    }
+
+    /**
+     * Metodo per recuperare gli identificativi di tutti i PointOfInterest associati ad una
+     * specifica RegionOfInterest
+     * @param roiId Identificativo della RegionOfInterest
+     * @return int[] Insieme degli identificativi dei PointOfInterest associati ad una specifica
+     * RegionOfInterest
+     */
+    public int[] findAllPointsWithRoi(int roiId) {
+        return sqliteRoiPoiDao.findAllPointsWithRoi(roiId);
     }
 
     /**
@@ -127,15 +159,8 @@ public class RegionOfInterestService {
         int major = regionOfInterestTable.getMajor();
         int minor = regionOfInterestTable.getMinor();
 
-        // recupero i PointOfInterest vicini alla RegionOfInterest
-        Collection<PointOfInterest> pois = sqliteRoiPoiDao.findAllPointsWithRoi(id);
-
-        // creo la RegionOfInterest e poi inserisco i POI vicini
-        RegionOfInterest roi = new RegionOfInterestImp(id, uuid, major, minor);
-        roi.setNearbyPOIs(pois);
-
-        // ritorno la RegionOfInterest costruita
-        return roi;
+        // creo la RegionOfInterest da ritornare
+        return new RegionOfInterestImp(id, uuid, major, minor);
     }
 }
 
