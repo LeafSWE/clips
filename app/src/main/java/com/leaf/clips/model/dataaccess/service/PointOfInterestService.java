@@ -73,7 +73,7 @@ public class PointOfInterestService {
      */
     public PointOfInterestService(SQLitePointOfInterestDao sqlitePOI, RemotePointOfInterestDao
             remotePOI, SQLiteRoiPoiDao sqliteRoiPoi, RemoteRoiPoiDao remoteRoiPoi, SQLiteCategoryDao
-            sqliteCategory, RemoteCategoryDao remoteCategory) {
+                                          sqliteCategory, RemoteCategoryDao remoteCategory) {
 
         remoteCategoryDao = remoteCategory;
         remotePointOfInterestDao = remotePOI;

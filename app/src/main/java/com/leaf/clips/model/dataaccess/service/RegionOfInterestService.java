@@ -163,4 +163,3 @@ public class RegionOfInterestService {
         return new RegionOfInterestImp(id, uuid, major, minor);
     }
 }
-
