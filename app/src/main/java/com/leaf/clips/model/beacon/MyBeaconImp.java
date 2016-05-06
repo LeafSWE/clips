@@ -25,13 +25,15 @@ public class MyBeaconImp extends Beacon implements MyBeacon, Comparable {
         }
 
         public MyBeacon[] newArray(int size) {
-            return new MyBeacon[size];
+            return new MyBeaconImp[size];
         }
     };
 
     private MyBeaconImp(Parcel in) {
         super(in);
-    }{
+    }
+
+    {
         Beacon.setDistanceCalculator(new MyDistanceCalculator());
     }
 
@@ -91,8 +93,18 @@ public class MyBeaconImp extends Beacon implements MyBeacon, Comparable {
      */
     @Override
     public String toString(){
-        // TODO: 28/04/2016  
-        return super.toString();
+        String s = "";
+        s += "UUID: " +  getUUID() +"\n";
+        s += "Major: " +  getMajor() +"\n";
+        s += "Minor: " +  getMinor() +"\n";
+        s += "RSSI: " +  getRssi() +"\n";
+        s += "Tx power: " + getTxPower() + "\n";
+        s += "Battery level: " + getBatteryLevel() + "%" + "\n";
+        s += "Distance: " + getDistance() + "\n";
+        s += "Beacon type code" + getBeaconTypeCode() + "\n";
+        s += "Bluetooth address: " + getBluetoothAddress();
+
+        return s;
     }
 
     /**
@@ -106,8 +118,7 @@ public class MyBeaconImp extends Beacon implements MyBeacon, Comparable {
 
     /**
      * Metodo che ritorna la distanza del beacon dal dispositivo che lo ha rilevato
-     * @return double distanza del beacon dal dispositivo che lo ha rilevato
-     */
+     * @return double distanza del beacon dal dispositivo che lo ha rilevato     */
     @Override
     public double getDistance() {
         return super.getDistance();

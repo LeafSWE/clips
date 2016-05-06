@@ -38,7 +38,7 @@ public interface Logger {
      * Metodo per la rimozione di un log precedentemente salvato
      * @param name Nome del log da rimuovere
      */
-    void remove(String name);
+    boolean remove(String name);
 
     /**
      * Metodo che salva le informazioni contenute nell’oggetto su di un
