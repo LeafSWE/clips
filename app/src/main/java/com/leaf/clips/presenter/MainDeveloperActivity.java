@@ -43,8 +43,7 @@ public class MainDeveloperActivity extends AppCompatActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
+            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
                 //TODO: dobbiamo passare i dati del log da mostrare nella Activity che stiamo aprendo
                 Intent intent = new Intent(MainDeveloperActivity.this,LogInformationActivity.class);
                 startActivity(intent);
