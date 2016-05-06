@@ -67,7 +67,8 @@ public class MainDeveloperActivity extends AppCompatActivity {
 
 
     public void showDetailedLog(int logPosition){
-        //TODO
+        Intent intent = new Intent(this, LogInformationActivity.class);
+        startActivity(intent);
     }
 
     public void startNewLog(){
