@@ -7,6 +7,7 @@ package com.leaf.clips.model.navigator.graph;
 
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
 import com.leaf.clips.model.navigator.graph.edge.EnrichedEdge;
+import com.leaf.clips.model.usersetting.Setting;
 
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
@@ -80,5 +81,16 @@ public class MapGraph {
         return graph;
     }
 
+    /**
+     * Metodo che permette di impostare le setting passate come parametro a tutti gli edge all'interno del graph
+     * @param setting Impostazioni di preferenza dell'applicazione
+     */
+    public void setSettingAllEdge(Setting setting) {
+        // TODO: da testare
+        Collection<EnrichedEdge> allEdges = graph.edgeSet();
+        for (EnrichedEdge edge : allEdges) {
+            edge.setUserPreference(setting);
+        }
+    }
 }
 

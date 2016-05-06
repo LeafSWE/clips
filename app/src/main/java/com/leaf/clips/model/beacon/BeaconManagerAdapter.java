@@ -177,11 +177,11 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
      */
     @Override
     public void didDetermineStateForRegion(int i, Region region) {
-        // TODO: 28/04/2016
-        if(i==0)
-            System.out.println();
+
+        if(i==MonitorNotifier.INSIDE)
+            Log.i("BEACON_MANAGER_ADAPTER","Beacons are visible in the region");
         else
-            System.out.println();
+            Log.i("BEACON_MANAGER_ADAPTER", "No beacons are visible in the region");
     }
 
     @Override
@@ -196,8 +196,8 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
                 p.add(new MyBeaconImp(oneBeacon));
             }
 
-            Intent msg = new Intent("beaconsDetected"); // TODO: 28/04/2016
-            msg.putExtra("beacons", p);
+            Intent msg = new Intent("beaconsDetected");
+            msg.putExtra("queueOfBeacons", p);
 
             LocalBroadcastManager.getInstance(BeaconManagerAdapter.this).sendBroadcast(msg);
 

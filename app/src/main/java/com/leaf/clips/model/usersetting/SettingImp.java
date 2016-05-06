@@ -41,26 +41,26 @@ public class SettingImp implements Setting {
      * Chiave per accedere alle preferenze dell'utente contenute nelle SharedPreferences
      */
 
-    private static final String USER_PREFERENCES = "userKey"; // TODO: 02/05/2016
+    private static final String USER_PREFERENCES = "userKey"; // TODO: 02/05/2016 decidere la stringa
 
     /**
      * Chiave per accedere alle preferenze di percorso dell'utente contenute nelle SharedPreferences
      */
 
-    private static final String PATH_PREFERENCES = "pathKey"; // TODO: 01/05/2016
+    private static final String PATH_PREFERENCES = "pathKey"; // TODO: 01/05/2016 decidere la stringa
 
     /**
      * Chiave per accedere alle preferenze di fruizione dell'informazione dell'utente contenute
      * nelle SharedPreferences
      */
 
-    private static final String INSTRUCTION_PREFERENCES = "instructionKey"; // TODO: 01/05/2016
+    private static final String INSTRUCTION_PREFERENCES = "instructionKey"; // TODO: 01/05/2016 decidere la stringa
 
     /**
      * Chiave per accedere al codice sviluppatore contenuto nelle SharedPreferences
      */
 
-    private static final String DEVELOPER_CODE = "developerKey"; // TODO: 01/05/2016
+    private static final String DEVELOPER_CODE = "developerKey"; // TODO: 01/05/2016 decidere la stringa
 
     /**
      * Costruttore della classe SettingImp
@@ -98,7 +98,8 @@ public class SettingImp implements Setting {
     @Override
     public boolean isDeveloper(){
 
-        return new DeveloperCodeManager(sharedPreferences).isValid(sharedPreferences.getString(DEVELOPER_CODE, "")); // TODO: 01/05/2016
+        return new DeveloperCodeManager(sharedPreferences)
+                .isValid(sharedPreferences.getString(DEVELOPER_CODE, "")); // TODO: 01/05/2016 decidere la stringa
     }
 
     /**

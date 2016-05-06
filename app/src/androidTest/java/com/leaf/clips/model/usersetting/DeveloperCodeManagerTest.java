@@ -19,13 +19,16 @@ import org.junit.runners.JUnit4;
 /**
  * Unit Test 2
  */
+
+// TODO: 5/6/16 Fede, Controllare test che non andavano 
+
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class DeveloperCodeManagerTest {
 
     private DeveloperCodeManager dev;
 
-    private static final String USER_PREFERENCES = "userKey"; // TODO: 01/05/2016
+    private static final String USER_PREFERENCES = "userKey"; // TODO: 01/05/2016 decidere la stringa
 
     @Before
     public void init(){
@@ -34,14 +37,19 @@ public class DeveloperCodeManagerTest {
 
     @Test
     public void shouldAcceptDeveloperCode(){
-       // Assert.assertTrue(dev.isValid("")); TODO: 01/05/2016
+
+        //Assert.assertTrue(dev.isValid(""));
+        // TODO: 01/05/2016 decidere la stringa
+
 
     }
 
 
     @Test
     public void shouldRejectDeveloperCode(){
-        // Assert.assertFalse(dev.isValid("")); TODO: 01/05/2016
+
+        //Assert.assertFalse(dev.isValid(""));
+        // TODO: 01/05/2016 decidere la stringa
 
     }
 }
