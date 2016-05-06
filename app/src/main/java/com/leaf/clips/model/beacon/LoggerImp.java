@@ -25,7 +25,7 @@ public class LoggerImp implements Logger {
     /**
      * Path della directory in cui vengono salvati i log
      */
-    final static String DIRECTORY = "C:\\Users\\Federico"; //TO-DO
+    final static String DIRECTORY = "C:\\Users\\Federico"; // TODO: 28/04/2016  
 
     /**
      * Rappresenta il contenuto di un log
@@ -119,8 +119,8 @@ public class LoggerImp implements Logger {
     public void remove(String name){
         File fileToDelete = new File(DIRECTORY, name);
         boolean deleted = fileToDelete.delete();
-        /*if(!deleted)
-            TO-DO*/
+        if(!deleted);
+        // TODO: 28/04/2016  
 
 
     }
