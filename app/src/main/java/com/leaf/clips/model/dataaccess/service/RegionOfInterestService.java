@@ -7,6 +7,9 @@ import com.leaf.clips.model.dataaccess.dao.RemoteRegionOfInterestDao;
 import com.leaf.clips.model.dataaccess.dao.RemoteRoiPoiDao;
 import com.leaf.clips.model.dataaccess.dao.SQLiteRegionOfInterestDao;
 import com.leaf.clips.model.dataaccess.dao.SQLiteRoiPoiDao;
+import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
+import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
+import com.leaf.clips.model.navigator.graph.area.RegionOfInterestImp;
 
 import java.util.Collection;
 import java.util.Iterator;
