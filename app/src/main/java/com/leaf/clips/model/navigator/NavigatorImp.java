@@ -40,7 +40,8 @@ public class NavigatorImp implements Navigator {
     private Compass compass;
 
     /**
-     * Lista di EnrichedEdge rappresentanti le indicazioni da seguire per raggiungere la destinazione
+     * Lista di EnrichedEdge rappresentanti le indicazioni da seguire per raggiungere la
+     * destinazione
      */
     private List<EnrichedEdge> path;
 
@@ -68,10 +69,8 @@ public class NavigatorImp implements Navigator {
     }
 
     /**
-     * TODO: attenzione, costruttore non previsto dalla progettazione
-     * Costruttore presente solo a fini di testing
-     * @param compass
-     * @param dijkstraPathFinder
+     * TODO: attenzione, costruttore non previsto dalla progettazione Costruttore presente solo a
+     * fini di testing
      */
     public NavigatorImp(Compass compass, PathFinder dijkstraPathFinder) {
         this.compass = compass;
@@ -118,7 +117,8 @@ public class NavigatorImp implements Navigator {
     }
 
     /**
-     * Metodo che crea le ProcessedInformation in base al tipo di arco e in base alle informazioni provenienti dal beacon e da eventuali sensori utilizzati
+     * Metodo che crea le ProcessedInformation in base al tipo di arco e in base alle informazioni
+     * provenienti dal beacon e da eventuali sensori utilizzati
      *
      * @param edge Edge di cui devono essere recuperate le informazioni
      * @return ProcessedInformation
@@ -128,7 +128,8 @@ public class NavigatorImp implements Navigator {
     }
 
     /**
-     * Metodo che ritorna la lista completa delle ProcessedInstruction da seguire per percorrere un percorso calcolato
+     * Metodo che ritorna la lista completa delle ProcessedInstruction da seguire per percorrere un
+     * percorso calcolato
      *
      * @return List<ProcessedInformation>
      */
@@ -184,19 +185,10 @@ public class NavigatorImp implements Navigator {
             negRange = negRange + 360;
         }
         if (negRange < deviceGrade || deviceGrade < posRange) {
-            return "Direzione corretta";
-        }
-        else {
+            return "Direzione corretta"; // TODO: usare una Android Resource
+        } else {
             return "Direzione sbagliata, voltati";
         }
-
-        /*if (Math.abs(deviceGrade - 90) % 360 > correctGrade &&
-                correctGrade < Math.abs(deviceGrade + 90) % 360) {// delta di 180
-            // siamo all'interno dell'intervallo accettato
-            return "Direzione sbagliata, voltati"; // TODO: usare una Android Resource
-        } else {
-            return "Direzione corretta";
-        }*/
     }
 
     /**
@@ -233,7 +225,14 @@ public class NavigatorImp implements Navigator {
     }
 
     /**
-     * Metodo che ritorna le informazioni da seguire per raggiungere la prossima RegionOfInterest. Le informazioni fornite dipendono dalla lista di beacon passata come parametro in ingrasso e dal beacon più potente tra quelli in essa contenuti. Viene lanciata una eccezione di tipo NoNavigationInformationException nel caso in cui si cerchi di accedere a tale metodo senza prima aver calcolato un percorso di navigazione. Viene lanciata una eccezione di tipo PathException nel caso in cui il beacon più potente nella lista di beacon in ingrasso sia associato ad una RegionOfInterest non appartenente ad una di quelle presenti nel percorso calcolato
+     * Metodo che ritorna le informazioni da seguire per raggiungere la prossima RegionOfInterest.
+     * Le informazioni fornite dipendono dalla lista di beacon passata come parametro in ingrasso e
+     * dal beacon più potente tra quelli in essa contenuti. Viene lanciata una eccezione di tipo
+     * NoNavigationInformationException nel caso in cui si cerchi di accedere a tale metodo senza
+     * prima aver calcolato un percorso di navigazione. Viene lanciata una eccezione di tipo
+     * PathException nel caso in cui il beacon più potente nella lista di beacon in ingrasso sia
+     * associato ad una RegionOfInterest non appartenente ad una di quelle presenti nel percorso
+     * calcolato
      *
      * @param visibleBeacons Insieme di beacon visibili al momento della chiamata al metodo
      * @return ProcessedInformation

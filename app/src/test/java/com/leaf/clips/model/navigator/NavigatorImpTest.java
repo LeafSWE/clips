@@ -64,7 +64,13 @@ public class NavigatorImpTest {
     private PriorityQueue<MyBeacon> mockVisibleBeacons;
 
     @Mock
+    private PriorityQueue<MyBeacon> mockNoVisibleBeacons;
+
+    @Mock
     private MyBeacon mockNearBeacon;
+
+    @Mock
+    private MyBeacon mockNoNearBeacon;
 
     @Mock
     private MapGraph mockMapGraph;
@@ -117,6 +123,7 @@ public class NavigatorImpTest {
         }
 
         when(mockVisibleBeacons.peek()).thenReturn(mockNearBeacon);
+        when(mockNoVisibleBeacons.peek()).thenReturn(mockNoNearBeacon);
         when(mockRoiWithBeacon.contains(mockVisibleBeacons.peek())).thenReturn(true);
 
         fakeProcessedInformation = new ArrayList<>();
@@ -124,14 +131,34 @@ public class NavigatorImpTest {
         fakeProcessedInformation.add(new ProcessedInformationImp(mockEnrichedEdge2));
     }
 
+    /**
+     * TU33
+     * In particolare deve essere testato che venga lanciata l'eccezione NoGraphSetException nel
+     * caso in cui venga richiesto di calcolare un percorso e non sia stato settato alcun grafo..
+     * @throws Exception
+     */
     @Test(expected = NoGraphSetException.class)
-    public void testCalculatePathException() throws Exception {
+    public void testCalculatePathWithNoGraphSet() throws Exception {
         navigatorImp.calculatePath(mockStartRoi, mockNullEndPoi);
         fail("Test not throw NoGraphException");
     }
 
     /**
-     * Non esegue test in NavigatorImp.isShortestPath()
+     * TU33
+     * mentre deve essere lanciata l'eccezione NoNavigationInformationException nel caso in cui si
+     * richieda un percorso e quest'ultimo non è ancora stato calcolato
+     * @throws Exception
+     */
+    @Test(expected = NoNavigationInformationException.class)
+    public void testGetPathWithoutSetIt() throws Exception {
+        navigatorImp.toNextRegion(mockVisibleBeacons);
+    }
+
+    /**
+     * TU33
+     * Viene testato che sia possibile settare ad un oggetto Navigator il grafo su cui si vuole
+     * effettuare la navigazione e calcolare un percorso da un certo punto ad un altro.
+     * TODO: N.B. Non esegue test in NavigatorImp.isShortestPath()
      * @throws NavigationExceptions
      */
     @Test
@@ -150,14 +177,11 @@ public class NavigatorImpTest {
         navigatorImp.calculatePath(mockStartRoi, mockNullEndPoi);
     }
 
-    @Test(expected = NoNavigationInformationException.class)
-    public void testGetAllInstructionsException() throws Exception {
-        navigatorImp.getAllInstructions();
-        fail("Test not throw NoNavigationInformationException");
-    }
-
     /**
-     * N.B. il test utilizza la classe ProcessedInformation istanziandola
+     * TU34
+     * Viene testato che sia possibile, settato un grafo e calcolato un percorso, ottenere tutte le
+     * istruzioni di navigazione.
+     * TODO: N.B. il test utilizza la classe ProcessedInformation istanziandola
      * @throws NavigationExceptions
      */
     @Test
@@ -188,6 +212,25 @@ public class NavigatorImpTest {
         }
     }
 
+    /**
+     * TU34
+     * In particolare deve essere lanciata un'eccezione di tipo
+     * NoNavigationInformationException nel caso in cui si richiedano le informazioni riguardanti
+     * un percorso ma queste non siano disponibili poichè non è stato settato un grafo o non è
+     * ancora stato calcolato un percorso
+     * @throws Exception
+     */
+    @Test(expected = NoNavigationInformationException.class)
+    public void testGetAllInstructionsException() throws Exception {
+        navigatorImp.getAllInstructions();
+    }
+
+    /**
+     * TU35
+     * 	Viene testato che sia possibile, settato un grafo e calcolato un percorso, ottenere le
+     * 	informazioni di navifìgazione una di seguito all'altra.
+     * @throws NavigationExceptions
+     */
     @Test
     public void testToNextRegion() throws NavigationExceptions {
         navigatorImp.setGraph(mockMapGraph);
@@ -200,5 +243,29 @@ public class NavigatorImpTest {
                 FAKE_WRONG_DIRECTION_INFO + " " + FAKE_BASIC_INFO)) {
             fail("Result processed basic info not equal as expected");
         }
+    }
+
+    /**
+     * TU35
+     *  In particolare deve essere lanciata un'eccezione di tipo NoNavigationInformationException
+     *  nel caso in cui si richiedano le informazioni riguardanti un percorso ma queste non siano
+     *  disponibili poichè non è stato settato un grafo o non è ancora stato calcolato un percorso.
+     * @throws Exception
+     */
+    @Test(expected = NoNavigationInformationException.class)
+    public void testToNextRegionWithoutPathOrGraph() throws Exception {
+        navigatorImp.toNextRegion(mockVisibleBeacons);
+    }
+
+    /**
+     * TU35
+     * Inoltre viene lanciata un'eccezione PathException nel caso in cui il beacon più potente
+     * rilevato non faccia parte del percorso previsto
+     */
+    @Test (expected = PathException.class)
+    public void testToNextRegionWrongBeacon() throws Exception {
+        navigatorImp.setGraph(mockMapGraph);
+        navigatorImp.calculatePath(mockStartRoi, mockEndPoi);
+        navigatorImp.toNextRegion(mockNoVisibleBeacons);
     }
 }
