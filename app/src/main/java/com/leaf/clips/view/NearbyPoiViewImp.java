@@ -2,12 +2,15 @@ package com.leaf.clips.view;
 
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.leaf.clips.R;
 import com.leaf.clips.presenter.NearbyPoiActivity;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author Oscar Elia Conti
@@ -41,20 +44,22 @@ public class NearbyPoiViewImp implements NearbyPoiView{
         listPois.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(presenter, "" + position,
-                        Toast.LENGTH_SHORT).show();
+            Toast.makeText(presenter, "" + position,
+                Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     /**
      * Metodo utilizzato per visualizzare tutti i POI nelle circostanze dell'utente
-     * @param adp Collegamento tra la lista dei POI circostanti l'utente e la view in cui essi devono essere mostrati
-     * @return  void
+     * @param toDisplay Array contenente i nomi dei PointOfInterest circostanti all'utente
      */
     @Override
-    public void setAdapter(ListAdapter adp){
-        listPois.setAdapter(adp);
+    public void setAdapter(String[] toDisplay){
+        final ArrayList<String> list = new ArrayList<>(Arrays.asList(toDisplay));
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(presenter,
+        android.R.layout.simple_list_item_1, list);
+        listPois.setAdapter(adapter);
     }
 
 }
