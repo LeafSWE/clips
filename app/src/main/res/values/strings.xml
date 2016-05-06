@@ -8,7 +8,6 @@
 
     <string name="menu_developer">Developer area</string>
 
-    <string name="action_settings">Settings</string>
     <string name="title_activity_developer_unlocker">Developer login</string>
     <string name="prompt_code">Please insert developer code</string>
     <string name="action_login">Login</string>
@@ -17,5 +16,6 @@
     <string name="dialog_title_dev_code_error">Sorry!</string>
     <string name="dialog_dev_code_error">Wrong code.</string>
     <string name="ok" translatable="false">Ok</string>
-    <string name="title_activity_log_information">LogInformationActivity</string>
+    <string name="title_activity_nearby_poi">Nearby</string>
+    <string name="title_activity_log_information">Log Details</string>
 </resources>

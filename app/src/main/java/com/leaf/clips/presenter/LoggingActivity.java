@@ -18,6 +18,7 @@ public class LoggingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //TODO: creare Activity e spostare logica corrispondente
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logging);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -45,6 +46,7 @@ public class LoggingActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
 }

@@ -5,10 +5,12 @@
     <string name="navigation_drawer_open">Apri il navigation drawer</string>
     <string name="splash_icon_desc">L\'icona dell\'applicazione</string>
     <string name="title_activity_developer_unlocker">Accesso sviluppatore</string>
-    <string name="prompt_code">Inserisci il codice sviluppatore</string>
+    <string name="prompt_code">Inserisci il codice</string>
     <string name="action_login">Accedi</string>
     <string name="title_activity_main_developer">I tuoi log</string>
     <string name="title_activity_logging">Nuovo log</string>
     <string name="dialog_dev_code_error">Codice errato.</string>
     <string name="dialog_title_dev_code_error">Ops!</string>
+    <string name="title_activity_nearby_poi">Nelle vicinanze</string>
+    <string name="title_activity_log_information">Dettaglio log</string>
 </resources>

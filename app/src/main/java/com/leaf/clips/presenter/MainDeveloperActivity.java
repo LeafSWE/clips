@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.leaf.clips.R;
 
@@ -38,13 +37,19 @@ public class MainDeveloperActivity extends AppCompatActivity {
         final ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
 
-        //LISTENER
+        /**
+         * Imposta il Listener sui click effettuati sugli item della ListView.
+         */
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainDeveloperActivity.this, "" + position,
-                        Toast.LENGTH_SHORT).show();
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                //TODO: dobbiamo passare i dati del log da mostrare nella Activity che stiamo aprendo
+                Intent intent = new Intent(MainDeveloperActivity.this,LogInformationActivity.class);
+                startActivity(intent);
             }
+
         });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.start_log_button);

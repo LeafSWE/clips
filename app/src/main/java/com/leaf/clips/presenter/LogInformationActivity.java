@@ -13,12 +13,13 @@ public class LogInformationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //TODO: Creare View e spostare relativa logica
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_information);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_delete_log);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

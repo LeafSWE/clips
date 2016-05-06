@@ -1,6 +1,6 @@
 package com.leaf.clips.view;
 
-import android.widget.Adapter;
+import android.widget.ListAdapter;
 
 /**
  * @author Oscar Elia Conti
@@ -14,5 +14,5 @@ public interface NearbyPoiView {
      * @param adp Collegamento tra la lista dei POI circostanti l'utente e la view in cui essi devono essere mostrati
      * @return  void
      */
-    void setAdapter(Adapter adp);
+    void setAdapter(ListAdapter adp);
 }

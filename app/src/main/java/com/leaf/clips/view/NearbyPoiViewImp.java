@@ -1,8 +1,12 @@
 package com.leaf.clips.view;
 
-import android.widget.Adapter;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.leaf.clips.R;
 import com.leaf.clips.presenter.NearbyPoiActivity;
 
 /**
@@ -28,8 +32,19 @@ public class NearbyPoiViewImp implements NearbyPoiView{
      * Costruttore della classe NearbyPoiViewImp
      * @param presenter Presenter della View che viene creata
      */
-    public NearbyPoiViewImp(NearbyPoiActivity presenter){
+    public NearbyPoiViewImp(final NearbyPoiActivity presenter){
+        presenter.setContentView(R.layout.activity_nearby_poi);
         this.presenter = presenter;
+
+        listPois = (ListView)presenter.findViewById(R.id.nearby_poi_list);
+        //Listener
+        listPois.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(presenter, "" + position,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -38,8 +53,8 @@ public class NearbyPoiViewImp implements NearbyPoiView{
      * @return  void
      */
     @Override
-    public void setAdapter(Adapter adp){
-        // TODO: 5/3/16
+    public void setAdapter(ListAdapter adp){
+        listPois.setAdapter(adp);
     }
 
 }
