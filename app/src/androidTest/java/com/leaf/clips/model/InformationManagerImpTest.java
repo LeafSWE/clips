@@ -5,9 +5,16 @@ package com.leaf.clips.model;
  * @since 0.00
  */
 
+
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import android.test.mock.MockContext;
 import android.test.suitebuilder.annotation.SmallTest;
+
+import com.leaf.clips.model.dataaccess.dao.BuildingTable;
+import com.leaf.clips.model.dataaccess.service.DatabaseService;
+import com.leaf.clips.model.navigator.BuildingMap;
+
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +31,7 @@ public class InformationManagerImpTest {
     @Before
     public void init(){
         informationManager = new InformationManagerImp(null, InstrumentationRegistry.getTargetContext());
-        // TODO: 04/05/2016 fare un mock di un database service
+        //no mock is needed
     }
 
     @Test(expected = NoBeaconSeenException.class)
@@ -36,5 +43,4 @@ public class InformationManagerImpTest {
     public void shouldNotReturnNearbyPOIs() throws NoBeaconSeenException {
         informationManager.getNearbyPOIs();
     }
-
 }
