@@ -22,18 +22,18 @@ public class InformationManagerImpTest {
     private InformationManager informationManager;
 
     @Before
-    void init(){
+    public void init(){
         informationManager = new InformationManagerImp(null, InstrumentationRegistry.getTargetContext());
         // TODO: 04/05/2016 fare un mock di un database service
     }
 
     @Test(expected = NoBeaconSeenException.class)
-    void shouldNotReturnMap() throws NoBeaconSeenException {
+    public void shouldNotReturnMap() throws NoBeaconSeenException {
         informationManager.getBuildingMap();
     }
 
     @Test(expected = NoBeaconSeenException.class)
-    void shouldNotReturnNearbyPOIs() throws NoBeaconSeenException {
+    public void shouldNotReturnNearbyPOIs() throws NoBeaconSeenException {
         informationManager.getNearbyPOIs();
     }
 
