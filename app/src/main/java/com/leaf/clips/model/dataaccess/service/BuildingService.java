@@ -341,6 +341,38 @@ public class BuildingService implements DatabaseService {
     }
 
     /**
+     * Metodo per verificare la presenza di una mappa di un edificio nel database remoto
+     * @param major Major dell'edificio
+     * @return boolean
+     */
+    @Override
+    public boolean isRemoteMapPresent(int major) {
+        String url = databaseURL+"mapVersion/?major="+major;
+        try (
+                InputStream input = new URL(url).openStream();
+                BufferedReader streamReader = new BufferedReader(new InputStreamReader(input));
+        ) {
+            String inputStr;
+            StringBuilder responseStrBuilder = new StringBuilder();
+            while ((inputStr = streamReader.readLine()) != null)
+                responseStrBuilder.append(inputStr);
+
+            JsonParser parser = new JsonParser();
+            JsonObject object = parser.parse(responseStrBuilder.toString()).getAsJsonObject();
+
+            // recupero l'ultima versione disponibile della mappa
+            int mapVersion = object.get("mapVersion").getAsInt();;
+
+            return mapVersion == -1;
+
+        } catch (IOException e) {
+            // TODO: lanciare un'eccezione Checked "RemoteMapNotFoundException" (gestita Presenter)
+            // TODO: aggiungere nella firma del metodo "throws ..."
+            return false;
+        }
+    }
+
+    /**
      * Metodo per verificare se la mappa di un edificio è aggiornata all'ultima versione
      * @param major Major dell'edificio
      * @return  boolean
