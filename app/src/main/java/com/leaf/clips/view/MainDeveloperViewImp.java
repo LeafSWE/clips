@@ -80,7 +80,6 @@ public class MainDeveloperViewImp implements MainDeveloperView {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
                 //TODO: dobbiamo passare i dati del log da mostrare nella Activity che stiamo aprendo
-                Intent intent = new Intent(presenter,LogInformationActivity.class);
                 // TODO: 5/6/16 indirizzare la chiamata al presenter
             }
 
@@ -108,6 +107,6 @@ public class MainDeveloperViewImp implements MainDeveloperView {
      */
     @Override
     public void setLogsAdapter(Adapter adp){
-        // TODO: 5/6/16
+        // TODO: 5/6/16 valutare il tipo del parametro 
     }
 }
