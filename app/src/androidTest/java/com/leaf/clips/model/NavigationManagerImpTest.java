@@ -38,7 +38,8 @@ import java.util.List;
 /**
  *
  */
-// TODO: 05/05/2016 associare ad un test? Unit o Integration 
+// TODO: 05/05/2016 associare ad un test? Unit o Integration
+// TODO: 5/6/16 Controllare perché è stato dato un conflitto. Ho preso la version f/model 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class NavigationManagerImpTest {
@@ -132,7 +133,6 @@ public class NavigationManagerImpTest {
         /**
          * Metodo che permette di aggiungere più RegionOfInterest al grafo che rappresenta l'edificio
          * @param regions Collezione di RegionOfInterest da aggiungere al grafo che rappresenta l'edificio
-
          */
         @Override
         public void addAllRegions(Collection<RegionOfInterest> regions) {

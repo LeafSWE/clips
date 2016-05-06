@@ -97,7 +97,7 @@ public class PhotoService {
         String uri_s = photoTable.getUrl();
         int id = photoTable.getId();
         URI uri = URI.create(uri_s);
-        return new PhotoRef(id,uri);
+        return new PhotoRef(id, uri);
     }
 
 }

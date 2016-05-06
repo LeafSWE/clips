@@ -73,7 +73,7 @@ public class PointOfInterestService {
      */
     public PointOfInterestService(SQLitePointOfInterestDao sqlitePOI, RemotePointOfInterestDao
             remotePOI, SQLiteRoiPoiDao sqliteRoiPoi, RemoteRoiPoiDao remoteRoiPoi, SQLiteCategoryDao
-            sqliteCategory, RemoteCategoryDao remoteCategory) {
+                                          sqliteCategory, RemoteCategoryDao remoteCategory) {
 
         remoteCategoryDao = remoteCategory;
         remotePointOfInterestDao = remotePOI;
@@ -135,7 +135,7 @@ public class PointOfInterestService {
         Collection<PointOfInterestTable> tables =
                 sqlitePointOfInterestDao.findAllPointsWithMajor(major);
         Iterator<PointOfInterestTable> iter = tables.iterator();
-        List<PointOfInterest> pois = new LinkedList<PointOfInterest>();
+        List<PointOfInterest> pois = new LinkedList<>();
         while(iter.hasNext()) {
             PointOfInterestTable table = iter.next();
             PointOfInterest poi = fromTableToBo(table);
@@ -145,14 +145,23 @@ public class PointOfInterestService {
     }
 
     /**
+     * Metodo per recuperare gli identificativi di tutte le RegionOfInterest associate ad uno
+     * specifico PointOfInterest
+     * @param poiId Identificativo numerico del PointOfInterest
+     * @return int[] Insieme degli identificativi di tutte le RegionOfInterest associate ad un POI
+     */
+    public int[] findAllRegionsWithPoi(int poiId) {
+        return sqliteRoiPoiDao.findAllRegionsWithPoi(poiId);
+    }
+
+    /**
      * Metodo per recuperare un PointOfInterest ricercandolo nel database locale
      * @param id Identificativo numerico del PointOfInterest da recuperare
      * @return  PointOfInterest
      */
     public PointOfInterest findPointOfInterest(int id) {
         PointOfInterestTable table = sqlitePointOfInterestDao.findPointOfInterest(id);
-        PointOfInterest poi = fromTableToBo(table);
-        return poi;
+        return fromTableToBo(table);
     }
 
     /**
@@ -176,8 +185,7 @@ public class PointOfInterestService {
                 new PointOfInterestInformation(name, description, category);
 
         // costruisco il PointOfInterest da restituire
-        PointOfInterest poi = new PointOfInterestImp(id, poiInfo);
-        return poi;
+        return new PointOfInterestImp(id, poiInfo);
     }
 
 }

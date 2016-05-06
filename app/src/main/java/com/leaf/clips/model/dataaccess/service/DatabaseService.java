@@ -60,6 +60,13 @@ public interface DatabaseService {
     boolean isBuildingMapPresent(int major);
 
     /**
+     * Metodo per verificare la presenza di una mappa di un edificio nel database remoto
+     * @param major Major dell'edificio
+     * @return boolean
+     */
+    boolean isRemoteMapPresent(int major);
+
+    /**
      * Metodo per verificare se la mappa di un edificio è aggiornata all'ultima versione
      * @param major Major dell'edificio
      * @return  boolean

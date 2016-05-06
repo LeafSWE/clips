@@ -10,6 +10,10 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
+
+import java.util.Collection;
+
 /**
  *Classe che rappresenta un DAO per la tabella “ROIPOI" del database locale
  */

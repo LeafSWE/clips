@@ -78,9 +78,8 @@ public class ServiceHelper {
                 remoteEdgeTypeDao, photoService, roiService);
 
         // costruisco l'oggetto BuildingService da ritornare
-        BuildingService buildingService = new BuildingService(dbURL, sqliteBuildingDao,
+        return new BuildingService(dbURL, sqliteBuildingDao,
                 remoteBuildingDao, roiService, poiService, edgeService);
-        return buildingService;
 
     }
 

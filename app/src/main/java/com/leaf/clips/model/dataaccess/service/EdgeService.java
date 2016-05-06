@@ -34,6 +34,9 @@ import java.util.List;
  * corrispettivi
  *
  */
+
+// TODO: 5/6/16 Controllare poiché ho avuto un conflitto su questo file 
+
 public class EdgeService {
 
 
@@ -150,7 +153,7 @@ public class EdgeService {
     public Collection<EnrichedEdge> findAllEdgesOfBuilding(int major) {
         Collection<EdgeTable> tables = sqliteEdgeDao.findAllEdgesOfBuilding(major);
         Iterator<EdgeTable> iter = tables.iterator();
-        List<EnrichedEdge> edges = new LinkedList<EnrichedEdge>();
+        List<EnrichedEdge> edges = new LinkedList<>();
         while(iter.hasNext()) {
             EdgeTable table = iter.next();
             EnrichedEdge edge = fromTableToBo(table);
@@ -179,7 +182,8 @@ public class EdgeService {
         // informazioni recuperate da EdgeTable
         int id = edgeTable.getId();
         double distance = edgeTable.getDistance();
-        String coordinate = edgeTable.getCoordinate();
+        String coordinate_s = edgeTable.getCoordinate();
+        int coordinate = Integer.parseInt(coordinate_s);
         int startROIid = edgeTable.getStartROI();
         int endROIid = edgeTable.getEndROI();
         String action = edgeTable.getAction();
@@ -187,8 +191,18 @@ public class EdgeService {
         int typeId = edgeTable.getTypeId();
 
         // creo le due RegionOfInterest a partire dai due id
-        RegionOfInterest startROI = roiService.findRegionOfInterest(startROIid);
-        RegionOfInterest endROI = roiService.findRegionOfInterest(endROIid);
+        Collection<RegionOfInterest> tracedRois = roiService.getTracedRois();
+        Iterator<RegionOfInterest> iter = tracedRois.iterator();
+        RegionOfInterest startROI = null;
+        RegionOfInterest endROI = null;
+        RegionOfInterest actualRoi;
+        while (iter.hasNext()) {
+            actualRoi = iter.next();
+            if(actualRoi.getId() == startROIid)
+                startROI = actualRoi;
+            else if(actualRoi.getId() == endROIid)
+                endROI = actualRoi;
+        }
 
         // recupero il nome del tipo di Edge
         EdgeTypeTable table = sqliteEdgeTypeDao.findEdgeType(typeId);
@@ -205,11 +219,11 @@ public class EdgeService {
 
         // costruisco e ritorno l'edge del tipo specificato
         if (typeName.equals("default"))
-            return new DefaultEdge(startROI, endROI, distance, Integer.getInteger(coordinate), id, navInfo);
+            return new DefaultEdge(startROI, endROI, distance, coordinate, id, navInfo);
         else if (typeName.equals("stairs"))
-            return new StairEdge(startROI, endROI, distance, Integer.getInteger(coordinate), id, navInfo);
+            return new StairEdge(startROI, endROI, distance, coordinate, id, navInfo);
         else //if (typeName.equals("elevator"))
-            return new ElevatorEdge(startROI, endROI, distance, Integer.getInteger(coordinate), id, navInfo);
+            return new ElevatorEdge(startROI, endROI, distance, coordinate, id, navInfo);
     }
 
 }
