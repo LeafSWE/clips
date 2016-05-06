@@ -34,7 +34,7 @@ public class MapsDbHelper extends SQLiteOpenHelper {
     /**
      * URL del database remoto
      */
-    public final static String REMOTE_DB_URL = "http://52.49.217.118/maps/";
+    public final static String REMOTE_DB_URL = "http://52.49.217.118/";
 
     /**
      * Costruttore della classe MapsDbHelper
