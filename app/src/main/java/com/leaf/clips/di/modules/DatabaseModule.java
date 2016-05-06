@@ -23,21 +23,29 @@ import dagger.Provides;
 @Module
 public class DatabaseModule {
 
-    private final String remoteDatabaseURL= "URL";
-    private final RemoteDaoFactory remoteDaoFactory;
-    private final SQLiteDaoFactory sqLiteDaoFactory;
+    String s;
 
-    public DatabaseModule(Context context) {
-        SQLiteOpenHelper sqLiteOpenHelper = new MapsDbHelper(context);
-        SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
-        sqLiteDaoFactory = new SQLiteDaoFactory(db);
-        remoteDaoFactory = new RemoteDaoFactory();
+    public DatabaseModule(String s){
+        this.s=s;
     }
-
 
     @Provides
     @Singleton
-    public DatabaseService providesDatabaseService(){
-        return ServiceHelper.getService(sqLiteDaoFactory, remoteDaoFactory, remoteDatabaseURL);
+    public SQLiteDaoFactory provideSQLiteDaoFactory(Context context){
+        SQLiteOpenHelper sqLiteOpenHelper = new MapsDbHelper(context);
+        SQLiteDatabase db = sqLiteOpenHelper.getWritableDatabase();
+        return new SQLiteDaoFactory(db);
+    }
+
+    @Provides
+    @Singleton
+    public RemoteDaoFactory provideRemoteDaoFactory(){
+        return new RemoteDaoFactory();
+    }
+
+    @Provides
+    @Singleton
+    public DatabaseService providesDatabaseService(SQLiteDaoFactory sqLiteDaoFactory,RemoteDaoFactory remoteDaoFactory){
+        return ServiceHelper.getService(sqLiteDaoFactory,remoteDaoFactory,s);
     }
 }

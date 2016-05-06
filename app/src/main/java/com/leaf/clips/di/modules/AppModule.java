@@ -1,6 +1,7 @@
 package com.leaf.clips.di.modules;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.leaf.clips.presenter.MyApplication;
 
@@ -21,6 +22,12 @@ public class AppModule {
 
     public AppModule(MyApplication application) {
         mApplication = application;
+    }
+
+    @Provides
+    @Singleton
+    public Context providesContext() {
+        return mApplication;
     }
 
     @Provides

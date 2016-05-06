@@ -22,11 +22,9 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        DatabaseModule databaseModule = new DatabaseModule(this);
-        DatabaseService service = databaseModule.providesDatabaseService();
         infoComponent = DaggerInfoComponent.builder().appModule(new AppModule(this)).
-            infoModule(new InfoModule(service, this)).settingModule(new SettingModule(this)).
-            databaseModule(databaseModule).build();
+            infoModule(new InfoModule()).
+            databaseModule(new DatabaseModule("URL")).settingModule(new SettingModule(this)).build();
     }
 
     public InfoComponent getInfoComponent(){

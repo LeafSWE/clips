@@ -19,16 +19,8 @@ import dagger.Provides;
 @Module
 public class InfoModule {
 
-    DatabaseService service;
-    Context context;
-
-    public InfoModule (DatabaseService service, Context context){
-        this.service = service;
-        this.context = context;
-    }
-
     @Provides @Singleton
-    public InformationManager providesInformationManager(){
+    public InformationManager providesInformationManager(DatabaseService service,Context context){
         return new InformationManagerImp(service, context);
     }
 }
