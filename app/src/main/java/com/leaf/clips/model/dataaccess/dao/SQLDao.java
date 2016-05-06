@@ -25,7 +25,6 @@ public class SQLDao {
      * @param database Database locale dell'applicazione
      */
     public SQLDao(SQLiteDatabase database) {
-        // TODO: 30/04/16
         this.database = database;
     }
 

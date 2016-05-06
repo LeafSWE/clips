@@ -24,7 +24,7 @@ public class RemoteEdgeTypeDaoTest {
     private RemoteEdgeTypeDao remoteEdgeTypeDao;
     private final String jsString = "{"
             +"\"id\" : 1,"
-            +"\"description\" : \"description\""
+            +"\"typeName\" : \"description\""
         +"}";
     private JsonParser parser;
 
