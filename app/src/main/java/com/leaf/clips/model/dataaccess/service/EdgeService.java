@@ -150,7 +150,7 @@ public class EdgeService {
     public Collection<EnrichedEdge> findAllEdgesOfBuilding(int major) {
         Collection<EdgeTable> tables = sqliteEdgeDao.findAllEdgesOfBuilding(major);
         Iterator<EdgeTable> iter = tables.iterator();
-        List<EnrichedEdge> edges = new LinkedList<EnrichedEdge>();
+        List<EnrichedEdge> edges = new LinkedList<>();
         while(iter.hasNext()) {
             EdgeTable table = iter.next();
             EnrichedEdge edge = fromTableToBo(table);
@@ -188,8 +188,18 @@ public class EdgeService {
         int typeId = edgeTable.getTypeId();
 
         // creo le due RegionOfInterest a partire dai due id
-        RegionOfInterest startROI = roiService.findRegionOfInterest(startROIid);
-        RegionOfInterest endROI = roiService.findRegionOfInterest(endROIid);
+        Collection<RegionOfInterest> tracedRois = roiService.getTracedRois();
+        Iterator<RegionOfInterest> iter = tracedRois.iterator();
+        RegionOfInterest startROI = null;
+        RegionOfInterest endROI = null;
+        RegionOfInterest actualRoi;
+        while (iter.hasNext()) {
+            actualRoi = iter.next();
+            if(actualRoi.getId() == startROIid)
+                startROI = actualRoi;
+            else if(actualRoi.getId() == endROIid)
+                endROI = actualRoi;
+        }
 
         // recupero il nome del tipo di Edge
         EdgeTypeTable table = sqliteEdgeTypeDao.findEdgeType(typeId);
