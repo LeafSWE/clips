@@ -34,6 +34,9 @@ import java.util.List;
  * corrispettivi
  *
  */
+
+// TODO: 5/6/16 Controllare poiché ho avuto un conflitto su questo file 
+
 public class EdgeService {
 
 
@@ -216,11 +219,11 @@ public class EdgeService {
 
         // costruisco e ritorno l'edge del tipo specificato
         if (typeName.equals("default"))
-            return new DefaultEdge(startROI, endROI, distance, Integer.getInteger(coordinate), id, navInfo);
+            return new DefaultEdge(startROI, endROI, distance, coordinate, id, navInfo);
         else if (typeName.equals("stairs"))
-            return new StairEdge(startROI, endROI, distance, Integer.getInteger(coordinate), id, navInfo);
+            return new StairEdge(startROI, endROI, distance, coordinate, id, navInfo);
         else //if (typeName.equals("elevator"))
-            return new ElevatorEdge(startROI, endROI, distance, Integer.getInteger(coordinate), id, navInfo);
+            return new ElevatorEdge(startROI, endROI, distance, coordinate, id, navInfo);
     }
 
 }
