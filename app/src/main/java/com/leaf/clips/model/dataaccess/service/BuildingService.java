@@ -5,6 +5,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import android.graphics.Region;
+
 import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 import com.leaf.clips.model.dataaccess.dao.RemoteBuildingDao;
 import com.leaf.clips.model.dataaccess.dao.SQLiteBuildingDao;
@@ -162,7 +164,7 @@ public class BuildingService implements DatabaseService {
          * Raccolgo tutti gli oggetti BuildingTable in una lista che ritorno.
          */
 
-        String url = new StringBuilder().append(databaseURL).append("allMaps").toString();
+        String url = databaseURL+"allMaps";
         try (
                 InputStream input = new URL(url).openStream();
                 BufferedReader streamReader = new BufferedReader(new InputStreamReader(input));
@@ -187,8 +189,8 @@ public class BuildingService implements DatabaseService {
             return tables;
 
         } catch (IOException e) {
-            // TODO: lanciare un'eccezione Checked "MapError" che il Presenter deve gestire
-            e.printStackTrace();
+            // TODO: lanciare un'eccezione Checked "AllMapsNotFoundException" (gestita Presenter)
+            // TODO: aggiungere nella firma del metodo "throws ..."
             return null;
         }
     }
@@ -238,8 +240,31 @@ public class BuildingService implements DatabaseService {
         // recupero tutti i PointOfInterest
         Collection<PointOfInterest> pois = poiService.findAllPointsWithMajor(major);
 
-        // inserisco tutte i POI vicini ad una ROI, per ogni ROI, per risolvere la dipendenza
-        // circolare
+        // associo ad ogni RegionOfInterest di un edificio i POI vicini
+        traceRois(rois, pois);
+
+        // associo ad ogni PointOfInterest dell'edificio le ROI vicine
+        tracePois(pois, rois);
+
+        roiService.setTracedRois(rois);
+
+        // recupero tutti gli EnrichedEdge
+        Collection<EnrichedEdge> edges = edgeService.findAllEdgesOfBuilding(major);
+
+        // creo l'oggetto BuildingInformation necessario per la costruzione della BuildingMapImp
+        BuildingInformation info =
+                new BuildingInformation(name, description, openingHours, address);
+
+        // creo l'oggetto BuildingMap da ritornare
+        return new BuildingMapImp(edges, id, version, pois, rois, info, size);
+    }
+
+    /**
+     * Metodo che permette di associare ad ogni RegionOfInterest di un edificio i POI vicini
+     * @param rois Le RegionOfInterest da tracciare
+     * @param pois I PointOfInterest dell'edificio
+     */
+    private void traceRois(Collection<RegionOfInterest> rois, Collection<PointOfInterest> pois) {
         Iterator<RegionOfInterest> roiIt = rois.iterator();
         RegionOfInterest roi;
         int roiId;
@@ -252,8 +277,8 @@ public class BuildingService implements DatabaseService {
         while(roiIt.hasNext()) {
             roi = roiIt.next();
             roiId = roi.getId();
-            nearbyPOI = sqliteRoiPoiDao.findAllPointsWithRoi(roiId);
-            poisOfRoi = new LinkedList<PointOfInterest>();
+            nearbyPOI = roiService.findAllPointsWithRoi(roiId);
+            poisOfRoi = new LinkedList<>();
             for (int i:nearbyPOI) {
                 poiIt = pois.iterator();
                 found = false;
@@ -267,20 +292,43 @@ public class BuildingService implements DatabaseService {
             }
             roi.setNearbyPOIs(poisOfRoi);
         }
-
-        // TODO: fare la stessa cosa per i POI dell'edificio
-        // TODO: aggiungere l'attributo sqliteRoiPoiDao
-
-        // recupero tutti gli EnrichedEdge
-        Collection<EnrichedEdge> edges = edgeService.findAllEdgesOfBuilding(major);
-
-        // creo l'oggetto BuildingInformation necessario per la costruzione della BuildingMapImp
-        BuildingInformation info =
-                new BuildingInformation(name, description, openingHours, address);
-
-        // creo l'oggetto BuildingMap da ritornare
-        return new BuildingMapImp(edges, id, version, pois, rois, info, size);
     }
+
+    /**
+     * Metodo che permette di associare ad ogni PointOfInterest dell'edificio le ROI vicine
+     * @param pois I PointOfInterest da tracciare
+     * @param rois Le RegionOfInterest dell'edificio
+     */
+    private void tracePois(Collection<PointOfInterest> pois, Collection<RegionOfInterest> rois) {
+        Iterator<PointOfInterest> poiIt = pois.iterator();
+        PointOfInterest poi;
+        int poiId;
+        int[] nearbyROI;
+        List<RegionOfInterest> roisOfPoi;
+        RegionOfInterest actualROI;
+        Iterator<RegionOfInterest> roiIt;
+        boolean found;
+
+        while(poiIt.hasNext()) {
+            poi = poiIt.next();
+            poiId = poi.getId();
+            nearbyROI = poiService.findAllRegionsWithPoi(poiId);
+            roisOfPoi = new LinkedList<>();
+            for (int i:nearbyROI) {
+                roiIt = rois.iterator();
+                found = false;
+                while(!found && roiIt.hasNext()) {
+                    actualROI = roiIt.next();
+                    if(nearbyROI[i] == actualROI.getId()) {
+                        found = true;
+                        roisOfPoi.add(actualROI);
+                    }
+                }
+            }
+            poi.setBelongingROIs(roisOfPoi);
+        }
+    }
+
 
     /**
      * Metodo per verificare la presenza di una mappa di un edificio nel database locale
@@ -323,8 +371,8 @@ public class BuildingService implements DatabaseService {
             return actualVersion == updatedVersion;
 
         } catch (IOException e) {
-            // TODO: lanciare un'eccezione Checked "MapError" che il Presenter deve gestire
-            e.printStackTrace();
+            // TODO: lanciare un'eccezione Checked "MapVersionNotFoundException" (gestita Presenter)
+            // TODO: aggiungere nella firma del metodo "throws ..."
             return false;
         }
 
@@ -337,7 +385,7 @@ public class BuildingService implements DatabaseService {
      */
     private void retrieveAndInsertMap(int major) {
 
-        String url = new StringBuilder().append(databaseURL).append("maps/?major=").append(major).toString();
+        String url = databaseURL+"maps/?major="+major;
         try (
             InputStream input = new URL(url).openStream();
             BufferedReader streamReader = new BufferedReader(new InputStreamReader(input));
@@ -404,8 +452,8 @@ public class BuildingService implements DatabaseService {
             }
 
         } catch (IOException e) {
-            // TODO: lanciare un'eccezione Checked "MapError" che il Presenter deve gestire
-            e.printStackTrace();
+            // TODO: lanciare un'eccezione Checked "MapNotFoundException" (gestita Presenter)
+            // TODO: aggiungere nella firma del metodo "throws ..."
         }
     }
 
