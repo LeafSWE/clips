@@ -8,6 +8,11 @@ import com.leaf.clips.model.dataaccess.dao.RemoteEdgeDao;
 import com.leaf.clips.model.dataaccess.dao.RemoteEdgeTypeDao;
 import com.leaf.clips.model.dataaccess.dao.SQLiteEdgeDao;
 import com.leaf.clips.model.dataaccess.dao.SQLiteEdgeTypeDao;
+import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
+import com.leaf.clips.model.navigator.graph.edge.DefaultEdge;
+import com.leaf.clips.model.navigator.graph.edge.ElevatorEdge;
+import com.leaf.clips.model.navigator.graph.edge.EnrichedEdge;
+import com.leaf.clips.model.navigator.graph.edge.StairEdge;
 import com.leaf.clips.model.navigator.graph.navigationinformation.BasicInformation;
 import com.leaf.clips.model.navigator.graph.navigationinformation.DetailedInformation;
 import com.leaf.clips.model.navigator.graph.navigationinformation.NavigationInformation;
@@ -174,7 +179,8 @@ public class EdgeService {
         // informazioni recuperate da EdgeTable
         int id = edgeTable.getId();
         double distance = edgeTable.getDistance();
-        String coordinate = edgeTable.getCoordinate();
+        String coordinate_s = edgeTable.getCoordinate();
+        int coordinate = Integer.parseInt(coordinate_s);
         int startROIid = edgeTable.getStartROI();
         int endROIid = edgeTable.getEndROI();
         String action = edgeTable.getAction();
