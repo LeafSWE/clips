@@ -3,12 +3,11 @@ package com.leaf.clips.presenter;
 import android.app.Application;
 
 import com.leaf.clips.di.component.DaggerInfoComponent;
-import com.leaf.clips.di.modules.AppModule;
 import com.leaf.clips.di.component.InfoComponent;
+import com.leaf.clips.di.modules.AppModule;
 import com.leaf.clips.di.modules.DatabaseModule;
 import com.leaf.clips.di.modules.InfoModule;
 import com.leaf.clips.di.modules.SettingModule;
-import com.leaf.clips.model.dataaccess.service.DatabaseService;
 
 /**
  * @author Marco Zanella
@@ -22,6 +21,10 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        /*ATTENZIONE: se non viene trovato dal compilatore DaggerInfoComponent:
+         *  >Menu Build
+         *  >Rebuild Project
+         */
         infoComponent = DaggerInfoComponent.builder().appModule(new AppModule(this)).
             infoModule(new InfoModule()).
             databaseModule(new DatabaseModule("URL")).settingModule(new SettingModule(this)).build();
