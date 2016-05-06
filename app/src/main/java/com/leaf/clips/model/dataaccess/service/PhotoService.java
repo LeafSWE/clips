@@ -95,8 +95,9 @@ public class PhotoService {
      */
     private PhotoRef fromTableToBo(PhotoTable photoTable) {
         String uri_s = photoTable.getUrl();
+        int id = photoTable.getId();
         URI uri = URI.create(uri_s);
-        return new PhotoRef(uri);
+        return new PhotoRef(id, uri);
     }
 
 }
