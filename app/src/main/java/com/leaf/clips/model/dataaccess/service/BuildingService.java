@@ -8,8 +8,13 @@ import com.google.gson.JsonParser;
 import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 import com.leaf.clips.model.dataaccess.dao.RemoteBuildingDao;
 import com.leaf.clips.model.dataaccess.dao.SQLiteBuildingDao;
+import com.leaf.clips.model.navigator.BuildingInformation;
+import com.leaf.clips.model.navigator.BuildingMap;
+import com.leaf.clips.model.navigator.BuildingMapImp;
+import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
+import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
+import com.leaf.clips.model.navigator.graph.edge.EnrichedEdge;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -157,8 +162,9 @@ public class BuildingService implements DatabaseService {
          * Raccolgo tutti gli oggetti BuildingTable in una lista che ritorno.
          */
 
+        String url = new StringBuilder().append(databaseURL).append("allMaps").toString();
         try (
-                InputStream input = new URL("http://52.49.217.118/allMaps").openStream();
+                InputStream input = new URL(url).openStream();
                 BufferedReader streamReader = new BufferedReader(new InputStreamReader(input));
         ) {
             String inputStr;
@@ -181,6 +187,7 @@ public class BuildingService implements DatabaseService {
             return tables;
 
         } catch (IOException e) {
+            // TODO: lanciare un'eccezione Checked "MapError" che il Presenter deve gestire
             e.printStackTrace();
             return null;
         }
@@ -231,6 +238,39 @@ public class BuildingService implements DatabaseService {
         // recupero tutti i PointOfInterest
         Collection<PointOfInterest> pois = poiService.findAllPointsWithMajor(major);
 
+        // inserisco tutte i POI vicini ad una ROI, per ogni ROI, per risolvere la dipendenza
+        // circolare
+        Iterator<RegionOfInterest> roiIt = rois.iterator();
+        RegionOfInterest roi;
+        int roiId;
+        int[] nearbyPOI;
+        Iterator<PointOfInterest> poiIt;
+        List<PointOfInterest> poisOfRoi;
+        boolean found;
+        PointOfInterest actualPOI;
+
+        while(roiIt.hasNext()) {
+            roi = roiIt.next();
+            roiId = roi.getId();
+            nearbyPOI = sqliteRoiPoiDao.findAllPointsWithRoi(roiId);
+            poisOfRoi = new LinkedList<PointOfInterest>();
+            for (int i:nearbyPOI) {
+                poiIt = pois.iterator();
+                found = false;
+                while(!found && poiIt.hasNext()) {
+                    actualPOI = poiIt.next();
+                    if(nearbyPOI[i] == actualPOI.getId()) {
+                        found = true;
+                        poisOfRoi.add(actualPOI);
+                    }
+                }
+            }
+            roi.setNearbyPOIs(poisOfRoi);
+        }
+
+        // TODO: fare la stessa cosa per i POI dell'edificio
+        // TODO: aggiungere l'attributo sqliteRoiPoiDao
+
         // recupero tutti gli EnrichedEdge
         Collection<EnrichedEdge> edges = edgeService.findAllEdgesOfBuilding(major);
 
@@ -259,8 +299,10 @@ public class BuildingService implements DatabaseService {
      */
     @Override
     public boolean isBuildingMapUpdated(int major) {
+
+        String url = databaseURL+"mapVersion/?major="+major;
         try (
-                InputStream input = new URL("http://52.49.217.118/mapVersion/?major="+major).openStream();
+                InputStream input = new URL(url).openStream();
                 BufferedReader streamReader = new BufferedReader(new InputStreamReader(input));
         ) {
             String inputStr;
@@ -281,6 +323,7 @@ public class BuildingService implements DatabaseService {
             return actualVersion == updatedVersion;
 
         } catch (IOException e) {
+            // TODO: lanciare un'eccezione Checked "MapError" che il Presenter deve gestire
             e.printStackTrace();
             return false;
         }
@@ -293,8 +336,10 @@ public class BuildingService implements DatabaseService {
      * @param major Major dell'edificio
      */
     private void retrieveAndInsertMap(int major) {
+
+        String url = new StringBuilder().append(databaseURL).append("maps/?major=").append(major).toString();
         try (
-            InputStream input = new URL("http://52.49.217.118/maps/?major="+major).openStream();
+            InputStream input = new URL(url).openStream();
             BufferedReader streamReader = new BufferedReader(new InputStreamReader(input));
         ) {
             String inputStr;
@@ -359,6 +404,7 @@ public class BuildingService implements DatabaseService {
             }
 
         } catch (IOException e) {
+            // TODO: lanciare un'eccezione Checked "MapError" che il Presenter deve gestire
             e.printStackTrace();
         }
     }
