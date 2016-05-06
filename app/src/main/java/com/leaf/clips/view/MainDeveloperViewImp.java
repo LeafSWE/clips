@@ -28,7 +28,7 @@ public class MainDeveloperViewImp implements MainDeveloperView {
     /**
      * View che mostra la lista dei log
      */
-    private ListView logList;
+    private final ListView logList;
 
     /**
      * Bottone che permette di attivare un log
@@ -45,13 +45,21 @@ public class MainDeveloperViewImp implements MainDeveloperView {
      * @param presenter Presenter della View che viene creata
      */
     public MainDeveloperViewImp(final MainDeveloperActivity presenter){
+
+        //Assegno il presenter alla view
         this.presenter = presenter;
+
+        //Carico il layout XML
         presenter.setContentView(R.layout.activity_main_developer);
+
+        //Setto la toolbar
         Toolbar toolbar = (Toolbar) presenter.findViewById(R.id.toolbar);
         presenter.setSupportActionBar(toolbar);
 
         //ADAPTER
-        final ListView listview = (ListView) presenter.findViewById(R.id.saved_log_list);
+        logList = (ListView) presenter.findViewById(R.id.saved_log_list);
+
+        // TODO: 5/6/16 Cambiare i log di prova quando pronto il model
         String[] values = new String[] { "20160501_0830", "20160501_0835", "20160501_0930",
                 "20160501_0940", "20160501_0950", "20160501_1010", "20160501_1030", "20160421_0830",
                 "20160421_0837", "20160421_0839", "20160421_1830", "20160421_1840", "20160421_1850", "20160421_1859"};
@@ -60,13 +68,14 @@ public class MainDeveloperViewImp implements MainDeveloperView {
         for (int i = 0; i < values.length; ++i) {
             list.add(values[i]);
         }
+
         final ArrayAdapter adapter = new ArrayAdapter(presenter, android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(adapter);
+        logList.setAdapter(adapter);
 
         /**
          * Imposta il Listener sui click effettuati sugli item della ListView.
          */
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        logList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
@@ -77,8 +86,8 @@ public class MainDeveloperViewImp implements MainDeveloperView {
 
         });
 
-        FloatingActionButton fab = (FloatingActionButton) presenter.findViewById(R.id.start_log_button);
-        fab.setOnClickListener(new View.OnClickListener() {
+        logStartBtn = (FloatingActionButton) presenter.findViewById(R.id.start_log_button);
+        logStartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
