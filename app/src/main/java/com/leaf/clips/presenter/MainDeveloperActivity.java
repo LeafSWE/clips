@@ -10,13 +10,21 @@ import com.leaf.clips.view.MainDeveloperViewImp;
 
 public class MainDeveloperActivity extends AppCompatActivity {
 
+    /**
+     * View associata a tale Activity
+     */
     private MainDeveloperView mainDeveloperView;
+
+    /**
+     * Oggetto del Model per la gestione delle informazioni
+     */
+    //private InformationManager infoManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mainDeveloperView = new MainDeveloperViewImp(this);
-
     }
 
 
