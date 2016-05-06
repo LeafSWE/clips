@@ -7,6 +7,7 @@ import com.leaf.clips.di.modules.AppModule;
 import com.leaf.clips.di.component.InfoComponent;
 import com.leaf.clips.di.modules.DatabaseModule;
 import com.leaf.clips.di.modules.InfoModule;
+import com.leaf.clips.di.modules.SettingModule;
 import com.leaf.clips.model.dataaccess.service.DatabaseService;
 
 /**
@@ -17,15 +18,15 @@ import com.leaf.clips.model.dataaccess.service.DatabaseService;
 public class MyApplication extends Application {
 
     private InfoComponent infoComponent;
-    DatabaseService service;
 
     @Override
     public void onCreate() {
         super.onCreate();
         DatabaseModule databaseModule = new DatabaseModule(this);
-        service = databaseModule.providesDatabaseService();
+        DatabaseService service = databaseModule.providesDatabaseService();
         infoComponent = DaggerInfoComponent.builder().appModule(new AppModule(this)).
-                infoModule(new InfoModule(service, this)).databaseModule(databaseModule).build();
+            infoModule(new InfoModule(service, this)).settingModule(new SettingModule(this)).
+            databaseModule(databaseModule).build();
     }
 
     public InfoComponent getInfoComponent(){
