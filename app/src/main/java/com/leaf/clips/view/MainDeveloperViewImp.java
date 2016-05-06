@@ -72,29 +72,31 @@ public class MainDeveloperViewImp implements MainDeveloperView {
         final ArrayAdapter adapter = new ArrayAdapter(presenter, android.R.layout.simple_list_item_1, list);
         logList.setAdapter(adapter);
 
+
         /**
-         * Imposta il Listener sui click effettuati sugli item della ListView.
+         * Imposta il Listener sui click effettuati sugli item della ListView. (I log)
          */
         logList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-                //TODO: dobbiamo passare i dati del log da mostrare nella Activity che stiamo aprendo
-                // TODO: 5/6/16 indirizzare la chiamata al presenter
+                presenter.showDetailedLog(position);
             }
 
         });
+
+        /**
+         * Controlla le azioni sul fab, e carica l'activity di un nuovo log
+         */
 
         logStartBtn = (FloatingActionButton) presenter.findViewById(R.id.start_log_button);
         logStartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-                Intent intent = new Intent(presenter,LoggingActivity.class);
-                //Indirizzare la chiamata al presenter
+                presenter.startNewLog();
             }
         });
+
+
         presenter.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -107,6 +109,6 @@ public class MainDeveloperViewImp implements MainDeveloperView {
      */
     @Override
     public void setLogsAdapter(Adapter adp){
-        // TODO: 5/6/16 valutare il tipo del parametro 
+        // TODO: 5/6/16 valutare il tipo del parametro
     }
 }
