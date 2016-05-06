@@ -11,6 +11,10 @@ import com.leaf.clips.model.dataaccess.dao.RoiPoiTable;
 import com.leaf.clips.model.dataaccess.dao.SQLiteCategoryDao;
 import com.leaf.clips.model.dataaccess.dao.SQLitePointOfInterestDao;
 import com.leaf.clips.model.dataaccess.dao.SQLiteRoiPoiDao;
+import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
+import com.leaf.clips.model.navigator.graph.area.PointOfInterestImp;
+import com.leaf.clips.model.navigator.graph.area.PointOfInterestInformation;
+import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -173,7 +177,13 @@ public class PointOfInterestService {
                 new PointOfInterestInformation(name, description, category);
 
         // costruisco il PointOfInterest da restituire
-        PointOfInterest poi = new PointOfInterest(id, poiInfo);
+        PointOfInterest poi = new PointOfInterestImp(id, poiInfo);
+
+        // recupero le ROI vicine e le inserisco nel POI
+        Collection<RegionOfInterest> rois = sqliteRoiPoiDao.findAllRegionsWithPoi(id);
+        poi.setBelongingROIs(rois);
+
+        // ritorno il PointOfInterest costruito
         return poi;
     }
 
