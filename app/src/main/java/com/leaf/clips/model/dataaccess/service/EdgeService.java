@@ -35,8 +35,6 @@ import java.util.List;
  *
  */
 
-// TODO: 5/6/16 Controllare poiché ho avuto un conflitto su questo file 
-
 public class EdgeService {
 
 
