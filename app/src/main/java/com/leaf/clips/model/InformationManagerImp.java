@@ -169,9 +169,12 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         // TODO: modificare l'add
         PriorityQueue<MyBeacon> p;
         p = ((PriorityQueue<MyBeacon>)intent.getSerializableExtra("queueOfBeacons"));
+        if(!p.containsAll(lastBeaconsSeen) || lastBeaconsSeen.containsAll(p)){
+            lastBeaconsSeen.clear();
+            for (MyBeacon oneBeacon : p)
+                lastBeaconsSeen.add(oneBeacon);
+        }
 
-        for (MyBeacon oneBeacon : p)
-            lastBeaconsSeen.add(oneBeacon);
 
         if(map == null)
             map = loadMap();

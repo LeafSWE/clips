@@ -220,13 +220,13 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        lastBeaconsSeen.clear();
+
         PriorityQueue<MyBeacon> p;
 
         p = ((PriorityQueue<MyBeacon>)intent.getSerializableExtra("queueOfBeacons"));
 
         if(!lastBeaconsSeen.containsAll(p) || !p.containsAll(lastBeaconsSeen)){
-
+            lastBeaconsSeen.clear();
             setVisibleBeacon(p);
             for(NavigationListener nv : listeners){
                 try {

@@ -84,7 +84,6 @@ public class NavigationManagerImpTest {
         endPOI.setBelongingROIs(belong);
 
         navigationManager = new NavigationManagerImp(map, InstrumentationRegistry.getTargetContext());
-        // TODO: 05/05/2016 serve il mock di più parti
 
         try {
             navigationManager.startNavigation(endPOI);
@@ -177,7 +176,6 @@ public class NavigationManagerImpTest {
          */
         @Override
         public void setSettingAllEdge(Setting setting) {
-            // TODO: da testare
             Collection<EnrichedEdge> allEdges = graph.edgeSet();
             for (EnrichedEdge edge : allEdges) {
                 edge.setUserPreference(setting);
