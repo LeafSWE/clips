@@ -16,7 +16,6 @@ import com.leaf.clips.model.beacon.MyBeacon;
 import com.leaf.clips.model.dataaccess.service.DatabaseService;
 import com.leaf.clips.model.navigator.BuildingMap;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
-import com.leaf.clips.model.usersetting.Setting;
 import com.leaf.clips.model.usersetting.SettingImp;
 
 import java.util.Collection;
@@ -167,6 +166,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     @Override
     public void onReceive(Context context, Intent intent){
         // TODO: modificare l'add
+        // TODO fare qualcosa con i listener
         PriorityQueue<MyBeacon> p;
         p = ((PriorityQueue<MyBeacon>)intent.getSerializableExtra("queueOfBeacons"));
 
@@ -185,7 +185,6 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     /**
     * Metodo che permette di rimuovere un log delle informazioni dei beacon visibili
     * @param filename Nome del file da rimuovere
-    * @return  void
     */
     @Override
     public void removeBeaconInformationFile(String filename){
@@ -195,7 +194,6 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     /**
     * Metodo che permette di salvare il log delle informazioni dei beacon visibili su file
     * @param filename Nome del file in cui salvare le informazioni dei beacon
-    * @return  void
     */
     @Override
     public void saveRecordedBeaconInformation(String filename){
@@ -220,6 +218,42 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     public void startRecordingBeacons(){
         if(isDeveloper())
             shouldLog = true;
+    }
+
+    /**
+     * Metodo che permette di registrare un listener
+     * @param listener Listener che deve essere aggiunto alla lista di InformationListener
+     */
+    @Override
+    public void addListener(InformationListener listener) {
+        super.addListener(listener);
+    }
+
+    /**
+     * Metodo che permette di rimuovere un listener
+     * @param listener Listener che deve essere rimosso dalla lista di InformationListener
+     */
+    @Override
+    public void removeListener(InformationListener listener) {
+        super.removeListener(listener);
+    }
+
+    /**
+     * Metodo che permette di scaricare una mappa dal database remoto
+     * @param major identificativo associato alla mappa da scaricare
+     */
+    @Override
+    public void remoteDownload(int major) {
+        //TODO non so che metodo sia da chiamare
+    }
+
+    /**
+     * Metodo che permette di cercare una mappa dal database remoto
+     * @param major Identificcativo della mappa da cercare
+     */
+    @Override
+    public void remoteSearchMap(int major) {
+        dbService.findRemoteBuildingByMajor(major);
     }
 
     private boolean isDeveloper(){

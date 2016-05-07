@@ -10,7 +10,7 @@ package com.leaf.clips.model;
  * Interfaccia che deve essere implementata da chi vuole usufruire delle informazioni contenute
  * nel model
  */
-public interface InformationListener {
+public interface InformationListener extends Listener {
 
     /**
      * Metodo che viene chiamato quando viene recuperata una mappa e non si siano verificate
