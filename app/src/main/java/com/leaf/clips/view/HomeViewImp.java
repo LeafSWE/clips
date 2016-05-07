@@ -35,7 +35,7 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
     SearchView searchView;
     TextView buildingAddress;
     TextView buildingName;
-    TextView buildingADescription;
+    TextView buildingDescription;
     TextView buildingOpeningHours;
     ListView poiCategories;
     FloatingActionButton exploreButton;
@@ -49,6 +49,12 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
         searchView = (SearchView)homeActivity.findViewById(R.id.searchview_poi);
         SearchManager searchManager = (SearchManager) homeActivity.getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(homeActivity.getComponentName()));
+
+        buildingAddress = (TextView)homeActivity.findViewById(R.id.view_address);
+        buildingName = (TextView)homeActivity.findViewById(R.id.view_building_name);
+        buildingDescription = (TextView)homeActivity.findViewById(R.id.view_building_description);
+        buildingOpeningHours = (TextView)homeActivity.findViewById(R.id.view_building_opening_hours);
+        poiCategories = (ListView)homeActivity.findViewById(R.id.view_poi_category_list);
 
         toolbar = (Toolbar) homeActivity.findViewById(R.id.toolbar_home);
         homeActivity.setSupportActionBar(toolbar);
@@ -79,27 +85,27 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
 
     @Override
     public void setBuildingName(String name) {
-        //TODO
+        buildingName.setText(name);
     }
 
     @Override
     public void setBuildingDescription(String description) {
-        //TODO
+        buildingDescription.setText(description);
     }
 
     @Override
     public void setBuildingOpeningHours(String hours) {
-        //TODO
+        buildingOpeningHours.setText(hours);
     }
 
     @Override
     public void setBuildingAddress(String address) {
-        //TODO
+        buildingAddress.setText(address);
     }
 
     @Override
     public void setPoiCategoryListAdapter(ListAdapter adapter) {
-        //TODO
+        poiCategories.setAdapter(adapter);
     }
 
     /**

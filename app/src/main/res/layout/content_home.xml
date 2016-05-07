@@ -113,7 +113,7 @@
                     android:background="@android:color/white"
                     android:elevation="3dp"
                     android:padding="16dp"
-                    android:id="@+id/category_search">
+                    android:id="@+id/category_search" android:nestedScrollingEnabled="false">
 
                 <TextView
                         android:layout_width="wrap_content"
