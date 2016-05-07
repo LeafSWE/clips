@@ -18,4 +18,6 @@
     <string name="ok" translatable="false">Ok</string>
     <string name="title_activity_nearby_poi">Nearby</string>
     <string name="title_activity_log_information">Log Details</string>
+
+    <string name="poi_category_choose_title">Choose your destination</string>
 </resources>

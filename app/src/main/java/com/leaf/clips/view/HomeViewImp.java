@@ -3,7 +3,6 @@ package com.leaf.clips.view;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 import com.leaf.clips.R;
 import com.leaf.clips.presenter.HomeActivity;
 import com.leaf.clips.presenter.MainDeveloperPresenter;
+import com.leaf.clips.presenter.PoiCategoryActivity;
 
 public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSelectedListener {
     HomeActivity homeActivity;
@@ -103,6 +103,9 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
 
         if (id == R.id.nav_developer) {
             Intent intent = new Intent(homeActivity, MainDeveloperPresenter.class);
+            homeActivity.startActivity(intent);
+        } else if (id == R.id.poi_category) {
+            Intent intent = new Intent(homeActivity, PoiCategoryActivity.class);
             homeActivity.startActivity(intent);
         }
 
