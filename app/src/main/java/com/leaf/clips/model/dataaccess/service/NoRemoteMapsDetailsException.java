@@ -1,7 +1,9 @@
 package com.leaf.clips.model.dataaccess.service;
 
 /**
- * Created by Davide on 07/05/16.
+ * @author Davide Castello
+ * @version 0.01
+ * @since 0.01
  */
-public class NoRemoteMapsDetailsException {
+public class NoRemoteMapsDetailsException extends MapsException {
 }
