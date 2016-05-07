@@ -181,7 +181,7 @@ public class BuildingService implements DatabaseService {
             return tables;
 
         } catch (IOException e) {
-            // TODO: lanciare un'eccezione Checked "AllMapsNotFoundException" (gestita Presenter)
+            // TODO: lanciare un'eccezione NoRemoteMapsDetailsException
             // TODO: aggiungere nella firma del metodo "throws ..."
             return null;
         }
@@ -354,10 +354,10 @@ public class BuildingService implements DatabaseService {
             // recupero l'ultima versione disponibile della mappa
             int mapVersion = object.get("mapVersion").getAsInt();
 
-            return mapVersion == -1;
+            return mapVersion != -1;
 
         } catch (IOException e) {
-            // TODO: lanciare un'eccezione Checked "RemoteMapNotFoundException" (gestita Presenter)
+            // TODO: lanciare un'eccezione NoRemoteMapException
             // TODO: aggiungere nella firma del metodo "throws ..."
             return false;
         }
@@ -394,7 +394,7 @@ public class BuildingService implements DatabaseService {
             return actualVersion == updatedVersion;
 
         } catch (IOException e) {
-            // TODO: lanciare un'eccezione Checked "MapVersionNotFoundException" (gestita Presenter)
+            // TODO: lanciare un'eccezione NoLastMapVersionException
             // TODO: aggiungere nella firma del metodo "throws ..."
             return false;
         }
@@ -475,8 +475,7 @@ public class BuildingService implements DatabaseService {
             }
 
         } catch (IOException e) {
-            // TODO: lanciare un'eccezione Checked "MapNotFoundException" (gestita Presenter)
-            // TODO: aggiungere nella firma del metodo "throws ..."
+            //TODO: lanciare IOException e aggiungere throws
         }
     }
 
