@@ -131,7 +131,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         if(lastBeaconsSeen.isEmpty())
             throw new NoBeaconSeenException();
 
-        LinkedList<PointOfInterest> list = new LinkedList<PointOfInterest>();
+        LinkedList<PointOfInterest> list = new LinkedList<>();
         list.addAll(map.getNearbyPOIs(lastBeaconsSeen.peek()));
         return list;
 
@@ -166,14 +166,11 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
      */
     @Override
     public void onReceive(Context context, Intent intent){
-        // TODO: modificare l'add
         PriorityQueue<MyBeacon> p;
         p = ((PriorityQueue<MyBeacon>)intent.getSerializableExtra("queueOfBeacons"));
-        if(!p.containsAll(lastBeaconsSeen) || lastBeaconsSeen.containsAll(p)){
-            lastBeaconsSeen.clear();
-            for (MyBeacon oneBeacon : p)
-                lastBeaconsSeen.add(oneBeacon);
-        }
+        if(!p.containsAll(lastBeaconsSeen) || lastBeaconsSeen.containsAll(p))
+            setVisibleBeacon(p);
+
 
 
         if(map == null)
@@ -188,7 +185,6 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     /**
     * Metodo che permette di rimuovere un log delle informazioni dei beacon visibili
     * @param filename Nome del file da rimuovere
-    * @return  void
     */
     @Override
     public void removeBeaconInformationFile(String filename){
@@ -198,7 +194,6 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     /**
     * Metodo che permette di salvare il log delle informazioni dei beacon visibili su file
     * @param filename Nome del file in cui salvare le informazioni dei beacon
-    * @return  void
     */
     @Override
     public void saveRecordedBeaconInformation(String filename){
