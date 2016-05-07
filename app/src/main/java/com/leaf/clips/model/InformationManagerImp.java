@@ -141,19 +141,28 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     * @return  BuildingMap Mappa dell'edificio
     */
 
-    private BuildingMap loadMap(){
+    private void loadMap(){
         int major = lastBeaconsSeen.peek().getMajor();
 
         if(dbService.isBuildingMapPresent(major)){
-            if(!dbService.isBuildingMapUpdated(major))
-                // TODO: chiedere il permesso all'utente prima di aggiornare la mappa
-                dbService.updateBuildingMap(major);
-
-            return dbService.findBuildingByMajor(major);
+            if(!dbService.isBuildingMapUpdated(major)){
+                boolean shouldUpdate = ((InformationListener)listeners).noLastMapVersion();
+                if (shouldUpdate)
+                    dbService.updateBuildingMap(major);
+            }
+            else
+                map = dbService.findBuildingByMajor(major);
         }
-        else
-            // TODO: chiedere il permesso all'utente prima di scaricare la mappa
-            return dbService.findRemoteBuildingByMajor(major);
+        else{
+            boolean mapExists = remoteSearchMap(major);
+            if(mapExists){
+                boolean shouldDownload = ((InformationListener)listeners).onLocalMapNotFound();
+                remoteDownload(major);
+                // TODO: 07/05/2016 aggiungere cannotRetrieveRemoteMapDetails quando vengono lanciate eccezioni
+            }
+            else
+                ((InformationListener)listeners).onRemoteMapNotFound();
+        }
 
     }
 
@@ -165,17 +174,18 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
      */
     @Override
     public void onReceive(Context context, Intent intent){
-        // TODO: modificare l'add
-        // TODO fare qualcosa con i listener
+
         PriorityQueue<MyBeacon> p;
         p = ((PriorityQueue<MyBeacon>)intent.getSerializableExtra("queueOfBeacons"));
 
         for (MyBeacon oneBeacon : p)
             lastBeaconsSeen.add(oneBeacon);
 
-        if(map == null)
-            map = loadMap();
-            // map =
+        if(map == null) {
+            loadMap();
+            if (map != null)
+                ((InformationListener)listeners).onDatabaseLoaded();
+        }
 
         if(shouldLog){
             activeLog.add(lastBeaconsSeen);
@@ -244,16 +254,17 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
      */
     @Override
     public void remoteDownload(int major) {
-        //TODO non so che metodo sia da chiamare
+        map = dbService.findRemoteBuildingByMajor(major);
     }
 
     /**
      * Metodo che permette di cercare una mappa dal database remoto
-     * @param major Identificcativo della mappa da cercare
+     * @param major Identificativo della mappa da cercare
      */
     @Override
-    public void remoteSearchMap(int major) {
-        dbService.findRemoteBuildingByMajor(major);
+    public boolean remoteSearchMap(int major) {
+        // TODO: 07/05/2016 in attesa del metodo dal service
+        return true;
     }
 
     private boolean isDeveloper(){

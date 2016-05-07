@@ -21,17 +21,14 @@ public interface InformationListener extends Listener {
     /**
      * Metodo che viene richiamato nel caso in cui la mappa richiesta non sia stata trovata nel
      * database locale
-     * @param major Identificativo associato ad un edificio di cui non si possiede la mappa
      */
-    void noLocalMapFound(int major);
+    boolean onLocalMapNotFound();
 
     /**
      * Metodo che viene richiamato nel caso in cui la mappa richiesta non sia stata trovata nel
      * database remoto
-     * @param major Identificativo associato ad un edificio di cui non è presente la mappa nel database
-     * remoto
      */
-    void noRemoteMapFound(int major);
+    void onRemoteMapNotFound();
 
     /**
      * Metodo che viene invocato nel caso in cui non si riescano a reperire le informazioni sulle
@@ -42,8 +39,6 @@ public interface InformationListener extends Listener {
     /**
      * Metodo che viene invocato nel caso in cui la versione della mappa locale differisca dalla
      * versione della mappa nel databaase remoto(l'ultima versione disponibile)
-     * @param major Identificativo associato all'edificio di cui non si possiedde la mappa
-     * aggiornata
      */
-    void noLastaMapVersion(int major);
+    boolean noLastMapVersion();
 }

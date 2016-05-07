@@ -96,6 +96,6 @@ public interface InformationManager {
      * Metodo che permette di cercare una mappa dal database remoto
      * @param major Identificcativo della mappa da cercare
      */
-    void remoteSearchMap(int major);
+    boolean remoteSearchMap(int major);
 }
 
