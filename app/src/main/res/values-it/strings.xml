@@ -13,4 +13,6 @@
     <string name="dialog_title_dev_code_error">Ops!</string>
     <string name="title_activity_nearby_poi">Nelle vicinanze</string>
     <string name="title_activity_log_information">Dettaglio log</string>
+    <string name="search_hint">Cerca nell\'edificio</string>
+    <string name="title_activity_navigation">Raggiungi la tua destinazione</string>
 </resources>

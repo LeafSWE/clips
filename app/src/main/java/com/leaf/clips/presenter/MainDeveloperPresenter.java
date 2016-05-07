@@ -1,5 +1,11 @@
 package com.leaf.clips.presenter;
 
+/**
+ * @author Andrea Tombolato
+ * @version 0.01
+ * @since 0.00
+ */
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

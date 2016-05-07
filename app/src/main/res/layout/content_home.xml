@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:showIn="@layout/app_bar_home"
-        tools:context="com.leaf.clips.presenter.HomeActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#f0f0f0">
 
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#f0f0f0"
-                android:clickable="false">
+                tools:showIn="@layout/app_bar_home"
+                tools:context="com.leaf.clips.presenter.HomeActivity"
+                android:clickable="false"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:clipToPadding="false">
+
 
                 <SearchView
                         android:layout_width="match_parent"
@@ -30,6 +31,48 @@
                         android:iconifiedByDefault="false"
                         android:background="@android:color/white"
                         android:gravity="center_horizontal" />
+
+                <!--Prima card-->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:background="@android:color/white"
+                    android:elevation="3dp"
+                    android:padding="16dp"
+                    android:visibility="visible">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Via Trieste, 63 - 35121 Padova (Italy)"
+                            android:id="@+id/view_address"
+                            android:textSize="10dp" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Torre Archimede"
+                            android:id="@+id/view_building_name"
+                            android:layout_marginTop="3dp"
+                            android:textColor="#9B0014"
+                            android:textStyle="bold"
+                            android:textSize="26dp"
+                            android:textIsSelectable="true" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Il Dipartimento di Matematica si propone come il riferimento fondamentale dell'Ateneo per le competenze matematiche e informatiche, sia sul piano della ricerca che in quello della didattica."
+                            android:id="@+id/view_building_description"
+                            android:layout_marginTop="10dp"
+                            android:textSize="16dp"
+                            android:textStyle="normal" />
+            </LinearLayout>
+
+
 
         </LinearLayout>
 

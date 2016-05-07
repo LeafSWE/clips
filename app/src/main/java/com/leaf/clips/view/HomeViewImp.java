@@ -1,5 +1,13 @@
 package com.leaf.clips.view;
 
+/**
+ * @author Andrea Tombolato
+ * @version 0.01
+ * @since 0.00
+ */
+
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -37,7 +45,10 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
         this.homeActivity = homeActivity;
         homeActivity.setContentView(R.layout.activity_home);
 
+        //Setup della funzinalità di Search
         searchView = (SearchView)homeActivity.findViewById(R.id.searchview_poi);
+        SearchManager searchManager = (SearchManager) homeActivity.getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(homeActivity.getComponentName()));
 
         toolbar = (Toolbar) homeActivity.findViewById(R.id.toolbar_home);
         homeActivity.setSupportActionBar(toolbar);

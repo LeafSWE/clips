@@ -1,10 +1,14 @@
 package com.leaf.clips.presenter;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+/**
+ * @author Andrea Tombolato
+ * @version 0.01
+ * @since 0.00
+ */
 
-import com.leaf.clips.R;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 /**
  *  MainActivity ha l'unico compito di reindirizzare l'utente verso HomeActivity e fornire una

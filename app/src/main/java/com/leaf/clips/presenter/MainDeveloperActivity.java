@@ -1,12 +1,17 @@
 package com.leaf.clips.presenter;
 
+/**
+ * @author Andrea Tombolato
+ * @version 0.01
+ * @since 0.00
+ */
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.leaf.clips.view.MainDeveloperView;
 import com.leaf.clips.view.MainDeveloperViewImp;
-
 
 public class MainDeveloperActivity extends AppCompatActivity {
 
