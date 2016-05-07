@@ -37,6 +37,8 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
         this.homeActivity = homeActivity;
         homeActivity.setContentView(R.layout.activity_home);
 
+        searchView = (SearchView)homeActivity.findViewById(R.id.searchview_poi);
+
         toolbar = (Toolbar) homeActivity.findViewById(R.id.toolbar_home);
         homeActivity.setSupportActionBar(toolbar);
 

@@ -13,4 +13,24 @@
         tools:showIn="@layout/app_bar_home"
         tools:context="com.leaf.clips.presenter.HomeActivity">
 
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#f0f0f0"
+                android:clickable="false">
+
+                <SearchView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/searchview_poi"
+                        android:clickable="true"
+                        android:elevation="3dp"
+                        android:inputType="text"
+                        android:iconifiedByDefault="false"
+                        android:background="@android:color/white"
+                        android:gravity="center_horizontal" />
+
+        </LinearLayout>
+
 </ScrollView>
