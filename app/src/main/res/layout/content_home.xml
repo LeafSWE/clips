@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -13,4 +13,4 @@
         tools:showIn="@layout/app_bar_home"
         tools:context="com.leaf.clips.presenter.HomeActivity">
 
-</RelativeLayout>
+</ScrollView>
