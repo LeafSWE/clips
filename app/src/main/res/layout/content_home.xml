@@ -32,7 +32,7 @@
                         android:background="@android:color/white"
                         android:gravity="center_horizontal" />
 
-                <!--Prima card-->
+                <!--Card informazioni generali-->
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -72,7 +72,65 @@
                             android:textStyle="normal" />
             </LinearLayout>
 
+                <!--Card orari di apertura-->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/white"
+                    android:elevation="3dp"
+                    android:padding="16dp">
 
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Orari"
+                        android:textColor="#9B0014"
+                        android:textStyle="bold"
+                        android:textSize="26dp"
+                        android:textIsSelectable="true" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="7:30 - 19:30. Dal lunedì al venerdì."
+                        android:id="@+id/view_building_opening_hours"
+                        android:layout_marginTop="10dp"
+                        android:textSize="16dp"
+                        android:textStyle="normal" />
+            </LinearLayout>
+
+                <!--Card categorie POI-->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/white"
+                    android:elevation="3dp"
+                    android:padding="16dp"
+                    android:id="@+id/category_search">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="La struttura"
+                        android:textColor="#9B0014"
+                        android:textStyle="bold"
+                        android:textSize="26sp"
+                        android:textIsSelectable="true" />
+
+                <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/view_poi_category_list" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
