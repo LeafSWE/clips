@@ -35,6 +35,11 @@ public class PoiCategoryActivity extends AppCompatActivity {
         String chosenCategoryName = getIntent().getStringExtra("category_name");
 
         setTitle(chosenCategoryName);
+
+        /**
+         * TODO: recupera lista poi appartenenti alla categoria scelta
+         * poiList = informationManager.getPoiInCategory(chosenCategoryName);
+         */
     }
     
     /**

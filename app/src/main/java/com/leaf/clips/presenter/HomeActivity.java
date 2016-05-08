@@ -34,6 +34,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         view = new HomeViewImp(this);
 
+        //TODO: remove (only for debug purpose) --> use InformationManager.getAllCategories()
         List<String> list = new LinkedList<>();
         list.add("Aule");
         list.add("Aule studio");
@@ -90,7 +91,9 @@ public class HomeActivity extends AppCompatActivity {
      * @return  void
      */
     public void showPoisCategory(String categoryName){
-        // TODO: 5/3/16  
+        Intent intent = new Intent(this, PoiCategoryActivity.class);
+        intent.putExtra("category_name",categoryName);
+        startActivity(intent);
     }
 
     /**

@@ -28,7 +28,6 @@ import android.widget.TextView;
 import com.leaf.clips.R;
 import com.leaf.clips.presenter.HomeActivity;
 import com.leaf.clips.presenter.MainDeveloperPresenter;
-import com.leaf.clips.presenter.PoiCategoryActivity;
 
 import java.util.List;
 
@@ -71,9 +70,7 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
                  * Passa il nome della categoria scelta a PoiCategoryActivity, sarà quest'ultima a
                  * recuperare i POI appartenenti a tale categoria.
                  */
-                Intent intent = new Intent(homeActivity, PoiCategoryActivity.class);
-                intent.putExtra("category_name",categoryName);
-                homeActivity.startActivity(intent);
+                homeActivity.showPoisCategory(categoryName);
             }
         });
 
@@ -81,9 +78,8 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
         homeActivity.setSupportActionBar(toolbar);
 
         exploreButton = (FloatingActionButton) homeActivity.findViewById(R.id.fab_explore_button);
-        /**
-         * Listener del tap su exploreButton
-         */
+
+        // Listener del tap su exploreButton
         if(exploreButton != null){
             exploreButton.setOnClickListener(new View.OnClickListener() {
                 @Override
