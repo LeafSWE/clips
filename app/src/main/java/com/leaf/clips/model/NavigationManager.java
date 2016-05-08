@@ -9,7 +9,6 @@ package com.leaf.clips.model;
 
 import com.leaf.clips.model.navigator.NavigationExceptions;
 import com.leaf.clips.model.navigator.NoNavigationInformationException;
-import com.leaf.clips.model.navigator.PathException;
 import com.leaf.clips.model.navigator.ProcessedInformation;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 
@@ -24,9 +23,8 @@ public interface NavigationManager {
     /**
     * Metodo che permette di registrare un listener
     * @param listener Listener che deve essere aggiunto alla lista di NavigationListener
-    * @return  void
     */
-    void addBeaconListener(NavigationListener listener);
+    void addListener(NavigationListener listener);
 
     /**
     * Metodo che permette di recuperare tutte le istruzioni di navigazione per un percorso
@@ -48,13 +46,11 @@ public interface NavigationManager {
     /**
     * Metodo che permette di rimuovere un listener
     * @param listener Listener che deve essere rimosso dalla lista di NavigationListener
-    * @return  void
     */
-    void removeBeaconListener(NavigationListener listener);
+    void removeListener(NavigationListener listener);
 
     /**
     * Metodo che permette di attivare il rilevamento dei dati dalla bussola
-    * @return  void
     */
     void startCompass();
 
@@ -67,13 +63,11 @@ public interface NavigationManager {
 
     /**
     * Metodo che permette di fermare il rilevamento dei dati ottenuti dalla bussola
-    * @return  void
     */
     void stopCompass();
 
     /**
     * Metodo che permette di fermare la navigazione
-    * @return  void
     */
     void stopNavigation();
 
