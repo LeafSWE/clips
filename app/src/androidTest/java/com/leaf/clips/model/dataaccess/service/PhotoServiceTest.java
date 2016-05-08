@@ -147,6 +147,7 @@ public class PhotoServiceTest {
 
     @Test
     public void shouldCreatePhotoTableAndInsertItInTheDB() throws Exception {
+        setUp();
         JsonObject js = new JsonObject();
         js.addProperty("id", 1);
         js.addProperty("url", "myUrl");
