@@ -10,6 +10,7 @@ package com.leaf.clips.model.dataaccess.service;
 import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 import com.leaf.clips.model.navigator.BuildingMap;
 
+import java.io.IOException;
 import java.util.Collection;
 
 /**
@@ -34,7 +35,7 @@ public interface DatabaseService {
      * Metodo che ritorna la lista di tutti gli oggetti BuildingTable presenti nel database remoto
      * @return  Collection<BuildingTable>
      */
-    Collection<BuildingTable> findAllRemoteBuildings();
+    Collection<BuildingTable> findAllRemoteBuildings() throws IOException;
 
     /**
      * Metodo per il recupero di un oggetto BuildingMap da un database locale o remoto tramite
@@ -50,7 +51,7 @@ public interface DatabaseService {
      * @param major Identificativo major uguale per tutti i beacon presenti in uno stesso edificio
      * @return  BuildingMap
      */
-    BuildingMap findRemoteBuildingByMajor(int major);
+    BuildingMap findRemoteBuildingByMajor(int major) throws IOException;
 
     /**
      * Metodo per verificare la presenza di una mappa di un edificio nel database locale
@@ -64,19 +65,19 @@ public interface DatabaseService {
      * @param major Major dell'edificio
      * @return boolean
      */
-    boolean isRemoteMapPresent(int major);
+    boolean isRemoteMapPresent(int major) throws IOException;
 
     /**
      * Metodo per verificare se la mappa di un edificio è aggiornata all'ultima versione
      * @param major Major dell'edificio
      * @return  boolean
      */
-    boolean isBuildingMapUpdated(int major);
+    boolean isBuildingMapUpdated(int major) throws IOException;
 
     /**
      * Metodo per aggiornare la mappa di un edificio all'ultima versione disponibile
      * @param major Major dell'edificio
      */
-    void updateBuildingMap(int major);
+    void updateBuildingMap(int major) throws IOException;
 
 }
