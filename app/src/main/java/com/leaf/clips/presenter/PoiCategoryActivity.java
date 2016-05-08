@@ -13,6 +13,7 @@ import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.view.PoiCategoryView;
 import com.leaf.clips.view.PoiCategoryViewImp;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class PoiCategoryActivity extends AppCompatActivity {
@@ -39,7 +40,25 @@ public class PoiCategoryActivity extends AppCompatActivity {
         /**
          * TODO: recupera lista poi appartenenti alla categoria scelta
          * poiList = informationManager.getPoiInCategory(chosenCategoryName);
+         *
+         * List<String> poiNamesList = new LinkedList()
+         *
+         * foreach(PointOfInterest poi : poiList){
+         *  String poiName = poi.getName();
+         *  poiNameList.add(poiName);
+         * }
+         *
+         *view.setPoiListAdapter(poiNameList);
          */
+
+        //TODO: remove (only for debug purpose) --> use InformationManager.getAllCategories()
+        List<String> list = new LinkedList<>();
+        list.add("Aula 1A150");
+        list.add("Aula 1AD100");
+        list.add("Aula 1C150");
+        list.add("Aula 1BC45");
+        list.add("Aula 1BC50");
+        view.setPoiListAdapter(list);
     }
     
     /**

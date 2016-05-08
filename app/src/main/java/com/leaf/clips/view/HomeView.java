@@ -7,5 +7,5 @@ public interface HomeView {
     void setBuildingDescription(String description);
     void setBuildingOpeningHours(String hours);
     void setBuildingAddress(String address);
-    void setPoiCategoryListAdapter(List<String> list);
+    void setPoiCategoryListAdapter(List<String> poiCategoryList);
 }
