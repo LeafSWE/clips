@@ -6,10 +6,6 @@
                 android:id="@+id/nav_developer"
                 android:icon="@drawable/icon_menu_developer"
                 android:title="@string/menu_developer"/>
-        <!--<item
-                android:id="@+id/poi_category"
-                android:icon="@drawable/icon_nearby_poi"
-                android:title="Destinazioni per categoria"/>-->
     </group>
 
 </menu>

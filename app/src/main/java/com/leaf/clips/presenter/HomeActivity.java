@@ -10,6 +10,9 @@ import com.leaf.clips.R;
 import com.leaf.clips.view.HomeView;
 import com.leaf.clips.view.HomeViewImp;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class HomeActivity extends AppCompatActivity {
     /**
      *  TODO
@@ -30,6 +33,15 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = new HomeViewImp(this);
+
+        List<String> list = new LinkedList<>();
+        list.add("Aule");
+        list.add("Aule studio");
+        list.add("Laboratori");
+        list.add("Uffici");
+        list.add("Biblioteche");
+        list.add("Toilette");
+        view.setPoiCategoryListAdapter(list);
     }
 
     /**

@@ -17,7 +17,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListAdapter;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -25,6 +27,8 @@ import android.widget.TextView;
 import com.leaf.clips.R;
 import com.leaf.clips.presenter.HomeActivity;
 import com.leaf.clips.presenter.MainDeveloperPresenter;
+
+import java.util.List;
 
 public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSelectedListener {
     HomeActivity homeActivity;
@@ -104,7 +108,16 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
     }
 
     @Override
-    public void setPoiCategoryListAdapter(ListAdapter adapter) {
+    public void setPoiCategoryListAdapter(List<String> list) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(homeActivity,android.R.layout.simple_list_item_1,list);
+
+        LinearLayout categoryLayout = (LinearLayout)homeActivity.findViewById(R.id.category_search);
+
+        //Imposta l'altezza della ListView in modo da mostrarne tutti gli item, evitando scroll interno.
+        ViewGroup.LayoutParams params = categoryLayout.getLayoutParams();
+        //height = altezza_titolo + numero_item * altezza_item
+        params.height = 100 + list.size()*100;
+
         poiCategories.setAdapter(adapter);
     }
 
@@ -122,12 +135,11 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
         if (id == R.id.nav_developer) {
             Intent intent = new Intent(homeActivity, MainDeveloperPresenter.class);
             homeActivity.startActivity(intent);
-        } /*else if (id == R.id.poi_category) {
-            Intent intent = new Intent(homeActivity, PoiCategoryActivity.class);
-            homeActivity.startActivity(intent);
-        }*/
+        }
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
