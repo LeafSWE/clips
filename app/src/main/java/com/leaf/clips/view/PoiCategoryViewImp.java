@@ -34,7 +34,7 @@ public class PoiCategoryViewImp implements PoiCategoryView {
      * Costruttore della classe PoiCategoryViewImp
      * @param presenter Presenter della View che viene creata
      */
-    public PoiCategoryViewImp(PoiCategoryActivity presenter) {
+    public PoiCategoryViewImp(final PoiCategoryActivity presenter) {
         this.presenter = presenter;
         presenter.setContentView(R.layout.activity_poi_category);
 
@@ -44,7 +44,7 @@ public class PoiCategoryViewImp implements PoiCategoryView {
         pois.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                presenter.startNavigation(position);
             }
         });
     }
