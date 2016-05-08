@@ -5,7 +5,6 @@ package com.leaf.clips.model;
  * @since 0.00
  */
 
-import android.graphics.Point;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
@@ -25,6 +24,7 @@ import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoRef;
 import com.leaf.clips.model.navigator.graph.vertex.VertexImp;
 import com.leaf.clips.model.usersetting.Setting;
 import com.leaf.clips.model.usersetting.SettingImp;
+
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.junit.Before;
 import org.junit.Test;
@@ -144,7 +144,6 @@ public class NavigationManagerImpTest {
         /**
          * Metodo che permette di aggiungere un arco al grafo che rappresenta l'edificio
          * @param edge Arco da aggiungere al grafo che rappresenta l'edificio
-         * @return void
          */
         @Override
         public void addEdge(EnrichedEdge edge) {
@@ -154,7 +153,6 @@ public class NavigationManagerImpTest {
         /**
          * Metodo che permette di aggiungere una RegionOfInterest al grafo che rappresenta l'edificio
          * @param roi RegionOfInterest da aggiungere al grafo che rappresenta l'edificio
-         * @return void
          */
         @Override
         public void addRegionOfInterest(RegionOfInterest roi) {
