@@ -147,7 +147,7 @@ public class BuildingService implements DatabaseService {
      * @return  Collection<BuildingTable>
      */
     @Override
-    public Collection<BuildingTable> findAllRemoteBuildings() {
+    public Collection<BuildingTable> findAllRemoteBuildings() throws IOException {
         /**
          * Contatto il db remoto su "/allMaps" e ottengo tutte le istanze della tabella Building.
          * Poi procedo al parsing del risultato (recupero un JsonArray chiamato "building")
@@ -180,10 +180,8 @@ public class BuildingService implements DatabaseService {
             }
             return tables;
 
-        } catch (IOException e) {
-            // TODO: lanciare un'eccezione NoRemoteMapsDetailsException
-            // TODO: aggiungere nella firma del metodo "throws ..."
-            return null;
+        } catch (IOException exc) {
+            throw exc;
         }
     }
 
@@ -204,7 +202,7 @@ public class BuildingService implements DatabaseService {
      * @return  BuildingMap
      */
     @Override
-    public BuildingMap findRemoteBuildingByMajor(int major) {
+    public BuildingMap findRemoteBuildingByMajor(int major) throws IOException {
         retrieveAndInsertMap(major);
         return findBuildingByMajor(major);
     }
@@ -337,7 +335,7 @@ public class BuildingService implements DatabaseService {
      * @return boolean
      */
     @Override
-    public boolean isRemoteMapPresent(int major) {
+    public boolean isRemoteMapPresent(int major) throws IOException {
         String url = databaseURL+"mapVersion/?major="+major;
         try (
                 InputStream input = new URL(url).openStream();
@@ -356,10 +354,8 @@ public class BuildingService implements DatabaseService {
 
             return mapVersion != -1;
 
-        } catch (IOException e) {
-            // TODO: lanciare un'eccezione NoRemoteMapException
-            // TODO: aggiungere nella firma del metodo "throws ..."
-            return false;
+        } catch (IOException exc) {
+            throw exc;
         }
     }
 
@@ -369,7 +365,7 @@ public class BuildingService implements DatabaseService {
      * @return  boolean
      */
     @Override
-    public boolean isBuildingMapUpdated(int major) {
+    public boolean isBuildingMapUpdated(int major) throws IOException {
 
         String url = databaseURL+"mapVersion/?major="+major;
         try (
@@ -393,10 +389,8 @@ public class BuildingService implements DatabaseService {
 
             return actualVersion == updatedVersion;
 
-        } catch (IOException e) {
-            // TODO: lanciare un'eccezione NoLastMapVersionException
-            // TODO: aggiungere nella firma del metodo "throws ..."
-            return false;
+        } catch (IOException exc) {
+            throw exc;
         }
 
     }
@@ -406,7 +400,7 @@ public class BuildingService implements DatabaseService {
      * ed inserirla nel database locale
      * @param major Major dell'edificio
      */
-    private void retrieveAndInsertMap(int major) {
+    private void retrieveAndInsertMap(int major) throws IOException {
 
         String url = databaseURL+"maps/?major="+major;
         try (
@@ -474,8 +468,8 @@ public class BuildingService implements DatabaseService {
                 edgeService.convertAndInsertPhoto(object);
             }
 
-        } catch (IOException e) {
-            //TODO: lanciare IOException e aggiungere throws
+        } catch (IOException exc) {
+            throw exc;
         }
     }
 
@@ -484,7 +478,7 @@ public class BuildingService implements DatabaseService {
      * @param major Major dell'edificio
      */
     @Override
-    public void updateBuildingMap(int major) {
+    public void updateBuildingMap(int major) throws IOException {
         BuildingMap map = findBuildingByMajor(major);
         deleteBuilding(map);
         retrieveAndInsertMap(major);

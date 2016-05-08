@@ -35,7 +35,6 @@ public class MapGraph {
     /**
      * Metodo che permette di aggiungere più archi al grafo che rappresenta l'edificio
      * @param edges Archi da aggiungere al grafo che rappresenta l'edificio
-     * @return void
      */
     public void addAllEdges(Collection<EnrichedEdge> edges) {
         for(EnrichedEdge edge: edges){
@@ -46,7 +45,6 @@ public class MapGraph {
     /**
      * Metodo che permette di aggiungere più RegionOfInterest al grafo che rappresenta l'edificio
      * @param regions Collezione di RegionOfInterest da aggiungere al grafo che rappresenta l'edificio
-     * @return void
      */
     public void addAllRegions(Collection<RegionOfInterest> regions) {
         for(RegionOfInterest regionOfInterest: regions){
@@ -57,7 +55,6 @@ public class MapGraph {
     /**
      * Metodo che permette di aggiungere un arco al grafo che rappresenta l'edificio
      * @param edge Arco da aggiungere al grafo che rappresenta l'edificio
-     * @return void
      */
     public void addEdge(EnrichedEdge edge) {
         graph.addEdge(edge.getStarterPoint(),edge.getEndPoint(),edge);
@@ -66,7 +63,6 @@ public class MapGraph {
     /**
      * Metodo che permette di aggiungere una RegionOfInterest al grafo che rappresenta l'edificio
      * @param roi RegionOfInterest da aggiungere al grafo che rappresenta l'edificio
-     * @return void
      */
     public void addRegionOfInterest(RegionOfInterest roi) {
         graph.addVertex(roi);

@@ -20,15 +20,33 @@ import dagger.Provides;
  * @version 0.01
  * @since 0.01
  */
+
+/**
+ * Classe nella quale vengono dichiarate le dipendenze verso oggetti di tipo SQliteDaoFactory,
+ * RemoteDaoFactory e DatabaseService
+ */
 @Module
 public class DatabaseModule {
 
-    String s;
+    /**
+     * Stringa che rappresenta l'URL del database remoto
+     */
+    private final String remoteURL;
 
-    public DatabaseModule(String s){
-        this.s=s;
+    /**
+     * Costruttore della classe DatabaseModule
+     * @param remoteURL Stringa che rappresenta l'URL del database remoto
+     */
+    public DatabaseModule(String remoteURL) {
+        this.remoteURL = remoteURL;
     }
 
+    /**
+     * Metodo che permette di risolvere le dipendenze verso campi dati annotati con Inject e di
+     * tipo SQLiteDaoFactory. L'istanza ritornata sarà sempre la stessa utilizzando lo stesso modulo.
+     * @param context Contesto di esecuzione dell'applicazione
+     * @return SQLiteDaoFactory
+     */
     @Provides
     @Singleton
     public SQLiteDaoFactory provideSQLiteDaoFactory(Context context){
@@ -37,15 +55,31 @@ public class DatabaseModule {
         return new SQLiteDaoFactory(db);
     }
 
+    /**
+     * Metodo che permette di risolvere le dipendenze verso campi dati annotati con Inject e di
+     * tipo RemoteDaoFactory. L'istanza ritornata sarà sempre la stessa utilizzando lo stesso modulo.
+     * @return RemoteDaoFactory
+     */
     @Provides
     @Singleton
     public RemoteDaoFactory provideRemoteDaoFactory(){
         return new RemoteDaoFactory();
     }
 
+    /**
+     * Metodo che permette di risolvere le dipendenze verso campi dati annotati con Inject e di
+     * tipo DatabaseService ritornando un oggetto di tipo BuildingServiceImp. L'istanza ritornata
+     * sarà sempre la stessa utilizzando lo stesso modulo.
+     * @param sqLiteDaoFactory Factory che permette di costruire oggetti con cui accedere ai dati
+     *                         salvati nel databse locale
+     * @param remoteDaoFactory Factory che permette di costruire oggetti scaricati dal database
+     *                         remoto
+     * @return DatabaseService
+     */
     @Provides
     @Singleton
-    public DatabaseService providesDatabaseService(SQLiteDaoFactory sqLiteDaoFactory,RemoteDaoFactory remoteDaoFactory){
-        return ServiceHelper.getService(sqLiteDaoFactory,remoteDaoFactory,s);
+    public DatabaseService providesDatabaseService(SQLiteDaoFactory sqLiteDaoFactory,
+                                                   RemoteDaoFactory remoteDaoFactory) {
+        return ServiceHelper.getService(sqLiteDaoFactory, remoteDaoFactory, remoteURL);
     }
 }
