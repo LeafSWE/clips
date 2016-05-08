@@ -264,8 +264,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
      */
     @Override
     public boolean remoteSearchMap(int major) {
-        // TODO: 07/05/2016 in attesa del metodo dal service
-        return true;
+        return dbService.isRemoteMapPresent(major);
     }
 
     private boolean isDeveloper(){
