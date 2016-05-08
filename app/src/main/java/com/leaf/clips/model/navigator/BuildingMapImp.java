@@ -5,8 +5,6 @@ package com.leaf.clips.model.navigator;
  * @since 0.00
  */
 
-import android.content.Intent;
-
 import com.leaf.clips.model.beacon.MyBeacon;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
@@ -141,7 +139,7 @@ public class BuildingMapImp implements BuildingMap {
      */
     @Override
     public Collection<String> getAllPOIsCategories() {
-        Collection<String> result = new ArrayList<String>();
+        Collection<String> result = new ArrayList<>();
         for (PointOfInterest poi : this.pois) {
             result.add(poi.getCategory());
         }
@@ -226,7 +224,7 @@ public class BuildingMapImp implements BuildingMap {
      */
     @Override
     public Collection<PointOfInterest> searchPOIByName(String name) {
-        Collection<PointOfInterest> result = new ArrayList<PointOfInterest>();
+        Collection<PointOfInterest> result = new ArrayList<>();
         for (PointOfInterest poi : this.pois) {
             if (poi.getName().contains(name)) {
                 result.add(poi);
