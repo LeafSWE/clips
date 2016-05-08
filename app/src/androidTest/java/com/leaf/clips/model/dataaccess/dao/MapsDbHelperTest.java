@@ -67,5 +67,12 @@ public class MapsDbHelperTest extends InstrumentationTestCase {
         c = database.rawQuery("SELECT * FROM sqlite_master WHERE type='table'" +
                 " AND name='" + BuildingContract.TABLE_NAME  + "'", null);
         Assert.assertEquals(1, c.getCount());
+        c = database.rawQuery("SELECT * FROM sqlite_master WHERE type='trigger'" +
+                " AND name='delete_empty_category'", null);
+        Assert.assertEquals(1, c.getCount());
+        c = database.rawQuery("SELECT * FROM sqlite_master WHERE type='trigger'" +
+                " AND name='delete_empty_edgetype'", null);
+        Assert.assertEquals(1, c.getCount());
+
     }
 }
