@@ -18,6 +18,7 @@ import com.leaf.clips.model.navigator.BuildingMap;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.usersetting.SettingImp;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -73,7 +74,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     @Override
     public Collection<String> getAllCategories(){
 
-        LinkedList<String> list = new LinkedList<String>();
+        LinkedList<String> list = new LinkedList<>();
         list.addAll(map.getAllPOIsCategories());
         return list;
     }
@@ -138,27 +139,42 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
 
     /**
     * Metodo che permette di recuperare una mappa dal database in base al major dei beacon rilevati
-    * @return  BuildingMap Mappa dell'edificio
     */
 
     private void loadMap(){
         int major = lastBeaconsSeen.peek().getMajor();
 
         if(dbService.isBuildingMapPresent(major)){
-            if(!dbService.isBuildingMapUpdated(major)){
-                boolean shouldUpdate = ((InformationListener)listeners).noLastMapVersion();
-                if (shouldUpdate)
-                    dbService.updateBuildingMap(major);
+            try {
+                if(!dbService.isBuildingMapUpdated(major)){
+                    boolean shouldUpdate = ((InformationListener)listeners).noLastMapVersion();
+                    if (shouldUpdate)
+                        dbService.updateBuildingMap(major);
+                }
+                else
+                    map = dbService.findBuildingByMajor(major);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                ((InformationListener)listeners).cannotRetrieveRemoteMapDetails(); //errore connessione
             }
-            else
-                map = dbService.findBuildingByMajor(major);
         }
         else{
-            boolean mapExists = remoteSearchMap(major);
+            boolean mapExists = false;
+            try {
+                mapExists = dbService.isRemoteMapPresent(major);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if(mapExists){
                 boolean shouldDownload = ((InformationListener)listeners).onLocalMapNotFound();
-                remoteDownload(major);
-                // TODO: 07/05/2016 aggiungere cannotRetrieveRemoteMapDetails quando vengono lanciate eccezioni
+                try {
+                    if(shouldDownload)
+                        map = dbService.findRemoteBuildingByMajor(major);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    ((InformationListener)listeners).cannotRetrieveRemoteMapDetails(); //errore connessione
+                }
             }
             else
                 ((InformationListener)listeners).onRemoteMapNotFound();
@@ -168,9 +184,9 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
 
     /**
      * Metodo che si occupa di settare il campo dati lastBeaconsSeen con la PriorityQueue<MyBeacon>
-     *     contenente gli ultimi beacon rilevati. Nel caso in cui non sia stata ancora caricata una
-     *     mappa dal database locale si occupa di caricare la mappa dell'edificio che contiene
-     *     i beacon rilevati
+     * contenente gli ultimi beacon rilevati. Nel caso in cui non sia stata ancora caricata una
+     * mappa dal database locale si occupa di caricare la mappa dell'edificio che contiene
+     * i beacon rilevati
      */
     @Override
     public void onReceive(Context context, Intent intent){
@@ -249,23 +265,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         super.removeListener(listener);
     }
 
-    /**
-     * Metodo che permette di scaricare una mappa dal database remoto
-     * @param major identificativo associato alla mappa da scaricare
-     */
-    @Override
-    public void remoteDownload(int major) {
-        map = dbService.findRemoteBuildingByMajor(major);
-    }
 
-    /**
-     * Metodo che permette di cercare una mappa dal database remoto
-     * @param major Identificativo della mappa da cercare
-     */
-    @Override
-    public boolean remoteSearchMap(int major) {
-        return dbService.isRemoteMapPresent(major);
-    }
 
     private boolean isDeveloper(){
         return new SettingImp(getContext()).isDeveloper();
