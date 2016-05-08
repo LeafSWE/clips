@@ -11,17 +11,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.leaf.clips.R;
+import com.leaf.clips.model.navigator.ProcessedInformation;
+import com.leaf.clips.view.NavigationView;
+import com.leaf.clips.view.NavigationViewImp;
 
 public class NavigationActivity extends AppCompatActivity {
-
+    private NavigationView view;
+    private NavigationAdapter navigationAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_navigation);
+        view = new NavigationViewImp(this);
 
         handleIntent(getIntent());
+
+        //TODO retrieve path instruction
     }
 
     //TODO: aggiornare documentazione se test Search ok
@@ -40,5 +45,35 @@ public class NavigationActivity extends AppCompatActivity {
             String query = intent.getStringExtra(SearchManager.QUERY);
             //use the query to search
         }
+    }
+
+    /**
+     * Lancia un avviso in caso il sistema rilevi che l'utente è uscito dal percorso consigliato
+     */
+    public void pathError(){
+        //TODO
+    }
+
+    /**
+     *
+     * @param info
+     */
+    public void informationUpdate(ProcessedInformation info){
+        //TODO
+    }
+
+    /**
+     * Avvia l'Activity deputata a spiegare l'istruzione selezionata dall'utente con maggior dettaglio
+     * @param instructionPosition la posizione, nella lista, dell'istruzione selezionata
+     */
+    public void showDetailedInformation(int instructionPosition){
+        //TODO
+    }
+
+    /**
+     * Interrompe la navigazione in corso
+     */
+    public void stopNavigation(){
+        //TODO
     }
 }

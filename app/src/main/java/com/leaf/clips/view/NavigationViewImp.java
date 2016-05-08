@@ -1,7 +1,9 @@
 package com.leaf.clips.view;
 
 import android.widget.Adapter;
+import android.widget.ListView;
 
+import com.leaf.clips.R;
 import com.leaf.clips.presenter.NavigationActivity;
 import com.leaf.clips.presenter.NavigationAdapter;
 
@@ -16,6 +18,10 @@ public class NavigationViewImp implements NavigationView {
 
     public NavigationViewImp(NavigationActivity presenter) {
         this.presenter = presenter;
+        presenter.setContentView(R.layout.activity_navigation);
+
+        ListView instructionList = (ListView)presenter.findViewById(R.id.view_instruction_list);
+
     }
 
     @Override
@@ -25,6 +31,6 @@ public class NavigationViewImp implements NavigationView {
 
     @Override
     public void refreshInstructions() {
-
+        //TODO
     }
 }
