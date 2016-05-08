@@ -1,8 +1,8 @@
 package com.leaf.clips.view;
 
 /**
- * @author Marco Zanella
- * @version 0.02
+ * @author Andrea Tombolato
+ * @version 1.0
  * @since 0.01
  */
 
@@ -20,6 +20,10 @@ public class PoiCategoryViewImp implements PoiCategoryView {
      * View che permette di visualizzare la lista delle categorie di POI
      */
     private ListView pois;
+    /**
+     * Presenter della View
+     */
+    private PoiCategoryActivity presenter;
 
     /**
      * Costruttore della classe PoiCategoryViewImp
@@ -29,14 +33,8 @@ public class PoiCategoryViewImp implements PoiCategoryView {
         this.presenter = presenter;
         presenter.setContentView(R.layout.activity_poi_category);
 
-        //pois.findViewById(R.id.category_list);
         pois = (ListView)presenter.findViewById(R.id.category_list);
     }
-
-    /**
-     * Presenter della View
-     */
-    private PoiCategoryActivity presenter;
 
     /**
      * Metodo utilizzato per visualizzare tutti i POI appartenenti ad una certa categoria
