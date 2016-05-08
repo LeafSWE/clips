@@ -35,8 +35,6 @@ import java.util.List;
  *
  */
 
-// TODO: 5/6/16 Controllare poiché ho avuto un conflitto su questo file 
-
 public class EdgeService {
 
 
@@ -169,8 +167,7 @@ public class EdgeService {
      */
     public EnrichedEdge findEdge(int id) {
         EdgeTable table = sqliteEdgeDao.findEdge(id);
-        EnrichedEdge edge = fromTableToBo(table);
-        return edge;
+        return fromTableToBo(table);
     }
 
     /**
@@ -218,12 +215,14 @@ public class EdgeService {
                 photoInfo);
 
         // costruisco e ritorno l'edge del tipo specificato
-        if (typeName.equals("default"))
-            return new DefaultEdge(startROI, endROI, distance, coordinate, id, navInfo);
-        else if (typeName.equals("stairs"))
-            return new StairEdge(startROI, endROI, distance, coordinate, id, navInfo);
-        else //if (typeName.equals("elevator"))
-            return new ElevatorEdge(startROI, endROI, distance, coordinate, id, navInfo);
+        switch (typeName) {
+            case "elevator":
+                return new ElevatorEdge(startROI, endROI, distance, coordinate, id, navInfo);
+            case "stairs":
+                return new StairEdge(startROI, endROI, distance, coordinate, id, navInfo);
+            default:
+                return new DefaultEdge(startROI, endROI, distance, coordinate, id, navInfo);
+        }
     }
 
 }

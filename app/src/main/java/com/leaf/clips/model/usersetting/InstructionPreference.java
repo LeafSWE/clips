@@ -11,7 +11,7 @@ package com.leaf.clips.model.usersetting;
 *Classe enumeratore che espone le possibili preferenze riguardanti la fruizione delle informazioni
 */ 
 public enum InstructionPreference {
-    DEFAULT, TEXT_TO_SPEECH, SONAR;
+    DEFAULT, TEXT_TO_SPEECH, SONAR, NO_PREFERENCE;
 
     /**
      * Metodo per convertire un intero ad una InstructionPreference
@@ -28,7 +28,7 @@ public enum InstructionPreference {
             case 2:
                 return SONAR;
         }
-        return DEFAULT; // TODO: 01/05/2016 Cosa fare in caso di errore?
+        return NO_PREFERENCE;
     }
 
     /**

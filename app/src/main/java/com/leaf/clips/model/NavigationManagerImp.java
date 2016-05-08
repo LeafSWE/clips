@@ -122,6 +122,7 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
     */
 
     private void setVisibleBeacon(PriorityQueue<MyBeacon> beacons){
+        lastBeaconsSeen.clear();
         for(MyBeacon oneBeacon : beacons){
             lastBeaconsSeen.add(oneBeacon);
         }
@@ -211,13 +212,12 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        lastBeaconsSeen.clear();
+
         PriorityQueue<MyBeacon> p;
 
         p = ((PriorityQueue<MyBeacon>)intent.getSerializableExtra("queueOfBeacons"));
 
         if(!lastBeaconsSeen.containsAll(p) || !p.containsAll(lastBeaconsSeen)){
-
             setVisibleBeacon(p);
             for(Listener listener : super.listeners){
                 NavigationListener nv = (NavigationListener) listener;

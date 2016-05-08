@@ -130,7 +130,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         if(lastBeaconsSeen.isEmpty())
             throw new NoBeaconSeenException();
 
-        LinkedList<PointOfInterest> list = new LinkedList<PointOfInterest>();
+        LinkedList<PointOfInterest> list = new LinkedList<>();
         list.addAll(map.getNearbyPOIs(lastBeaconsSeen.peek()));
         return list;
 
@@ -177,9 +177,10 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
 
         PriorityQueue<MyBeacon> p;
         p = ((PriorityQueue<MyBeacon>)intent.getSerializableExtra("queueOfBeacons"));
+        if(!p.containsAll(lastBeaconsSeen) || lastBeaconsSeen.containsAll(p))
+            setVisibleBeacon(p);
 
-        for (MyBeacon oneBeacon : p)
-            lastBeaconsSeen.add(oneBeacon);
+
 
         if(map == null) {
             loadMap();

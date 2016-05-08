@@ -64,7 +64,7 @@ public class SettingImp implements Setting {
 
     /**
      * Costruttore della classe SettingImp
-     * @param context
+     * @param context Context dell'applicazione
      */
 
     public SettingImp(Context context){
@@ -105,7 +105,6 @@ public class SettingImp implements Setting {
     /**
     * Metodo che permette di modificare le impostazioni riguardanti le preferenze di fruizione delle istruzioni di navigazione
     * @param instructionPreference Questo parametro richiede il tipo di istruzioni che si vuole ricevere durante la navigazione
-    * @return  void
     */
     @Override
     public void setInstructionPreference(InstructionPreference instructionPreference){
@@ -118,7 +117,6 @@ public class SettingImp implements Setting {
     /**
     * Metodo che permette di modificare le impostazioni riguardanti le preferenze sul percorso di navigazione
     * @param pathPreference Questo parametro richiede le preferenze di percorso che un utente vuole impostare
-    * @return  void
     */
     @Override
     public void setPathPreference(PathPreference pathPreference){

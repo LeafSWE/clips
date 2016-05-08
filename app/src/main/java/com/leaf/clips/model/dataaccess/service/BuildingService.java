@@ -1,11 +1,9 @@
 package com.leaf.clips.model.dataaccess.service;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import android.graphics.Region;
 
 import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 import com.leaf.clips.model.dataaccess.dao.RemoteBuildingDao;
@@ -114,23 +112,17 @@ public class BuildingService implements DatabaseService {
 
         // recupero ed elimino tutti gli edge della mappa
         Collection<EnrichedEdge> edges = buildingMap.getAllEdges();
-        Iterator<EnrichedEdge> edgeIterator = edges.iterator();
-        while(edgeIterator.hasNext())
-            edgeService.deleteEdge(edgeIterator.next());
+        for (EnrichedEdge edge : edges) edgeService.deleteEdge(edge);
 
         // recupero ed elimino tutti i PointOfInterest della mappa
         Collection<PointOfInterest> pois = buildingMap.getAllPOIs();
-        Iterator<PointOfInterest> poiIterator = pois.iterator();
-        while(poiIterator.hasNext()) {
-            PointOfInterest poi = poiIterator.next();
+        for (PointOfInterest poi : pois) {
             poiService.deletePointOfInterest(poi.getId());
         }
 
         // recupero ed elimino tutte le RegionOfInterest della mappa
         Collection<RegionOfInterest> rois = buildingMap.getAllROIs();
-        Iterator<RegionOfInterest> roiIterator = rois.iterator();
-        while(roiIterator.hasNext()) {
-            RegionOfInterest roi = roiIterator.next();
+        for (RegionOfInterest roi : rois) {
             roiService.deleteRegionOfInterest(roi.getId());
         }
 
@@ -179,7 +171,7 @@ public class BuildingService implements DatabaseService {
 
             // recupero e inserisco nel db tutte le entry della tabella Building
             JsonArray buildingArray = js.get("building").getAsJsonArray();
-            List<BuildingTable> tables = new LinkedList<BuildingTable>();
+            List<BuildingTable> tables = new LinkedList<>();
             for (int i = 0; i < buildingArray.size(); i++) {
                 // costruisco una BuildingTable e la inserisco nella lista
                 JsonObject object = buildingArray.get(i).getAsJsonObject();
@@ -189,7 +181,7 @@ public class BuildingService implements DatabaseService {
             return tables;
 
         } catch (IOException e) {
-            // TODO: lanciare un'eccezione Checked "AllMapsNotFoundException" (gestita Presenter)
+            // TODO: lanciare un'eccezione NoRemoteMapsDetailsException
             // TODO: aggiungere nella firma del metodo "throws ..."
             return null;
         }
@@ -226,7 +218,6 @@ public class BuildingService implements DatabaseService {
         // recupero tutte le informazioni dall'oggetto BuildingTable
         int id = buildingTable.getId();
         int version = buildingTable.getVersion();
-        String uuid = buildingTable.getUUID();
         int major = buildingTable.getMajor();
         String name = buildingTable.getName();
         String description = buildingTable.getDescription();
@@ -361,12 +352,12 @@ public class BuildingService implements DatabaseService {
             JsonObject object = parser.parse(responseStrBuilder.toString()).getAsJsonObject();
 
             // recupero l'ultima versione disponibile della mappa
-            int mapVersion = object.get("mapVersion").getAsInt();;
+            int mapVersion = object.get("mapVersion").getAsInt();
 
-            return mapVersion == -1;
+            return mapVersion != -1;
 
         } catch (IOException e) {
-            // TODO: lanciare un'eccezione Checked "RemoteMapNotFoundException" (gestita Presenter)
+            // TODO: lanciare un'eccezione NoRemoteMapException
             // TODO: aggiungere nella firma del metodo "throws ..."
             return false;
         }
@@ -394,7 +385,7 @@ public class BuildingService implements DatabaseService {
             JsonObject object = parser.parse(responseStrBuilder.toString()).getAsJsonObject();
 
             // recupero l'ultima versione disponibile della mappa
-            int updatedVersion = object.get("mapVersion").getAsInt();;
+            int updatedVersion = object.get("mapVersion").getAsInt();
 
             // recupero la versione della mappa sul database locale
             BuildingTable table = sqliteBuildingDao.findBuildingByMajor(major);
@@ -403,7 +394,7 @@ public class BuildingService implements DatabaseService {
             return actualVersion == updatedVersion;
 
         } catch (IOException e) {
-            // TODO: lanciare un'eccezione Checked "MapVersionNotFoundException" (gestita Presenter)
+            // TODO: lanciare un'eccezione NoLastMapVersionException
             // TODO: aggiungere nella firma del metodo "throws ..."
             return false;
         }
@@ -484,8 +475,7 @@ public class BuildingService implements DatabaseService {
             }
 
         } catch (IOException e) {
-            // TODO: lanciare un'eccezione Checked "MapNotFoundException" (gestita Presenter)
-            // TODO: aggiungere nella firma del metodo "throws ..."
+            //TODO: lanciare IOException e aggiungere throws
         }
     }
 
