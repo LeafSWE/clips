@@ -1,0 +1,17 @@
+com.leaf.clips.di.component
+com.leaf.clips.di.modules
+com.leaf.clips.model
+com.leaf.clips.model.beacon
+com.leaf.clips.model.compass
+com.leaf.clips.model.dataaccess.dao
+com.leaf.clips.model.dataaccess.service
+com.leaf.clips.model.navigator
+com.leaf.clips.model.navigator.algorithm
+com.leaf.clips.model.navigator.graph
+com.leaf.clips.model.navigator.graph.area
+com.leaf.clips.model.navigator.graph.edge
+com.leaf.clips.model.navigator.graph.navigationinformation
+com.leaf.clips.model.navigator.graph.vertex
+com.leaf.clips.model.usersetting
+com.leaf.clips.presenter
+com.leaf.clips.view
