@@ -146,7 +146,7 @@ public class EdgeService {
      * Metodo per recuperare le informazioni di tutti gli Edge di un edificio, dato il major
      * dell'edificio
      * @param major Major dell'edificio
-     * @return  Collection<EnrichedEdge>
+     * @return  Collection<EnrichedEdge> Le informazioni su tutti gli Edge dell'edificio
      */
     public Collection<EnrichedEdge> findAllEdgesOfBuilding(int major) {
         Collection<EdgeTable> tables = sqliteEdgeDao.findAllEdgesOfBuilding(major);
@@ -163,7 +163,7 @@ public class EdgeService {
     /**
      * Metodo per recuperare un Edge ricercandolo nel database locale
      * @param id Identificativo numerico dell'Edge da ricercare
-     * @return  EnrichedEdge
+     * @return  EnrichedEdge L'Edge richiesto
      */
     public EnrichedEdge findEdge(int id) {
         EdgeTable table = sqliteEdgeDao.findEdge(id);
@@ -173,7 +173,7 @@ public class EdgeService {
     /**
      * Metodo per la costruzione di oggetto EnrichedEdge a partire da un EdgeTable
      * @param edgeTable Oggetto contenente le informazioni di un Edge
-     * @return  EnrichedEdge
+     * @return  EnrichedEdge L'Edge costruito dopo aver recuperato tutte le informazioni necessarie
      */
     private EnrichedEdge fromTableToBo(EdgeTable edgeTable) {
         // informazioni recuperate da EdgeTable
