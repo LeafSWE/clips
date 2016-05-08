@@ -16,11 +16,19 @@ import com.leaf.clips.model.beacon.BeaconManagerAdapter;
 import com.leaf.clips.model.beacon.BeaconRanger;
 import com.leaf.clips.model.beacon.PeriodType;
 
+import java.util.Collection;
+import java.util.LinkedList;
+
 
 /** 
 *Classe base per la comunicazione con le classi che si occupano del rilevamento dei beacon
 */ 
 public abstract class AbsBeaconReceiverManager extends BroadcastReceiver {
+
+    /**
+     * Collection dei listener della classe
+     */
+    protected Collection<Listener> listeners;
 
     /**
      * Service che si occupa del rilevamento dei beacon
@@ -56,6 +64,7 @@ public abstract class AbsBeaconReceiverManager extends BroadcastReceiver {
         serviceStart = new Intent(context, BeaconManagerAdapter.class);
         serviceConnection = new ServiceConnectionImp();
         context.bindService(serviceStart, serviceConnection,Context.BIND_AUTO_CREATE);
+        listeners = new LinkedList<>();
     }
 
     /**
@@ -114,6 +123,22 @@ public abstract class AbsBeaconReceiverManager extends BroadcastReceiver {
 
     @Override //Method of BroadcastReceiver
     abstract public void onReceive(Context context, Intent intent);
+
+    /**
+     * Metodo che permette di registrare un listener
+     * @param listener Listener che deve essere aggiunto alla lista di Listener
+     */
+    protected void addListener(Listener listener) {
+        listeners.add(listener);
+    }
+
+    /**
+     * Metodo che permette di rimuovere un listener
+     * @param listener Listener che deve essere rimosso dalla lista di Listener
+     */
+    protected void removeListener(Listener listener) {
+        listeners.remove(listener);
+    }
 
 }
 

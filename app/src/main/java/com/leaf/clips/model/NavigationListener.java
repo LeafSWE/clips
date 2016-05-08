@@ -10,7 +10,7 @@ import com.leaf.clips.model.navigator.ProcessedInformation;
 /**
  * Interfaccia che deve essere implementata da chi vuole usufruire della navigazione
  */
-public interface NavigationListener {
+public interface NavigationListener extends Listener {
 
     void informationUpdate(ProcessedInformation info);
 

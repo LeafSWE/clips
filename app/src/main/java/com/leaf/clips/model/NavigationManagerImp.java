@@ -1,8 +1,8 @@
 package com.leaf.clips.model;
 /**
-* @author Federico Tavella
-* @version 0.08
-* @since 0.00
+* @author Marco Zanella
+* @version 0.09
+* @since 0.08
 *
 */
 
@@ -23,7 +23,6 @@ import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
 import com.leaf.clips.model.usersetting.SettingImp;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -51,11 +50,6 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
     private PriorityQueue<MyBeacon> lastBeaconsSeen;
 
     /**
-    * Collezione contenenti tutti i listener da aggiornare ad ogni nuova istruzione da inviare
-    */
-    private Collection<NavigationListener> listeners;
-
-    /**
     * Oggetto per la navigazione
     */
     private Navigator navigator;
@@ -68,19 +62,16 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
     public NavigationManagerImp(MapGraph graph, Context context){
         super(context);
         this.graph = graph;
-        listeners = new LinkedList<>();
         lastBeaconsSeen = new PriorityQueue<>();
-
     }
 
     /**
     * Metodo che permette di registrare un listener
     * @param listener Listener che deve essere aggiunto alla lista di NavigationListener
-    * @return  void
     */
     @Override
-    public void addBeaconListener(NavigationListener listener){
-        listeners.add(listener);
+    public void addListener(NavigationListener listener){
+        super.addListener(listener);
     }
 
     /**
@@ -121,8 +112,8 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
     * @param listener Listener che deve essere rimosso dalla lista di NavigationListener
     */
     @Override
-    public void removeBeaconListener(NavigationListener listener){
-        listeners.remove(listener);
+    public void removeListener(NavigationListener listener){
+        super.removeListener(listener);
     }
 
     /**
@@ -207,7 +198,7 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
     */
     @Override
     public void stopNavigation(){
-        listeners.clear();
+        super.listeners.clear();
         navigator = null;
     }
 
@@ -228,7 +219,8 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
 
         if(!lastBeaconsSeen.containsAll(p) || !p.containsAll(lastBeaconsSeen)){
             setVisibleBeacon(p);
-            for(NavigationListener nv : listeners){
+            for(Listener listener : super.listeners){
+                NavigationListener nv = (NavigationListener) listener;
                 try {
                     nv.informationUpdate(navigator.toNextRegion(lastBeaconsSeen));
                 } catch (NoNavigationInformationException navigationExceptions) {
