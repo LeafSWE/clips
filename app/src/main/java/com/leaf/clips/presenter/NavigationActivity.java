@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.leaf.clips.R;
 
 public class NavigationActivity extends AppCompatActivity {
+    //TODO: everything
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

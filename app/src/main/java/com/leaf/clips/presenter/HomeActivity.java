@@ -95,7 +95,7 @@ public class HomeActivity extends AppCompatActivity {
      * @return  void
      */
     public void startNavigation(int poiPosition){
-        // TODO: 5/3/16  
+        //TODO: 5/3/16
     }
 
     /**
@@ -103,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
      * @return  void
      */
     public void updateBuildingAddress(){
-        // TODO: 5/3/16  
+        // TODO: 5/3/16
     }
 
     /**
