@@ -25,7 +25,7 @@ public class AppModule {
     /**
      * Applicazione in esecuzione nella quale ci sono oggetti in cui fare la dependency injection
      */
-    MyApplication mApplication;
+    private final MyApplication mApplication;
 
     /**
      * Costruttore della classe AppModule
