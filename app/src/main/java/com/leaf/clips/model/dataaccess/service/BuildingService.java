@@ -180,9 +180,8 @@ public class BuildingService implements DatabaseService {
             }
             return tables;
 
-        } catch (IOException e) {
-            // TODO: lanciare un'eccezione NoRemoteMapsDetailsException
-            // TODO: aggiungere nella firma del metodo "throws ..."
+        } catch (IOException exc) {
+            // TODO: lanciare IOException exc e aggiungere throws
             return null;
         }
     }
@@ -356,9 +355,8 @@ public class BuildingService implements DatabaseService {
 
             return mapVersion != -1;
 
-        } catch (IOException e) {
-            // TODO: lanciare un'eccezione NoRemoteMapException
-            // TODO: aggiungere nella firma del metodo "throws ..."
+        } catch (IOException exc) {
+            // TODO: lanciare IOException exc e aggiungere throws
             return false;
         }
     }
@@ -393,9 +391,8 @@ public class BuildingService implements DatabaseService {
 
             return actualVersion == updatedVersion;
 
-        } catch (IOException e) {
-            // TODO: lanciare un'eccezione NoLastMapVersionException
-            // TODO: aggiungere nella firma del metodo "throws ..."
+        } catch (IOException exc) {
+            // TODO: lanciare IOException exc e aggiungere throws
             return false;
         }
 
@@ -474,8 +471,8 @@ public class BuildingService implements DatabaseService {
                 edgeService.convertAndInsertPhoto(object);
             }
 
-        } catch (IOException e) {
-            //TODO: lanciare IOException e aggiungere throws
+        } catch (IOException exc) {
+            // TODO: lanciare IOException exc e aggiungere throws
         }
     }
 
