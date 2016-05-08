@@ -15,9 +15,11 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -59,6 +61,16 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
         buildingDescription = (TextView)homeActivity.findViewById(R.id.view_building_description);
         buildingOpeningHours = (TextView)homeActivity.findViewById(R.id.view_building_opening_hours);
         poiCategories = (ListView)homeActivity.findViewById(R.id.view_poi_category_list);
+        //Imposta il Listener sulla lista di categorie
+        poiCategories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("PARENT",parent.toString());
+                Log.d("VIEW",view.toString());
+                Log.d("POSITION", Integer.toString(position));
+                Log.d("ID", Long.toString(id));
+            }
+        });
 
         toolbar = (Toolbar) homeActivity.findViewById(R.id.toolbar_home);
         homeActivity.setSupportActionBar(toolbar);
