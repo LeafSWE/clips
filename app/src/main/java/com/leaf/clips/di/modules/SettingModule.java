@@ -25,7 +25,7 @@ public class SettingModule {
     /**
      * Contesto di esecuzione dell'applicazione
      */
-    Context context;
+    private final Context context;
 
 
     /**
