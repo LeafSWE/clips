@@ -76,6 +76,9 @@ public class MapsDbHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS EdgeType(id INT PRIMARY KEY,typeName VARCHAR(255))");
         db.execSQL("CREATE TABLE IF NOT EXISTS Edge(id INT PRIMARY KEY,startROI INT,endROI INT,distance INT,coordinate VARCHAR(255),typeId INT,action VARCHAR(255),longDescription VARCHAR(2000),FOREIGN KEY (startROI) REFERENCES ROI(id) ON DELETE CASCADE ON UPDATE CASCADE,FOREIGN KEY (endROI) REFERENCES ROI(id) ON DELETE CASCADE ON UPDATE CASCADE,FOREIGN KEY (typeId) REFERENCES EdgeType(id) ON UPDATE CASCADE ON DELETE CASCADE)");
         db.execSQL("CREATE TABLE IF NOT EXISTS Photo(id INT PRIMARY KEY,URL VARCHAR(2048),edgeId INT,FOREIGN KEY (edgeId) REFERENCES Edge(id))");
+        db.execSQL("CREATE TRIGGER IF NOT EXISTS delete_empty_category AFTER DELETE ON POI FOR EACH ROW WHEN (SELECT COUNT(POI.id) FROM POI JOIN Category ON POI.categoryId=Category.id WHERE Category.id=OLD.categoryId) = 0 BEGIN DELETE FROM Category WHERE Category.id=OLD.categoryId; END;");
+        db.execSQL("CREATE TRIGGER IF NOT EXISTS delete_empty_edgetype AFTER DELETE ON Edge FOR EACH ROW WHEN (SELECT COUNT(Edge.id) FROM Edge JOIN EdgeType ON Edge.typeId=EdgeType.id WHERE EdgeType.id=OLD.typeId) = 0 BEGIN DELETE FROM EdgeType WHERE EdgeType.id=OLD.typeId; END;");
+        db.execSQL("PRAGMA foreign_keys=ON");
     }
 
     /**
