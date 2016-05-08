@@ -5,7 +5,6 @@ package com.leaf.clips.model.beacon;
  * @since 0.00
  */
 
-import android.os.Environment;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -13,7 +12,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.util.PriorityQueue;
 
@@ -25,7 +23,7 @@ public class LoggerImp implements Logger {
     /**
      * Path della directory in cui vengono salvati i log
      */
-    final static String DIRECTORY = "C:\\Users\\Federico"; //TO-DO
+    final static String DIRECTORY = "C:\\Users\\Federico"; // TODO: 28/04/2016  inserire il path in cui vengono salvati i log
 
     /**
      * Rappresenta il contenuto di un log
@@ -116,12 +114,9 @@ public class LoggerImp implements Logger {
      * @param name Nome del log da rimuovere
      */
     @Override
-    public void remove(String name){
+    public boolean remove(String name){
         File fileToDelete = new File(DIRECTORY, name);
-        boolean deleted = fileToDelete.delete();
-        /*if(!deleted)
-            TO-DO*/
-
+        return fileToDelete.delete();
 
     }
 

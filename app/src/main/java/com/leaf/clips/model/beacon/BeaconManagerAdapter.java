@@ -10,8 +10,10 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
-import javax.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
+
+import javax.annotation.Nullable;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -32,7 +34,11 @@ import java.util.PriorityQueue;
  * classe android.app.Service e implementa le interfacce org.altbeacon.beacon.BeaconConsumer
  * e org.altbeacon.beacon.startup.BootstrapNotifier
  */
-public class BeaconManagerAdapter extends Service implements BeaconConsumer, BootstrapNotifier, RangeNotifier, BeaconRanger {
+public class BeaconManagerAdapter extends Service implements BeaconRanger, BeaconConsumer, BootstrapNotifier, RangeNotifier {
+
+    static{
+        Log.i("SERVICE", "STATIC SERVICE");
+    }
 
     /**
      * Riferimento alla classe che permette di gestire il rilevamento dei beacon
@@ -58,13 +64,13 @@ public class BeaconManagerAdapter extends Service implements BeaconConsumer, Boo
      * Insieme dei periodi di scan del BeaconManager
      */
 
-    Map<PeriodType, Long> periods = new HashMap<>();
+    Map<PeriodType, Long> periods;
 
     /**
      * Indica se il BeaconManager è in background o meno
      */
 
-    boolean isBackground;
+    boolean isBackground = false;
 
     /**
      * Metodo che inizializza i parametri della classe alla creazione di un’istanza
@@ -72,20 +78,21 @@ public class BeaconManagerAdapter extends Service implements BeaconConsumer, Boo
 
     @Override
     public void onCreate(){
+
+        Log.i("SERVICE", "CREATING THE SERVICE");
         super.onCreate();
-        region = new Region("MyApplicationRegion", null, null, null);
         locBinder = new LocalBinder();
-        periods = new HashMap<>();
         beaconManager = BeaconManager.getInstanceForApplication(getApplicationContext());
         beaconManager.getBeaconParsers().clear();
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(beaconLayout));
+        region = new Region("Region", null, null, null);
+        periods = new HashMap<>(100);
         setMonitorNotifier(this);
-        beaconManager.bind(this);
         BeaconManager.setRegionExitPeriod(4000);
         beaconManager.setForegroundBetweenScanPeriod(500);
         beaconManager.setForegroundScanPeriod(1000);
         beaconManager.setRangeNotifier(this);
-
+        beaconManager.bind(this);
     }
 
     /**
@@ -93,6 +100,7 @@ public class BeaconManagerAdapter extends Service implements BeaconConsumer, Boo
      */
     @Override
     public void onDestroy(){
+        Log.i("SERVICE", "DESTROYING THE SERVICE");
         super.onDestroy();
         setMonitorNotifier(null);
         try {
@@ -102,9 +110,13 @@ public class BeaconManagerAdapter extends Service implements BeaconConsumer, Boo
         }
         beaconManager.getBeaconParsers().clear();
         beaconManager.unbind(this);
+        periods.clear();
+        region = null;
+        beaconManager = null;
     }
 
     private void setMonitorNotifier(MonitorNotifier monitorNotifier) {
+        Log.i("SERVICE", "SETTING MONITOR NOTIFIER");
         beaconManager.setMonitorNotifier(monitorNotifier);
     }
 
@@ -115,6 +127,7 @@ public class BeaconManagerAdapter extends Service implements BeaconConsumer, Boo
     @Override
     public void onBeaconServiceConnect() {
         try {
+            Log.i("SERVICE", "STARTING MONITORING");
             beaconManager.startMonitoringBeaconsInRegion(region);
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -125,7 +138,7 @@ public class BeaconManagerAdapter extends Service implements BeaconConsumer, Boo
      * Questo metodo serve per far partire il Ranging dei Beacon
      */
     private void startRanging(){
-
+        Log.i("SERVICE", "STARTING RANGING");
         try {
             beaconManager.startRangingBeaconsInRegion(region);
         } catch (RemoteException e) {
@@ -164,12 +177,17 @@ public class BeaconManagerAdapter extends Service implements BeaconConsumer, Boo
      */
     @Override
     public void didDetermineStateForRegion(int i, Region region) {
-        //TO-DO
+
+        if(i==MonitorNotifier.INSIDE)
+            Log.i("BEACON_MANAGER_ADAPTER","Beacons are visible in the region");
+        else
+            Log.i("BEACON_MANAGER_ADAPTER", "No beacons are visible in the region");
     }
 
     @Override
     public void didRangeBeaconsInRegion(Collection<Beacon> collection, Region region) {
         if (collection.size() > 0) {
+            Log.i("SERVICE", "BEACONS DETECTED");
             PriorityQueue<MyBeacon> p = new PriorityQueue<>();
 
             p.clear();
@@ -178,10 +196,10 @@ public class BeaconManagerAdapter extends Service implements BeaconConsumer, Boo
                 p.add(new MyBeaconImp(oneBeacon));
             }
 
-            Intent msg = new Intent("beaconsDetected"); //TO-DO
-            msg.putExtra("beacons", p);
-            LocalBroadcastManager.getInstance(BeaconManagerAdapter.this).sendBroadcast(msg);
+            Intent msg = new Intent("beaconsDetected");
+            msg.putExtra("queueOfBeacons", p);
 
+            LocalBroadcastManager.getInstance(BeaconManagerAdapter.this).sendBroadcast(msg);
 
         }
     }
@@ -192,9 +210,9 @@ public class BeaconManagerAdapter extends Service implements BeaconConsumer, Boo
      * @param intent Intent del Service di cui si vuole fare il collegamento
      * @return IBinder Binder per effettuare il bind con il Service
      */
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        Log.i("SERVICE", "BINDING THE SERVICE");
         return locBinder;
     }
 
@@ -205,6 +223,7 @@ public class BeaconManagerAdapter extends Service implements BeaconConsumer, Boo
     @Override
     public void setBackgroundMode(boolean mode) {
         beaconManager.setBackgroundMode(mode);
+        isBackground = mode;
     }
 
     /**
@@ -226,19 +245,32 @@ public class BeaconManagerAdapter extends Service implements BeaconConsumer, Boo
      */
     @Override
     public void modifyScanPeriod(long p, PeriodType type) {
-        //TO-DO
         switch (type){
             case BACKGROUND_BETWEEN :
+            {
                 beaconManager.setBackgroundBetweenScanPeriod(p);
-                break;
+                periods.put(PeriodType.BACKGROUND_BETWEEN, p);
+            }
+            break;
             case BACKGROUND :
+            {
                 beaconManager.setBackgroundScanPeriod(p);
-                break;
+                periods.put(PeriodType.BACKGROUND, p);
+            }
+            break;
             case FOREGROUND :
+            {
                 beaconManager.setForegroundScanPeriod(p);
-                break;
+                periods.put(PeriodType.FOREGROUND, p);
+            }
+            break;
             case FOREGROUND_BETWEEN :
+            {
                 beaconManager.setForegroundBetweenScanPeriod(p);
+                periods.put(PeriodType.FOREGROUND_BETWEEN, p);
+            }
+            break;
+            default :
                 break;
 
         }
@@ -257,11 +289,14 @@ public class BeaconManagerAdapter extends Service implements BeaconConsumer, Boo
      * android.os.Binder
      */
     public class LocalBinder extends Binder {
+
         /**
          * Metodo restituisce il riferimento al Service BeaconManagerAdapter
          * @return BeaconManagerAdapter Riferimento al BeaconManagerAdapter per invocare metodi pubblici
          */
+
         public BeaconManagerAdapter getService() {
+            Log.i("SERVICE", "RETURNING THIS SERVICE");
             return BeaconManagerAdapter.this;
         }
     }

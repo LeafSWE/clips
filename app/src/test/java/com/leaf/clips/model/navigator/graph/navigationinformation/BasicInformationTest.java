@@ -21,6 +21,9 @@ public class BasicInformationTest {
         this.basicInformation = new BasicInformation("TestAction");
     }
 
+    /*
+     * TU9
+     */
     @Test
     public void testGetBasicInstruction() throws Exception {
         Assert.assertEquals("TestAction", basicInformation.getBasicInstruction());

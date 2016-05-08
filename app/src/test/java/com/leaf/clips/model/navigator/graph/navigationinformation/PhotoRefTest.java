@@ -22,14 +22,24 @@ public class PhotoRefTest {
     @Before
     public void init() {
         try {
-            this.photoRef = new PhotoRef(new URI("www.google.com"));
+            this.photoRef = new PhotoRef(1,new URI("www.google.com"));
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
     }
 
+    /*
+     * TU11
+     */
     @Test
     public void testGetPhotoUri() throws Exception {
         Assert.assertEquals(new URI("www.google.com"), photoRef.getPhotoUri());
+    }
+    /*
+     * TU11
+     */
+    @Test
+    public void testGetPhotoId() throws Exception {
+        Assert.assertEquals(1, photoRef.getId());
     }
 }

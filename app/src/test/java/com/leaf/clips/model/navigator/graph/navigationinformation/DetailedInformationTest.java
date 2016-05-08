@@ -19,7 +19,9 @@ public class DetailedInformationTest {
     public void init() throws Exception {
         this.detailedInformation = new DetailedInformation("DetailedInformation");
     }
-
+    /*
+     * TU10
+     */
     @Test
     public void testGetDetailedInformation() throws Exception {
         Assert.assertEquals("DetailedInformation", detailedInformation.getDetailedInformation());

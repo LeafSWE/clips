@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">CLIPS</string>
+    <string name="app_name" translatable="false">CLIPS</string>
+    <string name="splash_icon_desc">The app icon</string>
+    <string name="title_activity_home" translatable="false">HomeActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="menu_developer">Developer area</string>
+
+    <string name="title_activity_developer_unlocker">Developer login</string>
+    <string name="prompt_code">Please insert developer code</string>
+    <string name="action_login">Login</string>
+    <string name="title_activity_main_developer">Your logs</string>
+    <string name="title_activity_logging">New log</string>
+    <string name="dialog_title_dev_code_error">Sorry!</string>
+    <string name="dialog_dev_code_error">Wrong code.</string>
+    <string name="ok" translatable="false">Ok</string>
+    <string name="title_activity_nearby_poi">Nearby</string>
+    <string name="title_activity_log_information">Log Details</string>
 </resources>
