@@ -95,22 +95,26 @@ public class SQLiteBuildingDao implements BuildingDao, CursorConverter {
         };
         Cursor cursor = sqlDao.query(true, BuildingContract.TABLE_NAME, columns,
                 "1", null, null, null, null, null);
-        int buildingNumber = cursor.getCount();
-        PriorityQueue<BuildingTable> buildingTables = new PriorityQueue<>(buildingNumber,
-                new Comparator<BuildingTable>() {
-            @Override
-            public int compare(BuildingTable lhs, BuildingTable rhs) {
-                if (lhs.getId() > rhs.getId())
-                    return 1;
-                else if (lhs.getId() == rhs.getId())
-                    return 0;
-                else
-                    return -1;
-            }
-        });
-        for (int i = 0; i < buildingNumber; i++)
-            buildingTables.add(cursorToType(cursor));
-        return buildingTables;
+        if (cursor.getCount()>0) {
+            int buildingNumber = cursor.getCount();
+            PriorityQueue<BuildingTable> buildingTables = new PriorityQueue<>(buildingNumber,
+                    new Comparator<BuildingTable>() {
+                        @Override
+                        public int compare(BuildingTable lhs, BuildingTable rhs) {
+                            if (lhs.getId() > rhs.getId())
+                                return 1;
+                            else if (lhs.getId() == rhs.getId())
+                                return 0;
+                            else
+                                return -1;
+                        }
+                    });
+            for (int i = 0; i < buildingNumber; i++)
+                buildingTables.add(cursorToType(cursor));
+            return buildingTables;
+        } else {
+            return new PriorityQueue<>();
+        }
     }
 
     /**
@@ -133,6 +137,8 @@ public class SQLiteBuildingDao implements BuildingDao, CursorConverter {
         };
         Cursor cursor = sqlDao.query(true, BuildingContract.TABLE_NAME, columns,
                 BuildingContract.COLUMN_ID + "=" + id, null, null, null, null, null);
+        if (cursor.getCount() == 0)
+            return null;
         return cursorToType(cursor);
     }
 

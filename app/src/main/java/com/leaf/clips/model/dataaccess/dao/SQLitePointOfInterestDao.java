@@ -87,21 +87,23 @@ public class SQLitePointOfInterestDao implements PointOfInterestDao, CursorConve
                 "=" + RoiPoiContract.COLUMN_POIID + " WHERE "
                 + RegionOfInterestContract.COLUMN_MAJOR + "=" + major, null);
         int poisNumber = cursor.getCount();
-        PriorityQueue<PointOfInterestTable> pointOfInterestTables = new PriorityQueue<>(poisNumber,
-                new Comparator<PointOfInterestTable>() {
-                    @Override
-                    public int compare(PointOfInterestTable lhs, PointOfInterestTable rhs) {
-                        if (lhs.getId() > rhs.getId())
-                            return 1;
-                        else if (lhs.getId() == rhs.getId())
-                            return 0;
-                        else
-                            return -1;
-                    }
-                });
-        for (int i = 0; i < poisNumber; i++)
-            pointOfInterestTables.add(cursorToType(cursor));
-        return pointOfInterestTables;
+        if (poisNumber > 0) {
+            PriorityQueue<PointOfInterestTable> pointOfInterestTables = new PriorityQueue<>(poisNumber,
+                    new Comparator<PointOfInterestTable>() {
+                        @Override
+                        public int compare(PointOfInterestTable lhs, PointOfInterestTable rhs) {
+                            if (lhs.getId() > rhs.getId())
+                                return 1;
+                            else if (lhs.getId() == rhs.getId())
+                                return 0;
+                            else
+                                return -1;
+                        }
+                    });
+            for (int i = 0; i < poisNumber; i++)
+                pointOfInterestTables.add(cursorToType(cursor));
+            return pointOfInterestTables;
+        } else return new PriorityQueue<>();
     }
 
     /**
@@ -119,6 +121,8 @@ public class SQLitePointOfInterestDao implements PointOfInterestDao, CursorConve
         };
         Cursor cursor = sqlDao.query(true, PointOfInterestContract.TABLE_NAME, columns,
                 PointOfInterestContract.COLUMN_ID + "=" + id, null, null, null, null, null);
+        if (cursor.getCount() == 0)
+            return null;
         return cursorToType(cursor);
     }
 

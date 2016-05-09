@@ -10,11 +10,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import junit.framework.Assert;
-
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 /**
  *Classe che rappresenta un DAO per la tabella “Photo" del database locale
@@ -74,22 +72,34 @@ public class SQLitePhotoDao implements PhotoDao, CursorConverter {
                 PhotoContract.COLUMN_EDGEID,
                 PhotoContract.COLUMN_URL
         };
-        final Cursor cursor = sqlDao.query(true, PhotoContract.TABLE_NAME, columns,
-            PhotoContract.COLUMN_EDGEID + "=" + id, null, null, null, null, null);
+        Cursor cursor = sqlDao.query(true, PhotoContract.TABLE_NAME, columns,
+                PhotoContract.COLUMN_EDGEID + "=" + id, null, null, null, null, null);
 
-        short photoNumber = (short)cursor.getCount();
+        final int photoNumber = cursor.getCount();
 
-        Assert.assertEquals(3, photoNumber);
-        List<PhotoTable> photoTables = new LinkedList<>();
+        final PriorityQueue<PhotoTable> photoTables;
 
+        if (photoNumber > 0) {
+            photoTables = new PriorityQueue<>(photoNumber,
+                    new Comparator<PhotoTable>() {
+                        @Override
+                        public int compare(PhotoTable lhs, PhotoTable rhs) {
+                            if (lhs.getId() > rhs.getId())
+                                return 1;
+                            else if (lhs.getId() == rhs.getId())
+                                return 0;
+                            else
+                                return -1;
+                        }
+                    });
 
-
-        for (int i = 0; i < photoNumber; i++){
-            PhotoTable pt = cursorToType(cursor);
-            photoTables.add(pt);
+            for (int i = 0; i < photoNumber; i++) {
+                photoTables.add(cursorToType(cursor));
+            }
+            return photoTables;
         }
-
-        return photoTables;
+        else
+            return new PriorityQueue<PhotoTable>();
     }
 
     /**
@@ -106,6 +116,8 @@ public class SQLitePhotoDao implements PhotoDao, CursorConverter {
         };
         Cursor cursor = sqlDao.query(true, PhotoContract.TABLE_NAME, columns,
                 PhotoContract.COLUMN_ID + "=" + id, null, null, null, null, null);
+        if (cursor.getCount() == 0)
+            return null;
         return cursorToType(cursor);
     }
 
