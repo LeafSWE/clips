@@ -79,13 +79,13 @@ public class SQLiteEdgeDao implements EdgeDao, CursorConverter {
     public Collection<EdgeTable> findAllEdgesOfBuilding(int major){
         String[] columns = new String[]{
                 EdgeContract.TABLE_NAME + "." + EdgeContract.COLUMN_ID,
+                EdgeContract.TABLE_NAME + "." + EdgeContract.COLUMN_STARTROI,
+                EdgeContract.TABLE_NAME + "." + EdgeContract.COLUMN_ENDROI,
                 EdgeContract.TABLE_NAME + "." + EdgeContract.COLUMN_ACTION,
                 EdgeContract.TABLE_NAME + "." + EdgeContract.COLUMN_COORDINATE,
                 EdgeContract.TABLE_NAME + "." + EdgeContract.COLUMN_DISTANCE,
                 EdgeContract.TABLE_NAME + "." + EdgeContract.COLUMN_LONGDESCRIPTION,
-                EdgeContract.TABLE_NAME + "." + EdgeContract.COLUMN_TYPEID,
-                EdgeContract.TABLE_NAME + "." + EdgeContract.COLUMN_STARTROI,
-                EdgeContract.TABLE_NAME + "." + EdgeContract.COLUMN_ENDROI
+                EdgeContract.TABLE_NAME + "." + EdgeContract.COLUMN_TYPEID
         };
         StringBuilder stringBuilder = new StringBuilder(columns[0]);
         for (String string : columns) {
@@ -97,7 +97,7 @@ public class SQLiteEdgeDao implements EdgeDao, CursorConverter {
             RegionOfInterestContract.TABLE_NAME + "." + RegionOfInterestContract.COLUMN_ID +
             " OR " + EdgeContract.TABLE_NAME + "." + EdgeContract.COLUMN_ENDROI + "=" +
             RegionOfInterestContract.TABLE_NAME + "." + RegionOfInterestContract.COLUMN_ID + ") AND "
-            + RegionOfInterestContract.COLUMN_MAJOR + "=" + major, null);
+            + RegionOfInterestContract.TABLE_NAME + "." + RegionOfInterestContract.COLUMN_MAJOR + "=" + major, null);
         int edgeNumber = cursor.getCount();
         PriorityQueue<EdgeTable> edgeTables = new PriorityQueue<>(edgeNumber,
                 new Comparator<EdgeTable>() {
