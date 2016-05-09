@@ -63,7 +63,7 @@ public class PhotoService {
     /**
      * Metodo per recuperare tutte le foto di un Edge dal database locale
      * @param id Identificativo dell'Edge di cui si vuole recuperare tutte le foto
-     * @return  Collection<PhotoRef>
+     * @return  Collection<PhotoRef> Tutte le foto di uno specifico Edge
      */
     public Collection<PhotoRef> findAllPhotosOfEdge(int id) {
         Collection<PhotoTable> tables = sqlitePhotoDao.findAllPhotosOfEdge(id);
@@ -80,7 +80,7 @@ public class PhotoService {
     /**
      * Metodo per recuperare una foto ricercandola nel database locale
      * @param id Identificativo numerico della foto da recuperare
-     * @return  PhotoRef
+     * @return  PhotoRef La foto richiesta
      */
     public PhotoRef findPhoto(int id) {
         PhotoTable photoTable = sqlitePhotoDao.findPhoto(id);
@@ -91,7 +91,7 @@ public class PhotoService {
     /**
      * Metodo per la costruzione di oggetto PhotoRef a partire da un PhotoTable
      * @param photoTable Oggetto contenente le informazioni della foto
-     * @return  PhotoRef
+     * @return  PhotoRef La foto costruita dopo aver recuperato tutte le informazioni necessarie
      */
     private PhotoRef fromTableToBo(PhotoTable photoTable) {
         String uri_s = photoTable.getUrl();

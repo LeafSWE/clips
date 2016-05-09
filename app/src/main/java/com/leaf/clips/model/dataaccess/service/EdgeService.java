@@ -35,8 +35,6 @@ import java.util.List;
  *
  */
 
-// TODO: 5/6/16 Controllare poiché ho avuto un conflitto su questo file 
-
 public class EdgeService {
 
 
@@ -148,7 +146,7 @@ public class EdgeService {
      * Metodo per recuperare le informazioni di tutti gli Edge di un edificio, dato il major
      * dell'edificio
      * @param major Major dell'edificio
-     * @return  Collection<EnrichedEdge>
+     * @return  Collection<EnrichedEdge> Le informazioni su tutti gli Edge dell'edificio
      */
     public Collection<EnrichedEdge> findAllEdgesOfBuilding(int major) {
         Collection<EdgeTable> tables = sqliteEdgeDao.findAllEdgesOfBuilding(major);
@@ -165,18 +163,17 @@ public class EdgeService {
     /**
      * Metodo per recuperare un Edge ricercandolo nel database locale
      * @param id Identificativo numerico dell'Edge da ricercare
-     * @return  EnrichedEdge
+     * @return  EnrichedEdge L'Edge richiesto
      */
     public EnrichedEdge findEdge(int id) {
         EdgeTable table = sqliteEdgeDao.findEdge(id);
-        EnrichedEdge edge = fromTableToBo(table);
-        return edge;
+        return fromTableToBo(table);
     }
 
     /**
      * Metodo per la costruzione di oggetto EnrichedEdge a partire da un EdgeTable
      * @param edgeTable Oggetto contenente le informazioni di un Edge
-     * @return  EnrichedEdge
+     * @return  EnrichedEdge L'Edge costruito dopo aver recuperato tutte le informazioni necessarie
      */
     private EnrichedEdge fromTableToBo(EdgeTable edgeTable) {
         // informazioni recuperate da EdgeTable
@@ -218,12 +215,14 @@ public class EdgeService {
                 photoInfo);
 
         // costruisco e ritorno l'edge del tipo specificato
-        if (typeName.equals("default"))
-            return new DefaultEdge(startROI, endROI, distance, coordinate, id, navInfo);
-        else if (typeName.equals("stairs"))
-            return new StairEdge(startROI, endROI, distance, coordinate, id, navInfo);
-        else //if (typeName.equals("elevator"))
-            return new ElevatorEdge(startROI, endROI, distance, coordinate, id, navInfo);
+        switch (typeName) {
+            case "elevator":
+                return new ElevatorEdge(startROI, endROI, distance, coordinate, id, navInfo);
+            case "stairs":
+                return new StairEdge(startROI, endROI, distance, coordinate, id, navInfo);
+            default:
+                return new DefaultEdge(startROI, endROI, distance, coordinate, id, navInfo);
+        }
     }
 
 }

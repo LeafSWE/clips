@@ -129,7 +129,8 @@ public class PointOfInterestService {
      * Metodo per recuperare le informazioni di tutti i PointOfInterest di un edificio,
      * dato il major dell'edificio
      * @param major Major dell'edificio
-     * @return  Collection<PointOfInterest>
+     * @return  Collection<PointOfInterest> Le informazioni su tutti i PointOfInterest di un
+     * edificio
      */
     public Collection<PointOfInterest> findAllPointsWithMajor(int major) {
         Collection<PointOfInterestTable> tables =
@@ -148,7 +149,7 @@ public class PointOfInterestService {
      * Metodo per recuperare gli identificativi di tutte le RegionOfInterest associate ad uno
      * specifico PointOfInterest
      * @param poiId Identificativo numerico del PointOfInterest
-     * @return int[] Insieme degli identificativi di tutte le RegionOfInterest associate ad un POI
+     * @return  int[] Insieme degli identificativi di tutte le RegionOfInterest associate ad un POI
      */
     public int[] findAllRegionsWithPoi(int poiId) {
         return sqliteRoiPoiDao.findAllRegionsWithPoi(poiId);
@@ -157,7 +158,7 @@ public class PointOfInterestService {
     /**
      * Metodo per recuperare un PointOfInterest ricercandolo nel database locale
      * @param id Identificativo numerico del PointOfInterest da recuperare
-     * @return  PointOfInterest
+     * @return  PointOfInterest Il PointOfInterest richiesto
      */
     public PointOfInterest findPointOfInterest(int id) {
         PointOfInterestTable table = sqlitePointOfInterestDao.findPointOfInterest(id);
@@ -167,7 +168,8 @@ public class PointOfInterestService {
     /**
      * Metodo per la costruzione di oggetto PointOfInterest a partire da un PointOfInterestTable
      * @param pointOfInterestTable Oggetto contenente le informazioni del PointOfInterest
-     * @return  PointOfInterest
+     * @return  PointOfInterest Il PointOfInterest costruito dopo aver recuperato tutte le
+     * informazioni necessarie
      */
     private PointOfInterest fromTableToBo(PointOfInterestTable pointOfInterestTable) {
         // recupero le informazioni dall'oggetto PointOfInterestTable
