@@ -24,7 +24,6 @@ public interface Navigator {
      * Metodo che calcola un percorso tra due RegionOfInterest viste come vertici di un grafo MapGraph utilizzando un oggetto PathFinder. Il punto di partenza e il punto di arrivo sono i parametri richiesti in input dal metodo mentre il grafo è un campo dati. Viene lanciata un eccezione di tipo NoGraphSetException nel caso in cui non sia settato alcun grafo.
      * @param startRoi Punto di partenza del percorso.
      * @param endPoi Punto di arrivo del percorso.
-     * @return  void
      */
     void calculatePath(RegionOfInterest startRoi, PointOfInterest endPoi) throws NavigationExceptions;
 
@@ -37,7 +36,6 @@ public interface Navigator {
     /**
      * Metodo per settare il grafo sul quale calcolare il percorso.
      * @param graph Grafo sul quale si vogliono calcolare dei percorsi.
-     * @return  void
      */
     void setGraph(MapGraph graph);
 
