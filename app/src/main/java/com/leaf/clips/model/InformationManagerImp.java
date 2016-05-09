@@ -265,7 +265,22 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         super.removeListener(listener);
     }
 
-
+    // TODO aggiungere asta/travis/test
+    /**
+     * Metodo che ritorna tutti i PointOfInterest appartenenti ad una certa categoria
+     * @param category Nome della categoria di cui si vogliono recupoerare tutti i PointOfInterest
+     * @return Collection<PointOfInterest>
+     */
+    @Override
+    public Collection<PointOfInterest> getPOIsByCategory(String category) {
+        Collection<PointOfInterest> pois = map.getAllPOIs();
+        Collection<PointOfInterest> poisWithCategory = new LinkedList<>();
+        for (PointOfInterest poi:pois) {
+            if (poi.getCategory().equals(category))
+                poisWithCategory.add(poi);
+        }
+        return poisWithCategory;
+    }
 
     private boolean isDeveloper(){
         return new SettingImp(getContext()).isDeveloper();
