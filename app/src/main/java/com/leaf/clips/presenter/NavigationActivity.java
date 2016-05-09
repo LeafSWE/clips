@@ -2,7 +2,7 @@ package com.leaf.clips.presenter;
 
 /**
  * @author Andrea Tombolato
- * @version 0.01
+ * @version 0.03
  * @since 0.00
  */
 
@@ -23,6 +23,7 @@ public class NavigationActivity extends AppCompatActivity {
     /**
      * Riferimento utilizzato per accedere alle informazioni trattate dal model
      */
+    //TODO: Serve NavigationManager!!
     @Inject
     InformationManager informationManager;
 
@@ -33,10 +34,10 @@ public class NavigationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = new NavigationViewImp(this);
+        ((MyApplication)getApplication()).getInfoComponent().inject(this);
 
         handleIntent(getIntent());
 
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
         //TODO retrieve path instruction
     }
 
@@ -47,8 +48,9 @@ public class NavigationActivity extends AppCompatActivity {
     }
 
     /**
-     * Gestisce l'Intent lanciato dalla ricerca nominativa di un POI
-     * @param intent
+     * Metodo che gestisce l'Intent lanciato dalla ricerca nominativa di un POI.
+     * @param intent: Intent attraverso il quale è stata creata la corrente istanza di
+     *              NavigationActivity.
      */
     private void handleIntent(Intent intent) {
 
@@ -59,7 +61,8 @@ public class NavigationActivity extends AppCompatActivity {
     }
 
     /**
-     * Lancia un avviso in caso il sistema rilevi che l'utente è uscito dal percorso consigliato
+     * Metodo che lancia un avviso in caso il sistema rilevi che l'utente è uscito dal percorso
+     * consigliato.
      */
     public void pathError(){
         //TODO
@@ -74,7 +77,8 @@ public class NavigationActivity extends AppCompatActivity {
     }
 
     /**
-     * Avvia l'Activity deputata a spiegare l'istruzione selezionata dall'utente con maggior dettaglio
+     * Metodo che avvia l'Activity deputata a spiegare l'istruzione selezionata dall'utente con
+     * maggior dettaglio.
      * @param instructionPosition la posizione, nella lista, dell'istruzione selezionata
      */
     public void showDetailedInformation(int instructionPosition){
@@ -82,7 +86,7 @@ public class NavigationActivity extends AppCompatActivity {
     }
 
     /**
-     * Interrompe la navigazione in corso
+     * Metodo che interrompe la navigazione in corso.
      */
     public void stopNavigation(){
         //TODO
