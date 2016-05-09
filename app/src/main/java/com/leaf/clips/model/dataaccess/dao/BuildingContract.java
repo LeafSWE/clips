@@ -53,7 +53,7 @@ public class BuildingContract implements BaseColumns{
     /**
      * Valore della colonna mapSize. Valore di default "size"
      */
-    public final static String COLUMN_MAPSIZE="size";
+    public final static String COLUMN_MAPSIZE="mapSize";
 
     /**
      * Valore della colonna major. Valore di default "major"
