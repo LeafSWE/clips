@@ -151,7 +151,7 @@ public class SQLiteEdgeDaoTest extends InstrumentationTestCase {
         values[1].put(RegionOfInterestContract.COLUMN_ID, startRoi);
         values[1].put(RegionOfInterestContract.COLUMN_MAJOR, major);
         values[2].put(RegionOfInterestContract.COLUMN_ID, endRoi);
-        values[2].put(RegionOfInterestContract.COLUMN_MAJOR, major);
+        values[2].put(RegionOfInterestContract.COLUMN_MINOR, 2);
         return values;
     }
 
@@ -197,7 +197,7 @@ public class SQLiteEdgeDaoTest extends InstrumentationTestCase {
         databaseInsert(valuesAndRois(5, 5, 6, 667));
         databaseInsert(valuesAndRois(6, 6, 7, 667));
         Collection<EdgeTable> edgeTables = edgeDao.findAllEdgesOfBuilding(666);
-        Assert.assertEquals(5, edgeTables.size());
+        Assert.assertEquals(4, edgeTables.size());
     }
 
     @Test
