@@ -35,7 +35,8 @@ public class ServiceHelper {
      * @param remoteDaoFactory Un oggetto RemoteDaoFactory necessario per la
      *                         creazione degli oggetti DAO remoti
      * @param dbURL L'URL del database remoto
-     * @return  DatabaseService
+     * @return  DatabaseService L'oggetto DatabaseService costruito dopo aver recuperato tutte le
+     * informazioni necessarie
      */
     public static DatabaseService getService(SQLiteDaoFactory sqliteDaoFactory,
                                              RemoteDaoFactory remoteDaoFactory, String dbURL) {

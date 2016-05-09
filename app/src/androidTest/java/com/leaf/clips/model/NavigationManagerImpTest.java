@@ -5,6 +5,7 @@ package com.leaf.clips.model;
  * @since 0.00
  */
 
+import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
@@ -24,6 +25,8 @@ import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoRef;
 import com.leaf.clips.model.navigator.graph.vertex.VertexImp;
 import com.leaf.clips.model.usersetting.Setting;
 import com.leaf.clips.model.usersetting.SettingImp;
+
+import junit.framework.Assert;
 
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.junit.Before;
@@ -332,6 +335,91 @@ public class NavigationManagerImpTest {
          */
         public PhotoRefMock(int id, URI source) {
             super(id, source);
+        }
+    }
+
+    private NavigationManagerImpExtended navmanager;
+
+    private Context context;
+
+    private MapGraph graph;
+
+    private InformationListener listener;
+
+    @Before
+    public void setUp() {
+        context = InstrumentationRegistry.getTargetContext();
+        graph = new MockMapGraph();
+        navmanager = new NavigationManagerImpExtended(graph, context);
+        listener = new MockInformationListener();
+    }
+
+    @Test
+    public void TestAddListener() {
+        setUp();
+        navmanager.addListener(listener);
+        Collection<InformationListener> collection = navmanager.getAllListener();
+        Assert.assertTrue(collection.contains(listener));
+    }
+
+    @Test
+    public void TestRemoveListener() {
+        setUp();
+        Collection<Listener> collection = navmanager.getAllRawListener();
+        collection.add(listener);
+        Assert.assertTrue(collection.contains(listener));
+        navmanager.removeListener(listener);
+        Assert.assertTrue(!collection.contains(listener));
+    }
+
+    class NavigationManagerImpExtended extends NavigationManagerImp{
+
+        public NavigationManagerImpExtended(MapGraph graph, Context context) {
+            super(graph, context);
+        }
+
+        public Collection<InformationListener> getAllListener(){
+            Collection<InformationListener> collection = new LinkedList<>();
+            for(Listener listener : listeners){
+                collection.add((InformationListener)listener);
+            }
+            return collection;
+        }
+
+        public Collection<Listener> getAllRawListener(){
+            return listeners;
+        }
+    }
+
+    class MockMapGraph extends MapGraph {
+
+    }
+
+    class MockInformationListener implements InformationListener {
+
+        @Override
+        public void onDatabaseLoaded() {
+
+        }
+
+        @Override
+        public boolean onLocalMapNotFound() {
+            return false;
+        }
+
+        @Override
+        public void onRemoteMapNotFound() {
+
+        }
+
+        @Override
+        public void cannotRetrieveRemoteMapDetails() {
+
+        }
+
+        @Override
+        public boolean noLastMapVersion() {
+            return false;
         }
     }
 

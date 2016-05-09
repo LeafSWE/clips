@@ -134,7 +134,7 @@ public class BuildingService implements DatabaseService {
     /**
      * Metodo per recuperare le informazioni di tutte le mappe degli edifici
      * presenti nel database locale
-     * @return  Collection<BuildingTable>
+     * @return  Collection<BuildingTable> Le informazioni sulle mappe degli edifici già scaricate
      */
     @Override
     public Collection<BuildingTable> findAllBuildings() {
@@ -144,7 +144,8 @@ public class BuildingService implements DatabaseService {
     /**
      * Metodo per recuperare le informazioni di tutte le mappe degli edifici
      * presenti nel database remoto
-     * @return  Collection<BuildingTable>
+     * @return  Collection<BuildingTable> Le informazioni sulle mappe degli edifici supportati
+     * dall'applicazione
      */
     @Override
     public Collection<BuildingTable> findAllRemoteBuildings() throws IOException {
@@ -188,7 +189,7 @@ public class BuildingService implements DatabaseService {
     /**
      * Metodo per recuperare la mappa di un edificio ricercandola nel database locale
      * @param major Major dell'edificio
-     * @return  BuildingMap
+     * @return  BuildingMap La mappa dell'edificio richiesto
      */
     @Override
     public BuildingMap findBuildingByMajor(int major) {
@@ -199,7 +200,7 @@ public class BuildingService implements DatabaseService {
     /**
      * Metodo per recuperare la mappa di un edificio ricercandola nel database remoto
      * @param major Major dell'edificio
-     * @return  BuildingMap
+     * @return  BuildingMap La mappa dell'edificio richiesto
      */
     @Override
     public BuildingMap findRemoteBuildingByMajor(int major) throws IOException {
@@ -210,7 +211,7 @@ public class BuildingService implements DatabaseService {
     /**
      * Metodo per la costruzione di oggetto BuildingMap a partire da un BuildingTable
      * @param buildingTable Oggetto contenente le informazioni dell'edificio
-     * @return  BuildingMap
+     * @return  BuildingMap La mappa costruita dopo aver recuperato tutte le informazioni necessarie
      */
     private BuildingMap fromTableToBo(BuildingTable buildingTable) {
         // recupero tutte le informazioni dall'oggetto BuildingTable
@@ -322,7 +323,7 @@ public class BuildingService implements DatabaseService {
     /**
      * Metodo per verificare la presenza di una mappa di un edificio nel database locale
      * @param major Major dell'edificio
-     * @return  boolean
+     * @return  boolean True se la mappa è presente nel database locale, false in caso contrario
      */
     @Override
     public boolean isBuildingMapPresent(int major) {
@@ -332,7 +333,7 @@ public class BuildingService implements DatabaseService {
     /**
      * Metodo per verificare la presenza di una mappa di un edificio nel database remoto
      * @param major Major dell'edificio
-     * @return boolean
+     * @return boolean True se la mappa è presente nel database remoto, false in caso contrario
      */
     @Override
     public boolean isRemoteMapPresent(int major) throws IOException {
@@ -362,7 +363,8 @@ public class BuildingService implements DatabaseService {
     /**
      * Metodo per verificare se la mappa di un edificio è aggiornata all'ultima versione
      * @param major Major dell'edificio
-     * @return  boolean
+     * @return  boolean True se la mappa è aggiornata all'ultima versione disponibile, false in
+     * caso contrario
      */
     @Override
     public boolean isBuildingMapUpdated(int major) throws IOException {
