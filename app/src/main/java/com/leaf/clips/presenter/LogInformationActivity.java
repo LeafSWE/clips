@@ -3,8 +3,11 @@ package com.leaf.clips.presenter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.view.LogInformationView;
 import com.leaf.clips.view.LogInformationViewImp;
+
+import javax.inject.Inject;
 
 public class LogInformationActivity extends AppCompatActivity {
 
@@ -12,7 +15,8 @@ public class LogInformationActivity extends AppCompatActivity {
     /**
      * Oggetto del Model per la gestione dei log
      */
-    //private InformationManager infoManager;
+    @Inject
+    InformationManager infoManager;
 
     /**
      * View associata a tale Activity
@@ -26,6 +30,8 @@ public class LogInformationActivity extends AppCompatActivity {
         //TODO: Leggere il log passato dall'Intendt e passarlo alla view
         super.onCreate(savedInstanceState);
         this.view = new LogInformationViewImp(this);
+
+        ((MyApplication)getApplication()).getInfoComponent().inject(this);
     }
 
     /**

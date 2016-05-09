@@ -1,11 +1,14 @@
 package com.leaf.clips.di.component;
 
+import com.leaf.clips.di.modules.AppModule;
 import com.leaf.clips.di.modules.DatabaseModule;
 import com.leaf.clips.di.modules.InfoModule;
-import com.leaf.clips.di.modules.AppModule;
 import com.leaf.clips.di.modules.SettingModule;
 import com.leaf.clips.presenter.DeveloperUnlockerActivity;
 import com.leaf.clips.presenter.HomeActivity;
+import com.leaf.clips.presenter.LogInformationActivity;
+import com.leaf.clips.presenter.MainDeveloperActivity;
+import com.leaf.clips.presenter.MainDeveloperPresenter;
 import com.leaf.clips.presenter.NavigationActivity;
 import com.leaf.clips.presenter.NearbyPoiActivity;
 import com.leaf.clips.presenter.PoiCategoryActivity;
@@ -38,4 +41,7 @@ public interface InfoComponent {
     void inject(PoiCategoryActivity poiCategoryActivity);
     void inject(NearbyPoiActivity nearbyPoiActivity);
     void inject(NavigationActivity navigationActivity);
+    void inject(MainDeveloperPresenter mainDeveloperPresenter);
+    void inject(MainDeveloperActivity mainDeveloperActivity);
+    void inject(LogInformationActivity logInformationActivity);
 }
