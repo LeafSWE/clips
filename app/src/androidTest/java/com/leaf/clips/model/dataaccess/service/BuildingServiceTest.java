@@ -1,6 +1,9 @@
 package com.leaf.clips.model.dataaccess.service;
 
+import com.google.gson.JsonObject;
+
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import android.support.test.InstrumentationRegistry;
@@ -57,6 +60,8 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.Collection;
 
 /**
  * @author Davide Castello
@@ -161,6 +166,7 @@ public class BuildingServiceTest {
     private String dbURL;
     private SQLiteDaoFactory sqLiteDaoFactory;
     private RemoteDaoFactory remoteDaoFactory;
+    private String[] columns;
 
     private EdgeService edgeService;
     private PhotoService photoService;
@@ -269,25 +275,169 @@ public class BuildingServiceTest {
         Assert.assertNotNull(remoteBuildingDao);
         buildingService = new BuildingService(dbURL, sqLiteBuildingDao, remoteBuildingDao,
                 roiService, poiService, edgeService);
+
+        columns = new String[]{
+                BuildingContract.COLUMN_ADDRESS,
+                BuildingContract.COLUMN_DESCRIPTION,
+                BuildingContract.COLUMN_ID,
+                BuildingContract.COLUMN_MAPVERSION,
+                BuildingContract.COLUMN_NAME,
+                BuildingContract.COLUMN_OPENINGHOURS,
+                BuildingContract.COLUMN_MAPSIZE,
+                BuildingContract.COLUMN_MAJOR,
+                BuildingContract.COLUMN_UUID
+        };
+        Assert.assertNotNull(columns);
     }
 
-    private void insertBuilding(int id, int major, int roi1_id, int roi2_id, int poi_id, int cat_id, int edgeType_id, int edge_id, int photo_id) {
-        sqLiteBuildingDao.insertBuilding(new BuildingTable(id, "UUID", major, "name", "d", "o", "a", 1, "s"));
+    private void insertBuilding(int id, int major, int mapVersion, int roi1_id, int roi2_id, int poi_id, int cat_id, int edgeType_id, int edge_id, int photo_id) {
+        sqLiteBuildingDao.insertBuilding(new BuildingTable(id, "UUID", major, "name", "d", "o", "a", mapVersion, "s"));
         sqLiteRoiDao.insertRegionOfInterest(new RegionOfInterestTable(roi1_id, "UUID", major, 1));
         sqLiteRoiDao.insertRegionOfInterest(new RegionOfInterestTable(roi2_id, "UUID", major, 2));
         sqLiteCategoryDao.insertCategory(new CategoryTable(cat_id, "Aule"));
-        sqLitePoiDao.insertPointOfInterest(new PointOfInterestTable("d", poi_id, "n", 1));
+        sqLitePoiDao.insertPointOfInterest(new PointOfInterestTable("d", poi_id, "n", cat_id));
         sqLiteRoiPoiDao.insertRoiPoi(new RoiPoiTable(roi1_id, poi_id));
+        sqLiteRoiPoiDao.insertRoiPoi(new RoiPoiTable(roi2_id, poi_id));
         sqLiteEdgeTypeDao.insertEdgeType(new EdgeTypeTable(edgeType_id, "A"));
         sqLiteEdgeDao.insertEdge(new EdgeTable(edge_id, roi1_id, roi2_id, 4.0, "180", edgeType_id, "a", "d"));
         sqLitePhotoDao.insertPhoto(new PhotoTable(photo_id, "url", edge_id));
     }
 
+    /**
+     * Viene testato che sia possibile eliminare una BuildingMap dal database locale,
+     * recuperarne una o tutte quelle presenti nel database locale.
+     */
+
     @Test
-    public void should() throws Exception {
+    public void shouldDeleteABuilding() throws Exception {
         setUp();
-        insertBuilding(1, 666, 2, 3, 4, 5, 6, 7, 8);
+        insertBuilding(1, 666, 1, 2, 3, 4, 5, 6, 7, 8);
+        // controllo che sia stata inserita correttamente
         BuildingMap map = buildingService.findBuildingByMajor(666);
+
+        buildingService.deleteBuilding(map);
+
+        Cursor cursor = database.query(true, BuildingContract.TABLE_NAME, columns,
+                BuildingContract.COLUMN_ID + "=\"1\"", null, null, null, null, null);
+        Assert.assertEquals(0, cursor.getCount());
     }
 
+    @Test
+    public void shouldRetrieveABuilding() throws Exception {
+        setUp();
+        int id = 1;
+        int major = 666;
+        insertBuilding(id, major, 1, 2, 3, 4, 5, 6, 7, 8);
+        BuildingMap map = buildingService.findBuildingByMajor(major);
+        Assert.assertEquals(map.getId(), id);
+    }
+
+    @Test
+    public void shouldRetrieveAllBuildings() throws Exception {
+        setUp();
+        int id1 = 1;
+        int major1 = 222;
+        int id2 = 2;
+        int major2 = 666;
+        insertBuilding(id1, major1, 1, 2, 3, 4, 5, 6, 7, 8);
+        insertBuilding(id2, major2, 1, 9, 10, 11, 12, 13, 14, 15);
+
+        Collection<BuildingTable> maps = buildingService.findAllBuildings();
+        Assert.assertEquals(maps.size(), 2);
+    }
+
+    /**
+     * Viene testato che, dato un oggetto JsonObject che possiede gli stessi valori di un oggetto
+     * BuildingTable, sia possibile costruire un oggetto BuildingTable e inserirlo nel database locale.
+     */
+    @Test
+    public void shouldCreateABuildingTableAndInsertItInTheDB() throws Exception {
+        setUp();
+        int id = 1;
+        int major = 666;
+        JsonObject js = new JsonObject();
+        js.addProperty("id", id);
+        js.addProperty("uuid", "UUID");
+        js.addProperty("major", major);
+        js.addProperty("name", "Name");
+        js.addProperty("description", "Description");
+        js.addProperty("openingHours", "08:00-18:00");
+        js.addProperty("address", "Address");
+        js.addProperty("mapVersion", 1);
+        js.addProperty("mapSize", "42 MB");
+        buildingService.convertAndInsert(js);
+
+        BuildingTable table = sqLiteBuildingDao.findBuildingById(id);
+        Assert.assertEquals(table.getMajor(), major);
+    }
+
+    /**
+     * Viene testato che, dato il major di un edificio, sia possibile verificare la
+     * presenza della BuildingMap nel database locale, verificare se è aggiornata
+     * all'ultima versione disponibile e aggiornarla.
+     */
+    @Test
+    public void shouldVerifyMapPresence() throws Exception {
+        setUp();
+        Assert.assertEquals(false, buildingService.isBuildingMapPresent(222));
+        int major = 666;
+        insertBuilding(1, major, 1, 2, 3, 4, 5, 6, 7, 8);
+        Assert.assertEquals(true, buildingService.isBuildingMapPresent(major));
+    }
+
+    @Test
+    public void shouldVerifyIfMapIsUpdated() throws Exception {
+        setUp();
+        int major = 666;
+        insertBuilding(1, major, 1, 2, 3, 4, 5, 6, 7, 8);
+        Assert.assertEquals(true, buildingService.isBuildingMapPresent(major));
+
+        Assert.assertEquals(true, buildingService.isBuildingMapUpdated(major));
+    }
+
+    @Test
+    public void shouldUpdateMap() throws Exception {
+        setUp();
+        int major = 666;
+        int oldMapVersion = 0;
+        int newMapVersion = 1;
+        insertBuilding(1, major, oldMapVersion, 2, 3, 4, 5, 6, 7, 8);
+
+        buildingService.updateBuildingMap(major);
+
+        BuildingMap map = buildingService.findBuildingByMajor(major);
+        Assert.assertEquals(newMapVersion, map.getVersion());
+    }
+
+    /**
+     * Viene testato che sia possibile verificare la presenza sul database remoto
+     * della mappa di un edificio
+     */
+    @Test
+    public void shouldVerifyRemoteMapPresence() throws Exception {
+        setUp();
+        Assert.assertEquals(true, buildingService.isRemoteMapPresent(666));
+        Assert.assertEquals(false, buildingService.isRemoteMapPresent(222));
+    }
+
+
+    /**
+     * Viene testato che sia possibile recuperare una BuildingMap dal database remoto o
+     * le informazioni di tutte quelle presenti nel database remoto.
+     */
+    @Test
+    public void shouldRetrieveARemoteMap() throws Exception {
+        setUp();
+        int major = 666;
+        BuildingMap downloadedMap = buildingService.findRemoteBuildingByMajor(major);
+        Assert.assertNotNull(downloadedMap);
+        Assert.assertEquals(downloadedMap.getName(), "Torre Archimede");
+    }
+
+    @Test
+    public void shouldRetrieveAllRemoteBuildingsInformation() throws Exception {
+        setUp();
+        Collection<BuildingTable> tables = buildingService.findAllRemoteBuildings();
+        Assert.assertEquals(tables.size(), 1);
+    }
 }
