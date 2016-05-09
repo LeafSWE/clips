@@ -155,6 +155,6 @@ public class PhotoServiceTest {
         photoService.convertAndInsert(js);
 
         PhotoRef ref = photoService.findPhoto(1);
-        Assert.assertNotNull(ref);
+        Assert.assertEquals("myUrl", ref.getPhotoUri().toString());
     }
 }
