@@ -1,8 +1,8 @@
 package com.leaf.clips.model.navigator;
 /**
  * @author Eduard Bicego
- * @version 0.01
- * @since 0.00
+ * @version 0.02
+ * @since 0.01
  */
 
 import com.leaf.clips.model.beacon.MyBeacon;
@@ -12,6 +12,7 @@ import com.leaf.clips.model.navigator.graph.edge.EnrichedEdge;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * Classe che rappresenta la mappa di un edificio con tutte le informazioni ad esso associate
@@ -139,7 +140,7 @@ public class BuildingMapImp implements BuildingMap {
      */
     @Override
     public Collection<String> getAllPOIsCategories() {
-        Collection<String> result = new ArrayList<>();
+        Collection<String> result = new HashSet<>();
         for (PointOfInterest poi : this.pois) {
             result.add(poi.getCategory());
         }

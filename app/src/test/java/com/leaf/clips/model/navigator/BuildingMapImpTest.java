@@ -1,8 +1,8 @@
 package com.leaf.clips.model.navigator;
 /**
  * @author Eduard Bicego
- * @version 0.01
- * @since 0.00
+ * @version 0.02
+ * @since 0.01
  */
 import com.leaf.clips.BuildConfig;
 import com.leaf.clips.model.beacon.MyBeacon;
@@ -42,31 +42,23 @@ public class BuildingMapImpTest {
     private Collection<PointOfInterest> fakeDifferentAllNearbyPOIs =
                                                             new ArrayList<PointOfInterest>();
 
-    @Mock
-    private EnrichedEdge mockEdge;
+    @Mock EnrichedEdge mockEdge;
 
-    @Mock
-    private RegionOfInterest mockROI;
+    @Mock RegionOfInterest mockROI;
 
-    @Mock
-    private PointOfInterest mockPOI;
+    @Mock PointOfInterest mockPOI;
 
-    @Mock
-    private PointOfInterest mockPOI2;
+    @Mock PointOfInterest mockPOI2;
 
-    @Mock
-    private PointOfInterest mockNearPOI;
+    @Mock PointOfInterest mockNearPOI;
 
-    @Mock
-    private BuildingInformation mockBuildingInformation;
+    @Mock BuildingInformation mockBuildingInformation;
 
-    private BuildingMapImp buildingMapImp;
+    BuildingMapImp buildingMapImp;
 
-    @Mock
-    private MyBeacon mockBeaconTrue;
+    @Mock MyBeacon mockBeaconTrue;
 
-    @Mock
-    private MyBeacon mockBeaconFalse;
+    @Mock MyBeacon mockBeaconFalse;
 
     @Before
     public void setUp() throws Exception {
@@ -87,11 +79,46 @@ public class BuildingMapImpTest {
         when(mockPOI.getName()).thenReturn(FAKE_POI_NAME);
         when(mockPOI2.getName()).thenReturn(FAKE_POI_NAME);
 
+        when(mockBuildingInformation.getAddress()).thenReturn("FakeAddress");
+
         buildingMapImp = new BuildingMapImp(fakeEnrichedEdgeCollection, FAKE_ID, FAKE_VERSION,
                                             fakePoiCollection, fakeRoiCollection,
                                             mockBuildingInformation, FAKE_SIZE);
     }
 
+    /**
+     * TU5
+     * Viene testato che utilizzando un oggetto BuildingMapImp sia possibile accedere alle
+     * informazioni dell'edificio, alla versione della mappa della mappa e al suo id all'interno
+     * del database, e alle collezioni di PointOfInterest, RegionOfInterest e EnrichedEdge che contiene
+     * @throws Exception
+     */
+    @Test
+    public void testGetAllAttributes() throws Exception {
+        assertEquals("Building address not equal", "FakeAddress", buildingMapImp.getAddress());
+        assertEquals("Building id not equal", 1, buildingMapImp.getId());
+        assertEquals("Building version not equal", 1, buildingMapImp.getVersion());
+
+        Collection<EnrichedEdge> buildingEdge = buildingMapImp.getAllEdges();
+        if (BuildConfig.DEBUG && !buildingEdge.containsAll(fakeEnrichedEdgeCollection)) {
+            fail("Building edges not equals");
+        }
+        Collection<PointOfInterest> buildingPoi = buildingMapImp.getAllPOIs();
+        if (BuildConfig.DEBUG && !buildingPoi.containsAll(fakePoiCollection)) {
+            fail("Building pois not equals");
+        }
+        Collection<RegionOfInterest> buildingRoi = buildingMapImp.getAllROIs();
+        if (BuildConfig.DEBUG && !buildingRoi.containsAll(fakeRoiCollection)) {
+            fail("Building rois not equals");
+        }
+    }
+
+    /**
+     * TU6
+     * Viene testato che utilizzando un oggetto BuildingMapImp sia possibile accedere alla collezione
+     * di PointOfInterest associati ad alla RegionOfInterest che contiene il beacon passato
+     * @throws Exception
+     */
     @Test
     public void testGetNearbyPOIs() throws Exception {
         Collection<PointOfInterest> result = buildingMapImp.getNearbyPOIs(mockBeaconTrue);
@@ -107,14 +134,24 @@ public class BuildingMapImpTest {
         assertEquals("Result not NULL", null, nullResult);
     }
 
+    /**
+     * Viene testato che sia possibile reperire l'insieme di categorie disponibili in un edificio
+     * partendo dai POI associati alla BuildingMapImp
+     * @throws Exception
+     */
     @Test
     public void testGetAllPOIsCategories() throws Exception {
         Collection<String> result = buildingMapImp.getAllPOIsCategories();
+        assertEquals("Duplicate categories", 1, result.size());
         for (String categoryString : result) {
-            assertEquals("Category not equal", FAKE_POI_CATEGORY, categoryString);
+            assertEquals("Category not equal", "FakePoiCategory", categoryString);
         }
     }
 
+    /**
+     * Viene testato che sia possibile ricercare un preciso POI a partire da una stringa
+     * @throws Exception
+     */
     @Test
     public void testSearchPOIByName() throws Exception {
         Collection<PointOfInterest> result = buildingMapImp.searchPOIByName("FakePoiName");
