@@ -131,7 +131,13 @@ public class HomeActivity extends AppCompatActivity {
      * @return  void
      */
     public void updateBuildingDescription(){
-        // TODO: 5/3/16  
+        // TODO: 5/3/16
+        try {
+            String desc = informationManager.getBuildingMap().getDescription();
+            view.setBuildingDescription(desc);
+        }catch(Exception e){
+        e.printStackTrace();
+        }
     }
 
     /**
