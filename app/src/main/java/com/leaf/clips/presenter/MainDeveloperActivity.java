@@ -10,8 +10,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.view.MainDeveloperView;
 import com.leaf.clips.view.MainDeveloperViewImp;
+
+import javax.inject.Inject;
 
 public class MainDeveloperActivity extends AppCompatActivity {
 
@@ -23,14 +26,16 @@ public class MainDeveloperActivity extends AppCompatActivity {
     /**
      * Oggetto del Model per la gestione delle informazioni
      */
-   /* @Inject
-    InformationManager infoManager;*/
+   @Inject
+    InformationManager infoManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mainDeveloperView = new MainDeveloperViewImp(this);
+
+        ((MyApplication)getApplication()).getInfoComponent().inject(this);
     }
 
 
