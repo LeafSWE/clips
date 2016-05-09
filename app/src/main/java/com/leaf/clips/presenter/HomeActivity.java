@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.leaf.clips.R;
 import com.leaf.clips.model.InformationManager;
@@ -48,6 +49,8 @@ public class HomeActivity extends AppCompatActivity {
         list.add("Toilette");
         view.setPoiCategoryListAdapter(list);
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
+
+        updateBuildingDescription();
     }
 
     /**
@@ -134,6 +137,7 @@ public class HomeActivity extends AppCompatActivity {
         // TODO: 5/3/16
         try {
             String desc = informationManager.getBuildingMap().getDescription();
+            Log.d("DESC",desc);
             view.setBuildingDescription(desc);
         }catch(Exception e){
         e.printStackTrace();
