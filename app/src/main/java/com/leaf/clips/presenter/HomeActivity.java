@@ -136,7 +136,7 @@ public class HomeActivity extends AppCompatActivity {
     public void updateBuildingDescription(){
         // TODO: 5/3/16
         try {
-            String desc = informationManager.getBuildingMap().getDescription();
+            String desc = informationManager.getBuildingMap().getDescription()+"%%%%";
             Log.d("DESC",desc);
             view.setBuildingDescription(desc);
         }catch(Exception e){
