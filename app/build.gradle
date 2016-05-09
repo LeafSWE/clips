@@ -44,7 +44,7 @@ android {
 
     adbOptions {
         timeOutInMs 10 * 60 * 1000  // 10 minutes
-        installOptions "-d","-t"
+        installOptions "-d", "-t"
     }
 
     sourceSets {
@@ -67,16 +67,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support:support-annotations:23.1.1'
 
-    compile 'com.android.support:appcompat-v7:23.3.0'
     androidTestCompile 'com.android.support:appcompat-v7:23.3.0'
     androidTestCompile 'com.android.support:support-annotations:23.3.0'
 
-    compile 'com.android.support:design:23.3.0'
     androidTestCompile 'com.android.support:design:23.3.0'
-    compile 'com.android.support:support-v4:23.3.0'
     androidTestCompile 'com.android.support:support-v4:23.3.0'
-
-    compile 'org.altbeacon:android-beacon-library:2+'
 
     // Required -- JUnit 4 framework
     testCompile 'junit:junit:4.12'
@@ -95,7 +90,7 @@ dependencies {
     // Espresso-web for WebView support
     androidTestCompile 'com.android.support.test.espresso:espresso-web:2.2.2'
     // Espresso-contrib for DatePicker, RecyclerView, Drawer actions, Accessibility checks, CountingIdlingResource
-    androidTestCompile ('com.android.support.test.espresso:espresso-contrib:2.2.2') {
+    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2.2') {
         exclude group: 'com.android.support', module: 'appcompat'
         exclude group: 'com.android.support', module: 'support-v4'
         exclude module: 'recyclerview-v7'
@@ -103,17 +98,20 @@ dependencies {
 
     // Espresso-idling-resource for synchronization with background jobs
     androidTestCompile 'com.android.support.test.espresso:espresso-idling-resource:2.2.2'
-    compile 'com.google.code.findbugs:jsr305:2.0.1'
 
-    compile 'com.google.code.gson:gson:2.6.2'
-
-
-    compile 'junit:junit:4.12'
-    compile 'org.jgrapht:jgrapht-core:0.9.1'
-	//Dagger 2
-	compile 'com.google.dagger:dagger:2.0'
+    //Dagger 2
     provided 'com.google.dagger:dagger-compiler:2.0'
     provided 'org.glassfish:javax.annotation:10.0-b28'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:support-v4:23.3.0'
+    compile 'org.altbeacon:android-beacon-library:2.+'
+    compile 'com.google.code.findbugs:jsr305:2.0.1'
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'junit:junit:4.12'
+    compile 'org.jgrapht:jgrapht-core:0.9.1'
+    compile 'com.google.dagger:dagger:2.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
 
 
