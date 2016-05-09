@@ -20,7 +20,7 @@ public class EdgeContract {
     /**
      * Valore della colonna coordinate. Valore di default "coordinate"
      */
-    public final static String COLUMN_COORDINATE = "coordianate";
+    public final static String COLUMN_COORDINATE = "coordinate";
 
     /**
      * Valore della colonna distance. Valore di default "distance"
