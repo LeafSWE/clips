@@ -30,9 +30,14 @@ public class DeveloperUnlockerActivity extends AppCompatActivity {
         developerUnlockerView = new DeveloperUnlockerViewImp(this);
 
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
-
     }
 
+    /**
+     * Metodo che si occupa di far accedere l'utente, in possesso di un codice sviluppatore valido,
+     * alla sezione sviluppatore dell'applicazione.
+     * @param code codice immesso dall'utente.
+     * @return true se il codice immesso è corretto.
+     */
     public boolean unlockDeveloper(String code){
         if(userSetting.unlockDeveloper(code)){
             Intent intent = new Intent(this, MainDeveloperActivity.class);
