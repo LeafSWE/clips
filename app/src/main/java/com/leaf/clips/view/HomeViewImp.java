@@ -60,16 +60,13 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
         buildingDescription = (TextView)homeActivity.findViewById(R.id.view_building_description);
         buildingOpeningHours = (TextView)homeActivity.findViewById(R.id.view_building_opening_hours);
         poiCategories = (ListView)homeActivity.findViewById(R.id.view_poi_category_list);
-        //Imposta il Listener sulla lista di categorie
+
+        //Imposta il Listener sugli item della lista di categorie
         poiCategories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String categoryName = (String)parent.getAdapter().getItem(position);
 
-                /**
-                 * Passa il nome della categoria scelta a PoiCategoryActivity, sarà quest'ultima a
-                 * recuperare i POI appartenenti a tale categoria.
-                 */
                 homeActivity.showPoisCategory(categoryName);
             }
         });
@@ -149,10 +146,7 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
             Intent intent = new Intent(homeActivity, MainDeveloperPresenter.class);
             homeActivity.startActivity(intent);
         }
-
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
 }
