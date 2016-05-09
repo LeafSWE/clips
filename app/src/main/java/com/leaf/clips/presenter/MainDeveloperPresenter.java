@@ -7,10 +7,17 @@ package com.leaf.clips.presenter;
  */
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.leaf.clips.model.usersetting.Setting;
+
+import javax.inject.Inject;
 
 public class MainDeveloperPresenter extends AppCompatActivity {
+
+    @Inject
+    Setting userSetting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +29,8 @@ public class MainDeveloperPresenter extends AppCompatActivity {
         }
         else
             startDeveloperUnlocker();
+
+        ((MyApplication)getApplication()).getInfoComponent().inject(this);
     }
 
     public boolean isDeveloper(){
