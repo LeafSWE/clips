@@ -7,11 +7,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 
 import com.leaf.clips.R;
+import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.view.HomeView;
 import com.leaf.clips.view.HomeViewImp;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 public class HomeActivity extends AppCompatActivity {
     /**
@@ -22,7 +25,8 @@ public class HomeActivity extends AppCompatActivity {
     /**
      * Riferimento utilizzato per accedere alle informazioni trattate dal model
      */
-    //private InformationManager informationManager;
+    @Inject
+    InformationManager informationManager;
 
     /**
      * View associata a tale Activity
@@ -43,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
         list.add("Biblioteche");
         list.add("Toilette");
         view.setPoiCategoryListAdapter(list);
+        ((MyApplication)getApplication()).getInfoComponent().inject(this);
     }
 
     /**
