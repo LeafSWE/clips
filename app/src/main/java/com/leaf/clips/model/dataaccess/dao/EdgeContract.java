@@ -20,7 +20,7 @@ public class EdgeContract {
     /**
      * Valore della colonna coordinate. Valore di default "coordinate"
      */
-    public final static String COLUMN_COORDINATE = "coordianate";
+    public final static String COLUMN_COORDINATE = "coordinate";
 
     /**
      * Valore della colonna distance. Valore di default "distance"
@@ -50,7 +50,7 @@ public class EdgeContract {
     /**
      * Valore della colonna typeId. Valore di default "typeId"
      */
-    public final static String COLUMN_TYPEID = "typeID";
+    public final static String COLUMN_TYPEID = "typeId";
 
     /**
      * Nome della tabella. Valore di default "Edge"

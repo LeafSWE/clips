@@ -180,6 +180,7 @@ public class EdgeService {
         int id = edgeTable.getId();
         double distance = edgeTable.getDistance();
         String coordinate_s = edgeTable.getCoordinate();
+        System.out.println(coordinate_s);
         int coordinate = Integer.parseInt(coordinate_s);
         int startROIid = edgeTable.getStartROI();
         int endROIid = edgeTable.getEndROI();

@@ -10,9 +10,11 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import junit.framework.Assert;
+
 import java.util.Collection;
-import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *Classe che rappresenta un DAO per la tabella “Photo" del database locale
@@ -43,6 +45,8 @@ public class SQLitePhotoDao implements PhotoDao, CursorConverter {
         int edgeIndex = cursor.getColumnIndex(PhotoContract.COLUMN_EDGEID);
         int urlIndex = cursor.getColumnIndex(PhotoContract.COLUMN_URL);
         cursor.moveToNext();
+        System.out.println("%%%%" + cursor.getInt(idIndex)+ cursor.getString(urlIndex)+
+                cursor.getInt(edgeIndex));
         return new PhotoTable(cursor.getInt(idIndex), cursor.getString(urlIndex),
                 cursor.getInt(edgeIndex));
     }
@@ -70,23 +74,21 @@ public class SQLitePhotoDao implements PhotoDao, CursorConverter {
                 PhotoContract.COLUMN_EDGEID,
                 PhotoContract.COLUMN_URL
         };
-        Cursor cursor = sqlDao.query(true, PhotoContract.TABLE_NAME, columns,
+        final Cursor cursor = sqlDao.query(true, PhotoContract.TABLE_NAME, columns,
             PhotoContract.COLUMN_EDGEID + "=" + id, null, null, null, null, null);
-        int photoNumber = cursor.getCount();
-        PriorityQueue<PhotoTable> photoTables = new PriorityQueue<>(photoNumber,
-                new Comparator<PhotoTable>() {
-            @Override
-            public int compare(PhotoTable lhs, PhotoTable rhs) {
-                if (lhs.getId() > rhs.getId())
-                    return 1;
-                else if (lhs.getId() == rhs.getId())
-                    return 0;
-                else
-                    return -1;
-            }
-        });
-        for (int i = 0; i < photoNumber; i++)
-            photoTables.add(cursorToType(cursor));
+
+        short photoNumber = (short)cursor.getCount();
+
+        Assert.assertEquals(3, photoNumber);
+        List<PhotoTable> photoTables = new LinkedList<>();
+
+
+
+        for (int i = 0; i < photoNumber; i++){
+            PhotoTable pt = cursorToType(cursor);
+            photoTables.add(pt);
+        }
+
         return photoTables;
     }
 

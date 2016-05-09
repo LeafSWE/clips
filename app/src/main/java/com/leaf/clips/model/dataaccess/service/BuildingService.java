@@ -274,7 +274,7 @@ public class BuildingService implements DatabaseService {
                 found = false;
                 while(!found && poiIt.hasNext()) {
                     actualPOI = poiIt.next();
-                    if(nearbyPOI[i] == actualPOI.getId()) {
+                    if(i == actualPOI.getId()) {
                         found = true;
                         poisOfRoi.add(actualPOI);
                     }
@@ -309,7 +309,7 @@ public class BuildingService implements DatabaseService {
                 found = false;
                 while(!found && roiIt.hasNext()) {
                     actualROI = roiIt.next();
-                    if(nearbyROI[i] == actualROI.getId()) {
+                    if(i == actualROI.getId()) {
                         found = true;
                         roisOfPoi.add(actualROI);
                     }
