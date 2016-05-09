@@ -80,6 +80,24 @@ public interface InformationManager {
     */
     void startRecordingBeacons();
 
+    /**
+     * Metodo che permette di registrare un listener
+     * @param listener Listener che deve essere aggiunto alla lista di InformationListener
+     */
+    void addListener(InformationListener listener);
 
+    /**
+     * Metodo che permette di rimuovere un listener
+     * @param listener Listener che deve essere rimosso dalla lista di InformationListener
+     */
+    void removeListener(InformationListener listener);
+
+    // TODO aggiungere asta/travis
+    /**
+     * Metodo che ritorna tutti i PointOfInterest appartenenti ad una certa categoria
+     * @param category Nome della categoria di cui si vogliono recupoerare tutti i PointOfInterest
+     * @return Collection<PointOfInterest>
+     */
+    Collection<PointOfInterest> getPOIsByCategory(String category);
 }
 

@@ -7,8 +7,6 @@ package com.leaf.clips.model.navigator;
  *
  */
 
-import android.support.v4.content.LocalBroadcastManager;
-
 /**
  *Classe che rappresenta le informazioni di un edificio
  */

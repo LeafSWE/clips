@@ -37,5 +37,13 @@ public class NoBeaconSeenException extends Exception{
         this.message = message;
     }
 
+    /**
+     * Metodo per ottenere un messaggio di spiegazione dell'eccezione
+     * @return String Il messaggio di spiegazione dell'eccezione
+     */
+    public String getException() {
+        return message;
+    }
+
 }
 

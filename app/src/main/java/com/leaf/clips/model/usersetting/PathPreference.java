@@ -28,7 +28,7 @@ public enum PathPreference {
             case 2:
                 return STAIR_PREFERENCE;
         }
-        return NO_PREFERENCE; // TODO: 01/05/2016 Cosa fare in caso di errore?
+        return NO_PREFERENCE;
     }
 
     /**

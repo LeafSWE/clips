@@ -1,11 +1,10 @@
 package com.leaf.clips.model.navigator;
 /**
  * @author Eduard Bicego
- * @version 0.01
- * @since 0.00
+ * @version 0.02
+ * @since 0.01
  */
 
-import android.nfc.Tag;
 import android.util.Log;
 
 import com.leaf.clips.model.beacon.MyBeacon;
@@ -16,7 +15,6 @@ import com.leaf.clips.model.navigator.graph.MapGraph;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
 import com.leaf.clips.model.navigator.graph.edge.EnrichedEdge;
-import com.leaf.clips.model.usersetting.Setting;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -102,7 +100,7 @@ public class NavigatorImp implements Navigator {
                 // prelevo gli altri path e li confronto con il migliore attuale
                 while (endRoisIterator.hasNext()) {
                     RegionOfInterest nextEndRoi = endRoisIterator.next();
-                    List<EnrichedEdge> newPath = pathFinder.calculatePath(this.buildingGraph, startRoi, endRoi);
+                    List<EnrichedEdge> newPath = pathFinder.calculatePath(this.buildingGraph, startRoi, nextEndRoi);
                     if (isShorter(newPath, shortestPath)) {
                         shortestPath = newPath;
                     }

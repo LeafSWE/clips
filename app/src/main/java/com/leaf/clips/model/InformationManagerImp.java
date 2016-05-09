@@ -16,7 +16,6 @@ import com.leaf.clips.model.beacon.MyBeacon;
 import com.leaf.clips.model.dataaccess.service.DatabaseService;
 import com.leaf.clips.model.navigator.BuildingMap;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
-import com.leaf.clips.model.usersetting.Setting;
 import com.leaf.clips.model.usersetting.SettingImp;
 
 import java.util.Collection;
@@ -65,6 +64,8 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         this.dbService = dbService;
         lastBeaconsSeen = new PriorityQueue<>();
         activeLog = new LoggerImp();
+        //TODO: remove (debug purpose)
+        map = this.dbService.findBuildingByMajor(666);
     }
 
     /**
@@ -74,7 +75,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     @Override
     public Collection<String> getAllCategories(){
 
-        LinkedList<String> list = new LinkedList<String>();
+        LinkedList<String> list = new LinkedList<>();
         list.addAll(map.getAllPOIsCategories());
         return list;
     }
@@ -131,7 +132,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         if(lastBeaconsSeen.isEmpty())
             throw new NoBeaconSeenException();
 
-        LinkedList<PointOfInterest> list = new LinkedList<PointOfInterest>();
+        LinkedList<PointOfInterest> list = new LinkedList<>();
         list.addAll(map.getNearbyPOIs(lastBeaconsSeen.peek()));
         return list;
 
@@ -139,43 +140,71 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
 
     /**
     * Metodo che permette di recuperare una mappa dal database in base al major dei beacon rilevati
-    * @return  BuildingMap Mappa dell'edificio
     */
 
-    private BuildingMap loadMap(){
-        int major = lastBeaconsSeen.peek().getMajor();
+    private void loadMap(){
+       /* int major = lastBeaconsSeen.peek().getMajor();
 
         if(dbService.isBuildingMapPresent(major)){
-            if(!dbService.isBuildingMapUpdated(major))
-                // TODO: chiedere il permesso all'utente prima di aggiornare la mappa
-                dbService.updateBuildingMap(major);
+            try {
+                if(!dbService.isBuildingMapUpdated(major)){
+                    boolean shouldUpdate = ((InformationListener)listeners).noLastMapVersion();
+                    if (shouldUpdate)
+                        dbService.updateBuildingMap(major);
+                }
+                else
+                    map = dbService.findBuildingByMajor(major);
 
-            return dbService.findBuildingByMajor(major);
+            } catch (IOException e) {
+                e.printStackTrace();
+                ((InformationListener)listeners).cannotRetrieveRemoteMapDetails(); //errore connessione
+            }
         }
-        else
-            // TODO: chiedere il permesso all'utente prima di scaricare la mappa
-            return dbService.findRemoteBuildingByMajor(major);
+        else{
+            boolean mapExists = false;
+            try {
+                mapExists = dbService.isRemoteMapPresent(major);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if(mapExists){
+                boolean shouldDownload = ((InformationListener)listeners).onLocalMapNotFound();
+                try {
+                    if(shouldDownload)
+                        map = dbService.findRemoteBuildingByMajor(major);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    ((InformationListener)listeners).cannotRetrieveRemoteMapDetails(); //errore connessione
+                }
+            }
+            else
+                ((InformationListener)listeners).onRemoteMapNotFound();
+        }*/
+        map=dbService.findBuildingByMajor(666);
 
     }
 
     /**
      * Metodo che si occupa di settare il campo dati lastBeaconsSeen con la PriorityQueue<MyBeacon>
-     *     contenente gli ultimi beacon rilevati. Nel caso in cui non sia stata ancora caricata una
-     *     mappa dal database locale si occupa di caricare la mappa dell'edificio che contiene
-     *     i beacon rilevati
+     * contenente gli ultimi beacon rilevati. Nel caso in cui non sia stata ancora caricata una
+     * mappa dal database locale si occupa di caricare la mappa dell'edificio che contiene
+     * i beacon rilevati
      */
     @Override
     public void onReceive(Context context, Intent intent){
-        // TODO: modificare l'add
+
         PriorityQueue<MyBeacon> p;
         p = ((PriorityQueue<MyBeacon>)intent.getSerializableExtra("queueOfBeacons"));
+        if(!p.containsAll(lastBeaconsSeen) || lastBeaconsSeen.containsAll(p))
+            setVisibleBeacon(p);
 
-        for (MyBeacon oneBeacon : p)
-            lastBeaconsSeen.add(oneBeacon);
 
-        if(map == null)
-            map = loadMap();
-            // map =
+
+        if(map == null) {
+            loadMap();
+            if (map != null)
+                ((InformationListener)listeners).onDatabaseLoaded();
+        }
 
         if(shouldLog){
             activeLog.add(lastBeaconsSeen);
@@ -185,7 +214,6 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     /**
     * Metodo che permette di rimuovere un log delle informazioni dei beacon visibili
     * @param filename Nome del file da rimuovere
-    * @return  void
     */
     @Override
     public void removeBeaconInformationFile(String filename){
@@ -195,7 +223,6 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     /**
     * Metodo che permette di salvare il log delle informazioni dei beacon visibili su file
     * @param filename Nome del file in cui salvare le informazioni dei beacon
-    * @return  void
     */
     @Override
     public void saveRecordedBeaconInformation(String filename){
@@ -220,6 +247,41 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     public void startRecordingBeacons(){
         if(isDeveloper())
             shouldLog = true;
+    }
+
+    /**
+     * Metodo che permette di registrare un listener
+     * @param listener Listener che deve essere aggiunto alla lista di InformationListener
+     */
+    @Override
+    public void addListener(InformationListener listener) {
+        super.addListener(listener);
+    }
+
+    /**
+     * Metodo che permette di rimuovere un listener
+     * @param listener Listener che deve essere rimosso dalla lista di InformationListener
+     */
+    @Override
+    public void removeListener(InformationListener listener) {
+        super.removeListener(listener);
+    }
+
+    // TODO aggiungere asta/travis/test
+    /**
+     * Metodo che ritorna tutti i PointOfInterest appartenenti ad una certa categoria
+     * @param category Nome della categoria di cui si vogliono recupoerare tutti i PointOfInterest
+     * @return Collection<PointOfInterest>
+     */
+    @Override
+    public Collection<PointOfInterest> getPOIsByCategory(String category) {
+        Collection<PointOfInterest> pois = map.getAllPOIs();
+        Collection<PointOfInterest> poisWithCategory = new LinkedList<>();
+        for (PointOfInterest poi:pois) {
+            if (poi.getCategory().equals(category))
+                poisWithCategory.add(poi);
+        }
+        return poisWithCategory;
     }
 
     private boolean isDeveloper(){

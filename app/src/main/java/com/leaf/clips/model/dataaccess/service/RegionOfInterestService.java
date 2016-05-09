@@ -111,7 +111,8 @@ public class RegionOfInterestService {
      * Metodo per recuperare le informazioni di tutte le RegionOfInterest di un edificio,
      * dato il major dell'edificio
      * @param major Major dell'edificio
-     * @return  Collection<RegionOfInterest>
+     * @return  Collection<RegionOfInterest> Le informazioni su tutte le RegionOfInterest di un
+     * edificio
      */
     public Collection<RegionOfInterest> findAllRegionsWithMajor(int major) {
         Collection<RegionOfInterestTable> tables =
@@ -129,7 +130,7 @@ public class RegionOfInterestService {
     /**
      * Metodo per recuperare una RegionOfInterest ricercandola nel database locale
      * @param id Identificativo numerico della RegionOfInterest da recuperare
-     * @return  RegionOfInterest
+     * @return  RegionOfInterest La RegionOfInterest richiesta
      */
     public RegionOfInterest findRegionOfInterest(int id) {
         RegionOfInterestTable table = sqliteRegionOfInterestDao.findRegionOfInterest(id);
@@ -150,7 +151,8 @@ public class RegionOfInterestService {
     /**
      * Metodo per la costruzione di oggetto RegionOfInterest a partire da un RegionOfInterestTable
      * @param regionOfInterestTable Oggetto contenente le informazioni della RegionOfInterest
-     * @return  RegionOfInterest
+     * @return  RegionOfInterest La RegionOfInterest costruita dopo aver recuperato tutte le
+     * informazioni necessarie
      */
     private RegionOfInterest fromTableToBo(RegionOfInterestTable regionOfInterestTable) {
         // recupero tutte le informazioni dall'oggetto RegionOfInterestTable
