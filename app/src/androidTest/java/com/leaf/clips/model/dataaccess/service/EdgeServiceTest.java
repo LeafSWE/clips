@@ -93,9 +93,11 @@ public class EdgeServiceTest {
                 " )";
         public static final String SQL_CREATE_ROI_TABLE = "CREATE TABLE " +
                 RegionOfInterestContract.TABLE_NAME + " (" +
-                RegionOfInterestContract.COLUMN_ID + " INTEGER PRIMARY KEY, " +
-                RegionOfInterestContract.COLUMN_MAJOR + " INTEGER" +
-                ")";
+                RegionOfInterestContract.COLUMN_ID + " INTEGER PRIMARY KEY," +
+                RegionOfInterestContract.COLUMN_MAJOR + " INTEGER, " +
+                RegionOfInterestContract.COLUMN_MINOR + " INTEGER, " +
+                RegionOfInterestContract.COLUMN_UUID + " TEXT " +
+                " )";
         public static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " +
                 EdgeContract.TABLE_NAME;
         public static final String SQL_DELETE_ROI_TABLE = "DROP TABLE IF EXISTS " +
@@ -266,17 +268,9 @@ public class EdgeServiceTest {
         tracedRois.add(roi1);
         tracedRois.add(roi2);
         roiService.setTracedRois(tracedRois);
-        EnrichedEdge edge1 = edgeService.findEdge(edgeId1);
-        RegionOfInterest startRoi1 = edge1.getStarterPoint();
-        Assert.assertEquals(startRoi1.getMajor(), major);
-        RegionOfInterest endRoi1 = edge1.getEndPoint();
-        Assert.assertEquals(endRoi1.getMajor(), major);
-        // questo sopra funziona
-        // TODO: se invoco findAllEdgesOfBuilding la query sul db non me li trova
-        // Collection<EdgeTable> tables = sqLiteEdgeDao.findAllEdgesOfBuilding(major);
-        // richiedo tutti gli Edge di un edificio
-        // Collection<EnrichedEdge> edges = edgeService.findAllEdgesOfBuilding(major);
-        // Assert.assertEquals(2, edges.size());
+
+        Collection<EnrichedEdge> edges = edgeService.findAllEdgesOfBuilding(major);
+        Assert.assertEquals(2, edges.size());
     }
 
     /**
