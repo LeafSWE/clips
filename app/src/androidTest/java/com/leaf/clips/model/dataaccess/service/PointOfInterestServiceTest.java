@@ -1,13 +1,18 @@
 package com.leaf.clips.model.dataaccess.service;
 
+import com.google.gson.JsonObject;
+
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
 
+import com.leaf.clips.model.dataaccess.dao.CategoryContract;
+import com.leaf.clips.model.dataaccess.dao.CategoryTable;
 import com.leaf.clips.model.dataaccess.dao.MapsDbHelper;
 import com.leaf.clips.model.dataaccess.dao.PointOfInterestContract;
 import com.leaf.clips.model.dataaccess.dao.RegionOfInterestContract;
@@ -26,6 +31,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Collection;
+
 /**
  * @author Davide Castello
  * @version 0.01
@@ -37,13 +44,20 @@ public class PointOfInterestServiceTest {
 
     public class DatabaseTest implements BaseColumns {
 
+        public static final String SQL_CREATE_CATEGORY_TABLE = "CREATE TABLE " +
+                CategoryContract.TABLE_NAME + " (" +
+                CategoryContract.COLUMN_ID + " INTEGER PRIMARY KEY, " +
+                CategoryContract.COLUMN_DESCRIPTION + " TEXT" +
+                " )";
         public static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE " + PointOfInterestContract.TABLE_NAME + " (" +
                         PointOfInterestContract.COLUMN_ID + " INTEGER PRIMARY KEY," +
                         PointOfInterestContract.COLUMN_NAME + " TEXT, "+
                         PointOfInterestContract.COLUMN_DESCRIPTION + " TEXT, "+
-                        PointOfInterestContract.COLUMN_CATEGORYID + " INTEGER "+
-                        " )";
+                        PointOfInterestContract.COLUMN_CATEGORYID + " INTEGER, "+
+                        "FOREIGN KEY ("+PointOfInterestContract.COLUMN_CATEGORYID+
+                        ") REFERENCES "+CategoryContract.TABLE_NAME+
+                        "("+CategoryContract.COLUMN_ID+"))";
         public static final String SQL_CREATE_ROI_TABLE = "CREATE TABLE " +
                 RegionOfInterestContract.TABLE_NAME + " (" +
                 RegionOfInterestContract.COLUMN_ID + " INTEGER PRIMARY KEY," +
@@ -67,6 +81,8 @@ public class PointOfInterestServiceTest {
                 RegionOfInterestContract.TABLE_NAME;
         public static final String SQL_DELETE_ROIPOI_TABLE = "DROP TABLE IF EXISTS " +
                 RoiPoiContract.TABLE_NAME;
+        public static final String SQL_DELETE_CATEGORY_TABLE = "DROP TABLE IF EXISTS " +
+                CategoryContract.TABLE_NAME;
     }
 
     private Context context;
@@ -80,6 +96,7 @@ public class PointOfInterestServiceTest {
     private SQLiteCategoryDao sqLiteCategoryDao;
     private RemoteCategoryDao remoteCategoryDao;
     private PointOfInterestService poiService;
+    private String[] categoryColumns;
 
     @Before
     public void setUp() throws Exception {
@@ -89,10 +106,12 @@ public class PointOfInterestServiceTest {
         Assert.assertNotNull(dbHelper);
         database = dbHelper.getWritableDatabase();
         Assert.assertNotNull(database);
-        database.execSQL(DatabaseTest.SQL_DELETE_ENTRIES);
-        database.execSQL(DatabaseTest.SQL_DELETE_ROI_TABLE);
         database.execSQL(DatabaseTest.SQL_DELETE_ROIPOI_TABLE);
+        database.execSQL(DatabaseTest.SQL_DELETE_ENTRIES);
+        database.execSQL(DatabaseTest.SQL_DELETE_CATEGORY_TABLE);
+        database.execSQL(DatabaseTest.SQL_DELETE_ROI_TABLE);
         database.execSQL(DatabaseTest.SQL_CREATE_ROI_TABLE);
+        database.execSQL(DatabaseTest.SQL_CREATE_CATEGORY_TABLE);
         database.execSQL(DatabaseTest.SQL_CREATE_ROIPOITABLE);
         database.execSQL(DatabaseTest.SQL_CREATE_ENTRIES);
         sqlitePoiDao = new SQLitePointOfInterestDao(database);
@@ -115,6 +134,10 @@ public class PointOfInterestServiceTest {
                 PointOfInterestContract.COLUMN_DESCRIPTION,
                 PointOfInterestContract.COLUMN_CATEGORYID
         };
+        categoryColumns = new String[] {
+                CategoryContract.COLUMN_ID,
+                CategoryContract.COLUMN_DESCRIPTION
+        };
         Assert.assertNotNull(columns);
     }
 
@@ -123,9 +146,10 @@ public class PointOfInterestServiceTest {
     }
 
     private void databaseInsert(ContentValues[] values){
-        database.insert(PointOfInterestContract.TABLE_NAME, null, values[0]);
-        database.insert(RegionOfInterestContract.TABLE_NAME, null, values[1]);
-        database.insert(RoiPoiContract.TABLE_NAME, null, values[2]);
+        database.insert(CategoryContract.TABLE_NAME, null, values[0]);
+        database.insert(PointOfInterestContract.TABLE_NAME, null, values[1]);
+        database.insert(RegionOfInterestContract.TABLE_NAME, null, values[2]);
+        database.insert(RoiPoiContract.TABLE_NAME, null, values[3]);
     }
 
     private ContentValues valuesWithId(int id) {
@@ -137,16 +161,21 @@ public class PointOfInterestServiceTest {
         return values;
     }
 
-    private ContentValues[] valuesWithIdAndRoi(int id, int idRoi, int major) {
-        ContentValues[] values = {new ContentValues(), new ContentValues(), new ContentValues()};
-        values[0].put(PointOfInterestContract.COLUMN_ID, id);
-        values[0].put(PointOfInterestContract.COLUMN_NAME, "Name");
-        values[0].put(PointOfInterestContract.COLUMN_DESCRIPTION, "Description");
-        values[0].put(PointOfInterestContract.COLUMN_CATEGORYID, "2");
-        values[1].put(RegionOfInterestContract.COLUMN_ID, idRoi);
-        values[1].put(RegionOfInterestContract.COLUMN_MAJOR, major);
-        values[2].put(RoiPoiContract.COLUMN_POIID, id);
-        values[2].put(RoiPoiContract.COLUMN_ROIID, idRoi);
+    private ContentValues[] valuesWithIdAndRoiAndCategory(int id, String name, int idRoi, int major,
+                                                          int categoryId, String category) {
+        ContentValues[] values = {new ContentValues(), new ContentValues(), new ContentValues(),
+                new ContentValues()};
+        values[0].put(CategoryContract.COLUMN_ID, categoryId);
+        values[0].put(CategoryContract.COLUMN_DESCRIPTION, category);
+        values[1].put(PointOfInterestContract.COLUMN_ID, id);
+        values[1].put(PointOfInterestContract.COLUMN_NAME, name);
+        values[1].put(PointOfInterestContract.COLUMN_DESCRIPTION, "Description");
+        values[1].put(PointOfInterestContract.COLUMN_CATEGORYID, categoryId);
+        values[2].put(RegionOfInterestContract.COLUMN_ID, idRoi);
+        values[2].put(RegionOfInterestContract.COLUMN_MAJOR, major);
+        values[3].put(RoiPoiContract.COLUMN_POIID, id);
+        values[3].put(RoiPoiContract.COLUMN_ROIID, idRoi);
+
         return values;
     }
 
@@ -158,5 +187,75 @@ public class PointOfInterestServiceTest {
     @Test
     public void shouldDeleteAPointOfInterest() throws Exception {
         setUp();
+        int poiId = 1;
+        databaseInsert(valuesWithId(poiId));
+        poiService.deletePointOfInterest(poiId);
+
+        Assert.assertEquals(0, database.query(true, PointOfInterestContract.TABLE_NAME, columns,
+                PointOfInterestContract.COLUMN_ID + "=1", null, null, null, null, null).getCount());
+    }
+
+    @Test
+    public void shouldRetrieveAPointOfInterest() throws Exception {
+        setUp();
+        int poiId = 1;
+        String myPoiName = "myPointOfInterest";
+        int categoryId = 12;
+        String category = "myCategory";
+        databaseInsert(valuesWithIdAndRoiAndCategory(poiId, myPoiName, 1, 666, categoryId,
+                category));
+
+        PointOfInterest poi = poiService.findPointOfInterest(poiId);
+        Assert.assertEquals(myPoiName, poi.getName());
+        Assert.assertEquals(category, poi.getCategory());
+    }
+
+    @Test
+    public void shouldRetrieveAllPOIsOfABuilding() throws Exception {
+        setUp();
+        int major = 666;
+        int poi1_id = 1;
+        String poi1_name = "poi1";
+        int poi2_id = 2;
+        String poi2_name = "poi2";
+        databaseInsert(valuesWithIdAndRoiAndCategory(poi1_id, poi1_name, 1, major, 1, "Aula"));
+        databaseInsert(valuesWithIdAndRoiAndCategory(poi2_id, poi2_name, 1, major, 1, "Aula"));
+
+        Collection<PointOfInterest> pois = poiService.findAllPointsWithMajor(major);
+        int i = 1;
+        for (PointOfInterest poi: pois) {
+            Assert.assertEquals(poi.getId(), i);
+            Assert.assertEquals(poi.getName(), "poi"+i);
+            i++;
+        }
+    }
+
+    /**
+     * Viene testato che, dato un oggetto JsonObject che possiede gli stessi valori di un oggetto
+     * PointOfInterestTable, sia possibile costruire un oggetto PointOfInterestTable e
+     * inserirlo nel database locale.
+     */
+    @Test
+    public void shouldCreateRegionOfInterestTableAndInsertItInTheDB() throws Exception {
+        setUp();
+        int poiId = 1;
+        String poiName = "MyPointOfInterest";
+        String poiDescription = "Description";
+        int categoryId = 2;
+        String category = "MyCategory";
+        databaseInsert(valuesWithIdAndRoiAndCategory(2, "AnotherPOI", 2, 666, categoryId, category));
+        // Now the category exists
+        JsonObject js = new JsonObject();
+        js.addProperty("description", poiDescription);
+        js.addProperty("id", poiId);
+        js.addProperty("name", poiName);
+        js.addProperty("categoryId", categoryId);
+        poiService.convertAndInsert(js);
+
+        PointOfInterest poi = poiService.findPointOfInterest(1);
+        Assert.assertEquals(poi.getId(), poiId);
+        Assert.assertEquals(poi.getName(), poiName);
+        Assert.assertEquals(poi.getDescription(), poiDescription);
+        Assert.assertEquals(poi.getCategory(), category);
     }
 }
