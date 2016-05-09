@@ -1,11 +1,15 @@
 package com.leaf.clips.model.dataaccess.service;
 
+import com.google.gson.JsonObject;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.BaseColumns;
 import android.support.test.InstrumentationRegistry;
 
 import com.leaf.clips.model.dataaccess.dao.BuildingContract;
+import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 import com.leaf.clips.model.dataaccess.dao.CategoryContract;
 import com.leaf.clips.model.dataaccess.dao.EdgeContract;
 import com.leaf.clips.model.dataaccess.dao.EdgeTable;
@@ -23,6 +27,7 @@ import com.leaf.clips.model.dataaccess.dao.RemotePhotoDao;
 import com.leaf.clips.model.dataaccess.dao.RemoteRegionOfInterestDao;
 import com.leaf.clips.model.dataaccess.dao.RemoteRoiPoiDao;
 import com.leaf.clips.model.dataaccess.dao.RoiPoiContract;
+import com.leaf.clips.model.dataaccess.dao.SQLiteBuildingDao;
 import com.leaf.clips.model.dataaccess.dao.SQLiteEdgeDao;
 import com.leaf.clips.model.dataaccess.dao.SQLiteEdgeTypeDao;
 import com.leaf.clips.model.dataaccess.dao.SQLitePhotoDao;
@@ -45,6 +50,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.net.URI;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -54,6 +60,47 @@ import java.util.List;
  * @since 0.01
  */
 public class EdgeServiceTest {
+
+    public class DatabaseTest implements BaseColumns {
+
+        public static final String SQL_CREATE_PHOTO_TABLE = "CREATE TABLE " +
+                PhotoContract.TABLE_NAME + " (" +
+                PhotoContract.COLUMN_ID + " INTEGER PRIMARY KEY, " +
+                PhotoContract.COLUMN_EDGEID + " INTEGER, " +
+                PhotoContract.COLUMN_URL + " TEXT" +
+                " )";
+        public static final String SQL_DELETE_PHOTO_TABLE = "DROP TABLE IF EXISTS " +
+                PhotoContract.TABLE_NAME;
+
+        public static final String SQL_CREATE_EDGETYPE_TABLE = "CREATE TABLE " +
+                EdgeTypeContract.TABLE_NAME + " (" +
+                EdgeTypeContract.COLUMN_ID + " INTEGER PRIMARY KEY, " +
+                EdgeTypeContract.COLUMN_TYPENAME+ " TEXT" +
+                " )";
+        public static final String SQL_DELETE_EDGETYPE_TABLE = "DROP TABLE IF EXISTS " +
+                EdgeTypeContract.TABLE_NAME;
+
+        public static final String SQL_CREATE_ENTRIES = "CREATE TABLE " +
+                EdgeContract.TABLE_NAME + " (" +
+                EdgeContract.COLUMN_ID + " INTEGER PRIMARY KEY, " +
+                EdgeContract.COLUMN_ACTION + " TEXT," +
+                EdgeContract.COLUMN_COORDINATE + " TEXT," +
+                EdgeContract.COLUMN_DISTANCE + " DOUBLE," +
+                EdgeContract.COLUMN_LONGDESCRIPTION + " TEXT," +
+                EdgeContract.COLUMN_TYPEID + " INTEGER," +
+                EdgeContract.COLUMN_STARTROI + " INTEGER," +
+                EdgeContract.COLUMN_ENDROI + " INTEGER" +
+                " )";
+        public static final String SQL_CREATE_ROI_TABLE = "CREATE TABLE " +
+                RegionOfInterestContract.TABLE_NAME + " (" +
+                RegionOfInterestContract.COLUMN_ID + " INTEGER PRIMARY KEY, " +
+                RegionOfInterestContract.COLUMN_MAJOR + " INTEGER" +
+                ")";
+        public static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " +
+                EdgeContract.TABLE_NAME;
+        public static final String SQL_DELETE_ROI_TABLE = "DROP TABLE IF EXISTS " +
+                RegionOfInterestContract.TABLE_NAME;
+    }
 
     private Context context;
     private EdgeService edgeService;
@@ -72,6 +119,7 @@ public class EdgeServiceTest {
     private MapsDbHelper dbHelper;
     private SQLiteDatabase database;
     private String[] columns;
+    private SQLiteBuildingDao sqLiteBuildingDao;
 
     @Before
     public void setUp() throws Exception {
@@ -81,25 +129,16 @@ public class EdgeServiceTest {
         Assert.assertNotNull(dbHelper);
         database = dbHelper.getWritableDatabase();
         Assert.assertNotNull(database);
-        database.execSQL("DROP TABLE IF EXISTS " +
-                PhotoContract.TABLE_NAME);
-        database.execSQL("DROP TABLE IF EXISTS " +
-                EdgeContract.TABLE_NAME);
-        database.execSQL("DROP TABLE IF EXISTS " +
-                EdgeTypeContract.TABLE_NAME);
-        database.execSQL("DROP TABLE IF EXISTS " +
-                RoiPoiContract.TABLE_NAME);
-        database.execSQL("DROP TABLE IF EXISTS " +
-                PointOfInterestContract.TABLE_NAME);
-        database.execSQL("DROP TABLE IF EXISTS " +
-                CategoryContract.TABLE_NAME);
-        database.execSQL("DROP TABLE IF EXISTS " +
-                RegionOfInterestContract.TABLE_NAME);
-        database.execSQL("DROP TABLE IF EXISTS " +
-                BuildingContract.TABLE_NAME);
-        dbHelper.onCreate(database);
-        //database.execSQL(DatabaseTest.SQL_DELETE_ENTRIES);
-        //database.execSQL(DatabaseTest.SQL_CREATE_ENTRIES);
+        database.execSQL(DatabaseTest.SQL_DELETE_PHOTO_TABLE);
+        database.execSQL(DatabaseTest.SQL_DELETE_ENTRIES);
+        database.execSQL(DatabaseTest.SQL_DELETE_ROI_TABLE);
+        database.execSQL(DatabaseTest.SQL_DELETE_EDGETYPE_TABLE);
+        database.execSQL(DatabaseTest.SQL_CREATE_EDGETYPE_TABLE);
+        database.execSQL(DatabaseTest.SQL_CREATE_ROI_TABLE);
+        database.execSQL(DatabaseTest.SQL_CREATE_ENTRIES);
+        database.execSQL(DatabaseTest.SQL_CREATE_PHOTO_TABLE);
+        sqLiteBuildingDao = new SQLiteBuildingDao(database);
+        Assert.assertNotNull(sqLiteBuildingDao);
         sqLiteRoiDao = new SQLiteRegionOfInterestDao(database);
         Assert.assertNotNull(sqLiteRoiDao);
         remoteRoiDao = new RemoteRegionOfInterestDao();
@@ -153,8 +192,10 @@ public class EdgeServiceTest {
         sqLiteRoiDao.insertRegionOfInterest(new RegionOfInterestTable(2, "uuid", 666, 5));
         sqLiteRoiDao.insertRegionOfInterest(new RegionOfInterestTable(3, "uuid", 666, 6));
         sqLiteEdgeDao.insertEdge(new EdgeTable(1, 2, 3, 4.0, "180", 1, "action", "descr"));
-        sqLitePhotoDao.insertPhoto(new PhotoTable(1, "myUrl1", 1));
-        sqLitePhotoDao.insertPhoto(new PhotoTable(2, "myUrl2", 1));
+
+        // Per esser sicuro che l'abbia inserito
+        EdgeTable table = sqLiteEdgeDao.findEdge(1);
+
         RegionOfInterest startROI = new RegionOfInterestImp(2, "uuid", 666, 5);
         RegionOfInterest endROI = new RegionOfInterestImp(3, "uuid", 666, 6);
         BasicInformation basicInfo = new BasicInformation("action");
@@ -176,12 +217,137 @@ public class EdgeServiceTest {
     }
 
     @Test
-    public void shouldDo() throws Exception {
+    public void shouldRetrieveAnEdge() throws Exception {
         setUp();
+        int edgeId = 13;
+        sqLiteEdgeTypeDao.insertEdgeType(new EdgeTypeTable(1, "Default"));
+        sqLiteRoiDao.insertRegionOfInterest(new RegionOfInterestTable(2, "uuid", 666, 5));
+        sqLiteRoiDao.insertRegionOfInterest(new RegionOfInterestTable(3, "uuid", 666, 6));
+        sqLiteEdgeDao.insertEdge(new EdgeTable(edgeId, 2, 3, 4.0, "180", 1, "action", "descr"));
+        sqLitePhotoDao.insertPhoto(new PhotoTable(1, "myUrl1", edgeId));
+        sqLitePhotoDao.insertPhoto(new PhotoTable(2, "myUrl2", edgeId));
+        RegionOfInterest startROI = new RegionOfInterestImp(2, "uuid", 666, 5);
+        RegionOfInterest endROI = new RegionOfInterestImp(3, "uuid", 666, 6);
+        List<RegionOfInterest> tracedRois = new LinkedList<>();
+        tracedRois.add(startROI);
+        tracedRois.add(endROI);
+        roiService.setTracedRois(tracedRois);
+        EnrichedEdge edge = edgeService.findEdge(edgeId);
+        Assert.assertEquals(edge.getCoordinate(), 180);
+        Assert.assertEquals(edge.getBasicInformation(), "action");
+        Assert.assertEquals(edge.getDetailedInformation(), "descr");
+        Assert.assertEquals(edge.getDistance(), 4.0);
     }
 
     @Test
-    public void shouldDoAnotherThing() throws Exception {
+    public void shouldRetrieveAllEdgesOfABuilding() throws Exception {
         setUp();
+        int major = 666;
+        int edgeId1 = 1;
+        int edgeId2 = 2;
+        int roi1_id = 1;
+        int roi2_id = 2;
+
+        sqLiteEdgeTypeDao.insertEdgeType(new EdgeTypeTable(1, "Default"));
+        sqLiteRoiDao.insertRegionOfInterest(new RegionOfInterestTable(roi1_id, "uuid", major, 5));
+        sqLiteRoiDao.insertRegionOfInterest(new RegionOfInterestTable(roi2_id, "uuid", major, 6));
+        // inserisco il primo edge
+        sqLiteEdgeDao.insertEdge(new EdgeTable(edgeId1, roi1_id, roi2_id, 4.0, "180", 1, "action", "descr"));
+        sqLitePhotoDao.insertPhoto(new PhotoTable(1, "myUrl1", edgeId1));
+        sqLitePhotoDao.insertPhoto(new PhotoTable(2, "myUrl2", edgeId1));
+        // inserisco il secondo edge
+        sqLiteEdgeDao.insertEdge(new EdgeTable(edgeId2, roi1_id, roi2_id, 10.0, "360", 1, "action", "descr"));
+        sqLitePhotoDao.insertPhoto(new PhotoTable(3, "myUrl3", edgeId2));
+        sqLitePhotoDao.insertPhoto(new PhotoTable(4, "myUrl4", edgeId2));
+        // setto le tracedRois
+        RegionOfInterest roi1 = new RegionOfInterestImp(roi1_id, "uuid", major, 5);
+        RegionOfInterest roi2 = new RegionOfInterestImp(roi2_id, "uuid", major, 6);
+        List<RegionOfInterest> tracedRois = new LinkedList<>();
+        tracedRois.add(roi1);
+        tracedRois.add(roi2);
+        roiService.setTracedRois(tracedRois);
+        EnrichedEdge edge1 = edgeService.findEdge(edgeId1);
+        RegionOfInterest startRoi1 = edge1.getStarterPoint();
+        Assert.assertEquals(startRoi1.getMajor(), major);
+        RegionOfInterest endRoi1 = edge1.getEndPoint();
+        Assert.assertEquals(endRoi1.getMajor(), major);
+        // questo sopra funziona
+        // TODO: se invoco findAllEdgesOfBuilding la query sul db non me li trova
+        // Collection<EdgeTable> tables = sqLiteEdgeDao.findAllEdgesOfBuilding(major);
+        // richiedo tutti gli Edge di un edificio
+        // Collection<EnrichedEdge> edges = edgeService.findAllEdgesOfBuilding(major);
+        // Assert.assertEquals(2, edges.size());
+    }
+
+    /**
+     * Viene testato che, dato un oggetto JsonObject che possiede gli stessi valori di un oggetto
+     * EdgeTable, sia possibile costruire un oggetto EdgeTable e inserirlo nel database locale.
+     */
+    @Test
+    public void shouldCreateAnEdgeTableAndInsertItInTheDB() throws Exception {
+        setUp();
+        int edgeId = 13;
+        sqLiteEdgeTypeDao.insertEdgeType(new EdgeTypeTable(1, "Default"));
+        sqLiteRoiDao.insertRegionOfInterest(new RegionOfInterestTable(2, "uuid", 666, 5));
+        sqLiteRoiDao.insertRegionOfInterest(new RegionOfInterestTable(3, "uuid", 666, 6));
+        JsonObject js = new JsonObject();
+        js.addProperty("id", edgeId);
+        js.addProperty("startROI", 2);
+        js.addProperty("endROI", 3);
+        js.addProperty("distance", 4.0);
+        js.addProperty("coordinate", "180");
+        js.addProperty("typeId", 1);
+        js.addProperty("action", "action");
+        js.addProperty("longDescription", "descr");
+        edgeService.convertAndInsert(js);
+        sqLitePhotoDao.insertPhoto(new PhotoTable(1, "myUrl1", edgeId));
+        sqLitePhotoDao.insertPhoto(new PhotoTable(2, "myUrl2", edgeId));
+        RegionOfInterest startROI = new RegionOfInterestImp(2, "uuid", 666, 5);
+        RegionOfInterest endROI = new RegionOfInterestImp(3, "uuid", 666, 6);
+        List<RegionOfInterest> tracedRois = new LinkedList<>();
+        tracedRois.add(startROI);
+        tracedRois.add(endROI);
+        roiService.setTracedRois(tracedRois);
+
+        EnrichedEdge edge = edgeService.findEdge(edgeId);
+        Assert.assertEquals(edge.getDistance(), 4.0);
+    }
+
+    /**
+     * Viene testato che, dato un oggetto JsonObject che possiede gli stessi valori di un oggetto
+     * EdgeTypeTable, sia possibile costruire un oggetto EdgeTypeTable e
+     * inserirlo nel database locale.
+     */
+    @Test
+    public void shouldCreateAnEdgeTypeTableAndInsertItInTheDB() throws Exception {
+        setUp();
+        int edgeType_id = 1;
+        String edgeType_name = "Stairs";
+        JsonObject js = new JsonObject();
+        js.addProperty("id", edgeType_id);
+        js.addProperty("typeName", edgeType_name);
+        edgeService.convertAndInsertEdgeType(js);
+
+        EdgeTypeTable table = sqLiteEdgeTypeDao.findEdgeType(edgeType_id);
+        Assert.assertEquals(table.getTypeName(), edgeType_name);
+    }
+
+    /**
+     * Viene testato che, dato un oggetto JsonObject che possiede gli stessi valori di un oggetto
+     * PhotoTable, sia possibile costruire un oggetto PhotoTable e inserirlo nel database locale.
+     */
+    @Test
+    public void shouldCreateAPhotoTableAndInsertItInTheDB() throws Exception {
+        setUp();
+        int photoId = 1;
+        String url = "myUrl";
+        JsonObject js = new JsonObject();
+        js.addProperty("id", photoId);
+        js.addProperty("url", url);
+        js.addProperty("edgeId", 2);
+        edgeService.convertAndInsertPhoto(js);
+
+        PhotoRef ref = photoService.findPhoto(photoId);
+        Assert.assertEquals(ref.getPhotoUri(), URI.create(url));
     }
 }
