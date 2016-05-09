@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterestImp;
 import com.leaf.clips.view.PoiCategoryView;
@@ -18,7 +19,15 @@ import com.leaf.clips.view.PoiCategoryViewImp;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class PoiCategoryActivity extends AppCompatActivity {
+
+    /**
+     * Riferimento utilizzato per accedere alle informazioni trattate dal model
+     */
+    @Inject
+    InformationManager informationManager;
 
     /**
      * Lista di POI associati ad una certa categoria 
@@ -52,6 +61,8 @@ public class PoiCategoryActivity extends AppCompatActivity {
          *
          *view.setPoiListAdapter(poiNameList);
          */
+
+        ((MyApplication)getApplication()).getInfoComponent().inject(this);
 
         //TODO: remove (only for debug purpose) --> use code upon instead
         List<String> list = new LinkedList<>();

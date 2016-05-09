@@ -4,7 +4,11 @@ import com.leaf.clips.di.modules.DatabaseModule;
 import com.leaf.clips.di.modules.InfoModule;
 import com.leaf.clips.di.modules.AppModule;
 import com.leaf.clips.di.modules.SettingModule;
+import com.leaf.clips.presenter.DeveloperUnlockerActivity;
 import com.leaf.clips.presenter.HomeActivity;
+import com.leaf.clips.presenter.NavigationActivity;
+import com.leaf.clips.presenter.NearbyPoiActivity;
+import com.leaf.clips.presenter.PoiCategoryActivity;
 
 import javax.inject.Singleton;
 
@@ -30,4 +34,8 @@ public interface InfoComponent {
      * @param mainActivity Oggetto in cui devono essere iniettate le dipendenze
      */
     void inject(HomeActivity mainActivity);
+    void inject(DeveloperUnlockerActivity developerUnlockerActivity);
+    void inject(PoiCategoryActivity poiCategoryActivity);
+    void inject(NearbyPoiActivity nearbyPoiActivity);
+    void inject(NavigationActivity navigationActivity);
 }

@@ -23,7 +23,8 @@ public class MainDeveloperActivity extends AppCompatActivity {
     /**
      * Oggetto del Model per la gestione delle informazioni
      */
-    //private InformationManager infoManager;
+   /* @Inject
+    InformationManager infoManager;*/
 
 
     @Override
