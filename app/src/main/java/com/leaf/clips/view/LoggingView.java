@@ -7,7 +7,7 @@ import android.widget.Adapter;
  * @version 0.01
  * @since 0.00
  */
-public interface LogginView {
+public interface LoggingView {
     /**
      * Metodo utilizzato per visualizzare la lista dei beacon rilevati
      * @param adp Collegamento tra la lista dei beacon rilevati e la view in cui essi devono essere mostrati
