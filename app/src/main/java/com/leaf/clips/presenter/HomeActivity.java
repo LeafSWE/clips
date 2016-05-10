@@ -1,26 +1,36 @@
 package com.leaf.clips.presenter;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.leaf.clips.R;
+import com.leaf.clips.model.InformationListener;
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NoBeaconSeenException;
 import com.leaf.clips.view.HomeView;
 import com.leaf.clips.view.HomeViewImp;
 
+import org.altbeacon.beacon.distance.AndroidModel;
+import org.altbeacon.bluetooth.BluetoothCrashResolver;
+
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements InformationListener{
     /**
      *  TODO
-        Enable Suggestion
+     Enable Suggestion
      */
 
     /**
@@ -34,18 +44,51 @@ public class HomeActivity extends AppCompatActivity {
      */
     private HomeView view;
 
+    BluetoothCrashResolver bluetoothCrashResolver ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
         view = new HomeViewImp(this);
-
+        bluetoothCrashResolver = new BluetoothCrashResolver(this);
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
+        informationManager.addListener(this);
 
-        updateBuildingAddress();
+        /*updateBuildingAddress();
         updateBuildingName();
         updateBuildingDescription();
         updateBuildingOpeningHours();
-        updatePoiCategoryList();
+        updatePoiCategoryList();*/
+        if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M ){
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                // Should we show an explanation?
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION)) {
+
+                    // Show an expanation to the user *asynchronously* -- don't block
+                    // this thread waiting for the user's response! After the user
+                    // sees the explanation, try again to request the permission.
+
+                } else {
+
+                    // No explanation needed, we can request the permission.
+
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                            0);
+
+                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                    // app-defined int constant. The callback method gets the
+                    // result of the request.
+                }
+            }
+        }
     }
 
     /**
@@ -95,7 +138,7 @@ public class HomeActivity extends AppCompatActivity {
      */
     public void showPoisCategory(String categoryName){
         Intent intent = new Intent(this, PoiCategoryActivity.class);
-        intent.putExtra("category_name",categoryName);
+        intent.putExtra("category_name", categoryName);
         startActivity(intent);
     }
 
@@ -186,4 +229,32 @@ public class HomeActivity extends AppCompatActivity {
         // TODO: 5/3/16  
     }
 
+    @Override
+    public void onDatabaseLoaded() {
+        updateBuildingAddress();
+        updateBuildingName();
+        updateBuildingDescription();
+        updateBuildingOpeningHours();
+        updatePoiCategoryList();
+    }
+
+    @Override
+    public boolean onLocalMapNotFound() {
+        return false;
+    }
+
+    @Override
+    public void onRemoteMapNotFound() {
+
+    }
+
+    @Override
+    public void cannotRetrieveRemoteMapDetails() {
+
+    }
+
+    @Override
+    public boolean noLastMapVersion() {
+        return false;
+    }
 }
