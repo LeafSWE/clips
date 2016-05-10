@@ -12,13 +12,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.leaf.clips.model.InformationManager;
+import com.leaf.clips.model.NavigationListener;
+import com.leaf.clips.model.NavigationManager;
+import com.leaf.clips.model.navigator.NavigationExceptions;
 import com.leaf.clips.model.navigator.ProcessedInformation;
 import com.leaf.clips.view.NavigationView;
 import com.leaf.clips.view.NavigationViewImp;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
-public class NavigationActivity extends AppCompatActivity {
+public class NavigationActivity extends AppCompatActivity implements NavigationListener {
 
     /**
      * Riferimento utilizzato per accedere alle informazioni trattate dal model
@@ -26,6 +31,8 @@ public class NavigationActivity extends AppCompatActivity {
     //TODO: Serve NavigationManager!!
     @Inject
     InformationManager informationManager;
+    @Inject
+    NavigationManager navigationManager;
 
     private NavigationView view;
     private NavigationAdapter navigationAdapter;
@@ -39,6 +46,11 @@ public class NavigationActivity extends AppCompatActivity {
         handleIntent(getIntent());
 
         //TODO retrieve path instruction
+        try {
+            List<ProcessedInformation> navigationInstruction = navigationManager.getAllNavigationInstruction();
+        } catch (NavigationExceptions navigationExceptions) {
+            navigationExceptions.printStackTrace();
+        }
     }
 
     //TODO: aggiornare documentazione se test Search ok
@@ -69,8 +81,8 @@ public class NavigationActivity extends AppCompatActivity {
     }
 
     /**
-     *
-     * @param info
+     * Metodo che viene invocato ogni volta che il sistema rileva un beacon durante la navigazione
+     * @param info: istruzioni di navigazione utili per attraversare il prossimo arco.
      */
     public void informationUpdate(ProcessedInformation info){
         //TODO
