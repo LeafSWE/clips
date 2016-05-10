@@ -2,11 +2,15 @@ package com.leaf.clips.di.modules;
 
 import android.content.Context;
 
+import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NavigationManager;
 import com.leaf.clips.model.NavigationManagerImp;
+import com.leaf.clips.model.NoBeaconSeenException;
 import com.leaf.clips.model.navigator.graph.MapGraph;
+import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
+import com.leaf.clips.model.navigator.graph.edge.EnrichedEdge;
 
-import javax.inject.Singleton;
+import java.util.Collection;
 
 import dagger.Module;
 import dagger.Provides;
@@ -24,8 +28,19 @@ import dagger.Provides;
 public class NavModule {
 
     @Provides
-    public MapGraph provideMapGraph(){
-        return new MapGraph();
+    public MapGraph provideMapGraph(InformationManager informationManager){
+        MapGraph map = new MapGraph();
+        Collection<RegionOfInterest> roi;
+        Collection<EnrichedEdge> enrichedEdges;
+        try {
+            roi = informationManager.getBuildingMap().getAllROIs();
+            map.addAllRegions(roi);
+            enrichedEdges = informationManager.getBuildingMap().getAllEdges();
+            map.addAllEdges(enrichedEdges);
+        }catch(NoBeaconSeenException e){
+            e.printStackTrace();
+        }
+        return map;
     }
 
     /**
