@@ -1,5 +1,13 @@
 package com.leaf.clips.presenter;
 
+
+/**
+ * @author Federico Tavella
+ * @version 0.05
+ * @since 0.04
+ *
+ */
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;

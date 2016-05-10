@@ -1,9 +1,9 @@
 package com.leaf.clips.presenter;
 
 /**
- * @author Andrea Tombolato
- * @version 0.03
- * @since 0.00
+ * @author Federico Tavella
+ * @version 0.05
+ * @since 0.03
  */
 
 import android.app.SearchManager;
@@ -14,10 +14,15 @@ import android.support.v7.app.AppCompatActivity;
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NavigationListener;
 import com.leaf.clips.model.NavigationManager;
+import com.leaf.clips.model.NoBeaconSeenException;
+import com.leaf.clips.model.navigator.BuildingMap;
 import com.leaf.clips.model.navigator.NavigationExceptions;
 import com.leaf.clips.model.navigator.ProcessedInformation;
+import com.leaf.clips.model.navigator.graph.MapGraph;
 import com.leaf.clips.view.NavigationView;
 import com.leaf.clips.view.NavigationViewImp;
+
+import org.jgrapht.Graph;
 
 import java.util.List;
 
@@ -42,9 +47,16 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         super.onCreate(savedInstanceState);
         view = new NavigationViewImp(this);
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
-
+        BuildingMap map = null;
+        try {
+            map = informationManager.getBuildingMap();
+        } catch (NoBeaconSeenException e) {
+            e.printStackTrace();
+        }
         handleIntent(getIntent());
-
+        MapGraph graph = navigationManager.getGraph();
+        graph.addAllRegions(map.getAllROIs());
+        graph.addAllEdges(map.getAllEdges());
         //TODO retrieve path instruction
         try {
             List<ProcessedInformation> navigationInstruction = navigationManager.getAllNavigationInstruction();
