@@ -176,7 +176,9 @@ public class RegionOfInterestServiceTest {
         roiService.convertAndInsert(js);
 
         RegionOfInterest roi = roiService.findRegionOfInterest(1);
-        Assert.assertNotNull(roi);
+        Assert.assertEquals("UUID",roi.getUUID());
+        Assert.assertEquals(666, roi.getMajor());
+        Assert.assertEquals(2, roi.getMinor());
     }
 
     /**
