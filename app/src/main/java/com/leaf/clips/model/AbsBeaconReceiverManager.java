@@ -9,8 +9,10 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.leaf.clips.model.beacon.BeaconManagerAdapter;
 import com.leaf.clips.model.beacon.BeaconRanger;
@@ -65,6 +67,8 @@ public abstract class AbsBeaconReceiverManager extends BroadcastReceiver {
         serviceConnection = new ServiceConnectionImp();
         context.bindService(serviceStart, serviceConnection,Context.BIND_AUTO_CREATE);
         listeners = new LinkedList<>();
+        LocalBroadcastManager.getInstance(context).registerReceiver(this,
+                new IntentFilter("beaconsDetected"));
     }
 
     /**

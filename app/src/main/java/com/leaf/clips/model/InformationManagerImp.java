@@ -9,6 +9,7 @@ package com.leaf.clips.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.leaf.clips.model.beacon.Logger;
 import com.leaf.clips.model.beacon.LoggerImp;
@@ -18,6 +19,7 @@ import com.leaf.clips.model.navigator.BuildingMap;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.usersetting.SettingImp;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -65,7 +67,9 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         lastBeaconsSeen = new PriorityQueue<>();
         activeLog = new LoggerImp();
         //TODO: remove (debug purpose)
-        map = this.dbService.findBuildingByMajor(666);
+        //map = this.dbService.findBuildingByMajor(666);
+        Log.i("INFORMATION_MANAGER", "START SERVICE");
+        super.startService();
     }
 
     /**
@@ -143,7 +147,8 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     */
 
     private void loadMap(){
-       /* int major = lastBeaconsSeen.peek().getMajor();
+        Log.i("INFORMATION_MANAGER","CARICO LA MAPPA");
+        int major = lastBeaconsSeen.peek().getMajor();
 
         if(dbService.isBuildingMapPresent(major)){
             try {
@@ -179,8 +184,8 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
             }
             else
                 ((InformationListener)listeners).onRemoteMapNotFound();
-        }*/
-        map=dbService.findBuildingByMajor(666);
+        }
+        //map=dbService.findBuildingByMajor(666);
 
     }
 
@@ -193,17 +198,21 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     @Override
     public void onReceive(Context context, Intent intent){
 
+        Log.i("INFORMATION_MANAGER", "RECEIVE");
         PriorityQueue<MyBeacon> p;
         p = ((PriorityQueue<MyBeacon>)intent.getSerializableExtra("queueOfBeacons"));
+        for(MyBeacon beacon : p)
+            Log.i("P", beacon.toString());
         if(!p.containsAll(lastBeaconsSeen) || lastBeaconsSeen.containsAll(p))
             setVisibleBeacon(p);
-
-
-
+        lastBeaconsSeen = p;
         if(map == null) {
+
             loadMap();
+
             if (map != null)
-                ((InformationListener)listeners).onDatabaseLoaded();
+                for(Listener listener : listeners)
+                    ((InformationListener)listener).onDatabaseLoaded();
         }
 
         if(shouldLog){
