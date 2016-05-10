@@ -14,6 +14,8 @@ import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.view.MainDeveloperView;
 import com.leaf.clips.view.MainDeveloperViewImp;
 
+import junit.framework.Assert;
+
 import javax.inject.Inject;
 
 public class MainDeveloperActivity extends AppCompatActivity {
@@ -36,6 +38,9 @@ public class MainDeveloperActivity extends AppCompatActivity {
         this.mainDeveloperView = new MainDeveloperViewImp(this);
 
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
+
+        //Controllo che l'iniziezione sia andata abuon fine
+        Assert.assertNotNull(infoManager);
     }
 
 
