@@ -3,6 +3,7 @@ package com.leaf.clips.di.component;
 import com.leaf.clips.di.modules.AppModule;
 import com.leaf.clips.di.modules.DatabaseModule;
 import com.leaf.clips.di.modules.InfoModule;
+import com.leaf.clips.di.modules.NavModule;
 import com.leaf.clips.di.modules.SettingModule;
 import com.leaf.clips.presenter.DeveloperUnlockerActivity;
 import com.leaf.clips.presenter.HomeActivity;
@@ -30,7 +31,7 @@ import dagger.Component;
  * l'annotazione Module che permettono di risolvere le dipendenze
  */
 @Singleton
-@Component(modules = {AppModule.class, InfoModule.class, DatabaseModule.class, SettingModule.class})
+@Component(modules = {AppModule.class, InfoModule.class, DatabaseModule.class, SettingModule.class, NavModule.class})
 public interface InfoComponent {
     /**
      * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo HomeActivity
