@@ -50,7 +50,7 @@ public class EdgeContract {
     /**
      * Valore della colonna typeId. Valore di default "typeId"
      */
-    public final static String COLUMN_TYPEID = "typeID";
+    public final static String COLUMN_TYPEID = "typeId";
 
     /**
      * Nome della tabella. Valore di default "Edge"

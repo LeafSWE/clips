@@ -1,5 +1,11 @@
 package com.leaf.clips.presenter;
 
+/**
+ * @author Andrea Tombolato
+ * @version 0.01
+ * @since 0.00
+ */
+
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;

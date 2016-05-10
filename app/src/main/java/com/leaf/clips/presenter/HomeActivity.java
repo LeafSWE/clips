@@ -5,10 +5,17 @@ import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.leaf.clips.R;
+import com.leaf.clips.model.InformationManager;
+import com.leaf.clips.model.NoBeaconSeenException;
 import com.leaf.clips.view.HomeView;
 import com.leaf.clips.view.HomeViewImp;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 public class HomeActivity extends AppCompatActivity {
     /**
@@ -19,7 +26,8 @@ public class HomeActivity extends AppCompatActivity {
     /**
      * Riferimento utilizzato per accedere alle informazioni trattate dal model
      */
-    //private InformationManager informationManager;
+    @Inject
+    InformationManager informationManager;
 
     /**
      * View associata a tale Activity
@@ -30,6 +38,14 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = new HomeViewImp(this);
+
+        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+
+        updateBuildingAddress();
+        updateBuildingName();
+        updateBuildingDescription();
+        updateBuildingOpeningHours();
+        updatePoiCategoryList();
     }
 
     /**
@@ -78,7 +94,9 @@ public class HomeActivity extends AppCompatActivity {
      * @return  void
      */
     public void showPoisCategory(String categoryName){
-        // TODO: 5/3/16  
+        Intent intent = new Intent(this, PoiCategoryActivity.class);
+        intent.putExtra("category_name",categoryName);
+        startActivity(intent);
     }
 
     /**
@@ -95,7 +113,7 @@ public class HomeActivity extends AppCompatActivity {
      * @return  void
      */
     public void startNavigation(int poiPosition){
-        // TODO: 5/3/16  
+        //TODO: 5/3/16
     }
 
     /**
@@ -103,7 +121,12 @@ public class HomeActivity extends AppCompatActivity {
      * @return  void
      */
     public void updateBuildingAddress(){
-        // TODO: 5/3/16  
+        try {
+            String address = informationManager.getBuildingMap().getAddress();
+            view.setBuildingAddress(address);
+        } catch (NoBeaconSeenException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -111,7 +134,13 @@ public class HomeActivity extends AppCompatActivity {
      * @return  void
      */
     public void updateBuildingDescription(){
-        // TODO: 5/3/16  
+        try {
+            String desc = informationManager.getBuildingMap().getDescription()+"%%%%";
+            Log.d("DESC",desc);
+            view.setBuildingDescription(desc);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -119,7 +148,12 @@ public class HomeActivity extends AppCompatActivity {
      * @return  void
      */
     public void updateBuildingName(){
-        // TODO: 5/3/16  
+        try {
+            String name = informationManager.getBuildingMap().getName();
+            view.setBuildingName(name);
+        } catch (NoBeaconSeenException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -127,7 +161,12 @@ public class HomeActivity extends AppCompatActivity {
      * @return  void
      */
     public void updateBuildingOpeningHours(){
-        // TODO: 5/3/16  
+        try {
+            String hours = informationManager.getBuildingMap().getOpeningHours();
+            view.setBuildingOpeningHours(hours);
+        } catch (NoBeaconSeenException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -135,7 +174,8 @@ public class HomeActivity extends AppCompatActivity {
      * @return  void
      */
     public void updatePoiCategoryList(){
-        // TODO: 5/3/16  
+        List<String> categories = (List<String>) informationManager.getAllCategories();
+        view.setPoiCategoryListAdapter(categories);
     }
 
     /**

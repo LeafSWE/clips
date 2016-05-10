@@ -136,6 +136,8 @@ public class SQLiteEdgeDao implements EdgeDao, CursorConverter {
         };
         Cursor cursor = sqlDao.query(true, EdgeContract.TABLE_NAME, columns,
                 EdgeContract.COLUMN_ID + "=" + id, null, null, null, null, null);
+        if (cursor.getCount() == 0)
+            return null;
         return cursorToType(cursor);
     }
 

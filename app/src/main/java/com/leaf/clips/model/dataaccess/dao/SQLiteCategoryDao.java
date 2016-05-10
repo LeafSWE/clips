@@ -66,6 +66,8 @@ public class SQLiteCategoryDao implements CategoryDao, CursorConverter {
         };
         Cursor cursor = sqlDao.query(true, CategoryContract.TABLE_NAME, columns,
                 CategoryContract.COLUMN_ID + "=" + id, null, null, null, null, null);
+        if (cursor.getCount() == 0)
+            return null;
         return cursorToType(cursor);
     }
 

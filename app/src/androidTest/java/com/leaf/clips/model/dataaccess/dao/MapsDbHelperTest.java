@@ -7,15 +7,12 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.InstrumentationTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
-import android.util.Log;
 
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.junit.Assert.*;
 
 /**
  * @author Marco Zanella
@@ -72,6 +69,11 @@ public class MapsDbHelperTest extends InstrumentationTestCase {
         Assert.assertEquals(1, c.getCount());
         c = database.rawQuery("SELECT * FROM sqlite_master WHERE type='trigger'" +
                 " AND name='delete_empty_edgetype'", null);
+        Assert.assertEquals(1, c.getCount());
+
+        //database.rawQuery("INSERT INTO Building VALUES (0, 'f7826da6-4fa2-4e98-8024-bc5b71e0893e', 666, 'Torre Archimede', 'Descrizione', '07.30 - 19.00. Dal lunedì al venerdì.', 'Via Trieste 63 - 35121 Padova', 1, 'DimensioniMappa')",null);
+
+        c = database.rawQuery("SELECT * FROM Building ",null);
         Assert.assertEquals(1, c.getCount());
 
     }

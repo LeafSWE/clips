@@ -43,6 +43,8 @@ public class SQLitePhotoDao implements PhotoDao, CursorConverter {
         int edgeIndex = cursor.getColumnIndex(PhotoContract.COLUMN_EDGEID);
         int urlIndex = cursor.getColumnIndex(PhotoContract.COLUMN_URL);
         cursor.moveToNext();
+        System.out.println("%%%%" + cursor.getInt(idIndex)+ cursor.getString(urlIndex)+
+                cursor.getInt(edgeIndex));
         return new PhotoTable(cursor.getInt(idIndex), cursor.getString(urlIndex),
                 cursor.getInt(edgeIndex));
     }
@@ -71,23 +73,33 @@ public class SQLitePhotoDao implements PhotoDao, CursorConverter {
                 PhotoContract.COLUMN_URL
         };
         Cursor cursor = sqlDao.query(true, PhotoContract.TABLE_NAME, columns,
-            PhotoContract.COLUMN_EDGEID + "=" + id, null, null, null, null, null);
-        int photoNumber = cursor.getCount();
-        PriorityQueue<PhotoTable> photoTables = new PriorityQueue<>(photoNumber,
-                new Comparator<PhotoTable>() {
-            @Override
-            public int compare(PhotoTable lhs, PhotoTable rhs) {
-                if (lhs.getId() > rhs.getId())
-                    return 1;
-                else if (lhs.getId() == rhs.getId())
-                    return 0;
-                else
-                    return -1;
+                PhotoContract.COLUMN_EDGEID + "=" + id, null, null, null, null, null);
+
+        final int photoNumber = cursor.getCount();
+
+        final PriorityQueue<PhotoTable> photoTables;
+
+        if (photoNumber > 0) {
+            photoTables = new PriorityQueue<>(photoNumber,
+                    new Comparator<PhotoTable>() {
+                        @Override
+                        public int compare(PhotoTable lhs, PhotoTable rhs) {
+                            if (lhs.getId() > rhs.getId())
+                                return 1;
+                            else if (lhs.getId() == rhs.getId())
+                                return 0;
+                            else
+                                return -1;
+                        }
+                    });
+
+            for (int i = 0; i < photoNumber; i++) {
+                photoTables.add(cursorToType(cursor));
             }
-        });
-        for (int i = 0; i < photoNumber; i++)
-            photoTables.add(cursorToType(cursor));
-        return photoTables;
+            return photoTables;
+        }
+        else
+            return new PriorityQueue<PhotoTable>();
     }
 
     /**
@@ -104,6 +116,8 @@ public class SQLitePhotoDao implements PhotoDao, CursorConverter {
         };
         Cursor cursor = sqlDao.query(true, PhotoContract.TABLE_NAME, columns,
                 PhotoContract.COLUMN_ID + "=" + id, null, null, null, null, null);
+        if (cursor.getCount() == 0)
+            return null;
         return cursorToType(cursor);
     }
 

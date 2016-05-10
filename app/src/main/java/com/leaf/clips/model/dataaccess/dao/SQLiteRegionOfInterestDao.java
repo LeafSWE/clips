@@ -80,21 +80,23 @@ public class SQLiteRegionOfInterestDao implements RegionOfInterestDao, CursorCon
         Cursor cursor = sqlDao.query(true, RegionOfInterestContract.TABLE_NAME, columns, 
                 RegionOfInterestContract.COLUMN_MAJOR + "=" + major, null, null, null, null, null);
         int roisNumber = cursor.getCount();
-        PriorityQueue<RegionOfInterestTable> regionOfInterestTables = new PriorityQueue<>(roisNumber,
-                new Comparator<RegionOfInterestTable>() {
-                    @Override
-                    public int compare(RegionOfInterestTable lhs, RegionOfInterestTable rhs) {
-                        if (lhs.getId() > rhs.getId())
-                            return 1;
-                        else if (lhs.getId() == rhs.getId())
-                            return 0;
-                        else
-                            return -1;
-                    }
-                });
-        for (int i = 0; i < roisNumber; i++)
-            regionOfInterestTables.add(cursorToType(cursor));
-        return regionOfInterestTables;
+        if (roisNumber > 0) {
+            PriorityQueue<RegionOfInterestTable> regionOfInterestTables = new PriorityQueue<>(roisNumber,
+                    new Comparator<RegionOfInterestTable>() {
+                        @Override
+                        public int compare(RegionOfInterestTable lhs, RegionOfInterestTable rhs) {
+                            if (lhs.getId() > rhs.getId())
+                                return 1;
+                            else if (lhs.getId() == rhs.getId())
+                                return 0;
+                            else
+                                return -1;
+                        }
+                    });
+            for (int i = 0; i < roisNumber; i++)
+                regionOfInterestTables.add(cursorToType(cursor));
+            return regionOfInterestTables;
+        } else return new PriorityQueue<>();
     }
 
     /**
@@ -112,6 +114,8 @@ public class SQLiteRegionOfInterestDao implements RegionOfInterestDao, CursorCon
         };
         Cursor cursor = sqlDao.query(true, RegionOfInterestContract.TABLE_NAME, columns,
                 RegionOfInterestContract.COLUMN_ID + "=" + id, null, null, null, null, null);
+        if (cursor.getCount() == 0)
+            return null;
         return cursorToType(cursor);
     }
 

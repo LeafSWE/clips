@@ -18,7 +18,6 @@ import com.leaf.clips.model.navigator.BuildingMap;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.usersetting.SettingImp;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -65,6 +64,8 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         this.dbService = dbService;
         lastBeaconsSeen = new PriorityQueue<>();
         activeLog = new LoggerImp();
+        //TODO: remove (debug purpose)
+        map = this.dbService.findBuildingByMajor(666);
     }
 
     /**
@@ -142,7 +143,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     */
 
     private void loadMap(){
-        int major = lastBeaconsSeen.peek().getMajor();
+       /* int major = lastBeaconsSeen.peek().getMajor();
 
         if(dbService.isBuildingMapPresent(major)){
             try {
@@ -178,7 +179,8 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
             }
             else
                 ((InformationListener)listeners).onRemoteMapNotFound();
-        }
+        }*/
+        map=dbService.findBuildingByMajor(666);
 
     }
 

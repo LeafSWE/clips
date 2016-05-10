@@ -2,14 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.leaf.clips">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
-			android:name=".presenter.MyApplication"
+            android:name=".presenter.MyApplication"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <service android:name=".model.beacon.BeaconManagerAdapter"/>
+
         <activity
                 android:name=".presenter.MainActivity"
                 android:theme="@style/SplashTheme">
@@ -21,7 +26,11 @@
         </activity>
         <activity
                 android:name=".presenter.HomeActivity"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:theme="@style/AppTheme.NoActionBar"
+                android:windowSoftInputMode="stateHidden|adjustPan">
+            <meta-data
+                    android:name="android.app.default_searchable"
+                    android:value=".presenter.NavigationActivity"/>
         </activity>
         <activity android:name=".presenter.MainDeveloperPresenter">
         </activity>
@@ -49,6 +58,9 @@
                     android:value="com.leaf.clips.presenter.MainDeveloperActivity"/>
         </activity>
         <activity android:name=".presenter.PoiCategoryActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="com.leaf.clips.presenter.HomeActivity"/>
         </activity>
         <activity
                 android:name=".presenter.NearbyPoiActivity"
@@ -64,9 +76,26 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.LoggingActivity"/>
         </activity>
+        <activity
+                android:name=".presenter.NavigationActivity"
+                android:label="@string/title_activity_navigation">
+
+            <!-- to identify this activity as "searchable" -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="com.leaf.clips.presenter.HomeActivity"/>
+            <meta-data
+                    android:name="android.app.searchable"
+                    android:resource="@xml/searchable"/>
+        </activity>
+        <activity android:name=".presenter.DetailedInformationActivity">
+        </activity>
     </application>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

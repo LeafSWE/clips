@@ -18,4 +18,7 @@
     <string name="ok" translatable="false">Ok</string>
     <string name="title_activity_nearby_poi">Nearby</string>
     <string name="title_activity_log_information">Log Details</string>
+    <string name="search_hint">Search inside the building</string>
+    <string name="title_activity_navigation">Instructions</string>
+
 </resources>

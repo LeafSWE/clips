@@ -18,7 +18,13 @@ import java.util.PriorityQueue;
 /**
 *Interfaccia che si occupa di esporre tutti i metodi utili per accedere ad informazioni trattate dai vari pacchetti del Model
 */ 
-public interface InformationManager { 
+public interface InformationManager {
+
+    /**
+     * TODO
+     * Metodo che ritorna tutti i POI appartenenti ad una certa categoria
+     * List<String> getAllPoiWithCategory(String category)
+     */
 
     /**
     * Metodo che ritorna tutte le categorie di POI all'interno dell'edificio
