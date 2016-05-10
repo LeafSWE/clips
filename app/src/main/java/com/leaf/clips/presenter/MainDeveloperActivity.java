@@ -14,6 +14,8 @@ import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.view.MainDeveloperView;
 import com.leaf.clips.view.MainDeveloperViewImp;
 
+import junit.framework.Assert;
+
 import javax.inject.Inject;
 
 public class MainDeveloperActivity extends AppCompatActivity {
@@ -33,9 +35,18 @@ public class MainDeveloperActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         this.mainDeveloperView = new MainDeveloperViewImp(this);
 
+        // TODO: 10/05/2016 Recuperare logs
+        //Setto i log nell'app
+        String [] stringLogs = new String [] {"230514", "230516", "230514", "230516", "230514", "230516"};
+        mainDeveloperView.setLogsAdapter(stringLogs);
+
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
+
+        //Controllo che l'iniziezione sia andata abuon fine
+        Assert.assertNotNull(infoManager);
     }
 
 
