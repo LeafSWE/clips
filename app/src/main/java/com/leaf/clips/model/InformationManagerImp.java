@@ -153,7 +153,9 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         if(dbService.isBuildingMapPresent(major)){
             try {
                 if(!dbService.isBuildingMapUpdated(major)){
-                    boolean shouldUpdate = ((InformationListener)listeners).noLastMapVersion();
+                    boolean shouldUpdate = true;
+                    for(Listener listener : listeners)
+                        shouldUpdate = shouldUpdate && ((InformationListener)listener).noLastMapVersion();
                     if (shouldUpdate)
                         dbService.updateBuildingMap(major);
                 }
@@ -162,7 +164,8 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
 
             } catch (IOException e) {
                 e.printStackTrace();
-                ((InformationListener)listeners).cannotRetrieveRemoteMapDetails(); //errore connessione
+                for(Listener listener : listeners)
+                    ((InformationListener)listener).cannotRetrieveRemoteMapDetails(); //errore connessione
             }
         }
         else{
@@ -173,17 +176,23 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
                 e.printStackTrace();
             }
             if(mapExists){
-                boolean shouldDownload = ((InformationListener)listeners).onLocalMapNotFound();
+                boolean shouldDownload = true;
+                for(Listener listener : listeners)
+                    shouldDownload = shouldDownload && ((InformationListener)listener).onLocalMapNotFound();
                 try {
-                    if(shouldDownload)
+                    if(shouldDownload) {
                         map = dbService.findRemoteBuildingByMajor(major);
+                        Log.i("INFORMATION_MANAGER","MAP LOADING");
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    ((InformationListener)listeners).cannotRetrieveRemoteMapDetails(); //errore connessione
+                    for(Listener listener : listeners)
+                        ((InformationListener)listener).cannotRetrieveRemoteMapDetails(); //errore connessione
                 }
             }
             else
-                ((InformationListener)listeners).onRemoteMapNotFound();
+                for(Listener listener : listeners)
+                    ((InformationListener)listener).onRemoteMapNotFound();
         }
         //map=dbService.findBuildingByMajor(666);
 
