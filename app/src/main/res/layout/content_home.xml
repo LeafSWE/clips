@@ -4,7 +4,7 @@
             xmlns:tools="http://schemas.android.com/tools"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/backroundGrey">
 
         <LinearLayout
@@ -112,15 +112,15 @@
                     android:id="@+id/category_search" android:nestedScrollingEnabled="false"
                     android:scrollIndicators="none">
 
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="La struttura"
-                        android:textColor="#9B0014"
-                        android:textStyle="bold"
-                        android:textSize="26sp"
-                        android:textIsSelectable="true" />
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="La struttura"
+                            android:textColor="#9B0014"
+                            android:textStyle="bold"
+                            android:textSize="26sp"
+                            android:textIsSelectable="true" />
 
                 <ListView
                         android:layout_width="match_parent"
