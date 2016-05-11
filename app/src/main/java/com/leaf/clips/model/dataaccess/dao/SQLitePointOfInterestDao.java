@@ -77,7 +77,7 @@ public class SQLitePointOfInterestDao implements PointOfInterestDao, CursorConve
                 PointOfInterestContract.TABLE_NAME + "." + PointOfInterestContract.COLUMN_DESCRIPTION,
                 PointOfInterestContract.TABLE_NAME + "." + PointOfInterestContract.COLUMN_CATEGORYID
         };
-        Cursor cursor = sqlDao.rawQuery("SELECT " + columns[0] + ", " + columns[1] + ", " +
+        Cursor cursor = sqlDao.rawQuery("SELECT DISTINCT " + columns[0] + ", " + columns[1] + ", " +
                 columns[2] + ", " + columns[3] + " "+ " FROM " +
                 RegionOfInterestContract.TABLE_NAME + " JOIN " +
                 RoiPoiContract.TABLE_NAME + " ON " +
