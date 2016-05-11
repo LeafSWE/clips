@@ -218,7 +218,6 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         if(map == null) {
 
             loadMap();
-            map = dbService.findBuildingByMajor(lastBeaconsSeen.peek().getMajor());
 
             if (map != null)
                 for(Listener listener : listeners)
@@ -227,11 +226,6 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
 
         if(shouldLog) {
             activeLog.add(lastBeaconsSeen);
-        }
-
-        for (Listener listener:listeners
-                ) {
-            ((InformationListener)listener).onDatabaseLoaded();
         }
 
         Log.d("beaconz", "onReceive");
