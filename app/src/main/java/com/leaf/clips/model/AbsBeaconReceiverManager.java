@@ -16,16 +16,23 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.leaf.clips.model.beacon.BeaconManagerAdapter;
 import com.leaf.clips.model.beacon.BeaconRanger;
+import com.leaf.clips.model.beacon.MyBeacon;
 import com.leaf.clips.model.beacon.PeriodType;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 
 
 /** 
 *Classe base per la comunicazione con le classi che si occupano del rilevamento dei beacon
 */ 
 public abstract class AbsBeaconReceiverManager extends BroadcastReceiver {
+
+    /**
+     * PriorityQueue, eventualmente vuota, contenente gli ultimi beacon rilevati
+     */
+    volatile static protected PriorityQueue<MyBeacon> lastBeaconsSeen = new PriorityQueue<>();
 
     /**
      * Collection dei listener della classe
@@ -97,7 +104,12 @@ public abstract class AbsBeaconReceiverManager extends BroadcastReceiver {
     public void startService(){
         if(!isBound)
             context.bindService(serviceStart, serviceConnection,Context.BIND_AUTO_CREATE);
-        context.startService(serviceStart);
+        /*new Thread(new Runnable() {
+            @Override
+            public void run() {*/
+                context.startService(serviceStart);
+           /* }
+        }).start();*/
 
     }
 

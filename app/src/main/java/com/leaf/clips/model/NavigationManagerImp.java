@@ -1,10 +1,10 @@
 package com.leaf.clips.model;
 /**
-* @author Marco Zanella
-* @version 0.09
-* @since 0.08
-*
-*/
+ * @author Federico Tavella
+ * @version 0.11
+ * @since 0.09
+ *
+ */
 
 import android.content.Context;
 import android.content.Intent;
@@ -35,51 +35,54 @@ import java.util.PriorityQueue;
 public class NavigationManagerImp extends AbsBeaconReceiverManager implements NavigationManager {
 
     /**
-    * Oggetto che permette di recuperare i dati della bussola
-    */
+     * Oggetto che permette di recuperare i dati della bussola
+     */
     private final Compass compass = new Compass((SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE));
 
     /**
-    * Grafo rappresentante la mappa dell'edificio
-    */
+     * Grafo rappresentante la mappa dell'edificio
+     */
     private final MapGraph graph;
 
     /**
-    * PriorityQueue, eventualmente vuota, contenente gli ultimi beacon rilevati
-    */
-    private PriorityQueue<MyBeacon> lastBeaconsSeen;
+     * PriorityQueue, eventualmente vuota, contenente gli ultimi beacon rilevati
+     */
+    //private PriorityQueue<MyBeacon> lastBeaconsSeen;
 
     /**
-    * Oggetto per la navigazione
-    */
+     * Oggetto per la navigazione
+     */
     private Navigator navigator;
 
     /**
-    * Costruttore della classe NavigationManagerImp
-    * @param graph Grafo dell'edificio in cui si desidera navigare
-    * @param context Contesto dell'applicazione
-    */
+     * Costruttore della classe NavigationManagerImp
+     * @param graph Grafo dell'edificio in cui si desidera navigare
+     * @param context Contesto dell'applicazione
+     */
     public NavigationManagerImp(MapGraph graph, Context context){
         super(context);
         this.graph = graph;
-        lastBeaconsSeen = new PriorityQueue<>();
+        //lastBeaconsSeen = new PriorityQueue<>();
+        this.graph.setSettingAllEdge(new SettingImp(getContext()));
+        navigator = new NavigatorImp(compass);
+        navigator.setGraph(this.graph);
     }
 
     /**
-    * Metodo che permette di registrare un listener
-    * @param listener Listener che deve essere aggiunto alla lista di NavigationListener
-    */
+     * Metodo che permette di registrare un listener
+     * @param listener Listener che deve essere aggiunto alla lista di NavigationListener
+     */
     @Override
     public void addListener(NavigationListener listener){
         super.addListener(listener);
     }
 
     /**
-    * Metodo che permette di recuperare tutte le istruzioni di navigazione per un percorso
+     * Metodo che permette di recuperare tutte le istruzioni di navigazione per un percorso
      * calcolato. Viene lanciata una eccezione di tipo NoNavigationInformationException nel caso in
      * cui venga richiamato questo metodo senza aver prima avviato la navigazione
-    * @return  List<ProcessedInformation>
-    */
+     * @return  List<ProcessedInformation>
+     */
     @Override
     public List<ProcessedInformation> getAllNavigationInstruction() throws NavigationExceptions {
 
@@ -108,18 +111,18 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
 
 
     /**
-    * Metodo che permette di rimuovere un listener
-    * @param listener Listener che deve essere rimosso dalla lista di NavigationListener
-    */
+     * Metodo che permette di rimuovere un listener
+     * @param listener Listener che deve essere rimosso dalla lista di NavigationListener
+     */
     @Override
     public void removeListener(NavigationListener listener){
         super.removeListener(listener);
     }
 
     /**
-    * Metodo che setta il campo dati lastBeaconsSeen
-    * @param beacons Collection di beacon rilevati nell'area circostante
-    */
+     * Metodo che setta il campo dati lastBeaconsSeen
+     * @param beacons Collection di beacon rilevati nell'area circostante
+     */
 
     private void setVisibleBeacon(PriorityQueue<MyBeacon> beacons){
         lastBeaconsSeen.clear();
@@ -145,9 +148,7 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
     @Override
     public ProcessedInformation startNavigation(PointOfInterest endPOI)
             throws NoNavigationInformationException {
-        graph.setSettingAllEdge(new SettingImp(getContext()));
-        navigator = new NavigatorImp(compass);
-        navigator.setGraph(graph);
+
         MyBeacon beacon = lastBeaconsSeen.peek();
         Iterator<RegionOfInterest> iterator = graph.getGraph().vertexSet().iterator();
         boolean found = false;
@@ -194,8 +195,8 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
     }
 
     /**
-    * Metodo che permette di fermare la navigazione
-    */
+     * Metodo che permette di fermare la navigazione
+     */
     @Override
     public void stopNavigation(){
         super.listeners.clear();
@@ -217,9 +218,10 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
 
         p = ((PriorityQueue<MyBeacon>)intent.getSerializableExtra("queueOfBeacons"));
 
-        if(!lastBeaconsSeen.containsAll(p) || !p.containsAll(lastBeaconsSeen)){
+        if(!lastBeaconsSeen.containsAll(p) || !p.containsAll(lastBeaconsSeen))
             setVisibleBeacon(p);
-            for(Listener listener : super.listeners){
+        lastBeaconsSeen = p;
+        for(Listener listener : super.listeners){
                 NavigationListener nv = (NavigationListener) listener;
                 try {
                     nv.informationUpdate(navigator.toNextRegion(lastBeaconsSeen));
@@ -230,9 +232,14 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
                     navigationExceptions.printStackTrace();
                 }
             }
-        }
 
 
+
+    }
+
+    @Override
+    public MapGraph getGraph(){
+        return graph;
     }
 }
 

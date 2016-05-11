@@ -1,26 +1,43 @@
 package com.leaf.clips.presenter;
 
+
+/**
+ * @author Federico Tavella
+ * @version 0.05
+ * @since 0.04
+ *
+ */
+
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.leaf.clips.R;
+import com.leaf.clips.model.InformationListener;
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NoBeaconSeenException;
 import com.leaf.clips.view.HomeView;
 import com.leaf.clips.view.HomeViewImp;
 
+import org.altbeacon.bluetooth.BluetoothCrashResolver;
+
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements InformationListener{
     /**
      *  TODO
-        Enable Suggestion
+     Enable Suggestion
      */
 
     /**
@@ -34,18 +51,65 @@ public class HomeActivity extends AppCompatActivity {
      */
     private HomeView view;
 
+    BluetoothCrashResolver bluetoothCrashResolver ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
         view = new HomeViewImp(this);
+        bluetoothCrashResolver = new BluetoothCrashResolver(this);
 
+        if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M ){
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                // Should we show an explanation?
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION)) {
+
+                    // Show an expanation to the user *asynchronously* -- don't block
+                    // this thread waiting for the user's response! After the user
+                    // sees the explanation, try again to request the permission.
+
+                } else {
+
+                    // No explanation needed, we can request the permission.
+
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                            0);
+
+                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                    // app-defined int constant. The callback method gets the
+                    // result of the request.
+                }
+            }
+        }
+    }
+
+    /**
+     * Dispatch onResume() to fragments.  Note that for better inter-operation with older versions
+     * of the platform, at the point of this call the fragments attached to the activity are
+     * <em>not</em> resumed.  This means that in some cases the previous state may still be saved,
+     * not allowing fragment transactions that modify the state.  To correctly interact with
+     * fragments in their proper state, you should instead override {@link #onResumeFragments()}.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
+        informationManager.addListener(this);
 
-        updateBuildingAddress();
-        updateBuildingName();
-        updateBuildingDescription();
-        updateBuildingOpeningHours();
-        updatePoiCategoryList();
+        try {
+           informationManager.getBuildingMap();
+            onDatabaseLoaded();
+        } catch (NoBeaconSeenException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -95,7 +159,7 @@ public class HomeActivity extends AppCompatActivity {
      */
     public void showPoisCategory(String categoryName){
         Intent intent = new Intent(this, PoiCategoryActivity.class);
-        intent.putExtra("category_name",categoryName);
+        intent.putExtra("category_name", categoryName);
         startActivity(intent);
     }
 
@@ -135,7 +199,7 @@ public class HomeActivity extends AppCompatActivity {
      */
     public void updateBuildingDescription(){
         try {
-            String desc = informationManager.getBuildingMap().getDescription()+"%%%%";
+            String desc = informationManager.getBuildingMap().getDescription()+"Versione Davide";
             Log.d("DESC",desc);
             view.setBuildingDescription(desc);
         }catch(Exception e){
@@ -186,4 +250,43 @@ public class HomeActivity extends AppCompatActivity {
         // TODO: 5/3/16  
     }
 
+    @Override
+    public void onDatabaseLoaded() {
+        updateBuildingAddress();
+        updateBuildingName();
+        updateBuildingDescription();
+        updateBuildingOpeningHours();
+        updatePoiCategoryList();
+    }
+
+    @Override
+    public boolean onLocalMapNotFound() {
+        Log.d("HOMEACTIVITY", "LOCAL MAP NOT FOUND");
+        // TODO: chiedere all'utente il permesso di scaricare la mappa da remoto e ritornare la risposta
+        return true;
+    }
+
+    @Override
+    public void onRemoteMapNotFound() {
+        Log.d("HOMEACTIVITY", "REMOTE MAP NOT FOUND");
+    }
+
+    @Override
+    public void cannotRetrieveRemoteMapDetails() {
+        Log.d("HOMEACTIVITY", "CAN'T RETRIEVE REMOTE DETAILS");
+    }
+
+    @Override
+    public boolean noLastMapVersion() {
+        // TODO: chiedere all'utente il permesso di aggiornare la mappa e ritornare la risposta
+        return true;
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+//        ((AbsBeaconReceiverManager)informationManager).stopService();
+        informationManager = null;
+
+    }
 }

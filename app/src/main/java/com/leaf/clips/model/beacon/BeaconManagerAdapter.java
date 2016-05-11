@@ -13,8 +13,6 @@ import android.os.RemoteException;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import javax.annotation.Nullable;
-
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
@@ -128,16 +126,17 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
     public void onBeaconServiceConnect() {
         try {
             Log.i("SERVICE", "STARTING MONITORING");
-            beaconManager.startMonitoringBeaconsInRegion(region);
+            beaconManager.startRangingBeaconsInRegion(region);
         } catch (RemoteException e) {
             e.printStackTrace();
+            Log.i("SERVICE", "NOT MONITORING");
         }
     }
 
     /**
      * Questo metodo serve per far partire il Ranging dei Beacon
      */
-    private void startRanging(){
+    private void startRanging() {
         Log.i("SERVICE", "STARTING RANGING");
         try {
             beaconManager.startRangingBeaconsInRegion(region);
