@@ -104,7 +104,12 @@ public abstract class AbsBeaconReceiverManager extends BroadcastReceiver {
     public void startService(){
         if(!isBound)
             context.bindService(serviceStart, serviceConnection,Context.BIND_AUTO_CREATE);
-        context.startService(serviceStart);
+        /*new Thread(new Runnable() {
+            @Override
+            public void run() {*/
+                context.startService(serviceStart);
+           /* }
+        }).start();*/
 
     }
 
