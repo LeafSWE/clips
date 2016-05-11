@@ -217,7 +217,8 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         lastBeaconsSeen = p;
         if(map == null) {
 
-            loadMap();
+            //loadMap();
+            map = dbService.findBuildingByMajor(lastBeaconsSeen.peek().getMajor());
 
             if (map != null)
                 for(Listener listener : listeners)
