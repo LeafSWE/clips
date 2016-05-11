@@ -92,23 +92,50 @@ public class NavigatorImp implements Navigator {
         if (buildingGraph != null) {
             Collection<RegionOfInterest> endRois = endPoi.getAllBelongingROIs();
             Iterator<RegionOfInterest> endRoisIterator = endRois.iterator();
+
+            List<EnrichedEdge> shortestPath = null;
+
+            while (endRoisIterator.hasNext()) {
+                RegionOfInterest endRoi = endRoisIterator.next();
+                shortestPath = pathFinder.calculatePath(this.buildingGraph, startRoi, endRoi);
+                if (shortestPath != null) {
+                    List<EnrichedEdge> newPath = null;
+                    if (endRoisIterator.hasNext()) {
+                        RegionOfInterest nextEndRoi = endRoisIterator.next();
+                        newPath = pathFinder.calculatePath(this.buildingGraph, startRoi, nextEndRoi);
+                    }
+                    if (newPath != null) {
+                        if (isShorter(newPath, shortestPath)) {
+                            shortestPath = newPath;
+                        }
+                    }
+                }
+            }
+            this.path = shortestPath;
+
+/*
             if (endRoisIterator.hasNext()) {
                 // prelevo il primo path considerandolo il migliore
                 RegionOfInterest endRoi = endRoisIterator.next();
-                List<EnrichedEdge> shortestPath = pathFinder.calculatePath(this.buildingGraph, startRoi, endRoi);
+                shortestPath = pathFinder.calculatePath(this.buildingGraph, startRoi, endRoi);
 
                 // prelevo gli altri path e li confronto con il migliore attuale
                 while (endRoisIterator.hasNext()) {
                     RegionOfInterest nextEndRoi = endRoisIterator.next();
                     List<EnrichedEdge> newPath = pathFinder.calculatePath(this.buildingGraph, startRoi, nextEndRoi);
-                    if (isShorter(newPath, shortestPath)) {
-                        shortestPath = newPath;
+                    if (newPath != null) {
+                        if (isShorter(newPath, shortestPath)) {
+                            shortestPath = newPath;
+                        }
                     }
+
                 }
                 path = shortestPath;
             } else {
                 throw new PathException("endPoi without ROI");
-            }
+            }*/
+
+
         } else {
             throw new NoGraphSetException();
         }
@@ -133,7 +160,7 @@ public class NavigatorImp implements Navigator {
      */
     @Override
     public List<ProcessedInformation> getAllInstructions() throws NavigationExceptions {
-        Log.i("getAllInstruction", "getAllInstruction");
+        //Log.i("getAllInstruction", "getAllInstruction");
         if (path != null) {
             ArrayList<ProcessedInformation> result = new ArrayList<>();
             int i = 1;
@@ -277,6 +304,7 @@ public class NavigatorImp implements Navigator {
                 throw new PathException();
             }
         } else {
+            //TODO lanciata eccezione alla fine della navigazione->trovare metodo migliore
             Log.d("NAVIGATOR", "toNextRegion: Progress iterator at end");
             throw new PathException("Navigation finish, progress iterator at end");
         }

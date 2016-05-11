@@ -22,7 +22,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.leaf.clips.R;
-import com.leaf.clips.model.AbsBeaconReceiverManager;
 import com.leaf.clips.model.InformationListener;
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NoBeaconSeenException;
@@ -286,7 +285,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     @Override
     public void onDestroy(){
         super.onDestroy();
-        ((AbsBeaconReceiverManager)informationManager).stopService();
+//        ((AbsBeaconReceiverManager)informationManager).stopService();
         informationManager = null;
 
     }
