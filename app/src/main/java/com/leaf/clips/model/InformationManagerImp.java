@@ -160,8 +160,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
                     if (shouldUpdate)
                         dbService.updateBuildingMap(major);
                 }
-                else
-                    map = dbService.findBuildingByMajor(major);
+                map = dbService.findBuildingByMajor(major);
 
             } catch (IOException e) {
                 e.printStackTrace();
