@@ -2,7 +2,7 @@ package com.leaf.clips.presenter;
 
 /**
  * @author Federico Tavella
- * @version 0.05
+ * @version 0.10
  * @since 0.03
  */
 
@@ -20,9 +20,11 @@ import com.leaf.clips.model.navigator.NavigationExceptions;
 import com.leaf.clips.model.navigator.ProcessedInformation;
 import com.leaf.clips.model.navigator.graph.MapGraph;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
+import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoRef;
 import com.leaf.clips.view.NavigationView;
 import com.leaf.clips.view.NavigationViewImp;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -33,14 +35,13 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
     /**
      * Riferimento utilizzato per accedere alle informazioni trattate dal model
      */
-
     @Inject
     InformationManager informationManager;
     @Inject
     NavigationManager navigationManager;
 
     private NavigationView view;
-    private NavigationAdapter navigationAdapter;
+    private  List<ProcessedInformation> navigationInstruction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +110,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
             }
 
             navigationManager.startNavigation(destinationPoi);
-            List<ProcessedInformation> navigationInstruction = navigationManager.getAllNavigationInstruction();
+            navigationInstruction = navigationManager.getAllNavigationInstruction();
 
             view.setInstructionAdapter(navigationInstruction);
         } catch (NoBeaconSeenException e) {
@@ -142,6 +143,20 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      */
     public void showDetailedInformation(int instructionPosition){
         //TODO
+        ProcessedInformation information = navigationInstruction.get(instructionPosition);
+
+        String detailedInformation = information.getDetailedInstruction();
+        List<PhotoRef> photoRefs = (List<PhotoRef>) information.getPhotoInstruction().getPhotoInformation();
+        ArrayList<String> uris = new ArrayList<>();
+        for (PhotoRef ref:photoRefs) {
+            String uri = ref.getPhotoUri().toString();
+            uris.add(uri);
+        }
+
+        Intent intent = new Intent(this,DetailedInformationActivity.class);
+        intent.putExtra("detailed_info",detailedInformation);
+        intent.putStringArrayListExtra("photo_uri",uris);
+        startActivity(intent);
     }
 
     /**

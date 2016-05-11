@@ -4,16 +4,19 @@ package com.leaf.clips.presenter;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoRef;
+import com.leaf.clips.R;
+import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,14 +24,14 @@ import java.util.List;
 public class ImageListFragment extends Fragment implements AdapterView.OnItemClickListener{
     //TODO everything
     private ImageAdapter imgAdapter;
-    List<PhotoRef> photoUris;
+    ArrayList<String> photoUris;
 
     public ImageListFragment() {}
 
-    public static ImageListFragment newInstance(int[] urls) {
+    public static ImageListFragment newInstance(ArrayList<String> urls) {
         final ImageListFragment f = new ImageListFragment();
         final Bundle args = new Bundle();
-        args.putIntArray("urls", urls);
+        args.putStringArrayList("urls", urls);
         f.setArguments(args);
         return f;
     }
@@ -41,16 +44,13 @@ public class ImageListFragment extends Fragment implements AdapterView.OnItemCli
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        /*TODO
-        photoUris = getArguments().getIntArray("urls");
-        final View v = inflater.inflate(R.layout.fragment_image_grid, container, false);
-        final GridView mGridView = (GridView) v.findViewById(R.id.gridView);
-        mGridView.setAdapter(mAdapter);
+        //TODO
+        photoUris = getArguments().getStringArrayList("urls");
+        final View v = inflater.inflate(R.layout.fragment_image_list, container, false);
+        final GridView mGridView = (GridView) v.findViewById(R.id.gridView_images);
+        mGridView.setAdapter(imgAdapter);
         mGridView.setOnItemClickListener(this);
         return v;
-         */
-        return null;
-
     }
 
     @Override
@@ -94,12 +94,14 @@ public class ImageListFragment extends Fragment implements AdapterView.OnItemCli
             } else {
                 imageView = (ImageView) convertView;
             }
-            /*Picasso.with(getContext())
-                    .load(imageResUrls[position])
+            Log.d("PHOTO_URI", photoUris.get(position));
+
+            Picasso.with(getContext())
+                    .load(photoUris.get(position))
                     .resize(200,200)
                     .centerCrop()
-                    .placeholder(R.drawable.image_placeholder)
-                    .into(imageView);*/
+                    .placeholder(R.drawable.icon_menu_developer)
+                    .into(imageView);
             return imageView;
         }
     }

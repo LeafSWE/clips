@@ -5,6 +5,7 @@ import com.leaf.clips.di.modules.DatabaseModule;
 import com.leaf.clips.di.modules.InfoModule;
 import com.leaf.clips.di.modules.NavModule;
 import com.leaf.clips.di.modules.SettingModule;
+import com.leaf.clips.presenter.DetailedInformationActivity;
 import com.leaf.clips.presenter.DeveloperUnlockerActivity;
 import com.leaf.clips.presenter.HomeActivity;
 import com.leaf.clips.presenter.LogInformationActivity;
@@ -45,4 +46,5 @@ public interface InfoComponent {
     void inject(MainDeveloperPresenter mainDeveloperPresenter);
     void inject(MainDeveloperActivity mainDeveloperActivity);
     void inject(LogInformationActivity logInformationActivity);
+    void inject(DetailedInformationActivity detailedInformationActivity);
 }
