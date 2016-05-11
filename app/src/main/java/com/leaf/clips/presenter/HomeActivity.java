@@ -65,12 +65,12 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         bluetoothCrashResolver = new BluetoothCrashResolver(this);
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
         informationManager.addListener(this);
-
-        /*updateBuildingAddress();
+        // TODO: 11/05/2016 rimuovere gli update dal costruttore e tenerli onDatabaseLoaded 
+        updateBuildingAddress();
         updateBuildingName();
         updateBuildingDescription();
         updateBuildingOpeningHours();
-        updatePoiCategoryList();*/
+        updatePoiCategoryList();
         if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M ){
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION)
