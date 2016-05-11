@@ -133,16 +133,38 @@ public class NavigatorImp implements Navigator {
      */
     @Override
     public List<ProcessedInformation> getAllInstructions() throws NavigationExceptions {
+        Log.i("getAllInstruction", "getAllInstruction");
         if (path != null) {
             ArrayList<ProcessedInformation> result = new ArrayList<>();
+            int i = 1;
             for (EnrichedEdge edge : path) {
-                ProcessedInformation edgeProcessedInformation = new ProcessedInformationImp(edge);
-                result.add(edgeProcessedInformation);
+                if (i<path.size()) {
+                    ProcessedInformation edgeProcessedInformation = new ProcessedInformationImp(edge,
+                            calcolaDestraSinistra(edge, path.get(i)));
+                    result.add(edgeProcessedInformation);
+                } else {
+                    ProcessedInformation edgeProcessedInformation = new ProcessedInformationImp(edge);
+                    result.add(edgeProcessedInformation);
+                }
+                i++;
             }
             return result;
         } else {
             throw new NoNavigationInformationException();
         }
+    }
+
+    private String calcolaDestraSinistra(EnrichedEdge actual, EnrichedEdge next) {
+        int correctGrade = next.getCoordinate() - actual.getCoordinate();
+        if (correctGrade < 0) {
+            correctGrade += 360;
+        }
+        if (correctGrade > 30 && correctGrade < 180)
+            return "gira a destra";
+        else if (correctGrade >= 180 && correctGrade < 330)
+            return "gira a sinistra";
+        else
+            return "vai dritto";
     }
 
     /**
