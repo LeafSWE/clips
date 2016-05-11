@@ -188,7 +188,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     public void updateBuildingDescription(){
         try {
-            String desc = informationManager.getBuildingMap().getDescription()+"%%%%";
+            String desc = informationManager.getBuildingMap().getDescription()+" Eduard è bello";
             Log.d("DESC",desc);
             view.setBuildingDescription(desc);
         }catch(Exception e){
@@ -250,21 +250,23 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
 
     @Override
     public boolean onLocalMapNotFound() {
+        Log.d("HOMEACTIVITY", "LOCAL MAP NOT FOUND");
         return true;
     }
 
     @Override
     public void onRemoteMapNotFound() {
-
+        Log.d("HOMEACTIVITY", "REMOTE MAP NOT FOUND");
     }
 
     @Override
     public void cannotRetrieveRemoteMapDetails() {
-
+        Log.d("HOMEACTIVITY", "CAN'T RETRIEVE REMOTE DETAILS");
     }
 
     @Override
     public boolean noLastMapVersion() {
+        Log.d("HOMEACTIVITY", "NO LAST MAP VERSION");
         return false;
     }
 
