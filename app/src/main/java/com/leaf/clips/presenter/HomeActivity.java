@@ -29,7 +29,6 @@ import com.leaf.clips.model.NoBeaconSeenException;
 import com.leaf.clips.view.HomeView;
 import com.leaf.clips.view.HomeViewImp;
 
-import org.altbeacon.beacon.distance.AndroidModel;
 import org.altbeacon.bluetooth.BluetoothCrashResolver;
 
 import java.util.List;
@@ -99,6 +98,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
             }
         }
         //((AbsBeaconReceiverManager)informationManager).stopService();
+        informationManager.addListener(this);
     }
 
     /**
@@ -241,11 +241,12 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
 
     @Override
     public void onDatabaseLoaded() {
-        updateBuildingAddress();
+        view.setBuildingName("Minor:" + informationManager.getAllVisibleBeacons().peek().getMinor());
+        /*updateBuildingAddress();
         updateBuildingName();
         updateBuildingDescription();
         updateBuildingOpeningHours();
-        updatePoiCategoryList();
+        updatePoiCategoryList();*/
     }
 
     @Override
