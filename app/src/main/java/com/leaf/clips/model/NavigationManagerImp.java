@@ -47,7 +47,7 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
     /**
      * PriorityQueue, eventualmente vuota, contenente gli ultimi beacon rilevati
      */
-    private PriorityQueue<MyBeacon> lastBeaconsSeen;
+    //private PriorityQueue<MyBeacon> lastBeaconsSeen;
 
     /**
      * Oggetto per la navigazione
@@ -62,7 +62,7 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
     public NavigationManagerImp(MapGraph graph, Context context){
         super(context);
         this.graph = graph;
-        lastBeaconsSeen = new PriorityQueue<>();
+        //lastBeaconsSeen = new PriorityQueue<>();
         this.graph.setSettingAllEdge(new SettingImp(getContext()));
         navigator = new NavigatorImp(compass);
         navigator.setGraph(this.graph);
@@ -218,9 +218,10 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
 
         p = ((PriorityQueue<MyBeacon>)intent.getSerializableExtra("queueOfBeacons"));
 
-        if(!lastBeaconsSeen.containsAll(p) || !p.containsAll(lastBeaconsSeen)){
+        if(!lastBeaconsSeen.containsAll(p) || !p.containsAll(lastBeaconsSeen))
             setVisibleBeacon(p);
-            for(Listener listener : super.listeners){
+        lastBeaconsSeen = p;
+        for(Listener listener : super.listeners){
                 NavigationListener nv = (NavigationListener) listener;
                 try {
                     nv.informationUpdate(navigator.toNextRegion(lastBeaconsSeen));
@@ -231,7 +232,7 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
                     navigationExceptions.printStackTrace();
                 }
             }
-        }
+
 
 
     }
