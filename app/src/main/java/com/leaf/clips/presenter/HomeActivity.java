@@ -188,7 +188,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     public void updateBuildingDescription(){
         try {
-            String desc = informationManager.getBuildingMap().getDescription()+"%%%%";
+            String desc = informationManager.getBuildingMap().getDescription()+"Versione Davide";
             Log.d("DESC",desc);
             view.setBuildingDescription(desc);
         }catch(Exception e){
@@ -241,12 +241,11 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
 
     @Override
     public void onDatabaseLoaded() {
-        view.setBuildingName("Minor:" + informationManager.getAllVisibleBeacons().peek().getMinor());
-        /*updateBuildingAddress();
+        updateBuildingAddress();
         updateBuildingName();
         updateBuildingDescription();
         updateBuildingOpeningHours();
-        updatePoiCategoryList();*/
+        updatePoiCategoryList();
     }
 
     @Override
@@ -266,7 +265,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
 
     @Override
     public boolean noLastMapVersion() {
-        return false;
+        return true;
     }
 
     @Override
