@@ -7,18 +7,16 @@ package com.leaf.clips.presenter;
  */
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.leaf.clips.R;
+import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.view.LoggingView;
+import com.leaf.clips.view.LoggingViewImp;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 public class LoggingActivity extends AppCompatActivity {
 
@@ -27,11 +25,18 @@ public class LoggingActivity extends AppCompatActivity {
      */
     private LoggingView view;
 
+    @Inject
+    InformationManager informationManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        view = new LoggingViewImp(this);
+        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+
+        informationManager.startRecordingBeacons();
     }
 
     /**
