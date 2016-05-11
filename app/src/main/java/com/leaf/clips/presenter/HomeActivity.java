@@ -62,14 +62,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         super.onCreate(savedInstanceState);
         view = new HomeViewImp(this);
         bluetoothCrashResolver = new BluetoothCrashResolver(this);
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
-        informationManager.addListener(this);
-        // TODO: 11/05/2016 rimuovere gli update dal costruttore e tenerli onDatabaseLoaded 
-       /* updateBuildingAddress();
-        updateBuildingName();
-        updateBuildingDescription();
-        updateBuildingOpeningHours();
-        updatePoiCategoryList();*/
+
         if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M ){
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -97,8 +90,27 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                 }
             }
         }
-        //((AbsBeaconReceiverManager)informationManager).stopService();
+    }
+
+    /**
+     * Dispatch onResume() to fragments.  Note that for better inter-operation with older versions
+     * of the platform, at the point of this call the fragments attached to the activity are
+     * <em>not</em> resumed.  This means that in some cases the previous state may still be saved,
+     * not allowing fragment transactions that modify the state.  To correctly interact with
+     * fragments in their proper state, you should instead override {@link #onResumeFragments()}.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ((MyApplication)getApplication()).getInfoComponent().inject(this);
         informationManager.addListener(this);
+
+        try {
+           informationManager.getBuildingMap();
+            onDatabaseLoaded();
+        } catch (NoBeaconSeenException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
