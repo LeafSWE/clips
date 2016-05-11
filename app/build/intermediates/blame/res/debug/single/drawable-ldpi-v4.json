@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "/home/zanna/clips/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/icon_delete_log.png",
+        "source": "/home/zanna/clips/app/build/generated/res/pngs/debug/drawable-ldpi/icon_delete_log.png"
+    },
+    {
+        "merged": "/home/zanna/clips/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/icon_add_log.png",
+        "source": "/home/zanna/clips/app/build/generated/res/pngs/debug/drawable-ldpi/icon_add_log.png"
+    },
+    {
+        "merged": "/home/zanna/clips/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/icon_stop_logging.png",
+        "source": "/home/zanna/clips/app/build/generated/res/pngs/debug/drawable-ldpi/icon_stop_logging.png"
+    },
+    {
+        "merged": "/home/zanna/clips/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/icon_menu_developer.png",
+        "source": "/home/zanna/clips/app/build/generated/res/pngs/debug/drawable-ldpi/icon_menu_developer.png"
+    },
+    {
+        "merged": "/home/zanna/clips/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/icon_nearby_poi.png",
+        "source": "/home/zanna/clips/app/build/generated/res/pngs/debug/drawable-ldpi/icon_nearby_poi.png"
+    },
+    {
+        "merged": "/home/zanna/clips/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/add.png",
+        "source": "/home/zanna/clips/app/build/generated/res/pngs/debug/drawable-ldpi/add.png"
+    },
+    {
+        "merged": "/home/zanna/clips/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/fab_stop_logging.png",
+        "source": "/home/zanna/clips/app/build/generated/res/pngs/debug/drawable-ldpi/fab_stop_logging.png"
+    }
+]

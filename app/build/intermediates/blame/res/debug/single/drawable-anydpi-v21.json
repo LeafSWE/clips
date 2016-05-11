@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "/home/zanna/clips/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/icon_add_log.xml",
+        "source": "/home/zanna/clips/app/build/generated/res/pngs/debug/drawable-anydpi-v21/icon_add_log.xml"
+    },
+    {
+        "merged": "/home/zanna/clips/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/add.xml",
+        "source": "/home/zanna/clips/app/build/generated/res/pngs/debug/drawable-anydpi-v21/add.xml"
+    },
+    {
+        "merged": "/home/zanna/clips/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/icon_delete_log.xml",
+        "source": "/home/zanna/clips/app/build/generated/res/pngs/debug/drawable-anydpi-v21/icon_delete_log.xml"
+    },
+    {
+        "merged": "/home/zanna/clips/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/fab_stop_logging.xml",
+        "source": "/home/zanna/clips/app/build/generated/res/pngs/debug/drawable-anydpi-v21/fab_stop_logging.xml"
+    },
+    {
+        "merged": "/home/zanna/clips/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/icon_stop_logging.xml",
+        "source": "/home/zanna/clips/app/build/generated/res/pngs/debug/drawable-anydpi-v21/icon_stop_logging.xml"
+    },
+    {
+        "merged": "/home/zanna/clips/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/icon_nearby_poi.xml",
+        "source": "/home/zanna/clips/app/build/generated/res/pngs/debug/drawable-anydpi-v21/icon_nearby_poi.xml"
+    },
+    {
+        "merged": "/home/zanna/clips/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/icon_menu_developer.xml",
+        "source": "/home/zanna/clips/app/build/generated/res/pngs/debug/drawable-anydpi-v21/icon_menu_developer.xml"
+    }
+]
