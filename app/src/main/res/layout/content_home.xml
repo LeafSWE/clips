@@ -5,7 +5,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#f0f0f0">
+            android:background="@color/backroundGrey">
 
         <LinearLayout
                 android:orientation="vertical"
@@ -46,7 +46,6 @@
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=" Via Trieste, 63 - 35121 Padova (Italy)"
                             android:id="@+id/view_address"
                             android:textSize="10dp" />
 
@@ -54,7 +53,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="Torre Archimede"
                             android:id="@+id/view_building_name"
                             android:layout_marginTop="3dp"
                             android:textColor="#9B0014"
@@ -95,7 +93,6 @@
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="7:30 - 19:30. Dal lunedì al venerdì."
                         android:id="@+id/view_building_opening_hours"
                         android:layout_marginTop="10dp"
                         android:textSize="16dp"

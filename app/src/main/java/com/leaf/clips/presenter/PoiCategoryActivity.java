@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
-import com.leaf.clips.model.navigator.graph.area.PointOfInterestImp;
 import com.leaf.clips.view.PoiCategoryView;
 import com.leaf.clips.view.PoiCategoryViewImp;
 
@@ -43,52 +42,30 @@ public class PoiCategoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = new PoiCategoryViewImp(this);
+        ((MyApplication)getApplication()).getInfoComponent().inject(this);
 
         String chosenCategoryName = getIntent().getStringExtra("category_name");
 
         setTitle(chosenCategoryName);
 
-        /**
-         * TODO: recupera lista poi appartenenti alla categoria scelta
-         * poiList = informationManager.getPoiInCategory(chosenCategoryName);
-         *
-         * List<String> poiNamesList = new LinkedList()
-         *
-         * foreach(PointOfInterest poi : poiList){
-         *  String poiName = poi.getName();
-         *  poiNameList.add(poiName);
-         * }
-         *
-         *view.setPoiListAdapter(poiNameList);
-         */
+        poiList = (List<PointOfInterest>) informationManager.getPOIsByCategory(chosenCategoryName);
 
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+        List<String> poiNames = new LinkedList<>();
+        for (PointOfInterest poi: poiList) {
+            String poiName = poi.getName();
+            poiNames.add(poiName);
+        }
 
-        //TODO: remove (only for debug purpose) --> use code upon instead
-        List<String> list = new LinkedList<>();
-        list.add("Aula 1A150");
-        list.add("Aula 1AD100");
-        list.add("Aula 1C150");
-        list.add("Aula 1BC45");
-        list.add("Aula 1BC50");
-        view.setPoiListAdapter(list);
+        view.setPoiListAdapter(poiNames);
     }
     
     /**
-     * Metodo che permette di avviare la navigazione tramite l'oggetto navigator
+     * Matodo che recupera l'id del POI scelto e lo passa a NavigationActivity, in modo che essa
+     * possa autonomamente recuperare il POI scelto e calcolare il percorso.
      * @param selectedPoi POI da raggiungere selezionato tramite la View
      */
     public void startNavigation(int selectedPoi){
         Intent intent = new Intent(this, NavigationActivity.class);
-        /**
-         * Recupera l'id del POI scelto e lo passa a NavigationActivity, in modo che essa possa
-         * autonomamente recuperare il POI scelto e calcolare il percorso
-         */
-        //TODO: remove (for debug purpose only)
-        poiList = new LinkedList<>();
-        PointOfInterest poi = new PointOfInterestImp(666,null);
-        poiList.add(poi);
-        /****************************/
 
         if(poiList != null){
             int chosenPoiId = poiList.get(selectedPoi).getId();
@@ -96,5 +73,4 @@ public class PoiCategoryActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-
 }

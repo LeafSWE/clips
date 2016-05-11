@@ -86,11 +86,11 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
         beaconManager.getBeaconParsers().clear();
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(beaconLayout));
         region = new Region("Region", null, null, null);
-        periods = new HashMap<>(100);
+        periods = new HashMap<>();
         setMonitorNotifier(this);
-        BeaconManager.setRegionExitPeriod(4000);
-        beaconManager.setForegroundBetweenScanPeriod(500);
-        beaconManager.setForegroundScanPeriod(1000);
+        BeaconManager.setRegionExitPeriod(5000);
+        beaconManager.setForegroundBetweenScanPeriod(800);
+        beaconManager.setForegroundScanPeriod(1600);
         beaconManager.setRangeNotifier(this);
         beaconManager.bind(this);
     }
@@ -188,7 +188,7 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
     public void didRangeBeaconsInRegion(Collection<Beacon> collection, Region region) {
         if (collection.size() > 0) {
             Log.i("SERVICE", "BEACONS DETECTED");
-            PriorityQueue<MyBeacon> p = new PriorityQueue<>();
+            PriorityQueue<MyBeacon> p = new PriorityQueue<>(collection.size());
 
             p.clear();
 
@@ -198,10 +198,12 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
 
             Intent msg = new Intent("beaconsDetected");
             msg.putExtra("queueOfBeacons", p);
-
+            Log.i("PRIMA DI BROADCAST", "PRIMA DI BROADCAST");
             LocalBroadcastManager.getInstance(BeaconManagerAdapter.this).sendBroadcast(msg);
-
+            Log.i("DOPO BROADCAST", "DOPO BROADCAST");
         }
+        else
+            Log.i("SERVICE","COLLECTION EMPTY");
     }
 
     /**

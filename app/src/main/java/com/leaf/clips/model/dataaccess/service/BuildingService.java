@@ -269,12 +269,12 @@ public class BuildingService implements DatabaseService {
             roiId = roi.getId();
             nearbyPOI = roiService.findAllPointsWithRoi(roiId);
             poisOfRoi = new LinkedList<>();
-            for (int i:nearbyPOI) {
+            for (int i=0; i<nearbyPOI.length; i++) {
                 poiIt = pois.iterator();
                 found = false;
                 while(!found && poiIt.hasNext()) {
                     actualPOI = poiIt.next();
-                    if(i == actualPOI.getId()) {
+                    if(nearbyPOI[i] == actualPOI.getId()) {
                         found = true;
                         poisOfRoi.add(actualPOI);
                     }
@@ -304,12 +304,12 @@ public class BuildingService implements DatabaseService {
             poiId = poi.getId();
             nearbyROI = poiService.findAllRegionsWithPoi(poiId);
             roisOfPoi = new LinkedList<>();
-            for (int i:nearbyROI) {
+            for (int i=0; i<nearbyROI.length; i++) {
                 roiIt = rois.iterator();
                 found = false;
                 while(!found && roiIt.hasNext()) {
                     actualROI = roiIt.next();
-                    if(i == actualROI.getId()) {
+                    if(nearbyROI[i] == actualROI.getId()) {
                         found = true;
                         roisOfPoi.add(actualROI);
                     }

@@ -3,6 +3,11 @@
           package="com.leaf.clips">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <application
             android:name=".presenter.MyApplication"
@@ -28,7 +33,7 @@
                 android:windowSoftInputMode="stateHidden|adjustPan">
             <meta-data
                     android:name="android.app.default_searchable"
-                    android:value=".presenter.NavigationActivity" />
+                    android:value=".presenter.NavigationActivity"/>
         </activity>
         <activity android:name=".presenter.MainDeveloperPresenter">
         </activity>
@@ -77,18 +82,22 @@
         <activity
                 android:name=".presenter.NavigationActivity"
                 android:label="@string/title_activity_navigation">
+
             <!-- to identify this activity as "searchable" -->
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.SEARCH"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.HomeActivity"/>
             <meta-data
                     android:name="android.app.searchable"
-                    android:resource="@xml/searchable"
-                    />
+                    android:resource="@xml/searchable"/>
+        </activity>
+        <activity android:name=".presenter.DetailedInformationActivity">
         </activity>
     </application>
 
