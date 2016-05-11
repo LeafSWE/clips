@@ -67,7 +67,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         lastBeaconsSeen = new PriorityQueue<>();
         activeLog = new LoggerImp();
         //TODO: remove (debug purpose)
-        //map = this.dbService.findBuildingByMajor(666);
+        map = this.dbService.findBuildingByMajor(666);
         Log.i("INFORMATION_MANAGER", "START SERVICE");
         super.startService();
     }
