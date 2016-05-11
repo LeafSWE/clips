@@ -65,11 +65,11 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
         informationManager.addListener(this);
         // TODO: 11/05/2016 rimuovere gli update dal costruttore e tenerli onDatabaseLoaded 
-        updateBuildingAddress();
+       /* updateBuildingAddress();
         updateBuildingName();
         updateBuildingDescription();
         updateBuildingOpeningHours();
-        updatePoiCategoryList();
+        updatePoiCategoryList();*/
         if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M ){
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -266,12 +266,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
 
     @Override
     public boolean noLastMapVersion() {
-<<<<<<< HEAD
         return true;
-=======
-        Log.d("HOMEACTIVITY", "NO LAST MAP VERSION");
-        return false;
->>>>>>> f/fix_service_problem
     }
 
     @Override

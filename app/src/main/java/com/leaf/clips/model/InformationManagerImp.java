@@ -152,21 +152,21 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         int major = lastBeaconsSeen.peek().getMajor();
 
         if(dbService.isBuildingMapPresent(major)){
-            try {
-                if(!dbService.isBuildingMapUpdated(major)){
+            //try {
+                /*if(!dbService.isBuildingMapUpdated(major)){
                     boolean shouldUpdate = true;
                     for(Listener listener : listeners)
                         shouldUpdate = shouldUpdate && ((InformationListener)listener).noLastMapVersion();
                     if (shouldUpdate)
                         dbService.updateBuildingMap(major);
-                }
+                }*/
                 map = dbService.findBuildingByMajor(major);
 
-            } catch (IOException e) {
+           /* } catch (IOException e) {
                 e.printStackTrace();
                 for(Listener listener : listeners)
                     ((InformationListener)listener).cannotRetrieveRemoteMapDetails(); //errore connessione
-            }
+            }*/
         }
         else{
             boolean mapExists = false;
@@ -217,7 +217,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         lastBeaconsSeen = p;
         if(map == null) {
 
-            //loadMap();
+            loadMap();
             map = dbService.findBuildingByMajor(lastBeaconsSeen.peek().getMajor());
 
             if (map != null)
