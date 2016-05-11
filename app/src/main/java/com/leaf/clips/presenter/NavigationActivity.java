@@ -25,9 +25,6 @@ import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.view.NavigationView;
 import com.leaf.clips.view.NavigationViewImp;
 
-import org.jgrapht.Graph;
-
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -51,13 +48,16 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         super.onCreate(savedInstanceState);
         view = new NavigationViewImp(this);
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
+
+        handleIntent(getIntent());
+
         BuildingMap map = null;
         try {
             map = informationManager.getBuildingMap();
         } catch (NoBeaconSeenException e) {
             e.printStackTrace();
         }
-        handleIntent(getIntent());
+
         MapGraph graph = navigationManager.getGraph();
         graph.addAllRegions(map.getAllROIs());
         graph.addAllEdges(map.getAllEdges());
