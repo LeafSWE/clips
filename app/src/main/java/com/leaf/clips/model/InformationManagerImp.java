@@ -69,6 +69,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         //TODO: remove (debug purpose)
         //map = this.dbService.findBuildingByMajor(666);
         Log.i("INFORMATION_MANAGER", "START SERVICE");
+
         super.startService();
     }
 
@@ -182,7 +183,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
                 try {
                     if(shouldDownload) {
                         map = dbService.findRemoteBuildingByMajor(major);
-                        Log.i("INFORMATION_MANAGER","MAP LOADING");
+                        Log.i("INFORMATION_MANAGER","MAP LOADING FROM REMOTE DB");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -224,9 +225,16 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
                     ((InformationListener)listener).onDatabaseLoaded();
         }
 
-        if(shouldLog){
+        if(shouldLog) {
             activeLog.add(lastBeaconsSeen);
         }
+
+        for (Listener listener:listeners
+                ) {
+            ((InformationListener)listener).onDatabaseLoaded();
+        }
+
+        Log.d("beaconz", "onReceive");
     }
 
     /**

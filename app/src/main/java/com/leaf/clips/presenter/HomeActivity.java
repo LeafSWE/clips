@@ -29,7 +29,6 @@ import com.leaf.clips.model.NoBeaconSeenException;
 import com.leaf.clips.view.HomeView;
 import com.leaf.clips.view.HomeViewImp;
 
-import org.altbeacon.beacon.distance.AndroidModel;
 import org.altbeacon.bluetooth.BluetoothCrashResolver;
 
 import java.util.List;
@@ -99,6 +98,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
             }
         }
         //((AbsBeaconReceiverManager)informationManager).stopService();
+        informationManager.addListener(this);
     }
 
     /**
@@ -188,7 +188,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     public void updateBuildingDescription(){
         try {
-            String desc = informationManager.getBuildingMap().getDescription()+"%%%%";
+            String desc = informationManager.getBuildingMap().getDescription()+"Versione Davide";
             Log.d("DESC",desc);
             view.setBuildingDescription(desc);
         }catch(Exception e){
@@ -265,7 +265,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
 
     @Override
     public boolean noLastMapVersion() {
-        return false;
+        return true;
     }
 
     @Override
