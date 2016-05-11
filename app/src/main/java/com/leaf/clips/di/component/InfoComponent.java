@@ -38,11 +38,46 @@ public interface InfoComponent {
      * @param mainActivity Oggetto in cui devono essere iniettate le dipendenze
      */
     void inject(HomeActivity mainActivity);
+
+    /**
+     * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo DeveloperUnlockerActivity
+     * @param developerUnlockerActivity Oggetto in cui devono essere iniettate le dipendenze
+     */
     void inject(DeveloperUnlockerActivity developerUnlockerActivity);
+
+    /**
+     * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo PoiCategoryActivity
+     * @param poiCategoryActivity Oggetto in cui devono essere iniettate le dipendenze
+     */
     void inject(PoiCategoryActivity poiCategoryActivity);
+
+    /**
+     * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo NearbyPoiActivity
+     * @param nearbyPoiActivity Oggetto in cui devono essere iniettate le dipendenze
+     */
     void inject(NearbyPoiActivity nearbyPoiActivity);
+
+    /**
+     * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo NavigationActivity
+     * @param navigationActivity Oggetto in cui devono essere iniettate le dipendenze
+     */
     void inject(NavigationActivity navigationActivity);
+
+    /**
+     * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo MainDeveloperPresenter
+     * @param mainDeveloperPresenter Oggetto in cui devono essere iniettate le dipendenze
+     */
     void inject(MainDeveloperPresenter mainDeveloperPresenter);
+
+    /**
+     * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo MainDeveloperActivity
+     * @param mainDeveloperActivity Oggetto in cui devono essere iniettate le dipendenze
+     */
     void inject(MainDeveloperActivity mainDeveloperActivity);
+
+    /**
+     * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo LogInformationActivity
+     * @param logInformationActivity Oggetto in cui devono essere iniettate le dipendenze
+     */
     void inject(LogInformationActivity logInformationActivity);
 }
