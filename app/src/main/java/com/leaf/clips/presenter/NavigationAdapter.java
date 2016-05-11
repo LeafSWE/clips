@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.leaf.clips.R;
+import com.leaf.clips.model.navigator.ProcessedInformation;
 import com.leaf.clips.model.navigator.graph.navigationinformation.NavigationInformation;
 
 import java.util.List;
@@ -19,9 +20,9 @@ import java.util.List;
  */
 public class NavigationAdapter extends BaseAdapter {
     private Context context;
-    private List<NavigationInformation> navigationInformation;
+    private List<ProcessedInformation> navigationInformation;
 
-    public NavigationAdapter(Context context, List<NavigationInformation> navigationInformation) {
+    public NavigationAdapter(Context context, List<ProcessedInformation> navigationInformation) {
         this.context = context;
         this.navigationInformation = navigationInformation;
     }
@@ -47,7 +48,7 @@ public class NavigationAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.nav_info_row,null);
         }
 
-        NavigationInformation navigationInformation = (NavigationInformation)getItem(position);
+        ProcessedInformation navigationInformation = (ProcessedInformation)getItem(position);
 
         /**TODO: where to find the direction arrow image?
          * ImageView directionImage = (ImageView)convertView.findViewById(R.id.imageView_direction);
@@ -55,7 +56,7 @@ public class NavigationAdapter extends BaseAdapter {
          */
 
         TextView basicDescription = (TextView)convertView.findViewById(R.id.textView_short_description);
-        basicDescription.setText(navigationInformation.getBasicInformation());
+        basicDescription.setText(navigationInformation.getProcessedBasicInstruction());
 
         /**TODO: where to find the distance?
          * TextView distance = (TextView)convertView.findViewById(R.id.textView_distance);

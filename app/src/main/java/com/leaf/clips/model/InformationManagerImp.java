@@ -42,7 +42,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     /**
     * PriorityQueue, eventualmente vuota, contenente gli ultimi beacon rilevati
     */
-    private PriorityQueue<MyBeacon> lastBeaconsSeen;
+    //private PriorityQueue<MyBeacon> lastBeaconsSeen;
 
     /**
     * Mappa dell'edificio di cui sono stati rilevati I beacon
@@ -64,7 +64,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     public InformationManagerImp(DatabaseService dbService, Context context){
         super(context);
         this.dbService = dbService;
-        lastBeaconsSeen = new PriorityQueue<>();
+        //lastBeaconsSeen = new PriorityQueue<>();
         activeLog = new LoggerImp();
         //TODO: remove (debug purpose)
         //map = this.dbService.findBuildingByMajor(666);
@@ -152,21 +152,21 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         int major = lastBeaconsSeen.peek().getMajor();
 
         if(dbService.isBuildingMapPresent(major)){
-            //try {
-                /*if(!dbService.isBuildingMapUpdated(major)){
+            try {
+                if(!dbService.isBuildingMapUpdated(major)){
                     boolean shouldUpdate = true;
                     for(Listener listener : listeners)
                         shouldUpdate = shouldUpdate && ((InformationListener)listener).noLastMapVersion();
                     if (shouldUpdate)
                         dbService.updateBuildingMap(major);
-                }*/
+                }
                 map = dbService.findBuildingByMajor(major);
 
-           /* } catch (IOException e) {
+           } catch (IOException e) {
                 e.printStackTrace();
                 for(Listener listener : listeners)
                     ((InformationListener)listener).cannotRetrieveRemoteMapDetails(); //errore connessione
-            }*/
+            }
         }
         else{
             boolean mapExists = false;
