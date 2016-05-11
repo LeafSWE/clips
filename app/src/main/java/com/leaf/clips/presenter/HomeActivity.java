@@ -266,12 +266,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
 
     @Override
     public boolean noLastMapVersion() {
-<<<<<<< HEAD
         return true;
-=======
-        Log.d("HOMEACTIVITY", "NO LAST MAP VERSION");
-        return false;
->>>>>>> f/fix_service_problem
     }
 
     @Override
