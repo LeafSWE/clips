@@ -27,6 +27,12 @@ import dagger.Provides;
 @Module
 public class NavModule {
 
+    /** Metodo che permette di risolvere le dipendenze verso gli oggetti della classe MapGraph
+     * @param informationManager Riferimento all'oggetto che gestisce le informazioni provenienti
+     *                           dal database
+     * @return MapGraph
+     */
+
     @Provides
     public MapGraph provideMapGraph(InformationManager informationManager){
         MapGraph map = new MapGraph();
