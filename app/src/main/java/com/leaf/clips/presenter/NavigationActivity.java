@@ -81,8 +81,10 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
             navigationManager.startNavigation(destinationPoi);
             List<ProcessedInformation> navigationInstruction = navigationManager.getAllNavigationInstruction();
             NavigationAdapter adp = new NavigationAdapter(this, navigationInstruction);
+            adp.notifyDataSetChanged();
             ListView listView = (ListView) findViewById(R.id.view_instruction_list);
             listView.setAdapter(adp);
+
         } catch (NavigationExceptions navigationExceptions) {
             navigationExceptions.printStackTrace();
         }

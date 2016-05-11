@@ -125,7 +125,8 @@
                 <ListView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/view_poi_category_list" android:scrollIndicators="none"/>
+                        android:id="@+id/view_poi_category_list" android:nestedScrollingEnabled="false"
+                        android:scrollIndicators="none"/>
 
             </LinearLayout>
 
