@@ -251,6 +251,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     @Override
     public boolean onLocalMapNotFound() {
         Log.d("HOMEACTIVITY", "LOCAL MAP NOT FOUND");
+        // TODO: chiedere all'utente il permesso di scaricare la mappa da remoto e ritornare la risposta
         return true;
     }
 
@@ -266,6 +267,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
 
     @Override
     public boolean noLastMapVersion() {
+        // TODO: chiedere all'utente il permesso di aggiornare la mappa e ritornare la risposta
         return true;
     }
 
