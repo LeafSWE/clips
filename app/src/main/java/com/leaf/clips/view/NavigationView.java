@@ -1,6 +1,8 @@
 package com.leaf.clips.view;
 
-import com.leaf.clips.presenter.NavigationAdapter;
+import com.leaf.clips.model.navigator.ProcessedInformation;
+
+import java.util.List;
 
 /**
  * @author Andrea Tombolato
@@ -8,6 +10,6 @@ import com.leaf.clips.presenter.NavigationAdapter;
  * @since 0.00
  */
 public interface NavigationView {
-    void setInstructionAdapter(NavigationAdapter adapter);
+    void setInstructionAdapter(List<ProcessedInformation> navigationInformation);
     void refreshInstructions();
 }
