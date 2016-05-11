@@ -6,20 +6,20 @@ package com.leaf.clips.presenter;
  * @since 0.00
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.leaf.clips.R;
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.view.LoggingView;
 import com.leaf.clips.view.LoggingViewImp;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
 public class LoggingActivity extends AppCompatActivity {
 
+    // TODO: 11/05/2016 Modificare comportamento Tasto indietro, deve fermare il log o mandare un avviso 
+    
     /**
      * View associata a tale Activity 
      */
@@ -44,7 +44,8 @@ public class LoggingActivity extends AppCompatActivity {
      * @return  void
      */
     public void stopLogging(){
-        // TODO: 10/05/2016 codify 
+        Intent intent = new Intent(this, MainDeveloperActivity.class);
+        startActivity(intent);
     }
 
 }
