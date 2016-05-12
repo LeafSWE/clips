@@ -50,10 +50,11 @@ public class ProcessedInformationImp implements ProcessedInformation {
         this.detailed = edge.getDetailedInformation();
         this.photos = edge.getPhotoInformation();
         this.direction = edge.getCoordinate();
+        int dist = (int)edge.getDistance();
         if(edge instanceof DefaultEdge)
-            this.distance = edge.getDistance()+" m";
+            this.distance = dist+" m";
         else
-            this.distance = edge.getDistance()+" piano";
+            this.distance = dist+" piano";
     }
 
     /**
@@ -68,10 +69,11 @@ public class ProcessedInformationImp implements ProcessedInformation {
         this.detailed = edge.getDetailedInformation();
         this.photos = edge.getPhotoInformation();
         this.direction = edge.getCoordinate();
+        int dist = (int)edge.getDistance();
         if(edge instanceof DefaultEdge)
-            this.distance = edge.getDistance()+" m";
+            this.distance = dist+" m";
         else
-            this.distance = edge.getDistance()+" piano";
+            this.distance = dist+" piano";
     }
 
     /**
@@ -117,6 +119,5 @@ public class ProcessedInformationImp implements ProcessedInformation {
     public String getDistance() {
         return this.distance;
     }
-
 }
 
