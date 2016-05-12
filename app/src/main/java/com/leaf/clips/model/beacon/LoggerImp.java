@@ -24,7 +24,7 @@ public class LoggerImp implements Logger {
     /**
      * Path della directory in cui vengono salvati i log
      */
-    final static String DIRECTORY = Environment.getDataDirectory().toString() + "clips/logs"; // TODO: 28/04/2016  inserire il path in cui vengono salvati i log
+    final static String DIRECTORY = Environment.getExternalStorageDirectory().toString() + "/clips/logs";
 
     /**
      * Rappresenta il contenuto di un log
@@ -89,7 +89,6 @@ public class LoggerImp implements Logger {
     public String open(String name){
 
         File file = new File(DIRECTORY,name+".txt");
-        Environment.getDataDirectory();
 
         StringBuilder text = new StringBuilder();
 
@@ -131,7 +130,11 @@ public class LoggerImp implements Logger {
     public void save(String name){
         String filename;
         File myDir = new File(DIRECTORY);
-        if(!myDir.isDirectory())
+
+        /**
+         * Controllo se la directory nella quale viene il log esiste, altrimenti la tolgo
+         */
+        if(!myDir.isDirectory() && !myDir.exists())
             myDir.mkdirs();
         filename = DIRECTORY+"/"+name+".txt";
 
