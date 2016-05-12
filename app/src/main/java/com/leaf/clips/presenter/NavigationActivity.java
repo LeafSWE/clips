@@ -10,7 +10,6 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NavigationListener;
 import com.leaf.clips.model.NavigationManager;
@@ -21,11 +20,9 @@ import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoRef;
 import com.leaf.clips.view.NavigationView;
 import com.leaf.clips.view.NavigationViewImp;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
-
 import javax.inject.Inject;
 
 public class NavigationActivity extends AppCompatActivity implements NavigationListener {
@@ -49,6 +46,9 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
 
         //Prova a recuperare la mappa dell'edificio in memoria
        /* BuildingMap map = null;
+
+
+        BuildingMap map = null;
         try {
             map = informationManager.getBuildingMap();
         } catch (NoBeaconSeenException e) {
@@ -60,6 +60,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         graph.addAllEdges(map.getAllEdges());*/
 
         handleIntent(getIntent());
+
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.leaf.clips.presenter.DetailedInformationActivity;
 import com.leaf.clips.presenter.DeveloperUnlockerActivity;
 import com.leaf.clips.presenter.HomeActivity;
 import com.leaf.clips.presenter.LogInformationActivity;
+import com.leaf.clips.presenter.LoggingActivity;
 import com.leaf.clips.presenter.MainDeveloperActivity;
 import com.leaf.clips.presenter.MainDeveloperPresenter;
 import com.leaf.clips.presenter.NavigationActivity;
@@ -87,4 +88,11 @@ public interface InfoComponent {
      * @param detailedInformationActivity Oggetto in cui devono essere iniettate le dipendenze
      */
     void inject(DetailedInformationActivity detailedInformationActivity);
+
+    /**
+     * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo LoggingActivity
+     * @param loggingActivity Oggetto in cui devono essere iniettate le dipendenze
+     */
+    void inject(LoggingActivity loggingActivity);
+
 }
