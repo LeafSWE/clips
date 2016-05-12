@@ -88,9 +88,6 @@ public class ImageListFragment extends Fragment implements AdapterView.OnItemCli
             ImageView imageView;
             if (convertView == null) { // if it's not recycled, initialize some attributes
                 imageView = new ImageView(mContext);
-                /*imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setLayoutParams(new GridView.LayoutParams(
-                        AbsListView.LayoutParams.MATCH_PARENT, AbsListView.LayoutParams.MATCH_PARENT));*/
             } else {
                 imageView = (ImageView) convertView;
             }
