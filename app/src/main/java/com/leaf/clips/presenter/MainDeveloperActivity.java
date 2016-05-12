@@ -18,7 +18,6 @@ import com.leaf.clips.view.MainDeveloperViewImp;
 import junit.framework.Assert;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -44,11 +43,9 @@ public class MainDeveloperActivity extends AppCompatActivity {
 
         String path = LoggerImp.getPath();
 
-        ArrayList<String> logFiles = new ArrayList<>();
         File directory = new File(path);
 
         // get all the files from the log directory
-
         File[] fList = directory.listFiles();
         String [] stringLogs = new String[fList.length];
         int i = 0;
@@ -68,8 +65,8 @@ public class MainDeveloperActivity extends AppCompatActivity {
 
 
     public void showDetailedLog(int logPosition){
-        // TODO: 5/6/16 Passare la posizione del log nell'intent
         Intent intent = new Intent(this, LogInformationActivity.class);
+        intent.putExtra("logNUmber", logPosition);
         startActivity(intent);
     }
 
