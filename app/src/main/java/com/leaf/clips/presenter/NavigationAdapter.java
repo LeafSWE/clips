@@ -58,10 +58,9 @@ public class NavigationAdapter extends BaseAdapter {
         TextView basicDescription = (TextView)convertView.findViewById(R.id.textView_short_description);
         basicDescription.setText(navigationInformation.getProcessedBasicInstruction());
 
-        /**TODO: where to find the distance?
-         * TextView distance = (TextView)convertView.findViewById(R.id.textView_distance);
-         * distance.setText(navigationInformation.getDistance());
-         */
+
+        TextView distance = (TextView)convertView.findViewById(R.id.textView_distance);
+        distance.setText(navigationInformation.getDistance());
 
         return  convertView;
     }
