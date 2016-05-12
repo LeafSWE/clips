@@ -56,7 +56,7 @@ public class StairEdge extends AbsEnrichedEdge {
      */
     @Override
     public double getWeight(){
-        return 0;
+        return Math.exp(getDistance()-1.9999);
         //TODO Decidere il peso
     }
 

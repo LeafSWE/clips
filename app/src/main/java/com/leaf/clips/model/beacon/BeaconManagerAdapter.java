@@ -17,6 +17,7 @@ import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
+import org.altbeacon.beacon.Identifier;
 import org.altbeacon.beacon.MonitorNotifier;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
@@ -26,6 +27,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.UUID;
 
 /**
  * Classe che si occupa del rilevamento dei beacon. Estende la
@@ -83,10 +85,11 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
         beaconManager = BeaconManager.getInstanceForApplication(getApplicationContext());
         beaconManager.getBeaconParsers().clear();
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(beaconLayout));
-        region = new Region("Region", null, null, null);
+        UUID uuid = UUID.fromString("f7826da6-4fa2-4e98-8024-bc5b71e0893e");
+        region = new Region("Region", Identifier.fromUuid(uuid), null, null);
         periods = new HashMap<>();
         setMonitorNotifier(this);
-        BeaconManager.setRegionExitPeriod(5000);
+        BeaconManager.setRegionExitPeriod(1000);
         beaconManager.setForegroundBetweenScanPeriod(800);
         beaconManager.setForegroundScanPeriod(1600);
         beaconManager.setRangeNotifier(this);
@@ -99,10 +102,9 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
     @Override
     public void onDestroy(){
         Log.i("SERVICE", "DESTROYING THE SERVICE");
-        super.onDestroy();
         setMonitorNotifier(null);
         try {
-            beaconManager.stopMonitoringBeaconsInRegion(region);
+            beaconManager.stopRangingBeaconsInRegion(region);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -111,6 +113,7 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
         periods.clear();
         region = null;
         beaconManager = null;
+        super.onDestroy();
     }
 
     private void setMonitorNotifier(MonitorNotifier monitorNotifier) {
@@ -126,7 +129,8 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
     public void onBeaconServiceConnect() {
         try {
             Log.i("SERVICE", "STARTING MONITORING");
-            beaconManager.startRangingBeaconsInRegion(region);
+            //beaconManager.startRangingBeaconsInRegion(region);
+            beaconManager.startMonitoringBeaconsInRegion(region);
         } catch (RemoteException e) {
             e.printStackTrace();
             Log.i("SERVICE", "NOT MONITORING");
@@ -164,6 +168,7 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
     public void didExitRegion(Region region) {
         try {
             beaconManager.stopRangingBeaconsInRegion(region);
+
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -177,8 +182,14 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
     @Override
     public void didDetermineStateForRegion(int i, Region region) {
 
-        if(i==MonitorNotifier.INSIDE)
-            Log.i("BEACON_MANAGER_ADAPTER","Beacons are visible in the region");
+        if(i==MonitorNotifier.INSIDE) {
+            try {
+                beaconManager.startRangingBeaconsInRegion(region);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            Log.i("BEACON_MANAGER_ADAPTER", "Beacons are visible in the region");
+        }
         else
             Log.i("BEACON_MANAGER_ADAPTER", "No beacons are visible in the region");
     }
