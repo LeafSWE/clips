@@ -130,7 +130,9 @@ public class LoggerImp implements Logger {
     @Override
     public void save(String name){
         String filename;
-
+        File myDir = new File(DIRECTORY);
+        if(!myDir.isDirectory())
+            myDir.mkdirs();
         filename = DIRECTORY+"/"+name+".txt";
 
         try {
