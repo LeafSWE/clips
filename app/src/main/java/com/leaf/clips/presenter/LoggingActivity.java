@@ -44,6 +44,7 @@ public class LoggingActivity extends AppCompatActivity {
      * @return  void
      */
     public void stopLogging(){
+        informationManager.saveRecordedBeaconInformation("11");
         Intent intent = new Intent(this, MainDeveloperActivity.class);
         startActivity(intent);
     }
