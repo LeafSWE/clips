@@ -41,5 +41,10 @@ public interface ProcessedInformation {
      */
     int getDirection();
 
+    /**
+     * Metodo che ritorna la distanza da percorrere nell'arco in cui ci si trova
+     * @return String
+     */
+    String getDistance();
 }
 
