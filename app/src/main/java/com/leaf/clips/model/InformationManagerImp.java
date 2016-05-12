@@ -1,11 +1,11 @@
 package com.leaf.clips.model;
 /**
-* @author Federico Tavella
-* @version 0.03
-* @since 0.00
-* 
-* 
-*/
+ * @author Federico Tavella
+ * @version 0.03
+ * @since 0.00
+ *
+ *
+ */
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,28 +25,28 @@ import java.util.LinkedList;
 import java.util.PriorityQueue;
 
 /**
-*Classe che permette l'accesso alle informazioni trattate nel package Model
-*/ 
-public class InformationManagerImp extends AbsBeaconReceiverManager implements InformationManager { 
+ *Classe che permette l'accesso alle informazioni trattate nel package Model
+ */
+public class InformationManagerImp extends AbsBeaconReceiverManager implements InformationManager {
 
     /**
-    * Logger per la registrazione delle informazioni dei beacon rilevati
-    */
+     * Logger per la registrazione delle informazioni dei beacon rilevati
+     */
     private Logger activeLog;
 
     /**
-    * Oggetto per la gestione delle mappe nel database locale e per il recupero delle mappe nel database remoto
-    */
+     * Oggetto per la gestione delle mappe nel database locale e per il recupero delle mappe nel database remoto
+     */
     private final DatabaseService dbService;
 
     /**
-    * PriorityQueue, eventualmente vuota, contenente gli ultimi beacon rilevati
-    */
+     * PriorityQueue, eventualmente vuota, contenente gli ultimi beacon rilevati
+     */
     //private PriorityQueue<MyBeacon> lastBeaconsSeen;
 
     /**
-    * Mappa dell'edificio di cui sono stati rilevati I beacon
-    */
+     * Mappa dell'edificio di cui sono stati rilevati I beacon
+     */
     private BuildingMap map;
 
     /**
@@ -55,11 +55,11 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     boolean shouldLog = false;
 
     /**
-    * Costruttore della classe InformationManagerImp
-    * @param dbService Oggetto per la gestione delle mappe nel database locale e per il recupero
+     * Costruttore della classe InformationManagerImp
+     * @param dbService Oggetto per la gestione delle mappe nel database locale e per il recupero
      *                 delle mappe nel database remoto
-    * @param context Contesto dell'applicazione
-    */
+     * @param context Contesto dell'applicazione
+     */
 
     public InformationManagerImp(DatabaseService dbService, Context context){
         super(context);
@@ -74,9 +74,9 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     }
 
     /**
-    * Metodo che ritorna tutte le categorie di POI presenti all'interno dell'edificio
-    * @return  Collection<String>
-    */
+     * Metodo che ritorna tutte le categorie di POI presenti all'interno dell'edificio
+     * @return  Collection<String>
+     */
     @Override
     public Collection<String> getAllCategories(){
 
@@ -86,20 +86,20 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     }
 
     /**
-    * Metodo che ritorna la PriorityQueue<MyBeacon>, eventualmente vuota, dei beacon visibili
-    * @return  PriorityQueue<MyBeacon>
-    */
+     * Metodo che ritorna la PriorityQueue<MyBeacon>, eventualmente vuota, dei beacon visibili
+     * @return  PriorityQueue<MyBeacon>
+     */
     @Override
     public PriorityQueue<MyBeacon> getAllVisibleBeacons(){
         return lastBeaconsSeen;
     }
 
     /**
-    * Metodo che ritorna la mappa dell'edificio se questa è già stata caricata dal database locale.
+     * Metodo che ritorna la mappa dell'edificio se questa è già stata caricata dal database locale.
      * Viene lanciata una eccezione di tipo NoBeaconSeenException nel caso in cui non sia stata
      * caricata la mappa poiché non è stato ancora ricevuto alcun beacon
-    * @return  BuildingMap
-    */
+     * @return  BuildingMap
+     */
     @Override
     public BuildingMap getBuildingMap() throws NoBeaconSeenException {
         if(map == null)
@@ -108,19 +108,19 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     }
 
     /**
-    * Metodo che ritorna un oggetto DatabaseService che permette di interrogare il database
-    * @return  DatabaseService
-    */
+     * Metodo che ritorna un oggetto DatabaseService che permette di interrogare il database
+     * @return  DatabaseService
+     */
     @Override
     public DatabaseService getDatabaseService(){
         return dbService;
     }
 
     /**
-    * Metodo che, dato il nome di un log, ritorna l'informazione in esso contenuta sotto forma di stringa
-    * @param name Nome del log da cui reperire l'informazione
-    * @return  String
-    */
+     * Metodo che, dato il nome di un log, ritorna l'informazione in esso contenuta sotto forma di stringa
+     * @param name Nome del log da cui reperire l'informazione
+     * @return  String
+     */
     @Override
     public String getLogInfo(String name){
         return activeLog.open(name);
@@ -144,8 +144,8 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     }
 
     /**
-    * Metodo che permette di recuperare una mappa dal database in base al major dei beacon rilevati
-    */
+     * Metodo che permette di recuperare una mappa dal database in base al major dei beacon rilevati
+     */
 
     private void loadMap(){
         Log.i("INFORMATION_MANAGER","CARICO LA MAPPA");
@@ -161,7 +161,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
                     if (shouldUpdate)
                         dbService.updateBuildingMap(major);
                 }*/
-                map = dbService.findBuildingByMajor(major);
+            map = dbService.findBuildingByMajor(major);
 
            /*} catch (IOException e) {
                 e.printStackTrace();
@@ -233,27 +233,27 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     }
 
     /**
-    * Metodo che permette di rimuovere un log delle informazioni dei beacon visibili
-    * @param filename Nome del file da rimuovere
-    */
+     * Metodo che permette di rimuovere un log delle informazioni dei beacon visibili
+     * @param filename Nome del file da rimuovere
+     */
     @Override
     public void removeBeaconInformationFile(String filename){
         activeLog.remove(filename);
     }
 
     /**
-    * Metodo che permette di salvare il log delle informazioni dei beacon visibili su file
-    * @param filename Nome del file in cui salvare le informazioni dei beacon
-    */
+     * Metodo che permette di salvare il log delle informazioni dei beacon visibili su file
+     * @param filename Nome del file in cui salvare le informazioni dei beacon
+     */
     @Override
     public void saveRecordedBeaconInformation(String filename){
         activeLog.save(filename);
     }
 
     /**
-    * Metodo che setta il campo dati lastBeaconsSeen
-    * @param beacons Lista dei beacon visibili
-    */
+     * Metodo che setta il campo dati lastBeaconsSeen
+     * @param beacons Lista dei beacon visibili
+     */
     private void setVisibleBeacon(PriorityQueue<MyBeacon> beacons){
         lastBeaconsSeen.clear();
         for(MyBeacon beacon : beacons){

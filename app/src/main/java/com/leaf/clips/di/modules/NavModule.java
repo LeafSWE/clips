@@ -6,8 +6,6 @@ import com.leaf.clips.model.NavigationManager;
 import com.leaf.clips.model.NavigationManagerImp;
 import com.leaf.clips.model.navigator.graph.MapGraph;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 
