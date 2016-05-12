@@ -11,10 +11,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.leaf.clips.model.InformationManager;
+import com.leaf.clips.model.beacon.LoggerImp;
 import com.leaf.clips.view.MainDeveloperView;
 import com.leaf.clips.view.MainDeveloperViewImp;
 
 import junit.framework.Assert;
+
+import java.io.File;
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -38,9 +42,22 @@ public class MainDeveloperActivity extends AppCompatActivity {
 
         this.mainDeveloperView = new MainDeveloperViewImp(this);
 
-        // TODO: 10/05/2016 Recuperare logs
-        //Setto i log nell'app
-        String [] stringLogs = new String [] {"230514", "230516", "230514", "230516", "230514", "230516"};
+        String path = LoggerImp.getPath();
+
+        ArrayList<String> logFiles = new ArrayList<>();
+        File directory = new File(path);
+
+        // get all the files from the log directory
+
+        File[] fList = directory.listFiles();
+        String [] stringLogs = new String[fList.length];
+        int i = 0;
+        for (File file : fList) {
+            if (file.isFile())
+                stringLogs[i] = file.toString();
+            i++;
+        }
+
         mainDeveloperView.setLogsAdapter(stringLogs);
 
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
