@@ -309,4 +309,3 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         return new SettingImp(getContext()).isDeveloper();
     }
 }
-
