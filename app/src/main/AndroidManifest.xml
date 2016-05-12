@@ -83,7 +83,7 @@
                 android:name=".presenter.NavigationActivity"
                 android:label="@string/title_activity_navigation">
 
-            <!-- to identify this activity as "searchable" -->
+            <!-- Per identificare tale Activity come "searchable" -->
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
 
@@ -98,8 +98,14 @@
                     android:resource="@xml/searchable"/>
         </activity>
         <activity android:name=".presenter.DetailedInformationActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="com.leaf.clips.presenter.NavigationActivity"/>
         </activity>
         <activity android:name=".presenter.ImageDetailActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="com.leaf.clips.presenter.DetailedInformationActivity"/>
         </activity>
     </application>
 

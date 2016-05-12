@@ -44,21 +44,6 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         view = new NavigationViewImp(this);
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
 
-        //Prova a recuperare la mappa dell'edificio in memoria
-       /* BuildingMap map = null;
-
-
-        BuildingMap map = null;
-        try {
-            map = informationManager.getBuildingMap();
-        } catch (NoBeaconSeenException e) {
-            e.printStackTrace();
-        }
-
-        MapGraph graph = navigationManager.getGraph();
-        graph.addAllRegions(map.getAllROIs());
-        graph.addAllEdges(map.getAllEdges());*/
-
         handleIntent(getIntent());
 
     }

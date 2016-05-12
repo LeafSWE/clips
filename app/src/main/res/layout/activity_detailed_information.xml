@@ -7,7 +7,8 @@
             android:background="@color/backroundGrey"
             android:paddingLeft="16dp"
             android:paddingTop="16dp"
-            android:paddingRight="16dp">
+            android:paddingRight="16dp"
+            android:clipToPadding="false">
 
 
         <LinearLayout
@@ -20,7 +21,8 @@
                         android:id="@+id/fragment_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"/>
+                        android:layout_marginBottom="10dp" android:minHeight="100dp"
+                        android:measureAllChildren="true"/>
 
                 <LinearLayout
                         android:orientation="vertical"

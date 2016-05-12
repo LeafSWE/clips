@@ -45,16 +45,13 @@ public class DetailedInformationActivity extends AppCompatActivity {
 
         updatePhoto();
         updateDetailedDescription();
-
     }
 
     public void updatePhoto(){
-        //TODO
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,imgListFragment).commit();
     }
 
     public void updateDetailedDescription(){
-        //TODO
         String detailedInfo = getIntent().getStringExtra("detailed_info");
         view.setDetailedDescription(detailedInfo);
     }
