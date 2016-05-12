@@ -17,7 +17,7 @@ import com.leaf.clips.di.modules.SettingModule;
 
 /**
  * Classe derivata da Application. Essa permette di ridefinire il comportamento dell'applicazione
- * al momento della creazione tramite il metodo onCreatej
+ * al momento della creazione tramite il metodo onCreate
  */
 public class MyApplication extends Application {
 
