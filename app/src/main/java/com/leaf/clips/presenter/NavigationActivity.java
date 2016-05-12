@@ -15,10 +15,8 @@ import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NavigationListener;
 import com.leaf.clips.model.NavigationManager;
 import com.leaf.clips.model.NoBeaconSeenException;
-import com.leaf.clips.model.navigator.BuildingMap;
 import com.leaf.clips.model.navigator.NavigationExceptions;
 import com.leaf.clips.model.navigator.ProcessedInformation;
-import com.leaf.clips.model.navigator.graph.MapGraph;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoRef;
 import com.leaf.clips.view.NavigationView;
@@ -50,7 +48,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
 
         //Prova a recuperare la mappa dell'edificio in memoria
-        BuildingMap map = null;
+       /* BuildingMap map = null;
         try {
             map = informationManager.getBuildingMap();
         } catch (NoBeaconSeenException e) {
@@ -59,7 +57,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
 
         MapGraph graph = navigationManager.getGraph();
         graph.addAllRegions(map.getAllROIs());
-        graph.addAllEdges(map.getAllEdges());
+        graph.addAllEdges(map.getAllEdges());*/
 
         handleIntent(getIntent());
     }
