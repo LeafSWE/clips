@@ -26,6 +26,7 @@ public class ProcessedInformationImpTest {
     private static final String FAKE_BASIC_INFORMATION = "FakeBasicInformation";
     private static final String FAKE_DETAIL_INFORMATION = "FakeDetailInformation";
     private static final String FAKE_STARTER_INFORMATION = "FakeStartInformation";
+    private static final String FAKE_DIRECTION = "FakeDirection";
     @Mock
     private PhotoInformation mockPhotoInformation;
 
@@ -42,6 +43,7 @@ public class ProcessedInformationImpTest {
         when(mockEnrichedEdge.getBasicInformation()).thenReturn(FAKE_BASIC_INFORMATION);
         when(mockEnrichedEdge.getDetailedInformation()).thenReturn(FAKE_DETAIL_INFORMATION);
         when(mockEnrichedEdge.getPhotoInformation()).thenReturn(mockPhotoInformation);
+        when(mockEnrichedEdge.getCoordinate()).thenReturn(FAKE_DIRECTION);
 
         processedInformation = new ProcessedInformationImp(mockEnrichedEdge);
         processedInformationWithStart = new ProcessedInformationImp(mockEnrichedEdge,
@@ -65,6 +67,8 @@ public class ProcessedInformationImpTest {
                 FAKE_DETAIL_INFORMATION);
         assertEquals("Different PhotoInformation info", processedInformation.getPhotoInstruction(),
                 mockPhotoInformation);
+        assertEquals("Different direction", processedInformation.getDirection(),
+                FAKE_DIRECTION);
     }
 
     @Test

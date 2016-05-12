@@ -21,6 +21,11 @@ public class ProcessedInformationImp implements ProcessedInformation {
     private String basic;
 
     /**
+     * La prossima direzione verso cui dirigersi
+     */
+    private int direction;
+
+    /**
      * Indicazioni dettagliate di un Edge
      */
     private String detailed;
@@ -38,6 +43,7 @@ public class ProcessedInformationImp implements ProcessedInformation {
         this.basic = edge.getBasicInformation();
         this.detailed = edge.getDetailedInformation();
         this.photos = edge.getPhotoInformation();
+        this.direction = edge.getCoordinate();
     }
 
     /**
@@ -51,6 +57,7 @@ public class ProcessedInformationImp implements ProcessedInformation {
         this.basic = starterInformation + " " + edge.getBasicInformation();
         this.detailed = edge.getDetailedInformation();
         this.photos = edge.getPhotoInformation();
+        this.direction = edge.getCoordinate();
     }
 
     /**
@@ -80,6 +87,13 @@ public class ProcessedInformationImp implements ProcessedInformation {
     public String getProcessedBasicInstruction() {
         return this.basic;
     }
+
+    /**
+     * Metodo che ritorna la direzione verso cui dirigersi
+     * @return  int
+     */
+    @Override
+    public int getDirection() {return this.direction;}
 
 }
 

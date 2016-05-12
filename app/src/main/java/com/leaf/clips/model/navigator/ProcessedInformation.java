@@ -35,5 +35,11 @@ public interface ProcessedInformation {
      */
     String getProcessedBasicInstruction();
 
+    /**
+     * Metodo che ritorna la direzione verso cui dirigersi.
+     * @return  int
+     */
+    int getDirection();
+
 }
 
