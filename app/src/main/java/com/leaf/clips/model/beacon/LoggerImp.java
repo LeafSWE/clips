@@ -5,6 +5,7 @@ package com.leaf.clips.model.beacon;
  * @since 0.00
  */
 
+import android.os.Environment;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -23,7 +24,7 @@ public class LoggerImp implements Logger {
     /**
      * Path della directory in cui vengono salvati i log
      */
-    final static String DIRECTORY = "C:\\Users\\Federico"; // TODO: 28/04/2016  inserire il path in cui vengono salvati i log
+    final static String DIRECTORY = Environment.getDataDirectory().toString() + "clips/logs"; // TODO: 28/04/2016  inserire il path in cui vengono salvati i log
 
     /**
      * Rappresenta il contenuto di un log
@@ -88,6 +89,7 @@ public class LoggerImp implements Logger {
     public String open(String name){
 
         File file = new File(DIRECTORY,name+".txt");
+        Environment.getDataDirectory();
 
         StringBuilder text = new StringBuilder();
 

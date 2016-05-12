@@ -92,23 +92,50 @@ public class NavigatorImp implements Navigator {
         if (buildingGraph != null) {
             Collection<RegionOfInterest> endRois = endPoi.getAllBelongingROIs();
             Iterator<RegionOfInterest> endRoisIterator = endRois.iterator();
+
+            List<EnrichedEdge> shortestPath = null;
+
+            while (endRoisIterator.hasNext()) {
+                RegionOfInterest endRoi = endRoisIterator.next();
+                shortestPath = pathFinder.calculatePath(this.buildingGraph, startRoi, endRoi);
+                if (shortestPath != null) {
+                    List<EnrichedEdge> newPath = null;
+                    if (endRoisIterator.hasNext()) {
+                        RegionOfInterest nextEndRoi = endRoisIterator.next();
+                        newPath = pathFinder.calculatePath(this.buildingGraph, startRoi, nextEndRoi);
+                    }
+                    if (newPath != null) {
+                        if (isShorter(newPath, shortestPath)) {
+                            shortestPath = newPath;
+                        }
+                    }
+                }
+            }
+            this.path = shortestPath;
+
+/*
             if (endRoisIterator.hasNext()) {
                 // prelevo il primo path considerandolo il migliore
                 RegionOfInterest endRoi = endRoisIterator.next();
-                List<EnrichedEdge> shortestPath = pathFinder.calculatePath(this.buildingGraph, startRoi, endRoi);
+                shortestPath = pathFinder.calculatePath(this.buildingGraph, startRoi, endRoi);
 
                 // prelevo gli altri path e li confronto con il migliore attuale
                 while (endRoisIterator.hasNext()) {
                     RegionOfInterest nextEndRoi = endRoisIterator.next();
                     List<EnrichedEdge> newPath = pathFinder.calculatePath(this.buildingGraph, startRoi, nextEndRoi);
-                    if (isShorter(newPath, shortestPath)) {
-                        shortestPath = newPath;
+                    if (newPath != null) {
+                        if (isShorter(newPath, shortestPath)) {
+                            shortestPath = newPath;
+                        }
                     }
+
                 }
                 path = shortestPath;
             } else {
                 throw new PathException("endPoi without ROI");
-            }
+            }*/
+
+
         } else {
             throw new NoGraphSetException();
         }
@@ -133,16 +160,38 @@ public class NavigatorImp implements Navigator {
      */
     @Override
     public List<ProcessedInformation> getAllInstructions() throws NavigationExceptions {
+        //Log.i("getAllInstruction", "getAllInstruction");
         if (path != null) {
             ArrayList<ProcessedInformation> result = new ArrayList<>();
+            int i = 1;
             for (EnrichedEdge edge : path) {
-                ProcessedInformation edgeProcessedInformation = new ProcessedInformationImp(edge);
-                result.add(edgeProcessedInformation);
+                if (i<path.size()) {
+                    ProcessedInformation edgeProcessedInformation = new ProcessedInformationImp(edge,
+                            calcolaDestraSinistra(edge, path.get(i)));
+                    result.add(edgeProcessedInformation);
+                } else {
+                    ProcessedInformation edgeProcessedInformation = new ProcessedInformationImp(edge);
+                    result.add(edgeProcessedInformation);
+                }
+                i++;
             }
             return result;
         } else {
             throw new NoNavigationInformationException();
         }
+    }
+
+    private String calcolaDestraSinistra(EnrichedEdge actual, EnrichedEdge next) {
+        int correctGrade = next.getCoordinate() - actual.getCoordinate();
+        if (correctGrade < 0) {
+            correctGrade += 360;
+        }
+        if (correctGrade > 30 && correctGrade < 180)
+            return "gira a destra";
+        else if (correctGrade >= 180 && correctGrade < 330)
+            return "gira a sinistra";
+        else
+            return "vai dritto";
     }
 
     /**
@@ -255,6 +304,7 @@ public class NavigatorImp implements Navigator {
                 throw new PathException();
             }
         } else {
+            //TODO lanciata eccezione alla fine della navigazione->trovare metodo migliore
             Log.d("NAVIGATOR", "toNextRegion: Progress iterator at end");
             throw new PathException("Navigation finish, progress iterator at end");
         }

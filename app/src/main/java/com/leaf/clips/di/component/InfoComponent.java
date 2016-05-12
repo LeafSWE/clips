@@ -8,6 +8,7 @@ import com.leaf.clips.di.modules.SettingModule;
 import com.leaf.clips.presenter.DeveloperUnlockerActivity;
 import com.leaf.clips.presenter.HomeActivity;
 import com.leaf.clips.presenter.LogInformationActivity;
+import com.leaf.clips.presenter.LoggingActivity;
 import com.leaf.clips.presenter.MainDeveloperActivity;
 import com.leaf.clips.presenter.MainDeveloperPresenter;
 import com.leaf.clips.presenter.NavigationActivity;
@@ -80,4 +81,5 @@ public interface InfoComponent {
      * @param logInformationActivity Oggetto in cui devono essere iniettate le dipendenze
      */
     void inject(LogInformationActivity logInformationActivity);
+    void inject(LoggingActivity loggingActivity);
 }

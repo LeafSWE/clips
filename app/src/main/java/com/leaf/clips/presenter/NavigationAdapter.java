@@ -48,7 +48,7 @@ public class NavigationAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.nav_info_row,null);
         }
 
-        NavigationInformation navigationInformation = (NavigationInformation)getItem(position);
+        ProcessedInformation navigationInformation = (ProcessedInformation)getItem(position);
 
         /**TODO: where to find the direction arrow image?
          * ImageView directionImage = (ImageView)convertView.findViewById(R.id.imageView_direction);
@@ -56,7 +56,7 @@ public class NavigationAdapter extends BaseAdapter {
          */
 
         TextView basicDescription = (TextView)convertView.findViewById(R.id.textView_short_description);
-        basicDescription.setText(navigationInformation.getBasicInformation());
+        basicDescription.setText(navigationInformation.getProcessedBasicInstruction());
 
         /**TODO: where to find the distance?
          * TextView distance = (TextView)convertView.findViewById(R.id.textView_distance);
