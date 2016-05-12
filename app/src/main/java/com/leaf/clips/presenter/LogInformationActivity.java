@@ -19,7 +19,6 @@ import javax.inject.Inject;
 
 public class LogInformationActivity extends AppCompatActivity {
 
-    // TODO: 5/6/16 Aggiungere model
     /**
      * Oggetto del Model per la gestione dei log
      */
@@ -35,7 +34,6 @@ public class LogInformationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //TODO: Leggere il log passato dall'Intendt e passarlo alla view
         super.onCreate(savedInstanceState);
         this.view = new LogInformationViewImp(this);
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
