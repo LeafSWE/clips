@@ -150,23 +150,24 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     private void loadMap(){
         Log.i("INFORMATION_MANAGER","CARICO LA MAPPA");
         int major = lastBeaconsSeen.peek().getMajor();
-
+        Log.i("BEACONLOADMAO", "major" + major);
+        Log.i("BEACONLOADMAO", "isPresent" + dbService.isBuildingMapPresent(major));
         if(dbService.isBuildingMapPresent(major)){
-            try {
+            /*try {
                 if(!dbService.isBuildingMapUpdated(major)){
                     boolean shouldUpdate = true;
                     for(Listener listener : listeners)
                         shouldUpdate = shouldUpdate && ((InformationListener)listener).noLastMapVersion();
                     if (shouldUpdate)
                         dbService.updateBuildingMap(major);
-                }
+                }*/
                 map = dbService.findBuildingByMajor(major);
 
-           } catch (IOException e) {
+           /*} catch (IOException e) {
                 e.printStackTrace();
                 for(Listener listener : listeners)
                     ((InformationListener)listener).cannotRetrieveRemoteMapDetails(); //errore connessione
-            }
+            }*/
         }
         else{
             boolean mapExists = false;
