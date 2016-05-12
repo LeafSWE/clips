@@ -2,6 +2,7 @@ package com.leaf.clips.presenter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 public class ImageListFragment extends Fragment implements AdapterView.OnItemClickListener{
     //TODO everything
     private ImageAdapter imgAdapter;
-    ArrayList<String> photoUris;
+    private ArrayList<String> photoUris;
 
     public ImageListFragment() {}
 
@@ -34,6 +35,7 @@ public class ImageListFragment extends Fragment implements AdapterView.OnItemCli
         args.putStringArrayList("urls", urls);
         f.setArguments(args);
         return f;
+
     }
 
     @Override
@@ -53,11 +55,14 @@ public class ImageListFragment extends Fragment implements AdapterView.OnItemCli
         return v;
     }
 
+    // Avvia l'Activity deputata a mostrare l'immagine nel dettaglio, passando la posizione (nella
+    // lista) dell'immagine selezionata.
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        /*final Intent i = new Intent(getActivity(), ImageDetailActivity.class);
-        i.putExtra(ImageDetailActivity.EXTRA_IMAGE, position);
-        startActivity(i);*/
+        final Intent i = new Intent(getActivity(), ImageDetailActivity.class);
+        i.putExtra("image_selected", position);
+        i.putStringArrayListExtra("photo_uris", photoUris);
+        startActivity(i);
     }
 
     private class ImageAdapter extends BaseAdapter {
@@ -97,7 +102,7 @@ public class ImageListFragment extends Fragment implements AdapterView.OnItemCli
                     .load(photoUris.get(position))
                     .resize(200,200)
                     .centerCrop()
-                    .placeholder(R.drawable.icon_menu_developer)
+                    .placeholder(R.drawable.image_placeholder)
                     .into(imageView);
             return imageView;
         }
