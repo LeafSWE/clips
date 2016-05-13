@@ -248,6 +248,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     @Override
     public void saveRecordedBeaconInformation(String filename){
         activeLog.save(filename);
+        shouldLog = false;
     }
 
     /**
