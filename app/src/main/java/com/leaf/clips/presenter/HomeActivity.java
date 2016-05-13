@@ -26,10 +26,12 @@ import com.leaf.clips.R;
 import com.leaf.clips.model.InformationListener;
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NoBeaconSeenException;
+import com.leaf.clips.model.beacon.MyBeacon;
 import com.leaf.clips.view.HomeView;
 import com.leaf.clips.view.HomeViewImp;
 
 import java.util.List;
+import java.util.PriorityQueue;
 
 import javax.inject.Inject;
 
@@ -294,6 +296,11 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
 
         builder.create().show();
         return true;
+    }
+
+    @Override
+    public void getAllVisibleBeacons(PriorityQueue<MyBeacon> visibleBeacons) {
+
     }
 
     /**
