@@ -2,6 +2,7 @@ package com.leaf.clips.view;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
@@ -61,18 +62,14 @@ public class LoggingViewImp implements LoggingView {
      * @param adp Collegamento tra la lista dei beacon rilevati e la view in cui essi devono essere mostrati
      * @return  void
      */
-    @Override
-    public void setBeaconListAdapter(Adapter adp){
-        // TODO: 5/13/16 MOstrare i beacon rilevati 
-        String[] values = new String[] { "Beacon 10001", "Beacon 10002", "Beacon 10003",
-                "Beacon 10004", "Beacon 10005", "Beacon 11001", "Beacon 11002", "Beacon 11003",
-                "Beacon 11004", "Beacon 11005", "Beacon 11006", "Beacon 12007", "Beacon 12008", "Beacon 12009",
-                "Beacon 12017" };
 
+    // TODO: 5/13/16 Tracy + Asta
+    @Override
+    public void setBeaconListAdapter(StringBuffer beacons){
+        // TODO: 5/13/16 Mostrare i beacon rilevati
         final ArrayList<String> list = new ArrayList<>();
-        for (int i = 0; i < values.length; ++i) {
-            list.add(values[i]);
-        }
+        list.add(beacons.toString());
+
         final ArrayAdapter adapter = new ArrayAdapter(presenter, android.R.layout.simple_list_item_1, list);
         listLog.setAdapter(adapter);
     }

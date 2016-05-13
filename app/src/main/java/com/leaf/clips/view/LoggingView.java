@@ -13,5 +13,5 @@ public interface LoggingView {
      * @param adp Collegamento tra la lista dei beacon rilevati e la view in cui essi devono essere mostrati
      * @return  void
      */
-    void setBeaconListAdapter(Adapter adp);
+    void setBeaconListAdapter(StringBuffer beacons);
 }
