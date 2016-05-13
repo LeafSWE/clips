@@ -99,5 +99,9 @@ public interface InformationManager {
      * @return Collection<PointOfInterest>
      */
     Collection<PointOfInterest> getPOIsByCategory(String category);
+
+    void downloadMapOfVisibleBeacons(Boolean remoteSearch);
+
+    void updateMapOfVisibleBeacons(Boolean update);
 }
 
