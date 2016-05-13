@@ -56,7 +56,7 @@ public class ElevatorEdge extends AbsEnrichedEdge {
      */
     @Override
     public double getWeight(){
-        return Math.exp(-1*(getDistance()-1.9999));
+        return Math.exp(-1*(getDistance()-1.9999)) + maxDistance * userElevatorPreference;
         //TODO Decidere il peso
     }
 
