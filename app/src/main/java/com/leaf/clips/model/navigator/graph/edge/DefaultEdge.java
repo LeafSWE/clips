@@ -51,8 +51,7 @@ public class DefaultEdge extends AbsEnrichedEdge {
      */
     @Override
     public double getWeight(){
-        return 0;
-        //TODO Decidere il peso
+        return getDistance();
     }
 
 }
