@@ -22,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.leaf.clips.R;
+import com.leaf.clips.model.AbsBeaconReceiverManager;
 import com.leaf.clips.model.InformationListener;
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NoBeaconSeenException;
@@ -48,7 +49,11 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     private HomeView view;
 
-    BluetoothCrashResolver bluetoothCrashResolver ;
+    /**
+     * Metodo che inizializza l'Activity e richiede tutti i permessi necessari esplicitamente
+     * se la versione utilizzata è maggiore della 6.0
+     * @param savedInstanceState
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +62,9 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
         view = new HomeViewImp(this);
-        bluetoothCrashResolver = new BluetoothCrashResolver(this);
 
         if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M ){
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION)
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED) {
 
                 // Should we show an explanation?
@@ -82,10 +85,12 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
 
                     // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                     // app-defined int constant. The callback method gets the
-                    // result of the request.
+                    // result of the request. // TODO: 13/05/16 define callback method 
                 }
             }
         }
+
+
     }
 
     /**
@@ -282,7 +287,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     @Override
     public void onDestroy(){
         super.onDestroy();
-//        ((AbsBeaconReceiverManager)informationManager).stopService();
+        ((AbsBeaconReceiverManager)informationManager).stopService();
         informationManager = null;
 
     }
