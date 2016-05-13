@@ -1,6 +1,5 @@
 package com.leaf.clips.presenter;
 
-
 /**
  * @author Federico Tavella
  * @version 0.05
@@ -9,6 +8,7 @@ package com.leaf.clips.presenter;
  */
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -18,6 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -29,34 +30,37 @@ import com.leaf.clips.model.NoBeaconSeenException;
 import com.leaf.clips.view.HomeView;
 import com.leaf.clips.view.HomeViewImp;
 
-import org.altbeacon.bluetooth.BluetoothCrashResolver;
-
 import java.util.List;
 
 import javax.inject.Inject;
 
+/**Una HomeActivity funge da Presenter e si occupa di recuperare i dati dal Model e formattarli cosicchè siano pronti
+ * per essere mostrati all'utente attraverso una classe che implementi {@link HomeView}.
+ * @see <a href="http://tinyurl.com/pjuc3bd">AppCompatActivity</a>
+ * @see InformationListener
+ */
 public class HomeActivity extends AppCompatActivity implements InformationListener{
-    //TODO Enable Suggestion
-
     /**
-     * Riferimento utilizzato per accedere alle informazioni trattate dal model
+     * Riferimento utilizzato per accedere alle informazioni trattate dal Model
      */
     @Inject
     InformationManager informationManager;
 
     /**
-     * View associata a tale Activity
+     * View associata a questa Activity
      */
     private HomeView view;
+
+    boolean dialogChoice;
 
     /**
      * Metodo che inizializza l'Activity e richiede tutti i permessi necessari esplicitamente
      * se la versione utilizzata è maggiore della 6.0
      * @param savedInstanceState
      */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        dialogChoice = false;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
@@ -106,16 +110,24 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
         informationManager.addListener(this);
 
+        /*TODO controllo stato bt: bt acceso -> controllare accesso internet, se ok tenta recupero building map
+            else chiedo di accendere. Altrimenti chiedere accenderlo bluetooth.
+         */
+
+        //TODO registrare registrare listener e fare lo stesso
+
         try {
            informationManager.getBuildingMap();
             onDatabaseLoaded();
         } catch (NoBeaconSeenException e) {
             e.printStackTrace();
+            //TODO: cambio layout e avviso che non vedo beacon
         }
     }
 
     /**
-     * Chiude il Drawer se utente esegue tap sul tasto Back.
+     * Gestisce il tap dell'utente sul tasto Back. Implementato in modo che chiuda il Drawer se
+     * questo è aperto.
      */
     @Override
     public void onBackPressed() {
@@ -130,8 +142,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     }
 
     /**
-     * Metodo che viene invocato a seguito della richiesta di visualizzazione della modalità esplora
-     * @return  void
+     * Avvia {@link NearbyPoiActivity}.
      */
     public void showExplorer(){
         Intent intent = new Intent(this, NearbyPoiActivity.class);
@@ -139,25 +150,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     }
 
     /**
-     * Metodo che viene invocato a seguito della richiesta di visualizzazione della guida
-     * @return  void
-     */
-    public void showHelp(){
-        // TODO: 5/3/16  codify
-    }
-
-    /**
-     * Metodo che viene invocato a seguito della richiesta di visualizzazione della mappe salvate nel database locale
-     * @return  void
-     */
-    public void showLocalMaps(){
-        // TODO: 5/3/16  
-    }
-
-    /**
-     * Metodo che viene invocato a seguito della richiesta di visualizzazione di tutti i POI appartenenti ad un certa categoria
-     * @param categoryName Nome della categoria di cui visualizzare l'insieme di POI appartenente
-     * @return  void
+     * Avvia {@link PoiCategoryActivity}.
+     * @param categoryName Nome della categoria di POI alla quale si vuole accedere.
      */
     public void showPoisCategory(String categoryName){
         Intent intent = new Intent(this, PoiCategoryActivity.class);
@@ -166,25 +160,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     }
 
     /**
-     * Metodo che viene invocato a seguito della richiesta di visualizzazione delle preferenze dell'utente
-     * @return  void
-     */
-    public void showPreferences(){
-        // TODO: 5/3/16  
-    }
-
-    /**
-     * Metodo che viene invocato a seguito della richiesta di inizio della navigazione
-     * @param poiPosition Identificativo del POI verso il quale si vuole effettuare una navigazione
-     * @return  void
-     */
-    public void startNavigation(int poiPosition){
-        //TODO: 5/3/16
-    }
-
-    /**
-     * Metodo che recupera l'indirizzo dell'edificio e lo passa alla View corrispondente
-     * @return  void
+     * Recupera dal Model l'indirizzo dell'edificio rilevato e aggiorna la {@link HomeView} con tale
+     * informazione.
      */
     public void updateBuildingAddress(){
         try {
@@ -196,13 +173,13 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     }
 
     /**
-     * Metodo che recupera la descrizione dell'edificio e lo passa alla View corrispondente
-     * @return  void
+     * Recupera dal Model la descrizione dell'edificio rilevato e aggiorna la {@link HomeView} con tale
+     * informazione.
      */
     public void updateBuildingDescription(){
         try {
-            String desc = informationManager.getBuildingMap().getDescription()+"Versione Davide";
-            Log.d("DESC",desc);
+            String desc = informationManager.getBuildingMap().getDescription();
+            Log.d("DESC", desc);
             view.setBuildingDescription(desc);
         }catch(Exception e){
             e.printStackTrace();
@@ -210,8 +187,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     }
 
     /**
-     * Metodo che recupera il nome dell'indirizzo dell'edificio e lo passa alla View corrispondente
-     * @return  void
+     * Recupera dal Model il nome dell'edificio rilevato e aggiorna la {@link HomeView} con tale
+     * informazione.
      */
     public void updateBuildingName(){
         try {
@@ -223,8 +200,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     }
 
     /**
-     * Metodo che recupera l'orario di apertura dell'edificio e lo passa alla View corrispondente
-     * @return  void
+     * Recupera dal Model le ore di apertura al pubblico dell'edificio rilevato e aggiorna la
+     * {@link HomeView} con tale informazione.
      */
     public void updateBuildingOpeningHours(){
         try {
@@ -236,8 +213,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     }
 
     /**
-     * Metodo che recupera la lista di categorie di POI nell'edificio e lo passa alla View corrispondente
-     * @return  void
+     * Recupera dal Model le categorie di POI presenti nell'edificio rilevato e aggiorna la
+     * {@link HomeView} con tale informazione.
      */
     public void updatePoiCategoryList(){
         List<String> categories = (List<String>) informationManager.getAllCategories();
@@ -245,13 +222,9 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     }
 
     /**
-     * Metodo che permette di attivare la lista dei possibili POI raggiungibili a partire da una stringa
-     * @return  void
+     * Invocato una volta che il caricamento del database locale è avvenuto con successo.
+     * Si occupa di aggiornare tutti le informazioni che la {@link HomeView} si propone di mostrare.
      */
-    public void enableSuggestions(){
-        // TODO: 5/3/16  
-    }
-
     @Override
     public void onDatabaseLoaded() {
         updateBuildingAddress();
@@ -261,34 +234,107 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         updatePoiCategoryList();
     }
 
+    /**
+     * @inheritDoc
+     * @return TRUE se l'utente concede il permesso di effettuare il download della mappa dal
+     * server remoto, FALSE altrimenti.
+     */
     @Override
     public boolean onLocalMapNotFound() {
-        Log.d("HOMEACTIVITY", "LOCAL MAP NOT FOUND");
-        // TODO: chiedere all'utente il permesso di scaricare la mappa da remoto e ritornare la risposta
-        return true;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.dialog_title_map_not_found)
+                .setMessage(R.string.dialog_map_not_found)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialogChoice = true;
+                    }
+                })
+                .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialogChoice = false;
+                    }
+                });
+
+        builder.create().show();
+        return dialogChoice;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void onRemoteMapNotFound() {
         Log.d("HOMEACTIVITY", "REMOTE MAP NOT FOUND");
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void cannotRetrieveRemoteMapDetails() {
         Log.d("HOMEACTIVITY", "CAN'T RETRIEVE REMOTE DETAILS");
     }
 
+    /**
+     * @inheritDoc
+     * @return TRUE se l'utente concede il permesso di aggiornare la mappa all'ultima versione
+     * della mappa dal server remoto, FALSE altrimenti.
+     */
     @Override
     public boolean noLastMapVersion() {
-        // TODO: chiedere all'utente il permesso di aggiornare la mappa e ritornare la risposta
-        return true;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.dialog_title_not_updated_map)
+                .setMessage(R.string.dialog_not_updated_map)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialogChoice = true;
+                    }
+                })
+                .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialogChoice = false;
+                    }
+                });
+
+        builder.create().show();
+        return dialogChoice;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void onDestroy(){
         super.onDestroy();
-        ((AbsBeaconReceiverManager)informationManager).stopService();
+        //((AbsBeaconReceiverManager)informationManager).stopService();
         informationManager = null;
+    }
 
+    /**
+     * Avvia l'Activity deputata a gestire la guida utente.
+     */
+    public void showHelp(){
+        // TODO: 5/3/16
+    }
+
+    /**
+     * Avvia l'Activity deputata a gestire le mappe salvate sul dispositivo.
+     */
+    public void showLocalMaps(){
+        // TODO: 5/3/16
+    }
+
+    /**
+     * Avvia l'Activity deputata a gestire le mappe salvate sul dispositivo.
+     */
+    public void showPreferences(){
+        // TODO: 5/3/16
+    }
+
+    /**
+     * Associa una lista di suggerimenti alla ricerca della destinazione.
+     */
+    public void enableSuggestions(){
+        // TODO: 5/3/16
     }
 }

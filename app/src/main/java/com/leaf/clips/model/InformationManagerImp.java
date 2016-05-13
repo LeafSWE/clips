@@ -244,80 +244,37 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         }
     }
 
-    private void loadMap(){
-        final int major = lastBeaconsSeen.peek().getMajor();
-        Log.i("INFORMATION_MANAGER","CARICO LA MAPPA");
-        Log.i("BEACONLOADMAO", "major" + major);
-        Log.i("BEACONLOADMAO", "isPresent" + dbService.isBuildingMapPresent(major));
+    boolean proc = false;
+    private  void loadMap(){
 
-        if(dbService.isBuildingMapPresent(major)){
-            AsyncUpdateControl asyncUpdateControl = new AsyncUpdateControl();
-            asyncUpdateControl.execute(major);
-            boolean isUpdate = false;
-            try {
-                isUpdate = asyncUpdateControl.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-            if (!isUpdate){
-                boolean update = true;
-                for(Listener listener : listeners) {
-                    update = update && ((InformationListener) listener).noLastMapVersion();
-                    if (update){
-                        AsyncUpdateDownload asyncUpdateDownload = new AsyncUpdateDownload();
-                        asyncUpdateDownload.execute();
-                        try {
-                            asyncUpdateControl.get();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-            map = dbService.findBuildingByMajor(major);
-            for (Listener listener : listeners)
-                ((InformationListener) listener).onDatabaseLoaded();
-        }
-        else{
-            boolean remoteSearch = true;
-            for (Listener listener : listeners)
-                remoteSearch = remoteSearch && ((InformationListener) listener).onLocalMapNotFound();
-            if (remoteSearch) {
-                AsyncRemoteIsPresent asyncRemoteIsPresent = new AsyncRemoteIsPresent();
-                asyncRemoteIsPresent.execute(major);
-                boolean isRemotePresent = false;
+            final int major = lastBeaconsSeen.peek().getMajor();
+
+            if (dbService.isBuildingMapPresent(major)) {
+                AsyncUpdateControl asyncUpdateControl = new AsyncUpdateControl();
+                asyncUpdateControl.execute(major);
+                boolean isUpdate = false;
                 try {
-                    isRemotePresent = asyncRemoteIsPresent.get();
+                    isUpdate = asyncUpdateControl.get();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
-                if (!isRemotePresent) {
-                    for (Listener listener : listeners)
-                        ((InformationListener) listener).onRemoteMapNotFound();
-                } else {
-                    AsyncDownload asyncDownload = new AsyncDownload();
-                    asyncDownload.execute(major);
-                    try {
-                        asyncDownload.get();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
+                if (!isUpdate) {
+                    for (Listener listener : listeners) {
+                        ((InformationListener) listener).noLastMapVersion();
                     }
+                } else {
+                    map = dbService.findBuildingByMajor(major);
                     for (Listener listener : listeners)
                         ((InformationListener) listener).onDatabaseLoaded();
                 }
             } else {
                 for (Listener listener : listeners)
-                    ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
+                    ((InformationListener) listener).onLocalMapNotFound();
             }
-        }
+
+
     }
 
 
@@ -340,9 +297,10 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
             setVisibleBeacon(p);
         lastBeaconsSeen = p;
         if(map == null) {
-
-            loadMap();
-
+            if (!proc) {
+                proc = true;
+                loadMap();
+            }
             /*if (map != null)
                 */
         }
@@ -425,6 +383,61 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
                 poisWithCategory.add(poi);
         }
         return poisWithCategory;
+    }
+
+    @Override
+    public void downloadMapOfVisibleBeacons(Boolean remoteSearch) {
+        final int major = lastBeaconsSeen.peek().getMajor();
+        if (remoteSearch) {
+            AsyncRemoteIsPresent asyncRemoteIsPresent = new AsyncRemoteIsPresent();
+            asyncRemoteIsPresent.execute(major);
+            boolean isRemotePresent = false;
+            try {
+                isRemotePresent = asyncRemoteIsPresent.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            if (!isRemotePresent) {
+                for (Listener listener : listeners)
+                    ((InformationListener) listener).onRemoteMapNotFound();
+            } else {
+                AsyncDownload asyncDownload = new AsyncDownload();
+                asyncDownload.execute(major);
+                try {
+                    asyncDownload.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                for (Listener listener : listeners)
+                    ((InformationListener) listener).onDatabaseLoaded();
+            }
+        } else {
+            for (Listener listener : listeners)
+                ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
+        }
+    }
+
+    @Override
+    public void updateMapOfVisibleBeacons(Boolean update) {
+        final int major = lastBeaconsSeen.peek().getMajor();
+        if(update) {
+            AsyncUpdateDownload asyncUpdateDownload = new AsyncUpdateDownload();
+            asyncUpdateDownload.execute(major);
+            try {
+                asyncUpdateDownload.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        map = dbService.findBuildingByMajor(major);
+        for (Listener listener : listeners)
+            ((InformationListener) listener).onDatabaseLoaded();
     }
 
     private boolean isDeveloper(){
