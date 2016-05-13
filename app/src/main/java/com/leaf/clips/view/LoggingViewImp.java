@@ -63,6 +63,7 @@ public class LoggingViewImp implements LoggingView {
      */
     @Override
     public void setBeaconListAdapter(Adapter adp){
+        // TODO: 5/13/16 MOstrare i beacon rilevati 
         String[] values = new String[] { "Beacon 10001", "Beacon 10002", "Beacon 10003",
                 "Beacon 10004", "Beacon 10005", "Beacon 11001", "Beacon 11002", "Beacon 11003",
                 "Beacon 11004", "Beacon 11005", "Beacon 11006", "Beacon 12007", "Beacon 12008", "Beacon 12009",
