@@ -26,7 +26,7 @@ public class ProcessedInformationImpTest {
     private static final String FAKE_BASIC_INFORMATION = "FakeBasicInformation";
     private static final String FAKE_DETAIL_INFORMATION = "FakeDetailInformation";
     private static final String FAKE_STARTER_INFORMATION = "FakeStartInformation";
-    private static final String FAKE_DIRECTION = "FakeDirection";
+    private static final int FAKE_DIRECTION = 1;
     @Mock
     private PhotoInformation mockPhotoInformation;
 

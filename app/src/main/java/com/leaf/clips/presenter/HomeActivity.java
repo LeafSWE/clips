@@ -35,10 +35,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class HomeActivity extends AppCompatActivity implements InformationListener{
-    /**
-     *  TODO
-     Enable Suggestion
-     */
+    //TODO Enable Suggestion
 
     /**
      * Riferimento utilizzato per accedere alle informazioni trattate dal model

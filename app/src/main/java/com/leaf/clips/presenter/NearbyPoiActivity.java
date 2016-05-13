@@ -9,23 +9,28 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.leaf.clips.model.InformationManager;
+import com.leaf.clips.model.NoBeaconSeenException;
+import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.view.NearbyPoiView;
 import com.leaf.clips.view.NearbyPoiViewImp;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 public class NearbyPoiActivity extends AppCompatActivity {
 
     /**
-     * Riferimento utilizzato per accedere alle informazioni trattate dal model
+     * Riferimento utilizzato per accedere alle informazioni trattate dal model.
      */
     @Inject
     InformationManager informationManager;
 
     /**
-     * Insieme di POI rilevati nelle circostanze
+     * Insieme di POI rilevati nelle vicinanze dell'utente.
      */
-    //private Collection<PointOfInterest> pois;
+    private List<PointOfInterest> pois;
 
     /**
      * View associata a tale Activity
@@ -35,16 +40,22 @@ public class NearbyPoiActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //TODO: creare la View e spostare relativa logica
 
         super.onCreate(savedInstanceState);
         view = new NearbyPoiViewImp(this);
-
-        //ADAPTER just for debug TODO: remove on integration
-        String[] values = new String[] {"Aula 1C150", "Aula 1BC45", "Toilette donne 1CB"};
-
-        view.setAdapter(values);
-
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
+
+        try {
+            pois = (List<PointOfInterest>) informationManager.getNearbyPOIs();
+
+            ArrayList<String> nearbyPoiNames = new ArrayList<>();
+            for (PointOfInterest poi : pois) {
+                String poiName = poi.getName();
+                nearbyPoiNames.add(poiName);
+            }
+            view.setAdapter(nearbyPoiNames);
+        } catch (NoBeaconSeenException e) {
+            e.printStackTrace();
+        }
     }
 }
