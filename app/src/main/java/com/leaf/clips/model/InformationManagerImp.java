@@ -20,6 +20,8 @@ import com.leaf.clips.model.navigator.BuildingMap;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.usersetting.SettingImp;
 
+import junit.framework.Assert;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -185,7 +187,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
                 e.printStackTrace();
                 remoteError = true;
             }
-            return null;
+            return false;
         }
 
         @Override
@@ -209,7 +211,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
                 e.printStackTrace();
                 remoteError = true;
             }
-            return null;
+            return false;
         }
 
         @Override
@@ -231,16 +233,22 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
             } catch (IOException e) {
                 e.printStackTrace();
                 remoteError = true;
+            } catch (NullPointerException e){
+                Log.i("NullPointerException" , "doInbackground");
             }
-            return null;
+            return false;
         }
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
-            if(remoteError)
-                for (Listener listener : listeners)
-                    ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
+            try {
+                if (remoteError)
+                    for (Listener listener : listeners)
+                        ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
+            } catch (NullPointerException e) {
+                Log.i("NullPointerException" , "postExecute");
+            }
         }
     }
 
@@ -395,7 +403,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         if (remoteSearch) {
             AsyncRemoteIsPresent asyncRemoteIsPresent = new AsyncRemoteIsPresent();
             asyncRemoteIsPresent.execute(major);
-            boolean isRemotePresent = false;
+            boolean isRemotePresent = true;
             try {
                 isRemotePresent = asyncRemoteIsPresent.get();
             } catch (InterruptedException e) {
@@ -403,6 +411,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
+            Assert.assertNotNull(isRemotePresent);
             if (!isRemotePresent) {
                 for (Listener listener : listeners)
                     ((InformationListener) listener).onRemoteMapNotFound();
