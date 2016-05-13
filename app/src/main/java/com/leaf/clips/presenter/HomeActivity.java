@@ -8,6 +8,7 @@ package com.leaf.clips.presenter;
  */
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -17,6 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -26,8 +28,6 @@ import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NoBeaconSeenException;
 import com.leaf.clips.view.HomeView;
 import com.leaf.clips.view.HomeViewImp;
-
-import org.altbeacon.bluetooth.BluetoothCrashResolver;
 
 import java.util.List;
 
@@ -50,16 +50,16 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     private HomeView view;
 
-    BluetoothCrashResolver bluetoothCrashResolver ;
+    boolean dialogChoice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        dialogChoice = false;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
         view = new HomeViewImp(this);
-        bluetoothCrashResolver = new BluetoothCrashResolver(this);
 
         if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M ){
             if (ContextCompat.checkSelfPermission(this,
@@ -103,11 +103,18 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
         informationManager.addListener(this);
 
+        /*TODO controllo stato bt: bt acceso -> controllare accesso internet, se ok tenta recupero building map
+            else chiedo di accendere. Altrimenti chiedere accenderlo bluetooth.
+         */
+
+        //TODO registrare registrare listener e fare lo stesso
+
         try {
            informationManager.getBuildingMap();
             onDatabaseLoaded();
         } catch (NoBeaconSeenException e) {
             e.printStackTrace();
+            //TODO: cambio layout e avviso che non vedo beacon
         }
     }
 
@@ -227,9 +234,22 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     @Override
     public boolean onLocalMapNotFound() {
-        Log.d("HOMEACTIVITY", "LOCAL MAP NOT FOUND");
-        // TODO: chiedere all'utente il permesso di scaricare la mappa da remoto e ritornare la risposta
-        return true;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.dialog_title_map_not_found)
+                .setMessage(R.string.dialog_map_not_found)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialogChoice = true;
+                    }
+                })
+                .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialogChoice = false;
+                    }
+                });
+
+        builder.create().show();
+        return dialogChoice;
     }
 
     /**
@@ -255,8 +275,22 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     @Override
     public boolean noLastMapVersion() {
-        // TODO: chiedere all'utente il permesso di aggiornare la mappa e ritornare la risposta
-        return true;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.dialog_title_not_updated_map)
+                .setMessage(R.string.dialog_not_updated_map)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialogChoice = true;
+                    }
+                })
+                .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialogChoice = false;
+                    }
+                });
+
+        builder.create().show();
+        return dialogChoice;
     }
 
     /**
@@ -265,7 +299,6 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     @Override
     public void onDestroy(){
         super.onDestroy();
-        //((AbsBeaconReceiverManager)informationManager).stopService();
         informationManager = null;
     }
 
