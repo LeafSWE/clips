@@ -76,12 +76,21 @@ public class MainDeveloperActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Metodo che permette di visualizzare il contenuto di un log
+     * @param logPosition  Intero rappresentante la posizione del log selezionato all'interno della lista
+     * @return  void
+     */
     public void showDetailedLog(int logPosition){
         Intent intent = new Intent(this, LogInformationActivity.class);
         intent.putExtra("logNumber", logPosition);
         startActivity(intent);
     }
 
+    /**
+     * Metodo che avvia un nuovo log
+     * @return  void
+     */
     public void startNewLog(){
         Intent intent = new Intent(this, LoggingActivity.class);
         startActivity(intent);
