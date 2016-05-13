@@ -31,14 +31,13 @@ public class LogInformationActivity extends AppCompatActivity {
     private LogInformationView view;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.view = new LogInformationViewImp(this);
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
 
-        int logPosition = getIntent().getExtras().getInt("logPosition");
+        int logPosition = getIntent().getExtras().getInt("logNumber");
 
         // get all the files from the log directory
         String path = LoggerImp.getPath();
