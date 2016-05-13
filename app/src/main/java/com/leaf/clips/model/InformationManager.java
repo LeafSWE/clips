@@ -100,8 +100,16 @@ public interface InformationManager {
      */
     Collection<PointOfInterest> getPOIsByCategory(String category);
 
+    /**
+     * Metodo che permette di scaricare lla mappa associata ai beacon visibili
+     * @param remoteSearch boolean che indica se scaricare la mappa associata ai beacon visibili oppure no
+     */
     void downloadMapOfVisibleBeacons(Boolean remoteSearch);
 
+    /**
+     * Metodo che permette di aggiornare la mappa associata ai beacon visibili
+     * @param update boolean che indica se aggiornare la mappa associata ai beacon visibili oppure no
+     */
     void updateMapOfVisibleBeacons(Boolean update);
 }
 

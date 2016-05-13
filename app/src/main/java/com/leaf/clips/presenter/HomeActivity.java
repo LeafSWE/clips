@@ -23,7 +23,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.leaf.clips.R;
-import com.leaf.clips.model.AbsBeaconReceiverManager;
 import com.leaf.clips.model.InformationListener;
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NoBeaconSeenException;
@@ -51,8 +50,6 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     private HomeView view;
 
-    boolean dialogChoice;
-
     /**
      * Metodo che inizializza l'Activity e richiede tutti i permessi necessari esplicitamente
      * se la versione utilizzata è maggiore della 6.0
@@ -60,7 +57,6 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        dialogChoice = false;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
@@ -246,17 +242,17 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                 .setMessage(R.string.dialog_map_not_found)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dialogChoice = true;
+                        informationManager.downloadMapOfVisibleBeacons(true);
                     }
                 })
                 .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dialogChoice = false;
+                        informationManager.downloadMapOfVisibleBeacons(false);
                     }
                 });
 
         builder.create().show();
-        return dialogChoice;
+        return true;
     }
 
     /**
@@ -287,17 +283,17 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                 .setMessage(R.string.dialog_not_updated_map)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dialogChoice = true;
+                        informationManager.updateMapOfVisibleBeacons(true);
                     }
                 })
                 .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dialogChoice = false;
+                        informationManager.updateMapOfVisibleBeacons(false);
                     }
                 });
 
         builder.create().show();
-        return dialogChoice;
+        return true;
     }
 
     /**
