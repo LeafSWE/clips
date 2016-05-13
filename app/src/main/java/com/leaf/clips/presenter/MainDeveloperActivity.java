@@ -36,6 +36,12 @@ public class MainDeveloperActivity extends AppCompatActivity {
 
 
     @Override
+    public void onBackPressed() {
+        Intent intent = getParentActivityIntent();
+        startActivity(intent);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -47,15 +53,21 @@ public class MainDeveloperActivity extends AppCompatActivity {
 
         // get all the files from the log directory
         File[] fList = directory.listFiles();
-        String [] stringLogs = new String[fList.length];
-        int i = 0;
-        for (File file : fList) {
-            if (file.isFile())
-                stringLogs[i] = file.toString();
-            i++;
+
+        if (fList != null) {
+            String [] stringLogs = new String[fList.length];
+            int i = 0;
+            for (File file : fList) {
+                if (file.isFile())
+                    stringLogs[i] = file.toString();
+                i++;
+            }
+
+            mainDeveloperView.setLogsAdapter(stringLogs);
         }
 
-        mainDeveloperView.setLogsAdapter(stringLogs);
+        else
+            mainDeveloperView.setLogsAdapter(null);
 
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
 
@@ -66,7 +78,7 @@ public class MainDeveloperActivity extends AppCompatActivity {
 
     public void showDetailedLog(int logPosition){
         Intent intent = new Intent(this, LogInformationActivity.class);
-        intent.putExtra("logNUmber", logPosition);
+        intent.putExtra("logNumber", logPosition);
         startActivity(intent);
     }
 
