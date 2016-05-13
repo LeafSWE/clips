@@ -7,6 +7,7 @@ package com.leaf.clips.model.navigator;
  *
  */
 
+import com.leaf.clips.model.navigator.graph.edge.DefaultEdge;
 import com.leaf.clips.model.navigator.graph.edge.EnrichedEdge;
 import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoInformation;
 
@@ -14,6 +15,11 @@ import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoInformati
  *Classe che rappresenta le informazioni di navigazione pronte per essere restituite ad un eventuale utilizzatore
  */
 public class ProcessedInformationImp implements ProcessedInformation {
+
+    /**
+     * La distanza da percorrere in un certo Edge
+     */
+    private String distance;
 
     /**
      * Informazioni di base di un Edge
@@ -44,6 +50,11 @@ public class ProcessedInformationImp implements ProcessedInformation {
         this.detailed = edge.getDetailedInformation();
         this.photos = edge.getPhotoInformation();
         this.direction = edge.getCoordinate();
+        int dist = (int)edge.getDistance();
+        if(edge instanceof DefaultEdge)
+            this.distance = dist+" m";
+        else
+            this.distance = dist+" piano";
     }
 
     /**
@@ -58,6 +69,11 @@ public class ProcessedInformationImp implements ProcessedInformation {
         this.detailed = edge.getDetailedInformation();
         this.photos = edge.getPhotoInformation();
         this.direction = edge.getCoordinate();
+        int dist = (int)edge.getDistance();
+        if(edge instanceof DefaultEdge)
+            this.distance = dist+" m";
+        else
+            this.distance = dist+" piano";
     }
 
     /**
@@ -94,6 +110,15 @@ public class ProcessedInformationImp implements ProcessedInformation {
      */
     @Override
     public int getDirection() {return this.direction;}
+
+    /**
+     * Metodo che ritorna la distanza da percorrere nell'arco in cui ci si trova
+     * @return String
+     */
+    @Override
+    public String getDistance() {
+        return this.distance;
+    }
 
 }
 

@@ -59,7 +59,7 @@ public class SQLiteBuildingDao implements BuildingDao, CursorConverter {
                 cursor.getString(descriptionIndex),
                 cursor.getString(openingHoursIndex),
                 cursor.getString(addressIndex),
-                cursor.getInt(mapVersionIndex),
+                Integer.parseInt(cursor.getString(mapVersionIndex)),
                 cursor.getString(mapSizeIndex)
         );
     }
@@ -178,7 +178,7 @@ public class SQLiteBuildingDao implements BuildingDao, CursorConverter {
         values.put(BuildingContract.COLUMN_ADDRESS, toInsert.getAddress());
         values.put(BuildingContract.COLUMN_DESCRIPTION, toInsert.getDescription());
         values.put(BuildingContract.COLUMN_ID, toInsert.getId());
-        values.put(BuildingContract.COLUMN_MAPVERSION, toInsert.getVersion());
+        values.put(BuildingContract.COLUMN_MAPVERSION, String.valueOf(toInsert.getVersion()));
         values.put(BuildingContract.COLUMN_NAME, toInsert.getName());
         values.put(BuildingContract.COLUMN_OPENINGHOURS, toInsert.getOpeningHours());
         values.put(BuildingContract.COLUMN_UUID, toInsert.getUUID());
@@ -238,7 +238,7 @@ public class SQLiteBuildingDao implements BuildingDao, CursorConverter {
             values.put(BuildingContract.COLUMN_ADDRESS, toUpdate.getAddress());
             values.put(BuildingContract.COLUMN_DESCRIPTION, toUpdate.getDescription());
             values.put(BuildingContract.COLUMN_ID, toUpdate.getId());
-            values.put(BuildingContract.COLUMN_MAPVERSION, toUpdate.getVersion());
+            values.put(BuildingContract.COLUMN_MAPVERSION, String.valueOf(toUpdate.getVersion()));
             values.put(BuildingContract.COLUMN_NAME, toUpdate.getName());
             values.put(BuildingContract.COLUMN_OPENINGHOURS, toUpdate.getOpeningHours());
             values.put(BuildingContract.COLUMN_UUID, toUpdate.getUUID());

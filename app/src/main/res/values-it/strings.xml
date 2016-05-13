@@ -15,4 +15,14 @@
     <string name="title_activity_log_information">Dettaglio log</string>
     <string name="search_hint">Cerca nell\'edificio</string>
     <string name="title_activity_navigation">Raggiungi la tua destinazione</string>
+    <string name="dialog_title_not_updated_map">Vuoi aggiornare la mappa?</string>
+    <string name="dialog_not_updated_map">Sembra che tu non abbia la mappa aggiornata per questo
+        edificio.
+        \n\nUna mappa aggiornata è però necessaria per usare le funzionalità di navigazione di
+        questa
+        app.
+    </string>
+    <string name="cancel">Annulla</string>
+    <string name="dialog_title_map_not_found">Scaricare la mappa?</string>
+    <string name="dialog_map_not_found">Sembra che tu non abbia la mappa dell\'edificio.</string>
 </resources>

@@ -163,17 +163,9 @@ public class NavigatorImp implements Navigator {
         //Log.i("getAllInstruction", "getAllInstruction");
         if (path != null) {
             ArrayList<ProcessedInformation> result = new ArrayList<>();
-            int i = 1;
             for (EnrichedEdge edge : path) {
-                if (i<path.size()) {
-                    ProcessedInformation edgeProcessedInformation = new ProcessedInformationImp(edge,
-                            calcolaDestraSinistra(edge, path.get(i)));
-                    result.add(edgeProcessedInformation);
-                } else {
-                    ProcessedInformation edgeProcessedInformation = new ProcessedInformationImp(edge);
-                    result.add(edgeProcessedInformation);
-                }
-                i++;
+                ProcessedInformation edgeProcessedInformation = new ProcessedInformationImp(edge);
+                result.add(edgeProcessedInformation);
             }
             return result;
         } else {
@@ -299,7 +291,7 @@ public class NavigatorImp implements Navigator {
             RegionOfInterest endEdgeROI = nextEdge.getEndPoint();
             if (endEdgeROI.contains(nearBeacon)) { // OK: percorso corretto
                 //TODO: non si utilizza il metodo this.createInformation(edge)
-                return new ProcessedInformationImp(nextEdge, startInformation);
+                return new ProcessedInformationImp(nextEdge);
             } else { // ERROR: errore percorso seguito errato
                 throw new PathException();
             }

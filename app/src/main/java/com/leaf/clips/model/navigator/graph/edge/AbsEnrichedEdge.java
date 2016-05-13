@@ -9,8 +9,6 @@ package com.leaf.clips.model.navigator.graph.edge;
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
 import com.leaf.clips.model.navigator.graph.navigationinformation.NavigationInformation;
 import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoInformation;
-import com.leaf.clips.model.usersetting.InstructionPreference;
-import com.leaf.clips.model.usersetting.PathPreference;
 import com.leaf.clips.model.usersetting.Setting;
 
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -61,6 +59,11 @@ public abstract class AbsEnrichedEdge extends DefaultWeightedEdge implements Enr
     protected int userStairPreference;
 
     /**
+     * Distanza massima tra gli edge istanziati
+     */
+    protected static double maxDistance = 0;
+
+    /**
      * Costruttore della classe AbsEnrichedEdge
      * @param startROI Punto di partenza dell'arco
      * @param endROI Punto di arrivo dell'arco
@@ -78,6 +81,8 @@ public abstract class AbsEnrichedEdge extends DefaultWeightedEdge implements Enr
         this.navInfo = navInfo;
         this.userElevatorPreference = 0;
         this.userStairPreference = 0;
+        if (distance > maxDistance)
+            maxDistance = distance + 1;
     }
 
     /**
