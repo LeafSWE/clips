@@ -8,12 +8,15 @@ package com.leaf.clips.presenter;
  */
 
 import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -54,12 +57,14 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ((MyApplication)getApplication()).getInfoComponent().inject(this);
         dialogChoice = false;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
         view = new HomeViewImp(this);
+        view.setContentVisibility(false);
 
         if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M ){
             if (ContextCompat.checkSelfPermission(this,
@@ -100,21 +105,65 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     @Override
     protected void onResume() {
         super.onResume();
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+
         informationManager.addListener(this);
 
-        /*TODO controllo stato bt: bt acceso -> controllare accesso internet, se ok tenta recupero building map
-            else chiedo di accendere. Altrimenti chiedere accenderlo bluetooth.
-         */
-
-        //TODO registrare registrare listener e fare lo stesso
-
         try {
-           informationManager.getBuildingMap();
+            informationManager.getBuildingMap();
             onDatabaseLoaded();
+            view.setContentVisibility(true);
         } catch (NoBeaconSeenException e) {
             e.printStackTrace();
-            //TODO: cambio layout e avviso che non vedo beacon
+        }
+    }
+
+    /**
+     * Dispatch onStart() to all fragments.  Ensure any created loaders are now started.
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkBluetoothConnection();
+    }
+
+    public void checkBluetoothConnection(){
+        final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //Abilita Bluetooth se disabilitato
+        if (!mBluetoothAdapter.isEnabled()) {
+
+            builder.setTitle(R.string.dialog_title_bluetooth_not_enabled)
+                    .setMessage(R.string.dialog_bluetooth_not_enabled)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            mBluetoothAdapter.enable();
+                            checkLocationService();
+                        }
+                    });
+
+            builder.create().show();
+        }
+    }
+
+    public void checkLocationService(){
+        // Get Location Manager and check for GPS & Network location services
+        LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                !lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            builder.setTitle(R.string.dialog_title_position_not_enabled)
+                    .setMessage(R.string.dialog_position_not_enabled)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // Show location settings when the user acknowledges the alert dialog
+                            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            startActivity(intent);
+                        }
+                    });
+            builder.create().show();
         }
     }
 

@@ -149,4 +149,15 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public void setContentVisibility(boolean visibility) {
+        LinearLayout layout = (LinearLayout)homeActivity.findViewById(R.id.linear_layout_home);
+        if(visibility)
+            layout.setVisibility(View.VISIBLE);
+        else
+        if(!visibility)
+            layout.setVisibility(View.INVISIBLE);
+        homeActivity.recreate();
+    }
 }

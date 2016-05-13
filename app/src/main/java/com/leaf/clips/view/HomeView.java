@@ -8,4 +8,5 @@ public interface HomeView {
     void setBuildingOpeningHours(String hours);
     void setBuildingAddress(String address);
     void setPoiCategoryListAdapter(List<String> poiCategoryList);
+    void setContentVisibility(boolean visibility);
 }
