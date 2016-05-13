@@ -9,6 +9,7 @@ package com.leaf.clips.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.leaf.clips.model.beacon.Logger;
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
+import java.util.concurrent.ExecutionException;
 
 /**
  *Classe che permette l'accesso alle informazioni trattate nel package Model
@@ -147,57 +149,178 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
      * Metodo che permette di recuperare una mappa dal database in base al major dei beacon rilevati
      */
 
-    private void loadMap(){
-        Log.i("INFORMATION_MANAGER","CARICO LA MAPPA");
-        int major = lastBeaconsSeen.peek().getMajor();
-        Log.i("BEACONLOADMAO", "major" + major);
-        Log.i("BEACONLOADMAO", "isPresent" + dbService.isBuildingMapPresent(major));
-        if(dbService.isBuildingMapPresent(major)){
-            /*try {
-                if(!dbService.isBuildingMapUpdated(major)){
-                    boolean shouldUpdate = true;
-                    for(Listener listener : listeners)
-                        shouldUpdate = shouldUpdate && ((InformationListener)listener).noLastMapVersion();
-                    if (shouldUpdate)
-                        dbService.updateBuildingMap(major);
-                }*/
-            map = dbService.findBuildingByMajor(major);
+    private class AsyncUpdateControl extends AsyncTask<Integer, Void, Boolean> {
+        private Boolean isUpdated = true;
+        private Boolean remoteError = false;
 
-           /*} catch (IOException e) {
-                e.printStackTrace();
-                for(Listener listener : listeners)
-                    ((InformationListener)listener).cannotRetrieveRemoteMapDetails(); //errore connessione
-            }*/
-        }
-        else{
-            boolean mapExists = false;
+        @Override
+        protected Boolean doInBackground(Integer... params) {
             try {
-                mapExists = dbService.isRemoteMapPresent(major);
+                return dbService.isBuildingMapUpdated(params[0]);
             } catch (IOException e) {
                 e.printStackTrace();
+                remoteError = true;
             }
-            if(mapExists){
-                boolean shouldDownload = true;
-                for(Listener listener : listeners)
-                    shouldDownload = shouldDownload && ((InformationListener)listener).onLocalMapNotFound();
-                try {
-                    if(shouldDownload) {
-                        map = dbService.findRemoteBuildingByMajor(major);
-                        Log.i("INFORMATION_MANAGER","MAP LOADING FROM REMOTE DB");
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if(remoteError)
+                for (Listener listener : listeners)
+                    ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
+        }
+    }
+
+    private class AsyncUpdateDownload extends AsyncTask<Integer, Void, Boolean> {
+        private Boolean remoteError = false;
+
+        @Override
+        protected Boolean doInBackground(Integer... params) {
+            try {
+                 dbService.updateBuildingMap(params[0]);
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+                remoteError = true;
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if(remoteError)
+                for (Listener listener : listeners)
+                    ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
+        }
+    }
+
+    private class AsyncDownload extends AsyncTask<Integer, Void, Boolean> {
+        private Boolean remoteError = false;
+
+        @Override
+        protected Boolean doInBackground(Integer... params) {
+            try {
+                map = dbService.findRemoteBuildingByMajor(params[0]);
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+                remoteError = true;
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if(remoteError)
+                for (Listener listener : listeners)
+                    ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
+        }
+    }
+
+    private class AsyncRemoteIsPresent extends AsyncTask<Integer, Void, Boolean> {
+        private Boolean remoteError = false;
+
+        @Override
+        protected Boolean doInBackground(Integer... params) {
+            try {
+                return dbService.isRemoteMapPresent(params[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+                remoteError = true;
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if(remoteError)
+                for (Listener listener : listeners)
+                    ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
+        }
+    }
+
+    private void loadMap(){
+        final int major = lastBeaconsSeen.peek().getMajor();
+        Log.i("INFORMATION_MANAGER","CARICO LA MAPPA");
+        Log.i("BEACONLOADMAO", "major" + major);
+        Log.i("BEACONLOADMAO", "isPresent" + dbService.isBuildingMapPresent(major));
+
+        if(dbService.isBuildingMapPresent(major)){
+            AsyncUpdateControl asyncUpdateControl = new AsyncUpdateControl();
+            asyncUpdateControl.execute(major);
+            boolean isUpdate = false;
+            try {
+                isUpdate = asyncUpdateControl.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            if (!isUpdate){
+                boolean update = true;
+                for(Listener listener : listeners) {
+                    update = update && ((InformationListener) listener).noLastMapVersion();
+                    if (update){
+                        AsyncUpdateDownload asyncUpdateDownload = new AsyncUpdateDownload();
+                        asyncUpdateDownload.execute();
+                        try {
+                            asyncUpdateControl.get();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    for(Listener listener : listeners)
-                        ((InformationListener)listener).cannotRetrieveRemoteMapDetails(); //errore connessione
                 }
             }
-            else
-                for(Listener listener : listeners)
-                    ((InformationListener)listener).onRemoteMapNotFound();
+            map = dbService.findBuildingByMajor(major);
+            for (Listener listener : listeners)
+                ((InformationListener) listener).onDatabaseLoaded();
         }
-        //map=dbService.findBuildingByMajor(666);
-
+        else{
+            boolean remoteSearch = true;
+            for (Listener listener : listeners)
+                remoteSearch = remoteSearch && ((InformationListener) listener).onLocalMapNotFound();
+            if (remoteSearch) {
+                AsyncRemoteIsPresent asyncRemoteIsPresent = new AsyncRemoteIsPresent();
+                asyncRemoteIsPresent.execute(major);
+                boolean isRemotePresent = false;
+                try {
+                    isRemotePresent = asyncRemoteIsPresent.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                if (!isRemotePresent) {
+                    for (Listener listener : listeners)
+                        ((InformationListener) listener).onRemoteMapNotFound();
+                } else {
+                    AsyncDownload asyncDownload = new AsyncDownload();
+                    asyncDownload.execute(major);
+                    try {
+                        asyncDownload.get();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                    for (Listener listener : listeners)
+                        ((InformationListener) listener).onDatabaseLoaded();
+                }
+            } else {
+                for (Listener listener : listeners)
+                    ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
+            }
+        }
     }
+
+
 
     /**
      * Metodo che si occupa di settare il campo dati lastBeaconsSeen con la PriorityQueue<MyBeacon>
@@ -220,9 +343,8 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
 
             loadMap();
 
-            if (map != null)
-                for(Listener listener : listeners)
-                    ((InformationListener)listener).onDatabaseLoaded();
+            /*if (map != null)
+                */
         }
 
         if(shouldLog) {
@@ -237,7 +359,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
      * @param filename Nome del file da rimuovere
      */
     @Override
-    public void removeBeaconInformationFile(String filename){
+    public void removeBeaconInformationFile(String filename) {
         activeLog.remove(filename);
     }
 
