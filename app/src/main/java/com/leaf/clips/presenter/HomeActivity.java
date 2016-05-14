@@ -15,7 +15,6 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -57,8 +56,6 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     private HomeView view;
 
-    boolean dialogChoice;
-
     /**
      *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
      *i campi dati.
@@ -69,10 +66,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
-        dialogChoice = false;
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
         view = new HomeViewImp(this,fragmentManager);
 
@@ -314,17 +308,17 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                 .setMessage(R.string.dialog_map_not_found)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dialogChoice = true;
+                        informationManager.downloadMapOfVisibleBeacons(true);
                     }
                 })
                 .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dialogChoice = false;
+                        informationManager.downloadMapOfVisibleBeacons(false);
                     }
                 });
 
         builder.create().show();
-        return dialogChoice;
+        return true;
     }
 
     /**
@@ -355,17 +349,17 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                 .setMessage(R.string.dialog_not_updated_map)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dialogChoice = true;
+                        informationManager.updateMapOfVisibleBeacons(true);
                     }
                 })
                 .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dialogChoice = false;
+                        informationManager.updateMapOfVisibleBeacons(false);
                     }
                 });
 
         builder.create().show();
-        return dialogChoice;
+        return true;
     }
 
     @Override
