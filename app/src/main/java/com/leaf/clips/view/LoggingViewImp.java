@@ -59,14 +59,13 @@ public class LoggingViewImp implements LoggingView {
 
     /**
      * Metodo utilizzato per visualizzare la lista dei beacon rilevati
-     * @param adp Collegamento tra la lista dei beacon rilevati e la view in cui essi devono essere mostrati
+     * @param beacons Collegamento tra la lista dei beacon rilevati e la view in cui essi devono essere mostrati
      * @return  void
      */
 
     // TODO: 5/13/16 Tracy + Asta
     @Override
     public void setBeaconListAdapter(StringBuffer beacons){
-        // TODO: 5/13/16 Mostrare i beacon rilevati
         final ArrayList<String> list = new ArrayList<>();
         list.add(beacons.toString());
 
