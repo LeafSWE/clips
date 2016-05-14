@@ -10,6 +10,8 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NavigationListener;
 import com.leaf.clips.model.NavigationManager;
@@ -20,9 +22,11 @@ import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoRef;
 import com.leaf.clips.view.NavigationView;
 import com.leaf.clips.view.NavigationViewImp;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+
 import javax.inject.Inject;
 
 public class NavigationActivity extends AppCompatActivity implements NavigationListener {
@@ -37,6 +41,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
 
     private NavigationView view;
     private  List<ProcessedInformation> navigationInstruction;
+    private int poiId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +49,13 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         view = new NavigationViewImp(this);
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
 
-        handleIntent(getIntent());
-
+        if(savedInstanceState != null){
+            poiId = savedInstanceState.getInt("poi_id");
+            Log.d("LOADED_POI_ID", Integer.toString(poiId));
+            handleIntent(getIntent());
+        }
+        else
+            handleIntent(getIntent());
     }
 
     @Override
@@ -81,16 +91,21 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
 
             }else { //Se l'Intent è stato generato dalla PoiCategoryActivity
                 int destinationPOIid = getIntent().getIntExtra("poi_id",-1);
+                if(destinationPOIid != -1)
+                    poiId = destinationPOIid;
+                Log.d("DEST_POI_ID", Integer.toString(poiId));
 
-                boolean found = false;
-                //Trova il POI all'id scelto
-                for(ListIterator<PointOfInterest> i = poiList.listIterator(); i.hasNext() && !found;){
-                    PointOfInterest poi = i.next();
-                    if(poi.getId() == destinationPOIid){
-                        destinationPoi = poi;
-                        found = true;
+                    boolean found = false;
+                    //Trova il POI all'id scelto
+                    for(ListIterator<PointOfInterest> i = poiList.listIterator(); i.hasNext() && !found;){
+                        PointOfInterest poi = i.next();
+                        if(poi.getId() == poiId){
+                            destinationPoi = poi;
+                            found = true;
+                        }
                     }
-                }
+
+
             }
 
             navigationManager.startNavigation(destinationPoi);
@@ -149,4 +164,16 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
     public void stopNavigation(){
         //TODO
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        int poiId = getIntent().getIntExtra("poi_id",-1);
+        Log.d("SAVED_POI_ID", Integer.toString(poiId));
+        if(poiId != -1)
+            outState.putInt("poi_id",poiId);
+    }
+
+
 }

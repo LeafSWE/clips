@@ -8,12 +8,17 @@ package com.leaf.clips.presenter;
  */
 
 import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -25,10 +30,12 @@ import com.leaf.clips.R;
 import com.leaf.clips.model.InformationListener;
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NoBeaconSeenException;
+import com.leaf.clips.model.beacon.MyBeacon;
 import com.leaf.clips.view.HomeView;
 import com.leaf.clips.view.HomeViewImp;
 
 import java.util.List;
+import java.util.PriorityQueue;
 
 import javax.inject.Inject;
 
@@ -50,17 +57,22 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     private HomeView view;
 
     /**
-     * Metodo che inizializza l'Activity e richiede tutti i permessi necessari esplicitamente
-     * se la versione utilizzata è maggiore della 6.0
-     * @param savedInstanceState
+     *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
+     * i campi dati.
+     *@param savedInstanceState se l'Actvity viene re-inizializzata dopo essere stata chiusa, allora
+     *                           questo Bundle contiene i dati più recenti forniti al metodo
+     *                           <a href="http://tinyurl.com/acaw22p">onSavedInstanceState(Bundle)</a>
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+        FragmentManager fragmentManager = getSupportFragmentManager();
         super.onCreate(savedInstanceState);
-        view = new HomeViewImp(this);
+        view = new HomeViewImp(this,fragmentManager);
 
         if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M ){
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED) {
 
                 // Should we show an explanation?
@@ -81,39 +93,86 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
 
                     // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                     // app-defined int constant. The callback method gets the
-                    // result of the request. // TODO: 13/05/16 define callback method 
+                    // result of the request.
                 }
             }
         }
-
-
     }
 
     /**
-     * Dispatch onResume() to fragments.  Note that for better inter-operation with older versions
-     * of the platform, at the point of this call the fragments attached to the activity are
-     * <em>not</em> resumed.  This means that in some cases the previous state may still be saved,
-     * not allowing fragment transactions that modify the state.  To correctly interact with
-     * fragments in their proper state, you should instead override {@link #onResumeFragments()}.
+     * Recupera le informazioni dell'edificio dal database ed utilizza la View associata per
+     * mostrarle all'utente.
      */
     @Override
     protected void onResume() {
         super.onResume();
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+
         informationManager.addListener(this);
 
-        /*TODO controllo stato bt: bt acceso -> controllare accesso internet, se ok tenta recupero building map
-            else chiedo di accendere. Altrimenti chiedere accenderlo bluetooth.
-         */
-
-        //TODO registrare registrare listener e fare lo stesso
-
         try {
-           informationManager.getBuildingMap();
+            informationManager.getBuildingMap();
             onDatabaseLoaded();
         } catch (NoBeaconSeenException e) {
             e.printStackTrace();
-            //TODO: cambio layout e avviso che non vedo beacon
+        }
+    }
+
+    /**
+     * Si occupa di controllare che Bluetooth e servizi di Localizzazione siano attivati sul
+     * dispositivo.
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkBluetoothConnection();
+    }
+
+    /**
+     * Controlla che la connettività Bluetoooth sia attiva. In caso negativo domanda il permesso di
+     * attivarla.
+     */
+    public void checkBluetoothConnection(){
+        final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //Abilita Bluetooth se disabilitato
+        if (!mBluetoothAdapter.isEnabled()) {
+
+            builder.setTitle(R.string.dialog_title_bluetooth_not_enabled)
+                    .setMessage(R.string.dialog_bluetooth_not_enabled)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            mBluetoothAdapter.enable();
+                            checkLocationService();
+                        }
+                    });
+
+            builder.create().show();
+        }
+    }
+
+    /**
+     * Controlla che i servizi di Localizzazione siano attivi. In caso negativo chiede all'utente di
+     * attivarli.
+     */
+    public void checkLocationService(){
+        // Get Location Manager and check for GPS & Network location services
+        LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                !lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            builder.setTitle(R.string.dialog_title_position_not_enabled)
+                    .setMessage(R.string.dialog_position_not_enabled)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // Show location settings when the user acknowledges the alert dialog
+                            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            startActivity(intent);
+                        }
+                    });
+            builder.create().show();
         }
     }
 
@@ -219,11 +278,22 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     @Override
     public void onDatabaseLoaded() {
-        updateBuildingAddress();
-        updateBuildingName();
-        updateBuildingDescription();
-        updateBuildingOpeningHours();
-        updatePoiCategoryList();
+        //Imposta il fragment vuoto, come base del layout
+        CompleteHomeFragment completeHomeFragment = new CompleteHomeFragment();
+        List<Fragment> fragments= getSupportFragmentManager().getFragments();
+        if(fragments == null ){
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.linear_layout_home, completeHomeFragment, "COMPLETE_FRAGMENT")
+                    .addToBackStack("COMPLETE_FRAGMENT")
+                    .commitAllowingStateLoss();
+            getSupportFragmentManager().executePendingTransactions();
+
+            updateBuildingAddress();
+            updateBuildingName();
+            updateBuildingDescription();
+            updateBuildingOpeningHours();
+            updatePoiCategoryList();
+        }
     }
 
     /**
@@ -292,13 +362,15 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         return true;
     }
 
+    @Override
+    public void getAllVisibleBeacons(PriorityQueue<MyBeacon> visibleBeacons) {}
+
     /**
      * @inheritDoc
      */
     @Override
     public void onDestroy(){
         super.onDestroy();
-        //((AbsBeaconReceiverManager)informationManager).stopService();
         informationManager = null;
     }
 

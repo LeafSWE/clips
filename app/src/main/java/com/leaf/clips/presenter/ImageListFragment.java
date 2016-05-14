@@ -20,22 +20,37 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Una sottoclasse di {@link Fragment} che gestisce e mostra le thumbnail delle immagini relative
+ * ad una certa istruzione.
  */
 public class ImageListFragment extends Fragment implements AdapterView.OnItemClickListener{
-    //TODO everything
+    /**
+     * Riferimento all'Adapter utilizzato per mostrare le thumbnail.
+     * {@link com.leaf.clips.presenter.ImageListFragment.ImageAdapter} è una classe interna
+     * ad ImageListFragment.
+     */
     private ImageAdapter imgAdapter;
+    /**
+     * Riferimento alla lista di URI delle immagini associate all'istruzione scelta.
+     */
     private ArrayList<String> photoUris;
 
+    /**
+     * Costruttore di default. Richiesto dalla documentazione di {@link Fragment}.
+     */
     public ImageListFragment() {}
 
+    /**
+     * Usato per creare
+     * @param urls
+     * @return
+     */
     public static ImageListFragment newInstance(ArrayList<String> urls) {
         final ImageListFragment f = new ImageListFragment();
         final Bundle args = new Bundle();
         args.putStringArrayList("urls", urls);
         f.setArguments(args);
         return f;
-
     }
 
     @Override

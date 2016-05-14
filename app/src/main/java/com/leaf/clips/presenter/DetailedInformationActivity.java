@@ -20,19 +20,44 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+/**
+ * Una DetailedInformationActivity si occupa di gestire le informazioni dettagliate relative ad una
+ * certa istruzione di navigazione.
+ * @see AppCompatActivity
+ */
 public class DetailedInformationActivity extends AppCompatActivity {
     /**
-     * Riferimento utilizzato per accedere alle informazioni trattate dal model
+     * Riferimento utilizzato per accedere alle informazioni trattate dal Model.
      */
     @Inject
     InformationManager informationManager;
+    /**
+     * Riferimento utilizzato per accedere alle istruzioni di navigazione trattate dal Model.
+     */
     @Inject
     NavigationManager navigationManager;
 
+    /**
+     * Riferimento alla relativa View.
+     */
     private DetailedInformationView view;
+    /**
+     * Riferimento alle istruzioni di navigazione arricchite con informazioni di contesto.
+     */
     private ProcessedInformation processedInfo;
+    /**
+     * Riferimento al {@link ImageListFragment} contentente lo slideshow delle immagini relative al
+     * prossimo ROI da raggiungere.
+     */
     private ImageListFragment imgListFragment;
 
+    /**
+     * Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare i
+     * campi dati.
+     * @param savedInstanceState se l'Actvity viene re-inizializzata dopo essere stata chiusa, allora
+     *                           questo Bundle contiene i dati più recenti forniti al metodo
+     *                           <a href="http://tinyurl.com/acaw22p">onSavedInstanceState(Bundle)</a>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +72,17 @@ public class DetailedInformationActivity extends AppCompatActivity {
         updateDetailedDescription();
     }
 
+    /**
+     * Aggiorna la sezione della UI contente le immagini del prossimo ROI da raggiungere.
+     */
     public void updatePhoto(){
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,imgListFragment).commit();
     }
 
+    /**
+     * Aggiorna la sezione della UI contente i passi dettagliati da compiere per raggiungere il
+     * prossimo ROI.
+     */
     public void updateDetailedDescription(){
         String detailedInfo = getIntent().getStringExtra("detailed_info");
         view.setDetailedDescription(detailedInfo);

@@ -6,6 +6,10 @@ package com.leaf.clips.model;
  * @since 0.01
  */
 
+import com.leaf.clips.model.beacon.MyBeacon;
+
+import java.util.PriorityQueue;
+
 /**
  * Interfaccia che deve essere implementata da chi vuole usufruire delle informazioni contenute
  * nel model
@@ -41,4 +45,13 @@ public interface InformationListener extends Listener {
      * versione della mappa nel databaase remoto(l'ultima versione disponibile)
      */
     boolean noLastMapVersion();
+
+
+    // TODO: 5/13/16 Aggiungere javaDoc
+
+    /**
+     * Metodo invocato ogni volta che vengono rilevati beacon
+     * @param visibleBeacons lista di beacon rilevati
+     */
+    void getAllVisibleBeacons(PriorityQueue<MyBeacon> visibleBeacons);
 }

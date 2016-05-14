@@ -304,6 +304,9 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         if(!p.containsAll(lastBeaconsSeen) || lastBeaconsSeen.containsAll(p))
             setVisibleBeacon(p);
         lastBeaconsSeen = p;
+        for(Listener listener : listeners) {
+            ((InformationListener)listener).getAllVisibleBeacons(lastBeaconsSeen);
+        }
         if(map == null) {
             if (!proc) {
                 proc = true;
@@ -336,6 +339,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     @Override
     public void saveRecordedBeaconInformation(String filename){
         activeLog.save(filename);
+        shouldLog = false;
     }
 
     /**

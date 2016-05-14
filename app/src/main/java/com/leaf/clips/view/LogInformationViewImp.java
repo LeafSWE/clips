@@ -44,6 +44,7 @@ public class LogInformationViewImp implements LogInformationView {
         presenter.setContentView(R.layout.activity_log_information);
         Toolbar toolbar = (Toolbar) presenter.findViewById(R.id.toolbar);
         presenter.setSupportActionBar(toolbar);
+        this.txtLog = (TextView) presenter.findViewById(R.id.logInformationTextView);
 
         //Setto il btnDelete + Listener
         this.btnDeleteLog = (FloatingActionButton) presenter.findViewById(R.id.fab_delete_log);
@@ -53,6 +54,7 @@ public class LogInformationViewImp implements LogInformationView {
                 showAlertDialog();
             }
         });
+
 
         presenter.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -64,7 +66,7 @@ public class LogInformationViewImp implements LogInformationView {
      */
     @Override
     public void setBeaconAdapter(String logInfo){
-        // TODO: 5/6/16 Codify
+        txtLog.setText(logInfo);
     }
 
     private void showAlertDialog () {

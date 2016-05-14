@@ -37,6 +37,7 @@ import java.net.URI;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  *
@@ -420,6 +421,11 @@ public class NavigationManagerImpTest {
         @Override
         public boolean noLastMapVersion() {
             return false;
+        }
+
+        @Override
+        public void getAllVisibleBeacons(PriorityQueue<MyBeacon> visibleBeacons) {
+
         }
     }
 

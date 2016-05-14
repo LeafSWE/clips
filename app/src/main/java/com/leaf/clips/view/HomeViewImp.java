@@ -6,26 +6,19 @@ package com.leaf.clips.view;
  * @since 0.00
  */
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.TextView;
 
 import com.leaf.clips.R;
+import com.leaf.clips.presenter.CompleteHomeFragment;
 import com.leaf.clips.presenter.HomeActivity;
 import com.leaf.clips.presenter.MainDeveloperPresenter;
 
@@ -33,25 +26,27 @@ import java.util.List;
 
 public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSelectedListener {
     HomeActivity homeActivity;
+    FragmentManager fragmentManager;
     int layoutId;
     Toolbar toolbar;
     DrawerLayout drawer;
     NavigationView navigationView;
-    SearchView searchView;
+    /*SearchView searchView;
     TextView buildingAddress;
     TextView buildingName;
     TextView buildingDescription;
     TextView buildingOpeningHours;
-    ListView poiCategories;
+    ListView poiCategories;*/
     FloatingActionButton exploreButton;
     ActionBarDrawerToggle toggle;
 
-    public HomeViewImp(final HomeActivity homeActivity) {
+    public HomeViewImp(final HomeActivity homeActivity, FragmentManager fragmentManager) {
+        this.fragmentManager = fragmentManager;
         this.homeActivity = homeActivity;
         homeActivity.setContentView(R.layout.activity_home);
 
         //Setup della funzinalità di Search
-        searchView = (SearchView)homeActivity.findViewById(R.id.searchview_poi);
+        /*searchView = (SearchView)homeActivity.findViewById(R.id.searchview_poi);
         SearchManager searchManager = (SearchManager) homeActivity.getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(homeActivity.getComponentName()));
 
@@ -69,7 +64,7 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
 
                 homeActivity.showPoisCategory(categoryName);
             }
-        });
+        });*/
 
         toolbar = (Toolbar) homeActivity.findViewById(R.id.toolbar_home);
         homeActivity.setSupportActionBar(toolbar);
@@ -99,36 +94,32 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
 
     @Override
     public void setBuildingName(String name) {
-        buildingName.setText(name);
+        CompleteHomeFragment homeFragment = (CompleteHomeFragment)fragmentManager.findFragmentByTag("COMPLETE_FRAGMENT");
+        homeFragment.setBuildingName(name);
     }
 
     @Override
     public void setBuildingDescription(String description) {
-        buildingDescription.setText(description);
+        CompleteHomeFragment homeFragment = (CompleteHomeFragment)fragmentManager.findFragmentByTag("COMPLETE_FRAGMENT");
+        homeFragment.setBuildingDescription(description);
     }
 
     @Override
     public void setBuildingOpeningHours(String hours) {
-        buildingOpeningHours.setText(hours);
+        CompleteHomeFragment homeFragment = (CompleteHomeFragment)fragmentManager.findFragmentByTag("COMPLETE_FRAGMENT");
+        homeFragment.setBuildingOpeningHours(hours);
     }
 
     @Override
     public void setBuildingAddress(String address) {
-        buildingAddress.setText(address);
+        CompleteHomeFragment homeFragment = (CompleteHomeFragment)fragmentManager.findFragmentByTag("COMPLETE_FRAGMENT");
+        homeFragment.setBuildingAddress(address);
     }
 
     @Override
     public void setPoiCategoryListAdapter(List<String> list) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(homeActivity,android.R.layout.simple_list_item_1,list);
-
-        LinearLayout categoryLayout = (LinearLayout)homeActivity.findViewById(R.id.category_search);
-
-        //Imposta l'altezza della ListView in modo da mostrarne tutti gli item, evitando scroll interno.
-        ViewGroup.LayoutParams params = categoryLayout.getLayoutParams();
-        //height = altezza_titolo + numero_item * altezza_item
-        params.height = 100 + list.size()*100;
-
-        poiCategories.setAdapter(adapter);
+        CompleteHomeFragment homeFragment = (CompleteHomeFragment)fragmentManager.findFragmentByTag("COMPLETE_FRAGMENT");
+        homeFragment.setPoiCategoryListAdapter(list);
     }
 
     /**

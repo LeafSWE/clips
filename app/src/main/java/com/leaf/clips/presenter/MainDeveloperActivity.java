@@ -11,10 +11,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.leaf.clips.model.InformationManager;
+import com.leaf.clips.model.beacon.LoggerImp;
 import com.leaf.clips.view.MainDeveloperView;
 import com.leaf.clips.view.MainDeveloperViewImp;
 
 import junit.framework.Assert;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
@@ -31,17 +34,33 @@ public class MainDeveloperActivity extends AppCompatActivity {
    @Inject
     InformationManager infoManager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         this.mainDeveloperView = new MainDeveloperViewImp(this);
 
-        // TODO: 10/05/2016 Recuperare logs
-        //Setto i log nell'app
-        String [] stringLogs = new String [] {"230514", "230516", "230514", "230516", "230514", "230516"};
-        mainDeveloperView.setLogsAdapter(stringLogs);
+        String path = LoggerImp.getPath();
+
+        File directory = new File(path);
+
+        // get all the files from the log directory
+        File[] fList = directory.listFiles();
+
+        if (fList != null) {
+            String [] stringLogs = new String[fList.length];
+            int i = 0;
+            for (File file : fList) {
+                if (file.isFile())
+                    stringLogs[i] = file.toString();
+                i++;
+            }
+
+            mainDeveloperView.setLogsAdapter(stringLogs);
+        }
+
+        else
+            mainDeveloperView.setLogsAdapter(null);
 
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
 
@@ -49,15 +68,32 @@ public class MainDeveloperActivity extends AppCompatActivity {
         Assert.assertNotNull(infoManager);
     }
 
-
+    /**
+     * Metodo che permette di visualizzare il contenuto di un log
+     * @param logPosition  Intero rappresentante la posizione del log selezionato all'interno della lista
+     * @return  void
+     */
     public void showDetailedLog(int logPosition){
-        // TODO: 5/6/16 Passare la posizione del log nell'intent
         Intent intent = new Intent(this, LogInformationActivity.class);
+        intent.putExtra("logNumber", logPosition);
         startActivity(intent);
     }
 
+    /**
+     * Metodo che avvia un nuovo log
+     * @return  void
+     */
     public void startNewLog(){
         Intent intent = new Intent(this, LoggingActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Metodo utilizzato per modificare il comportamento di default del tasto back
+     */
+    @Override
+    public void onBackPressed() {
+        Intent intent = getParentActivityIntent();
         startActivity(intent);
     }
 
