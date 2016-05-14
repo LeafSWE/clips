@@ -34,6 +34,8 @@ public class DetailedInformationViewImp implements DetailedInformationView {
     public void setDetailedDescription(String detailedInstr) {
         TextView detailedDesc = (TextView)presenter.findViewById(R.id.detailed_description);
         //TODO: Inserire detailedInstr come HTML formatted già in DB
-        detailedDesc.setText(Html.fromHtml(detailedInstr));
+        if (detailedDesc != null) {
+            detailedDesc.setText(Html.fromHtml(detailedInstr));
+        }
     }
 }
