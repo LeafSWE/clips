@@ -15,14 +15,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Una sottoclasse di {@link Fragment} che gestisce e mostra un immagine tra quelle relative ad
+ * una certa istruzione di navigazione.
  */
 public class ImageDetailFragment extends Fragment {
 
+    /**
+     * Numero dell'immagine, tra quelle associate ad una particolare istruzione di navigazione,
+     * da mostrare.
+     */
     private int mImageNum;
+    /**
+     * Riferimento al widget usato per mostrare l'immagine.
+     */
     private ImageView mImageView;
+    /**
+     * Riferimento alla lista di URI delle immagini associate all'istruzione scelta.
+     */
     private List<String> photoUris;
 
+    /**
+     * Usato per costruire un Fragment attraverso il passaggio di parametri. Best practice consigliata
+     * dalla documentazione Android.
+     * @param photoUris URI delle immagini associate all'istruzione scelta.
+     * @param imageNum Numero dell'immagine, tra quelle associate ad una particolare istruzione di
+     *                 navigazione, da mostrare.
+     * @return istanza di ImageListFragment i cui campi dati sono stati inizializzati usando il
+     * parametro passato.
+     */
     public static ImageDetailFragment newInstance(ArrayList<String> photoUris,int imageNum) {
         final ImageDetailFragment f = new ImageDetailFragment();
         final Bundle args = new Bundle();
@@ -32,9 +52,15 @@ public class ImageDetailFragment extends Fragment {
         return f;
     }
 
-    // Empty constructor, required as per Fragment docs
+
     public ImageDetailFragment() {}
 
+    /**
+     * @inheritDoc
+     * @param savedInstanceState se l'Actvity viene re-inizializzata dopo essere stata chiusa, allora
+     *                           questo Bundle contiene i dati più recenti forniti al metodo
+     *                           <a href="http://tinyurl.com/acaw22p">onSavedInstanceState(Bundle)</a>
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +68,9 @@ public class ImageDetailFragment extends Fragment {
         photoUris = getArguments().getStringArrayList("image_uris");
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,6 +80,9 @@ public class ImageDetailFragment extends Fragment {
         return v;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
