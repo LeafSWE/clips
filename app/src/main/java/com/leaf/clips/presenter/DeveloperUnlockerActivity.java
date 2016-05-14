@@ -16,6 +16,11 @@ import com.leaf.clips.view.DeveloperUnlockerViewImp;
 
 import javax.inject.Inject;
 
+/**
+ *  classe che estende AppCompactActivity che consente di gestire
+ *  l'interazione tra DeveloperUnlockerView ed il model
+ */
+
 public class DeveloperUnlockerActivity extends AppCompatActivity {
 
     DeveloperUnlockerView developerUnlockerView;
