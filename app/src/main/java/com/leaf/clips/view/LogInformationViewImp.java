@@ -69,6 +69,9 @@ public class LogInformationViewImp implements LogInformationView {
         txtLog.setText(logInfo);
     }
 
+    /**
+     * Metodo utilizzato per mostrare un dialog di conferma per poter cancellare un log
+     */
     private void showAlertDialog () {
 
         AlertDialog.Builder builder1 = new AlertDialog.Builder(presenter);

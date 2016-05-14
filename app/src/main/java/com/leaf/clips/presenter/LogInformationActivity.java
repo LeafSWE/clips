@@ -32,6 +32,13 @@ public class LogInformationActivity extends AppCompatActivity {
     private LogInformationView view;
 
 
+    /**
+     *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
+     *i campi dati.
+     *@param savedInstanceState se l'Actvity viene re-inizializzata dopo essere stata chiusa, allora
+     *                           questo Bundle contiene i dati più recenti forniti al metodo
+     *                           <a href="http://tinyurl.com/acaw22p">onSavedInstanceState(Bundle)</a>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

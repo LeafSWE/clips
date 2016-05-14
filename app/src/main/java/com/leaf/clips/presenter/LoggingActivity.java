@@ -32,6 +32,13 @@ public class LoggingActivity extends AppCompatActivity implements InformationLis
     @Inject
     InformationManager informationManager;
 
+    /**
+     *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
+     *i campi dati.
+     *@param savedInstanceState se l'Actvity viene re-inizializzata dopo essere stata chiusa, allora
+     *                           questo Bundle contiene i dati più recenti forniti al metodo
+     *                           <a href="http://tinyurl.com/acaw22p">onSavedInstanceState(Bundle)</a>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +85,10 @@ public class LoggingActivity extends AppCompatActivity implements InformationLis
         return false;
     }
 
+    /**
+     * @inheritDoc
+     * @param visibleBeacons lista di beacon rilevati
+     */
     @Override
     public void getAllVisibleBeacons(PriorityQueue<MyBeacon> visibleBeacons) {
         StringBuffer beacons = new StringBuffer();
@@ -90,6 +101,9 @@ public class LoggingActivity extends AppCompatActivity implements InformationLis
         view.setBeaconListAdapter(beacons);
     }
 
+    /**
+     * Redefinizione del comportamento di default del tasto upBack per fermare la registrazione di un log
+     */
     @Override
     public void onBackPressed() {
         Long tsLong = System.currentTimeMillis()/1000;
@@ -101,6 +115,10 @@ public class LoggingActivity extends AppCompatActivity implements InformationLis
     }
 
 
+    /**
+     * Redefinizione del comportamento di default del tasto upBack per fermare la registrazione di un log
+     * @param item elemento del menu selezionato
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
