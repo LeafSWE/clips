@@ -76,6 +76,7 @@ public class LoggerImp implements Logger {
     public void add(PriorityQueue<MyBeacon> beacons){
         for(MyBeacon beacon : beacons){
             data.append(beacon.toString());
+            data.append("\n\n\n");
         }
     }
 
