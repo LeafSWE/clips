@@ -90,7 +90,7 @@ public class LoggingActivity extends AppCompatActivity implements InformationLis
 
         for(MyBeacon beacon : visibleBeacons){
             beacons.append(beacon.toString());
-            beacons.append("\n******---<3 Manu <3********\n");
+            beacons.append("\n\n\n");
         }
         Log.e("BeaconSeen:", beacons.toString());
         view.setBeaconListAdapter(beacons);
