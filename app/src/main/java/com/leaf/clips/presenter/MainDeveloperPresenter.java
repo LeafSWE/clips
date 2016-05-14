@@ -16,9 +16,16 @@ import javax.inject.Inject;
 
 public class MainDeveloperPresenter extends AppCompatActivity {
 
+    /**
+     * Riferimento alle preferenze utente
+     */
     @Inject
     Setting userSetting;
 
+    /**
+     * Metodo che viene invocato alla creazione dell'oggetto
+     * @param savedInstanceState satto dell'oggetto memorizzato
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

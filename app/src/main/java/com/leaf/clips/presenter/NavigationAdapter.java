@@ -97,7 +97,8 @@ public class NavigationAdapter extends BaseAdapter {
     /**
      * Metodo di utilità che associa la freccia corretta (Drawable) alla istruzione, in modo che ne
      * indichi visivamente la direzione da seguire.
-     * @param direction indicatore della direzione.
+     * @param direction indicatore della direzione
+     * @param image view da aggiornare
      */
     private void setDirectionArrow(int direction, ImageView image){
         int directionArrowId = -1;
