@@ -41,7 +41,7 @@ public class SQLiteBuildingDaoTest extends InstrumentationTestCase {
                         BuildingContract.COLUMN_ADDRESS + " TEXT, "+
                         BuildingContract.COLUMN_UUID + " TEXT, "+
                         BuildingContract.COLUMN_DESCRIPTION + " TEXT, "+
-                        BuildingContract.COLUMN_MAPVERSION + " INTEGER, "+
+                        BuildingContract.COLUMN_MAPVERSION + " TEXT, "+
                         BuildingContract.COLUMN_MAJOR + " INTEGER, "+
                         BuildingContract.COLUMN_OPENINGHOURS + " TEXT,"+
                         BuildingContract.COLUMN_MAPSIZE + " TEXT"+

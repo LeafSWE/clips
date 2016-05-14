@@ -10,8 +10,8 @@ import android.widget.Adapter;
 public interface LoggingView {
     /**
      * Metodo utilizzato per visualizzare la lista dei beacon rilevati
-     * @param adp Collegamento tra la lista dei beacon rilevati e la view in cui essi devono essere mostrati
+     * @param beacons Collegamento tra la lista dei beacon rilevati e la view in cui essi devono essere mostrati
      * @return  void
      */
-    void setBeaconListAdapter(Adapter adp);
+    void setBeaconListAdapter(StringBuffer beacons);
 }

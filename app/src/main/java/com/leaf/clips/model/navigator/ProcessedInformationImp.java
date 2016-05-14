@@ -119,5 +119,6 @@ public class ProcessedInformationImp implements ProcessedInformation {
     public String getDistance() {
         return this.distance;
     }
+
 }
 

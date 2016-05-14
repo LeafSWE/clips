@@ -11,6 +11,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
 
+import com.leaf.clips.model.beacon.MyBeacon;
 import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 import com.leaf.clips.model.dataaccess.service.DatabaseService;
 import com.leaf.clips.model.navigator.BuildingMap;
@@ -24,6 +25,7 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 
 /**
  * Unit test 172
@@ -175,6 +177,11 @@ public class InformationManagerImpTest {
         @Override
         public boolean noLastMapVersion() {
             return false;
+        }
+
+        @Override
+        public void getAllVisibleBeacons(PriorityQueue<MyBeacon> visibleBeacons) {
+
         }
     }
 }

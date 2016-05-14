@@ -96,10 +96,12 @@ public class MainDeveloperViewImp implements MainDeveloperView {
      */
     @Override
     public void setLogsAdapter(String [] stringLogs){
-
         final ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < stringLogs.length; ++i) {
-            list.add(stringLogs[i]);
+
+        if(stringLogs != null){
+            for (int i = 0; i < stringLogs.length; ++i) {
+                list.add(stringLogs[i]);
+            }
         }
 
         final ArrayAdapter adapter = new ArrayAdapter(presenter, android.R.layout.simple_list_item_1, list);
