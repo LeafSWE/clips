@@ -29,6 +29,10 @@ import java.util.ListIterator;
 
 import javax.inject.Inject;
 
+/**
+ * Una NavigationActivity si occupa di recuperare e gestire le istruzioni di navigazione utili perchè
+ * l'utente possa raggiungere la destinazione scelta.
+ */
 public class NavigationActivity extends AppCompatActivity implements NavigationListener {
 
     /**
@@ -36,13 +40,31 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      */
     @Inject
     InformationManager informationManager;
+    /**
+     * Riferimento utilizzato per accedere alle istruzioni di navigazione.
+     */
     @Inject
     NavigationManager navigationManager;
-
+    /**
+     * Riferimento alla relativa VIew.
+     */
     private NavigationView view;
+    /**
+     * Riferimento alla lista di istruzioni di navigazione.
+     */
     private  List<ProcessedInformation> navigationInstruction;
+    /**
+     * Id del POI che l'utente ha indicato come destinazione.
+     */
     private int poiId;
 
+    /**
+     *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
+     * i campi dati.
+     *@param savedInstanceState se l'Actvity viene re-inizializzata dopo essere stata chiusa, allora
+     *                           questo Bundle contiene i dati più recenti forniti al metodo
+     *                           <a href="http://tinyurl.com/acaw22p">onSavedInstanceState(Bundle)</a>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +80,10 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
             handleIntent(getIntent());
     }
 
+    /**
+     * @inheritDoc
+     * @param intent {@link Intent} con il quale è stata avviata al corrente Activity.
+     */
     @Override
     protected void onNewIntent(Intent intent) {
         handleIntent(intent);
@@ -72,7 +98,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         PointOfInterest destinationPoi = null;
         List<PointOfInterest> poiList = null;
         try {
-            //TODO: Introdurre suggerimenti nella SearchBox, altrimenti l'app si spacca se query non corretta
+            //TODO: Introdurre suggerimenti nella SearchBox
             poiList = (List<PointOfInterest>)informationManager.getBuildingMap().getAllPOIs();
 
             //Se l'Intent è stato generato dalla SearchBox
@@ -104,8 +130,6 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                             found = true;
                         }
                     }
-
-
             }
 
             navigationManager.startNavigation(destinationPoi);
@@ -165,6 +189,10 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         //TODO
     }
 
+    /**
+     * Salva lo stato corrente dell'Activity, in modo da poterlo ripristinare in caso di
+     * interruzione coatta della stessa.
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -174,6 +202,4 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         if(poiId != -1)
             outState.putInt("poi_id",poiId);
     }
-
-
 }

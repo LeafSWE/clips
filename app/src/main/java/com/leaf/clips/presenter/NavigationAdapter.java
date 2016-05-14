@@ -16,11 +16,22 @@ import java.util.List;
 
 /**
  * @author Andrea Tombolato
- * @version 0.03
+ * @version 0.25
  * @since 0.00
  */
+
+/**
+ * Si occupa del binding tra le informazioni di navigazione fornite dal Model e la View deputata
+ * a mostrarle.
+ */
 public class NavigationAdapter extends BaseAdapter {
+    /**
+     * Contesto dell'applicazione.
+     */
     private Context context;
+    /**
+     * Lista delle istruzioni di navigazione utili per raggiungere un determinato POI.
+     */
     private List<ProcessedInformation> navigationInformation;
 
     public NavigationAdapter(Context context, List<ProcessedInformation> navigationInformation) {
@@ -28,21 +39,39 @@ public class NavigationAdapter extends BaseAdapter {
         this.navigationInformation = navigationInformation;
     }
 
+    /**
+     * Restituisce il numero di istruzioni di navigazione contenute nella lista.
+     */
     @Override
     public int getCount() {
         return navigationInformation.size();
     }
 
+    /**
+     * Restituisce l'istruzione di navigazione che, nella lista, si trova nella posizione fornita
+     * come parametro.
+     * @param position
+     * @return
+     */
     @Override
     public Object getItem(int position) {
         return navigationInformation.get(position);
     }
 
+    /**
+     * Restituisce l'id dell'istruzione di navigazione che, nella lista, si trova nella posizione
+     * fornita come parametro.
+     * @param position
+     * @return
+     */
     @Override
     public long getItemId(int position) {
         return getItem(position).hashCode();
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
