@@ -16,13 +16,28 @@ import com.leaf.clips.view.DeveloperUnlockerViewImp;
 
 import javax.inject.Inject;
 
+/**
+ *  classe che estende AppCompactActivity che consente di gestire
+ *  l'interazione tra DeveloperUnlockerView ed il model
+ */
+
 public class DeveloperUnlockerActivity extends AppCompatActivity {
 
+    /**
+     * View associata a tale Activity
+     */
     DeveloperUnlockerView developerUnlockerView;
 
+    /**
+     * Impostazioni dell'utente
+     */
     @Inject
     Setting userSetting;
 
+    /**
+     * Metodo che inizializza la View associata e recupera un riferimento alle impostazioni dell'utente
+     * @param savedInstanceState Componente per salvare lo stato dell'applicazione
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
