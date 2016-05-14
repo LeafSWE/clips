@@ -41,9 +41,11 @@ public class ImageListFragment extends Fragment implements AdapterView.OnItemCli
     public ImageListFragment() {}
 
     /**
-     * Usato per creare
-     * @param urls
-     * @return
+     * Usato per costruire un Fragment attraverso il passaggio di parametri. Best practice consigliata
+     * dalla documentazione Android.
+     * @param urls URI delle immagini associate all'istruzione scelta.
+     * @return istanza di ImageListFragment i cui campi dati sono stati inizializzati usando il
+     * parametro passato.
      */
     public static ImageListFragment newInstance(ArrayList<String> urls) {
         final ImageListFragment f = new ImageListFragment();
@@ -53,15 +55,23 @@ public class ImageListFragment extends Fragment implements AdapterView.OnItemCli
         return f;
     }
 
+    /**
+     * @inheritDoc
+     * @param savedInstanceState se l'Actvity viene re-inizializzata dopo essere stata chiusa, allora
+     *                           questo Bundle contiene i dati più recenti forniti al metodo
+     *                           <a href="http://tinyurl.com/acaw22p">onSavedInstanceState(Bundle)</a>
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         imgAdapter = new ImageAdapter(getActivity());
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //TODO
         photoUris = getArguments().getStringArrayList("urls");
         final View v = inflater.inflate(R.layout.fragment_image_list, container, false);
         final GridView mGridView = (GridView) v.findViewById(R.id.gridView_images);
@@ -70,8 +80,15 @@ public class ImageListFragment extends Fragment implements AdapterView.OnItemCli
         return v;
     }
 
-    // Avvia l'Activity deputata a mostrare l'immagine nel dettaglio, passando la posizione (nella
-    // lista) dell'immagine selezionata.
+
+    /**
+     * Gestisce i tap dell'utente sulle thumbnail della lista, mostrando (a schermo intero)
+     * l'immagine relativa alla thumbnail scelta.
+     * @param parent View contenitore della lista di thumbnail.
+     * @param view View relativa alla lista di thumnail.
+     * @param position posizione nella lista della thumbnail scelta.
+     * @param id ID della thumbnail scelta.
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         final Intent i = new Intent(getActivity(), ImageDetailActivity.class);
@@ -80,7 +97,14 @@ public class ImageListFragment extends Fragment implements AdapterView.OnItemCli
         startActivity(i);
     }
 
+    /**
+     * Adapter custom che gestisce il binding tra la lista di URI e le relative thumbnail da
+     * mostrare.
+     */
     private class ImageAdapter extends BaseAdapter {
+        /**
+         * Contesto dell'applicazione.
+         */
         private final Context mContext;
 
         public ImageAdapter(Context context) {
@@ -88,21 +112,37 @@ public class ImageListFragment extends Fragment implements AdapterView.OnItemCli
             mContext = context;
         }
 
+        /**
+         * @return numero di item contenuti nella lista di thumbnail.
+         */
         @Override
         public int getCount() {
             return photoUris.size();
         }
 
+        /**
+         * @param position poisizione di una thumbnail.
+         * @return URI relativa alla thumbnail che si trova nella posizione passata come
+         * parametro.
+         */
         @Override
         public Object getItem(int position) {
             return photoUris.get(position);
         }
 
+        /**
+         * @param position poisizione di una thumbnail.
+         * @return ID dell'URI relativa alla thumbnail che si trova nella posizione passata come
+         * parametro.
+         */
         @Override
         public long getItemId(int position) {
             return position;
         }
 
+        /**
+         * @inheritDoc
+         */
         @Override
         public View getView(int position, View convertView, ViewGroup container) {
             ImageView imageView;

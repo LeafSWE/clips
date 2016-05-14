@@ -1,7 +1,7 @@
 package com.leaf.clips.presenter;
 /**
  * @author Andrea Tombolato
- * @version 0.01
+ * @version 0.06
  * @since 0.00
  */
 
@@ -19,6 +19,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+/**
+ * Questa Activity si occupa di gestire i POI rilevati nelle vicinanze dell'utente.
+ */
 public class NearbyPoiActivity extends AppCompatActivity {
 
     /**
@@ -37,7 +40,13 @@ public class NearbyPoiActivity extends AppCompatActivity {
      */
     private NearbyPoiView view;
 
-
+    /**
+     *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
+     *i campi dati.
+     *@param savedInstanceState se l'Actvity viene re-inizializzata dopo essere stata chiusa, allora
+     *                           questo Bundle contiene i dati più recenti forniti al metodo
+     *                           <a href="http://tinyurl.com/acaw22p">onSavedInstanceState(Bundle)</a>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 

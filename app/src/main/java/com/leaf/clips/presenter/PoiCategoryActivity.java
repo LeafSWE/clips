@@ -1,8 +1,8 @@
 package com.leaf.clips.presenter;
 
 /**
- * @author Marco Zanella
- * @version 0.02
+ * @author Andrea Tombolato
+ * @version 0.05
  * @since 0.01
  */
 
@@ -20,8 +20,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+/**
+ * PoiCategoryActivity si occupa di gestire le categorie di POI presenti nell'edificio, in modo che
+ * l'utente possa effettuare la ricerca della destinazione per categoria.
+ */
 public class PoiCategoryActivity extends AppCompatActivity {
-
     /**
      * Riferimento utilizzato per accedere alle informazioni trattate dal model
      */
@@ -38,6 +41,13 @@ public class PoiCategoryActivity extends AppCompatActivity {
      */
     private PoiCategoryView view;
 
+    /**
+     *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
+     *i campi dati.
+     *@param savedInstanceState se l'Actvity viene re-inizializzata dopo essere stata chiusa, allora
+     *                           questo Bundle contiene i dati più recenti forniti al metodo
+     *                           <a href="http://tinyurl.com/acaw22p">onSavedInstanceState(Bundle)</a>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
