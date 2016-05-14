@@ -8,8 +8,10 @@ package com.leaf.clips.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.leaf.clips.model.InformationListener;
 import com.leaf.clips.model.InformationManager;
@@ -22,9 +24,6 @@ import java.util.PriorityQueue;
 import javax.inject.Inject;
 
 public class LoggingActivity extends AppCompatActivity implements InformationListener  {
-
-    // TODO: 11/05/2016 Modificare comportamento Tasto indietro, deve fermare il log o mandare un avviso 
-    
     /**
      * View associata a tale Activity 
      */
@@ -32,7 +31,6 @@ public class LoggingActivity extends AppCompatActivity implements InformationLis
 
     @Inject
     InformationManager informationManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +40,11 @@ public class LoggingActivity extends AppCompatActivity implements InformationLis
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
 
         informationManager.startRecordingBeacons();
-        view.setBeaconListAdapter(new StringBuffer("ciao"));
+        view.setBeaconListAdapter(new StringBuffer("Waiting for nearby beacons..."));
 
         informationManager.addListener(this);
     }
+
 
     /**
      * Metodo che viene utilizzato per interrompere l'attività di log
@@ -57,12 +56,11 @@ public class LoggingActivity extends AppCompatActivity implements InformationLis
         informationManager.saveRecordedBeaconInformation(ts);
         Intent intent = new Intent(this, MainDeveloperActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
-    public void onDatabaseLoaded() {
-
-    }
+    public void onDatabaseLoaded() {}
 
     @Override
     public boolean onLocalMapNotFound() {
@@ -70,14 +68,10 @@ public class LoggingActivity extends AppCompatActivity implements InformationLis
     }
 
     @Override
-    public void onRemoteMapNotFound() {
-
-    }
+    public void onRemoteMapNotFound() {}
 
     @Override
-    public void cannotRetrieveRemoteMapDetails() {
-
-    }
+    public void cannotRetrieveRemoteMapDetails() {}
 
     @Override
     public boolean noLastMapVersion() {
@@ -94,5 +88,32 @@ public class LoggingActivity extends AppCompatActivity implements InformationLis
         }
         Log.e("BeaconSeen:", beacons.toString());
         view.setBeaconListAdapter(beacons);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Long tsLong = System.currentTimeMillis()/1000;
+        String ts = tsLong.toString();
+        informationManager.saveRecordedBeaconInformation(ts);
+        Intent intent = getParentActivityIntent();
+        startActivity(intent);
+        finish();
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                Long tsLong = System.currentTimeMillis()/1000;
+                String ts = tsLong.toString();
+                informationManager.saveRecordedBeaconInformation(ts);
+                Intent intent = getParentActivityIntent();
+                startActivity(intent);
+                finish();
+                return true;
+        }
+        return true;
     }
 }
