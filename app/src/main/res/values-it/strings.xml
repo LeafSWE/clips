@@ -25,4 +25,13 @@
     <string name="cancel">Annulla</string>
     <string name="dialog_title_map_not_found">Scaricare la mappa?</string>
     <string name="dialog_map_not_found">Sembra che tu non abbia la mappa dell\'edificio.</string>
+    <string name="dialog_title_bluetooth_not_enabled">Attivare il Bluetooth?</string>
+    <string name="dialog_bluetooth_not_enabled">Necessario per accedere alle funzionalità di
+        navigazione di questa app.
+    </string>
+    <string name="dialog_title_position_not_enabled">Attiva la Geolocalizzazione</string>
+    <string name="dialog_position_not_enabled">Necessaria per il corretto funzionamento delle
+        funzionalità di navigazione.
+    </string>
+    <string name="dialog_title_no_beacon_seen">Nessun edificio conosciuto nelle vicinanze.</string>
 </resources>
