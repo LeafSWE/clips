@@ -15,8 +15,19 @@ import java.util.ArrayList;
  * @version 0.01
  * @since 0.00
  */
+
+/**
+ * ImageDetailViewImp si occupa di gestire direttamente i widget della UI deputati a mostrare
+ * lo slideshow delle immagini relative ad una certa istruzione di navigazione.
+ */
 public class ImageDetailViewImp implements ImageDetailView{
+    /**
+     * Riferimento al relativo Presenter.
+     */
     ImageDetailActivity presenter;
+    /**
+     * Riferimento al widget responsabile dello slideshow.
+     */
     private ViewPager pager;
 
     public ImageDetailViewImp(ImageDetailActivity presenter) {
@@ -26,6 +37,10 @@ public class ImageDetailViewImp implements ImageDetailView{
         pager = (ViewPager)presenter.findViewById(R.id.view_pager_photo);
     }
 
+    /**
+     * @inheritDoc
+     * @param listLength numero delle immagini da mostrare.
+     */
     @Override
     public void setAdapter(int listLength) {
         ImagePagerAdapter adapter =
@@ -37,8 +52,17 @@ public class ImageDetailViewImp implements ImageDetailView{
         pager.setCurrentItem(startItem);
     }
 
+    /**
+     * ImagePagerAdapter si occupa di gestire lo slideshow.
+     */
     public static class ImagePagerAdapter extends FragmentStatePagerAdapter {
+        /**
+         * Numero di immagini da mostrare.
+         */
         private final int mSize;
+        /**
+         * Riferimento al Presenter.
+         */
         private ImageDetailActivity presenter;
 
         public ImagePagerAdapter(ImageDetailActivity presenter, int size) {
@@ -47,11 +71,18 @@ public class ImageDetailViewImp implements ImageDetailView{
             mSize = size;
         }
 
+        /**
+         * Restituisce il numero di immagini inserite nello slideshow.
+         */
         @Override
         public int getCount() {
             return mSize;
         }
 
+        /**
+         * Restituisce l'immagine che, nella lista che compone lo slideshow, si trova nella
+         * posizione passata come parametro.
+         */
         @Override
         public Fragment getItem(int position) {
             return ImageDetailFragment.newInstance((ArrayList)presenter.getListPhotos(), position);

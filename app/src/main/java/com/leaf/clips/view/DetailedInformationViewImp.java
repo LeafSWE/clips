@@ -1,5 +1,11 @@
 package com.leaf.clips.view;
 
+/**
+ * @author Andrea Tombolato
+ * @version 0.01
+ * @since 0.00
+ */
+
 import android.text.Html;
 import android.widget.TextView;
 
@@ -8,11 +14,14 @@ import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoInformati
 import com.leaf.clips.presenter.DetailedInformationActivity;
 
 /**
- * @author Andrea Tombolato
- * @version 0.01
- * @since 0.00
+ * DetailedInformationViewImp si occupa di gestire direttamente i widget della UI deputati a mostrare
+ * le informazioni dettagliate rispetto ad una certa istruzione di navigazione. Tali informazioni
+ * comprendono le immagini del prossimo ROI da raggiungere ed i passi dettagliati da seguire.
  */
 public class DetailedInformationViewImp implements DetailedInformationView {
+    /**
+     * Riferimento al relativo Presenter.
+     */
     DetailedInformationActivity presenter;
 
     public DetailedInformationViewImp(DetailedInformationActivity presenter) {
@@ -20,9 +29,12 @@ public class DetailedInformationViewImp implements DetailedInformationView {
         presenter.setContentView(R.layout.activity_detailed_information);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void setPhoto(PhotoInformation photo) {
-
+        //TODO:
     }
 
     /**
@@ -33,7 +45,6 @@ public class DetailedInformationViewImp implements DetailedInformationView {
     @Override
     public void setDetailedDescription(String detailedInstr) {
         TextView detailedDesc = (TextView)presenter.findViewById(R.id.detailed_description);
-        //TODO: Inserire detailedInstr come HTML formatted già in DB
         if (detailedDesc != null) {
             detailedDesc.setText(Html.fromHtml(detailedInstr));
         }

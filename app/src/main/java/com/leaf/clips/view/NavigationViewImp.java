@@ -16,8 +16,19 @@ import java.util.List;
  * @version 0.04
  * @since 0.00
  */
+
+/**
+ * INavigationViewImp si occupa di gestire direttamente i widget della UI deputati a mostrare
+ * la lista di istruzioni di navigazione utili per raggiungere una certa destinazione.
+ */
 public class NavigationViewImp implements NavigationView {
+    /**
+     * Riferimento al relativo Presenter.
+     */
     private NavigationActivity presenter;
+    /**
+     * Riferimento al widget responsabile di mostrare la lista di istruzioni.
+     */
     private NavigationAdapter instructionAdapter;
 
     public NavigationViewImp(final NavigationActivity presenter) {
@@ -33,6 +44,10 @@ public class NavigationViewImp implements NavigationView {
         });
     }
 
+    /**
+     * @inheritDoc
+     * @param navigationInformation lista delle istruzioni di navigazione.
+     */
     @Override
     public void setInstructionAdapter(List<ProcessedInformation> navigationInformation) {
         instructionAdapter = new NavigationAdapter(presenter, navigationInformation);
@@ -43,6 +58,9 @@ public class NavigationViewImp implements NavigationView {
 
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void refreshInstructions() {
         //TODO
