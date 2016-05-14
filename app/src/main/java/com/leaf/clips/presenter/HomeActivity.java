@@ -369,7 +369,9 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     }
 
     @Override
-    public void getAllVisibleBeacons(PriorityQueue<MyBeacon> visibleBeacons) {}
+    public void getAllVisibleBeacons(PriorityQueue<MyBeacon> visibleBeacons) {
+
+    }
 
     /**
      * @inheritDoc
