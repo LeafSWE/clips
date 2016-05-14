@@ -34,13 +34,6 @@ public class MainDeveloperActivity extends AppCompatActivity {
    @Inject
     InformationManager infoManager;
 
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = getParentActivityIntent();
-        startActivity(intent);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +68,6 @@ public class MainDeveloperActivity extends AppCompatActivity {
         Assert.assertNotNull(infoManager);
     }
 
-
     /**
      * Metodo che permette di visualizzare il contenuto di un log
      * @param logPosition  Intero rappresentante la posizione del log selezionato all'interno della lista
@@ -93,6 +85,15 @@ public class MainDeveloperActivity extends AppCompatActivity {
      */
     public void startNewLog(){
         Intent intent = new Intent(this, LoggingActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Metodo utilizzato per modificare il comportamento di default del tasto back
+     */
+    @Override
+    public void onBackPressed() {
+        Intent intent = getParentActivityIntent();
         startActivity(intent);
     }
 
