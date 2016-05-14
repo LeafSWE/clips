@@ -1,5 +1,6 @@
 package com.leaf.clips.presenter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -82,7 +83,27 @@ public class LogInformationActivity extends AppCompatActivity {
      * @return  void
      */
     public void deleteLog(String name){
-        // TODO: 5/6/16 Codifiy
+        int logPosition = getIntent().getExtras().getInt("logNumber");
+
+        // get all the files from the log directory
+        String path = LoggerImp.getPath();
+        File directory = new File(path);
+
+        File[] fList = directory.listFiles();
+        String stringLogName = new String();
+        int i = 0;
+        for (File file : fList) {
+            if (file.isFile() && i == logPosition)
+                stringLogName = file.getName().toString();
+            i++;
+        }
+
+        infoManager.removeBeaconInformationFile(stringLogName);
+
+        Intent intent = new Intent(this, MainDeveloperActivity.class);
+        startActivity(intent);
+        finish();
+
     }
 
 }
