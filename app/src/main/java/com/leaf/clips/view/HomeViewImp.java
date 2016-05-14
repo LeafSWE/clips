@@ -2,7 +2,7 @@ package com.leaf.clips.view;
 
 /**
  * @author Andrea Tombolato
- * @version 0.01
+ * @version 0.27
  * @since 0.00
  */
 
@@ -24,19 +24,32 @@ import com.leaf.clips.presenter.MainDeveloperPresenter;
 
 import java.util.List;
 
+/**
+ * HomeViewImp si occupa di gestire direttamente i widget della UI deputati a mostrare
+ * le informazioni dell'edficio. Ci si avvale di {@link android.support.v4.app.Fragment} per popolare
+ * dinamicamente la UI se e solo se il dispositivo rileva un edificio conosciuto.
+ */
 public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSelectedListener {
+    /**
+     * Riferimento al relativo Presenter.
+     */
     HomeActivity homeActivity;
+    /**
+     * Riferimento al gestore dei Fragment.
+     */
     FragmentManager fragmentManager;
-    int layoutId;
+    /**
+     * Riferimento alla toolbar.
+     */
     Toolbar toolbar;
     DrawerLayout drawer;
+    /**
+     * Riferimento al menù a comparsa laterale.
+     */
     NavigationView navigationView;
-    /*SearchView searchView;
-    TextView buildingAddress;
-    TextView buildingName;
-    TextView buildingDescription;
-    TextView buildingOpeningHours;
-    ListView poiCategories;*/
+    /**
+     * Riferimento al bottone che avvia l'esplorazione.
+     */
     FloatingActionButton exploreButton;
     ActionBarDrawerToggle toggle;
 
@@ -44,27 +57,6 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
         this.fragmentManager = fragmentManager;
         this.homeActivity = homeActivity;
         homeActivity.setContentView(R.layout.activity_home);
-
-        //Setup della funzinalità di Search
-        /*searchView = (SearchView)homeActivity.findViewById(R.id.searchview_poi);
-        SearchManager searchManager = (SearchManager) homeActivity.getSystemService(Context.SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(homeActivity.getComponentName()));
-
-        buildingAddress = (TextView)homeActivity.findViewById(R.id.view_address);
-        buildingName = (TextView)homeActivity.findViewById(R.id.view_building_name);
-        buildingDescription = (TextView)homeActivity.findViewById(R.id.view_building_description);
-        buildingOpeningHours = (TextView)homeActivity.findViewById(R.id.view_building_opening_hours);
-        poiCategories = (ListView)homeActivity.findViewById(R.id.view_poi_category_list);
-
-        //Imposta il Listener sugli item della lista di categorie
-        poiCategories.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String categoryName = (String)parent.getAdapter().getItem(position);
-
-                homeActivity.showPoisCategory(categoryName);
-            }
-        });*/
 
         toolbar = (Toolbar) homeActivity.findViewById(R.id.toolbar_home);
         homeActivity.setSupportActionBar(toolbar);
@@ -83,39 +75,50 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
 
         drawer = (DrawerLayout) homeActivity.findViewById(R.id.drawer_layout_home);
 
-        toggle = new ActionBarDrawerToggle(homeActivity, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
         navigationView = (NavigationView) homeActivity.findViewById(R.id.nav_view_home);
         if(navigationView != null)
             navigationView.setNavigationItemSelectedListener(this);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void setBuildingName(String name) {
         CompleteHomeFragment homeFragment = (CompleteHomeFragment)fragmentManager.findFragmentByTag("COMPLETE_FRAGMENT");
         homeFragment.setBuildingName(name);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void setBuildingDescription(String description) {
         CompleteHomeFragment homeFragment = (CompleteHomeFragment)fragmentManager.findFragmentByTag("COMPLETE_FRAGMENT");
         homeFragment.setBuildingDescription(description);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void setBuildingOpeningHours(String hours) {
         CompleteHomeFragment homeFragment = (CompleteHomeFragment)fragmentManager.findFragmentByTag("COMPLETE_FRAGMENT");
         homeFragment.setBuildingOpeningHours(hours);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void setBuildingAddress(String address) {
         CompleteHomeFragment homeFragment = (CompleteHomeFragment)fragmentManager.findFragmentByTag("COMPLETE_FRAGMENT");
         homeFragment.setBuildingAddress(address);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void setPoiCategoryListAdapter(List<String> list) {
         CompleteHomeFragment homeFragment = (CompleteHomeFragment)fragmentManager.findFragmentByTag("COMPLETE_FRAGMENT");

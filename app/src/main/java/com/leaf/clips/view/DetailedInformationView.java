@@ -7,6 +7,11 @@ import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoInformati
  * @version 0.01
  * @since 0.00
  */
+
+/**
+ * DetailedInformationView espone i metodi utili a gestire i widget della UI deputata a mostrare
+ * le informazioni dettagliate e relative ad una data istruzione di navigazione.
+ */
 public interface DetailedInformationView {
     void setPhoto(PhotoInformation photo);
 
