@@ -64,7 +64,6 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
         view = new HomeViewImp(this);
-        view.setContentVisibility(false);
 
         if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M ){
             if (ContextCompat.checkSelfPermission(this,
@@ -111,7 +110,6 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         try {
             informationManager.getBuildingMap();
             onDatabaseLoaded();
-            view.setContentVisibility(true);
         } catch (NoBeaconSeenException e) {
             e.printStackTrace();
         }

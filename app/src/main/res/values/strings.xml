@@ -24,13 +24,16 @@
     </string>
     <string name="dialog_title_bluetooth_not_enabled">Enable Bluetooth?</string>
     <string name="dialog_bluetooth_not_enabled">Bluetooth connectivity is needed to use the
-        navigation functionality of this app.</string>
+        navigation functionality of this app.
+    </string>
     <string name="dialog_title_position_not_enabled">Enable geolocalization?</string>
     <string name="dialog_position_not_enabled">Geolocalization is needed to use the
-        navigation functionality of this app.</string>
+        navigation functionality of this app.
+    </string>
     <string name="dialog_title_connection_not_enabled">Enable Wi-Fi?</string>
     <string name="dialog_connection_not_enabled">Wi-Fi is needed to use the
-        navigation functionality of this app.</string>
+        navigation functionality of this app.
+    </string>
     <string name="dialog_title_no_beacon_seen">No beacon seen</string>
     <string name="ok" translatable="false">@android:string/ok</string>
     <string name="cancel">@android:string/cancel</string>
@@ -38,5 +41,8 @@
     <string name="title_activity_log_information">Log Details</string>
     <string name="search_hint">Search inside the building</string>
     <string name="title_activity_navigation">Instructions</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
