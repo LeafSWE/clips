@@ -38,7 +38,9 @@ public class NavigationViewImp implements NavigationView {
         instructionAdapter = new NavigationAdapter(presenter, navigationInformation);
         instructionAdapter.notifyDataSetChanged();
         ListView listView = (ListView) presenter.findViewById(R.id.view_instruction_list);
+
         listView.setAdapter(instructionAdapter);
+
     }
 
     @Override

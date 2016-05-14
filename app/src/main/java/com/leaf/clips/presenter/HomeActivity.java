@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -57,16 +59,22 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
 
     boolean dialogChoice;
 
+    /**
+     *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
+     * i campi dati.
+     *@param savedInstanceState se l'Actvity viene re-inizializzata dopo essere stata chiusa, allora
+     *                           questo Bundle contiene i dati più recenti forniti al metodo
+     *                           <a href="http://tinyurl.com/acaw22p">onSavedInstanceState(Bundle)</a>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
         dialogChoice = false;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
+        FragmentManager fragmentManager = getSupportFragmentManager();
         StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
-        view = new HomeViewImp(this);
-        view.setContentVisibility(false);
+        view = new HomeViewImp(this,fragmentManager);
 
         if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M ){
             if (ContextCompat.checkSelfPermission(this,
@@ -98,11 +106,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     }
 
     /**
-     * Dispatch onResume() to fragments.  Note that for better inter-operation with older versions
-     * of the platform, at the point of this call the fragments attached to the activity are
-     * <em>not</em> resumed.  This means that in some cases the previous state may still be saved,
-     * not allowing fragment transactions that modify the state.  To correctly interact with
-     * fragments in their proper state, you should instead override {@link #onResumeFragments()}.
+     * Recupera le informazioni dell'edificio dal database ed utilizza la View associata per
+     * mostrarle all'utente.
      */
     @Override
     protected void onResume() {
@@ -113,14 +118,14 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         try {
             informationManager.getBuildingMap();
             onDatabaseLoaded();
-            view.setContentVisibility(true);
         } catch (NoBeaconSeenException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Dispatch onStart() to all fragments.  Ensure any created loaders are now started.
+     * Si occupa di controllare che Bluetooth e servizi di Localizzazione siano attivati sul
+     * dispositivo.
      */
     @Override
     protected void onStart() {
@@ -128,6 +133,10 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         checkBluetoothConnection();
     }
 
+    /**
+     * Controlla che la connettività Bluetoooth sia attiva. In caso negativo domanda il permesso di
+     * attivarla.
+     */
     public void checkBluetoothConnection(){
         final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -148,6 +157,10 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         }
     }
 
+    /**
+     * Controlla che i servizi di Localizzazione siano attivi. In caso negativo chiede all'utente di
+     * attivarli.
+     */
     public void checkLocationService(){
         // Get Location Manager and check for GPS & Network location services
         LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -271,11 +284,22 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     @Override
     public void onDatabaseLoaded() {
-        updateBuildingAddress();
-        updateBuildingName();
-        updateBuildingDescription();
-        updateBuildingOpeningHours();
-        updatePoiCategoryList();
+        //Imposta il fragment vuoto, come base del layout
+        CompleteHomeFragment completeHomeFragment = new CompleteHomeFragment();
+        List<Fragment> fragments= getSupportFragmentManager().getFragments();
+        if(fragments == null ){
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.linear_layout_home, completeHomeFragment, "COMPLETE_FRAGMENT")
+                    .addToBackStack("COMPLETE_FRAGMENT")
+                    .commitAllowingStateLoss();
+            getSupportFragmentManager().executePendingTransactions();
+
+            updateBuildingAddress();
+            updateBuildingName();
+            updateBuildingDescription();
+            updateBuildingOpeningHours();
+            updatePoiCategoryList();
+        }
     }
 
     /**
