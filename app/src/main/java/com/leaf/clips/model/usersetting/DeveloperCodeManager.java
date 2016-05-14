@@ -9,6 +9,10 @@ package com.leaf.clips.model.usersetting;
 
 import android.content.SharedPreferences;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * Classe che per la verifica dei codici sviluppatore
  */
@@ -34,9 +38,24 @@ public class DeveloperCodeManager {
      * @param code Questo parametro richiede il codice per attivare la modalità sviluppatore
      * @return  boolean
      */
-    public boolean isValid(String code){
-        //dumb implementation
-        return code == sharedPreferences.getString(DEVELOPER_CODE, "");// TODO: 01/05/2016  decidere la stringa
+    public boolean isValid(String code)  {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash =  md.digest(code.getBytes(StandardCharsets.UTF_8));
+            StringBuilder result = new StringBuilder();
+            for (byte byt : hash)
+                result.append(Integer.toString((byt & 0xff) + 0x100, 16).substring(1));
+            String hashedcode = result.toString();
+            if (hashedcode.equals("6a2387e9baac5778ab72dda120a3f2d7fe6c7611aaebc0571d1cb6e4b41f8a51")){
+                sharedPreferences.edit().putString(DEVELOPER_CODE, hashedcode).apply();
+                return true;
+            }else{
+                return false;
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }
