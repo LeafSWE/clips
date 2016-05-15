@@ -22,15 +22,21 @@ import java.util.List;
  * la lista di istruzioni di navigazione utili per raggiungere una certa destinazione.
  */
 public class NavigationViewImp implements NavigationView {
+
     /**
      * Riferimento al relativo Presenter.
      */
     private NavigationActivity presenter;
+
     /**
      * Riferimento al widget responsabile di mostrare la lista di istruzioni.
      */
     private NavigationAdapter instructionAdapter;
 
+    /**
+     * Costruttore della classe NavigationViewImp
+     * @param presenter Presenter che ha il compito di controllare l'oggetto
+     */
     public NavigationViewImp(final NavigationActivity presenter) {
         this.presenter = presenter;
         presenter.setContentView(R.layout.activity_navigation);

@@ -12,7 +12,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,29 +29,42 @@ import java.util.List;
  * dinamicamente la UI se e solo se il dispositivo rileva un edificio conosciuto.
  */
 public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSelectedListener {
+
     /**
      * Riferimento al relativo Presenter.
      */
-    HomeActivity homeActivity;
+    private HomeActivity homeActivity;
+
     /**
      * Riferimento al gestore dei Fragment.
      */
-    FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;
+
     /**
      * Riferimento alla toolbar.
      */
-    Toolbar toolbar;
-    DrawerLayout drawer;
+    private Toolbar toolbar;
+
+    /**
+     * Rifermineto al layout
+     */
+    private DrawerLayout drawer;
+
     /**
      * Riferimento al menù a comparsa laterale.
      */
-    NavigationView navigationView;
+    private NavigationView navigationView;
+
     /**
      * Riferimento al bottone che avvia l'esplorazione.
      */
-    FloatingActionButton exploreButton;
-    ActionBarDrawerToggle toggle;
+    private FloatingActionButton exploreButton;
 
+    /**
+     * Costruttore della classe HomeViewImp
+     * @param homeActivity Presenter che si occupa della gestione di tale view
+     * @param fragmentManager Manager dei fragment
+     */
     public HomeViewImp(final HomeActivity homeActivity, FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
         this.homeActivity = homeActivity;

@@ -14,11 +14,35 @@ import com.leaf.clips.presenter.DeveloperUnlockerActivity;
  * @version 0.01
  * @since 0.00
  */
+
+/**
+ * Classe che si occupa di mostrare i campi utili all'inserimento del codice sviluppatore.
+ * Mantiene i riferimenti agli elementi di layout che compongono la UI dell'inserimento. Tramite
+ * questi riferimenti è possibile invocare i metodi propri dei vari elementi di layout. Ogni
+ * bottone presente deve essere legato ad un oggetto anonimo di tipo View.OnClickListener, in modo
+ * da poter reagire alla pressione su di esso
+ */
 public class DeveloperUnlockerViewImp implements DeveloperUnlockerView {
+
+    /**
+     * Presenter della View
+     */
     private DeveloperUnlockerActivity developerUnlockerActivity;
+
+    /**
+     * EditText in cui è possibile inserire il codice sviluppatore
+     */
     private EditText developerCode;
+
+    /**
+     * Bottone per confermare l'inserimento del codice sviluppatore
+     */
     private Button btnInsertCode;
 
+    /**
+     * Costruttore della classe DeveloperUnlockerViewImp
+     * @param developerUnlockerActivity Presenter che ha il compito di controllare l'oggetto
+     */
     public DeveloperUnlockerViewImp(final DeveloperUnlockerActivity developerUnlockerActivity) {
         developerUnlockerActivity.setContentView(R.layout.activity_developer_unlocker);
         this.developerUnlockerActivity = developerUnlockerActivity;
@@ -37,6 +61,9 @@ public class DeveloperUnlockerViewImp implements DeveloperUnlockerView {
 
     }
 
+    /**
+     * Metodo utilizzato per visualizzare un errore relativo all'errato inserimento del codice sviluppatore
+     */
     @Override
     public void showWrongCode() {
         // Uso AlertDialog.Builder per una costruzione più sempre di AlertDialog
