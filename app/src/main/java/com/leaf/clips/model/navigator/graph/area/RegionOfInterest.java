@@ -61,7 +61,6 @@ public interface RegionOfInterest {
     /**
      * Metodo utilizzato per settare l'insieme di PointOfInterest associato a tale RegionOfInterest
      * @param pois Insieme di PointOfInterest appartenenti alla RegionOfInterest
-     * @return  void
      */
     void setNearbyPOIs(Collection<PointOfInterest> pois);
 

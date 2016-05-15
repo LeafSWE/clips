@@ -46,9 +46,6 @@ public interface InformationListener extends Listener {
      */
     boolean noLastMapVersion();
 
-
-    // TODO: 5/13/16 Aggiungere javaDoc
-
     /**
      * Metodo invocato ogni volta che vengono rilevati beacon
      * @param visibleBeacons lista di beacon rilevati

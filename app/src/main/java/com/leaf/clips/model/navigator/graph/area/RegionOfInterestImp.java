@@ -117,7 +117,6 @@ public class RegionOfInterestImp extends VertexImp implements RegionOfInterest {
 
     /**
      * Metodo utilizzato per settare l'insieme di PointOfInterest associato a tale RegionOfInterestImp
-     * @return  void
      */
     @Override
     public void setNearbyPOIs(Collection<PointOfInterest> pois) {

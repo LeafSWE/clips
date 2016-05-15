@@ -19,7 +19,9 @@ import java.util.List;
  * @author Davide Castello
  * @version 0.01
  * @since 0.00
- *
+ */
+
+/**
  * Classe che rappresenta il layer Service tra gli oggetti RegionOfInterest e
  * gli oggetti DAO corrispettivi
  */

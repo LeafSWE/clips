@@ -25,6 +25,11 @@ public class DeveloperCodeManager {
      */
     private SharedPreferences sharedPreferences;
 
+    /**
+     * Costruttore della classe DeveloperCodeManager
+     * @param sharedPreferences SharedPreference dell'applicazione a cui accedere per verificare
+     *                          se un utente è sviluppatore
+     */
     public DeveloperCodeManager(SharedPreferences sharedPreferences){
         this.sharedPreferences = sharedPreferences;
     }

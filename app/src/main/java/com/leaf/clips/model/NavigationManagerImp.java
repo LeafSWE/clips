@@ -237,6 +237,10 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
 
     }
 
+    /**
+     * Metodo che permette di accedere al grafo che rappresenta l'edificio
+     * @return MapGraph
+     */
     @Override
     public MapGraph getGraph(){
         return graph;

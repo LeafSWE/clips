@@ -43,17 +43,6 @@ public class MapsDbHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Metodo che ritorna una istanza di MapsDbHelper
-     * @return  MapsDbHelper
-     */
-    /*public static MapsDbHelper getInstance(Context context){
-        if (instance == null){
-            instance = new MapsDbHelper(context);
-        }
-        return instance;
-    }*/
-
-    /**
      * Metodo che ritorna l'URL del database remoto
      * @return  String
      */

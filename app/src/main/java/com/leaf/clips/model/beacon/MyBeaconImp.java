@@ -19,6 +19,9 @@ import org.altbeacon.beacon.Beacon;
  */
 public class MyBeaconImp extends Beacon implements MyBeacon, Comparable {
 
+    /**
+     * Creatore dei beacon
+     */
     public static final Parcelable.Creator<MyBeacon> CREATOR = new Parcelable.Creator<MyBeacon>() {
         public MyBeacon createFromParcel(Parcel in) {
             return new MyBeaconImp(in);
@@ -29,14 +32,25 @@ public class MyBeaconImp extends Beacon implements MyBeacon, Comparable {
         }
     };
 
+    /**
+     * Costruttore della classe MyBeaconImp
+     * @param in
+     */
     private MyBeaconImp(Parcel in) {
         super(in);
     }
 
+    /**
+     * Impostato l'oggetto che si occupa di calcolare le distanze
+     */
     {
         Beacon.setDistanceCalculator(new MyDistanceCalculator());
     }
 
+    /**
+     * Costruttore della classe MyBeaconImp
+     * @param beacon Beacon rilevato
+     */
     public MyBeaconImp(Beacon beacon){
         super(beacon);
         recalculateDistance();
@@ -50,11 +64,17 @@ public class MyBeaconImp extends Beacon implements MyBeacon, Comparable {
         calculateDistance(this.getTxPower(), this.getRssi());
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public int describeContents() {
         return 0;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public void writeToParcel(Parcel out, int flags) {
         super.writeToParcel(out, flags);
@@ -160,6 +180,9 @@ public class MyBeaconImp extends Beacon implements MyBeacon, Comparable {
         return super.getBeaconTypeCode();
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public int compareTo(Object another) {
         if(this.getTxPower()==((MyBeacon)another).getTxPower())

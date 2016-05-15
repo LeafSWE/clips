@@ -84,7 +84,6 @@ public class Compass implements SensorEventListener {
      * Metodo che viene chiamato nel caso in cui l'accuratezza dei sensori è cambiata. Attualmente non viene utilizzato dall'applicativo
      * @param sensor Riferimento al sensore che ha scatenato l'evento
      * @param accuracy Nuova accuratezza impostata al sensore
-     * @return  void
      */
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -94,7 +93,6 @@ public class Compass implements SensorEventListener {
     /**
      * Metodo invocato ad ogni evento generato dai sensori attivi di Compass. Fornisce quindi i dati misurati dal sensore e elaborandoli ne ricava l'orientamento del device
      * @param event Rappresenta un evento scatenato da un sensore del dispositivo e detiene al suo interno tutti i dati rilevati da quel sensore
-     * @return  void
      */
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -115,7 +113,6 @@ public class Compass implements SensorEventListener {
 
     /**
      * Metodo che permette all'oggetto Compass di ricevere dati dai sensori e quindi accenderli
-     * @return  void
      */
     public void registerListener(){
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
@@ -124,7 +121,6 @@ public class Compass implements SensorEventListener {
 
     /**
      * Metodo che permette all'oggetto Compass di smettere di ricevere dati dai sensori e quindi spegnerli
-     * @return  void
      */
     public void unregisterListener() {
         sensorManager.unregisterListener(this, accelerometer);

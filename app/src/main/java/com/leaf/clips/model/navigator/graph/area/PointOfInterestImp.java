@@ -88,7 +88,6 @@ public class PointOfInterestImp implements PointOfInterest {
     /**
      * Metodo che permette di settare l'insieme di RegionOfInterest nelle quali tale PointOfInterestImp è contenuto
      * @param rois Insieme di RegionOfInterest alle quali appartiene il PointOfInterestImp.
-     * @return  void
      */
     @Override
     public void setBelongingROIs(Collection<RegionOfInterest> rois){

@@ -6,11 +6,16 @@ package com.leaf.clips.model.beacon;
  */
 
 /**
- * Class Description
+ * Classe enumeratore che serve per descrivere i periodi di di scansione dei beacon
  */
 public enum PeriodType{
     BACKGROUND, FOREGROUND, BACKGROUND_BETWEEN, FOREGROUND_BETWEEN, ERROR;
-    
+
+    /**
+     * Metodo che permette di trasformare un oggetto PeriodType in intero
+     * @param periodType oggetto da trasformare in intero
+     * @return int
+     */
     static public int toInt(PeriodType periodType){
         switch (periodType){
             case BACKGROUND:
@@ -25,7 +30,12 @@ public enum PeriodType{
         }
         return -1;    
     }
-    
+
+    /**
+     * Metodo che permette di trasformare un intero in un oggetto PeriodType
+     * @param i intero da trasformare in PeriodType
+     * @return PeriodType
+     */
     static public PeriodType fromInt(int i){
         switch (i){
             case 0:

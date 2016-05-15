@@ -13,7 +13,12 @@ package com.leaf.clips.model;
 */ 
 public enum MessageSendType {
     VISIBLE_BEACON, ERROR;
-    
+
+    /**
+     * Metodo che permette di trasformare un intero in un oggetto MessageSendType
+     * @param i intero da trasformare in MessageSendType
+     * @return MessageSendType
+     */
     public static MessageSendType fromInt(int i){
         switch(i){
             case 0 : 
@@ -22,7 +27,12 @@ public enum MessageSendType {
         }
         return ERROR;
     }
-    
+
+    /**
+     * Metodo che permette di trasformare un oggetto MessageSendType in intero
+     * @param messageSendType oggetto da trasformare in intero
+     * @return int
+     */
     public static int toInt(MessageSendType messageSendType){
         switch (messageSendType){
             case VISIBLE_BEACON:

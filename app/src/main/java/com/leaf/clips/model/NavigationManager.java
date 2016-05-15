@@ -72,6 +72,10 @@ public interface NavigationManager {
      */
     void stopNavigation();
 
+    /**
+     * Metodo che permette di accedere al grafo che rappresenta l'edificio
+     * @return MapGraph
+     */
     MapGraph getGraph();
 
 }
