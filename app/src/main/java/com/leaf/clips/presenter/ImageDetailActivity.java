@@ -13,14 +13,17 @@ import java.util.List;
  * certa istruzione.
  */
 public class ImageDetailActivity extends AppCompatActivity {
+
     /**
      * Riferimento alla VIew associata.
      */
     private ImageDetailView view;
+
     /**
      * Riferimento alla lista di URI delle immagini associate all'istruzione scelta.
      */
     private List<String> listPhotos;
+
     /**
      * Riferimento alla prima immagine da visualizzare nello slideshow.
      */

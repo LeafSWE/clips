@@ -24,26 +24,32 @@ import java.util.List;
  * recupero delle informazioni dell'edificio è andato a buon fine.
  */
 public class CompleteHomeFragment extends Fragment {
+
     /**
      * Riferimento al widget adibito a search box.
      */
     SearchView searchView;
+
     /**
      * Riferimento al widget che mostra l'indirizzo dell'edificio rilevato.
      */
     TextView buildingAddress;
+
     /**
      * Riferimento al widget che mostra il nome dell'edificio rilevato.
      */
     TextView buildingName;
+
     /**
      * Riferimento al widget che mostra la descrizione dell'edificio rilevato.
      */
     TextView buildingDescription;
+
     /**
      * Riferimento al widget che mostra gli orari di apertura al pubblico dell'edificio rilevato.
      */
     TextView buildingOpeningHours;
+
     /**
      * Riferimento al widget che mostra le categorie di POI presenti nell'edificio rilevato.
      */

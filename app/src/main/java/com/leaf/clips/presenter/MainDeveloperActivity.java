@@ -21,6 +21,10 @@ import java.io.File;
 
 import javax.inject.Inject;
 
+/**
+ * È una classe che estende AppCompactActivity e consente di gestire l'interazione tra MainDeveloperView ed il model.
+ * È usata per recuperare i log dal model e avviare la registrazione di un nuovo log. Gestisce tutte le possibile richieste effettuate da MainDeveloperView.
+ */
 public class MainDeveloperActivity extends AppCompatActivity {
 
     /**

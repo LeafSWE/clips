@@ -40,19 +40,23 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      */
     @Inject
     InformationManager informationManager;
+
     /**
      * Riferimento utilizzato per accedere alle istruzioni di navigazione.
      */
     @Inject
     NavigationManager navigationManager;
+
     /**
      * Riferimento alla relativa VIew.
      */
     private NavigationView view;
+
     /**
      * Riferimento alla lista di istruzioni di navigazione.
      */
     private  List<ProcessedInformation> navigationInstruction;
+
     /**
      * Id del POI che l'utente ha indicato come destinazione.
      */

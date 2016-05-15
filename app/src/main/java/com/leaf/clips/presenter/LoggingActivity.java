@@ -24,11 +24,15 @@ import java.util.PriorityQueue;
 import javax.inject.Inject;
 
 public class LoggingActivity extends AppCompatActivity implements InformationListener  {
+
     /**
      * View associata a tale Activity 
      */
     private LoggingView view;
 
+    /**
+     * Riferimento utilizzato per accedere alle informazioni trattate dal Model
+     */
     @Inject
     InformationManager informationManager;
 
@@ -55,7 +59,6 @@ public class LoggingActivity extends AppCompatActivity implements InformationLis
 
     /**
      * Metodo che viene utilizzato per interrompere l'attività di log
-     * @return  void
      */
     public void stopLogging(){
         Long tsLong = System.currentTimeMillis()/1000;

@@ -24,12 +24,14 @@ import java.util.ArrayList;
  * ad una certa istruzione.
  */
 public class ImageListFragment extends Fragment implements AdapterView.OnItemClickListener{
+
     /**
      * Riferimento all'Adapter utilizzato per mostrare le thumbnail.
      * {@link com.leaf.clips.presenter.ImageListFragment.ImageAdapter} è una classe interna
      * ad ImageListFragment.
      */
     private ImageAdapter imgAdapter;
+
     /**
      * Riferimento alla lista di URI delle immagini associate all'istruzione scelta.
      */
@@ -102,11 +104,16 @@ public class ImageListFragment extends Fragment implements AdapterView.OnItemCli
      * mostrare.
      */
     private class ImageAdapter extends BaseAdapter {
+
         /**
          * Contesto dell'applicazione.
          */
         private final Context mContext;
 
+        /**
+         * Costruttore della classe ImageAdapter
+         * @param context Contesto di esecuzione dell'applicazione
+         */
         public ImageAdapter(Context context) {
             super();
             mContext = context;
