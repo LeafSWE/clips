@@ -1,7 +1,7 @@
 package com.leaf.clips.model;
 /**
  * @author Federico Tavella
- * @version 0.05
+ * @version 0.03
  * @since 0.00
  *
  *
@@ -23,7 +23,6 @@ import com.leaf.clips.model.usersetting.SettingImp;
 import junit.framework.Assert;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -142,7 +141,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         if(lastBeaconsSeen.isEmpty())
             throw new NoBeaconSeenException();
 
-        ArrayList<PointOfInterest> list = new ArrayList<>();
+        LinkedList<PointOfInterest> list = new LinkedList<>();
         list.addAll(map.getNearbyPOIs(lastBeaconsSeen.peek()));
         return list;
 
@@ -389,15 +388,12 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
      */
     @Override
     public Collection<PointOfInterest> getPOIsByCategory(String category) {
-        Collection<PointOfInterest> poisWithCategory = new ArrayList<>();
-        if(map != null){
-            Collection<PointOfInterest> pois = map.getAllPOIs();
-            for (PointOfInterest poi:pois) {
-                if (poi.getCategory().equals(category))
-                    poisWithCategory.add(poi);
-            }
+        Collection<PointOfInterest> pois = map.getAllPOIs();
+        Collection<PointOfInterest> poisWithCategory = new LinkedList<>();
+        for (PointOfInterest poi:pois) {
+            if (poi.getCategory().equals(category))
+                poisWithCategory.add(poi);
         }
-
         return poisWithCategory;
     }
 
