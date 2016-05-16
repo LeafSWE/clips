@@ -1,8 +1,8 @@
 package com.leaf.clips.model.navigator;
 /**
- * @author Eduard Bicego
- * @version 0.02
- * @since 0.01
+ * @author Federico Tavella
+ * @version 0.03
+ * @since 0.02
  */
 
 import com.leaf.clips.model.beacon.MyBeacon;
@@ -120,7 +120,7 @@ public class BuildingMapImp implements BuildingMap {
             }
         }
         //TODO: definire un ritorno se non si trova il ROI corrispondente al beacon
-        return null;
+        return new ArrayList<>();
     }
 
     /**
