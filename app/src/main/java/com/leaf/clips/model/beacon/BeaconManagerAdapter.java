@@ -208,9 +208,7 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
 
             Intent msg = new Intent("beaconsDetected");
             msg.putExtra("queueOfBeacons", p);
-            Log.i("PRIMA DI BROADCAST", "PRIMA DI BROADCAST");
             LocalBroadcastManager.getInstance(BeaconManagerAdapter.this).sendBroadcast(msg);
-            Log.i("DOPO BROADCAST", "DOPO BROADCAST");
         }
         else
             Log.i("SERVICE","COLLECTION EMPTY");
