@@ -51,4 +51,11 @@ public class ImageDetailActivity extends AppCompatActivity {
     public List<String> getListPhotos() {
         return listPhotos;
     }
+
+    /*@Override
+    public boolean onSupportNavigateUp() {
+        Log.i("state%", "onNavigateup");
+        onBackPressed();
+        return true;
+    }*/
 }
