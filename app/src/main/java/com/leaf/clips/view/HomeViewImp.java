@@ -75,6 +75,10 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
 
         drawer = (DrawerLayout) homeActivity.findViewById(R.id.drawer_layout_home);
 
+        toggle = new ActionBarDrawerToggle(homeActivity, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
         navigationView = (NavigationView) homeActivity.findViewById(R.id.nav_view_home);
         if(navigationView != null)
             navigationView.setNavigationItemSelectedListener(this);

@@ -1,10 +1,9 @@
 package com.leaf.clips.presenter;
 
 /**
- * @author Federico Tavella
- * @version 0.05
+ * @author Andrea Tombolato
+ * @version 0.06
  * @since 0.04
- *
  */
 
 import android.Manifest;
@@ -216,7 +215,9 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     public void updateBuildingAddress(){
         try {
+            Log.d("ENTERED","yess");
             String address = informationManager.getBuildingMap().getAddress();
+            Log.d("AZZ",address);
             view.setBuildingAddress(address);
         } catch (NoBeaconSeenException e) {
             e.printStackTrace();
@@ -278,7 +279,6 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     @Override
     public void onDatabaseLoaded() {
-        //Imposta il fragment vuoto, come base del layout
         CompleteHomeFragment completeHomeFragment = new CompleteHomeFragment();
         List<Fragment> fragments= getSupportFragmentManager().getFragments();
         if(fragments == null ){
