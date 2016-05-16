@@ -6,7 +6,6 @@ package com.leaf.clips.presenter;
  * @since 0.00
  */
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -101,10 +100,7 @@ public class DetailedInformationActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         Log.i("state%", "onNavigateup");
-        //onBackPressed();
-        Intent i = new Intent(this, NavigationActivity.class);
-        i.putExtra("poi_id", getIntent().getIntExtra("poi_id", -1));
-        startActivity(i);
+        onBackPressed();
         return true;
     }
 }

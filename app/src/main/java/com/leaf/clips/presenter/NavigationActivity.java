@@ -139,11 +139,11 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                         }
                     }
             }
-
-            navigationManager.startNavigation(destinationPoi);
-            navigationInstruction = navigationManager.getAllNavigationInstruction();
-
-            view.setInstructionAdapter(navigationInstruction);
+            if(destinationPoi!=null) {
+                navigationManager.startNavigation(destinationPoi);
+                navigationInstruction = navigationManager.getAllNavigationInstruction();
+                view.setInstructionAdapter(navigationInstruction);
+            }
         } catch (NoBeaconSeenException e) {
             e.printStackTrace();
         } catch (NavigationExceptions navigationExceptions) {

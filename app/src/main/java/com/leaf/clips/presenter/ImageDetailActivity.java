@@ -2,6 +2,7 @@ package com.leaf.clips.presenter;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.leaf.clips.view.ImageDetailView;
 import com.leaf.clips.view.ImageDetailViewImp;
@@ -55,10 +56,10 @@ public class ImageDetailActivity extends AppCompatActivity {
         return listPhotos;
     }
 
-    /*@Override
+    @Override
     public boolean onSupportNavigateUp() {
         Log.i("state%", "onNavigateup");
         onBackPressed();
         return true;
-    }*/
+    }
 }
