@@ -23,6 +23,7 @@ import com.leaf.clips.model.usersetting.SettingImp;
 import junit.framework.Assert;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -444,11 +445,13 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
      */
     @Override
     public Collection<PointOfInterest> getPOIsByCategory(String category) {
-        Collection<PointOfInterest> pois = map.getAllPOIs();
-        Collection<PointOfInterest> poisWithCategory = new LinkedList<>();
-        for (PointOfInterest poi:pois) {
-            if (poi.getCategory().equals(category))
-                poisWithCategory.add(poi);
+        Collection<PointOfInterest> poisWithCategory = new ArrayList<>();
+        if(map != null){
+            Collection<PointOfInterest> pois = map.getAllPOIs();
+            for (PointOfInterest poi:pois) {
+                if (poi.getCategory().equals(category))
+                    poisWithCategory.add(poi);
+            }
         }
         return poisWithCategory;
     }

@@ -2,9 +2,8 @@ package com.leaf.clips.presenter;
 
 /**
  * @author Federico Tavella
- * @version 0.05
- * @since 0.04
- *
+ * @version 0.07
+ * @since 0.06
  */
 
 import android.Manifest;
@@ -149,6 +148,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
 
             builder.create().show();
         }
+        checkStoragePermissions();
     }
 
     /**
@@ -174,6 +174,66 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                     });
             builder.create().show();
         }
+
+    }
+
+    /**
+     * Controlla che i servizi di Localizzazione siano attivi. In caso negativo chiede all'utente di
+     * attivarli.
+     */
+    public void checkStoragePermissions(){
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        0);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+
+        /*if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        0);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }*/
     }
 
     /**
@@ -216,7 +276,9 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     public void updateBuildingAddress(){
         try {
+            Log.d("ENTERED","yess");
             String address = informationManager.getBuildingMap().getAddress();
+            Log.d("AZZ",address);
             view.setBuildingAddress(address);
         } catch (NoBeaconSeenException e) {
             e.printStackTrace();
@@ -278,7 +340,6 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     @Override
     public void onDatabaseLoaded() {
-        //Imposta il fragment vuoto, come base del layout
         CompleteHomeFragment completeHomeFragment = new CompleteHomeFragment();
         List<Fragment> fragments= getSupportFragmentManager().getFragments();
         if(fragments == null ){

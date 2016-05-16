@@ -141,8 +141,9 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
      * Questo metodo serve per far partire il Ranging dei Beacon
      */
     private void startRanging() {
-        Log.i("SERVICE", "STARTING RANGING");
+
         try {
+            Log.i("SERVICE", "STARTING RANGING");
             beaconManager.startRangingBeaconsInRegion(region);
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -190,8 +191,15 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
             }
             Log.i("BEACON_MANAGER_ADAPTER", "Beacons are visible in the region");
         }
-        else
+        else{
+            try {
+                beaconManager.stopRangingBeaconsInRegion(region);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
             Log.i("BEACON_MANAGER_ADAPTER", "No beacons are visible in the region");
+        }
+
     }
 
     /**
@@ -213,9 +221,7 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
 
             Intent msg = new Intent("beaconsDetected");
             msg.putExtra("queueOfBeacons", p);
-            Log.i("PRIMA DI BROADCAST", "PRIMA DI BROADCAST");
             LocalBroadcastManager.getInstance(BeaconManagerAdapter.this).sendBroadcast(msg);
-            Log.i("DOPO BROADCAST", "DOPO BROADCAST");
         }
         else
             Log.i("SERVICE","COLLECTION EMPTY");

@@ -72,8 +72,9 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //poiId = savedInstanceState.getInt("poi_id");
         view = new NavigationViewImp(this);
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+                ((MyApplication) getApplication()).getInfoComponent().inject(this);
 
         if(savedInstanceState != null){
             poiId = savedInstanceState.getInt("poi_id");
@@ -82,7 +83,10 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         }
         else
             handleIntent(getIntent());
+        Log.i("state%", "ONCREATE" + poiId);
     }
+
+
 
     /**
      * @inheritDoc
@@ -113,7 +117,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                 //Trova il POI corrispondente al nome digitato
                 for(ListIterator<PointOfInterest> i = poiList.listIterator(); i.hasNext() && !found;){
                     PointOfInterest poi = i.next();
-                    if(poi.getName().equals(destinationPoiName)){
+                    if(poi.getName().toLowerCase().contains(destinationPoiName.toLowerCase())){
                         destinationPoi = poi;
                         found = true;
                     }
@@ -182,7 +186,8 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
 
         Intent intent = new Intent(this,DetailedInformationActivity.class);
         intent.putExtra("detailed_info",detailedInformation);
-        intent.putStringArrayListExtra("photo_uri",uris);
+        intent.putStringArrayListExtra("photo_uri", uris);
+        intent.putExtra("poi_id", poiId);
         startActivity(intent);
     }
 
@@ -193,17 +198,28 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         //TODO
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        poiId = savedInstanceState.getInt("poi_id");
+        Log.i("state%", "ONRESTOREINSTANCESTATE" + poiId);
+        // Restore state members from saved instance
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+
+    }
+
     /**
      * Salva lo stato corrente dell'Activity, in modo da poterlo ripristinare in caso di
      * interruzione coatta della stessa.
      */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("poi_id", poiId);
         super.onSaveInstanceState(outState);
-
-        int poiId = getIntent().getIntExtra("poi_id",-1);
-        Log.d("SAVED_POI_ID", Integer.toString(poiId));
-        if(poiId != -1)
-            outState.putInt("poi_id",poiId);
     }
 }

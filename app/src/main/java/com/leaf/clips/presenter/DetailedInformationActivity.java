@@ -6,8 +6,10 @@ package com.leaf.clips.presenter;
  * @since 0.00
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.leaf.clips.R;
 import com.leaf.clips.model.InformationManager;
@@ -65,6 +67,10 @@ public class DetailedInformationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.i("POI_ID", getIntent().getIntExtra("poi_id", -1) + "");
+        savedInstanceState = new Bundle();
+        savedInstanceState.putSerializable("poi_id", getIntent().getIntExtra("poi_id", -1));
         view = new DetailedInformationViewImp(this);
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
 
@@ -90,5 +96,15 @@ public class DetailedInformationActivity extends AppCompatActivity {
     public void updateDetailedDescription(){
         String detailedInfo = getIntent().getStringExtra("detailed_info");
         view.setDetailedDescription(detailedInfo);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        Log.i("state%", "onNavigateup");
+        //onBackPressed();
+        Intent i = new Intent(this, NavigationActivity.class);
+        i.putExtra("poi_id", getIntent().getIntExtra("poi_id", -1));
+        startActivity(i);
+        return true;
     }
 }
