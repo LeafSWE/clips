@@ -2,9 +2,7 @@ package com.leaf.clips.view;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -60,7 +58,6 @@ public class LoggingViewImp implements LoggingView {
     /**
      * Metodo utilizzato per visualizzare la lista dei beacon rilevati
      * @param beacons Collegamento tra la lista dei beacon rilevati e la view in cui essi devono essere mostrati
-     * @return  void
      */
     @Override
     public void setBeaconListAdapter(StringBuffer beacons){

@@ -21,15 +21,21 @@ import java.util.ArrayList;
  * lo slideshow delle immagini relative ad una certa istruzione di navigazione.
  */
 public class ImageDetailViewImp implements ImageDetailView{
+
     /**
      * Riferimento al relativo Presenter.
      */
     ImageDetailActivity presenter;
+
     /**
      * Riferimento al widget responsabile dello slideshow.
      */
     private ViewPager pager;
 
+    /**
+     * Costruttore della classe ImageDetailViewImp
+     * @param presenter Presenter che ha il compito di controllare tale oggetto
+     */
     public ImageDetailViewImp(ImageDetailActivity presenter) {
         this.presenter = presenter;
         presenter.setContentView(R.layout.activity_image_detail);
@@ -56,15 +62,22 @@ public class ImageDetailViewImp implements ImageDetailView{
      * ImagePagerAdapter si occupa di gestire lo slideshow.
      */
     public static class ImagePagerAdapter extends FragmentStatePagerAdapter {
+
         /**
          * Numero di immagini da mostrare.
          */
         private final int mSize;
+
         /**
          * Riferimento al Presenter.
          */
         private ImageDetailActivity presenter;
 
+        /**
+         * Costruttore della classe ImagePagerAdapter
+         * @param presenter Presenter che ha il compito di controllare tale oggetto
+         * @param size Grandezza immagini
+         */
         public ImagePagerAdapter(ImageDetailActivity presenter, int size) {
             super(presenter.getSupportFragmentManager());
             this.presenter = presenter;

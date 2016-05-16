@@ -8,6 +8,7 @@ package com.leaf.clips.presenter;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.leaf.clips.R;
 import com.leaf.clips.model.InformationManager;
@@ -26,11 +27,13 @@ import javax.inject.Inject;
  * @see AppCompatActivity
  */
 public class DetailedInformationActivity extends AppCompatActivity {
+
     /**
      * Riferimento utilizzato per accedere alle informazioni trattate dal Model.
      */
     @Inject
     InformationManager informationManager;
+
     /**
      * Riferimento utilizzato per accedere alle istruzioni di navigazione trattate dal Model.
      */
@@ -41,10 +44,12 @@ public class DetailedInformationActivity extends AppCompatActivity {
      * Riferimento alla relativa View.
      */
     private DetailedInformationView view;
+
     /**
      * Riferimento alle istruzioni di navigazione arricchite con informazioni di contesto.
      */
     private ProcessedInformation processedInfo;
+
     /**
      * Riferimento al {@link ImageListFragment} contentente lo slideshow delle immagini relative al
      * prossimo ROI da raggiungere.
@@ -61,6 +66,10 @@ public class DetailedInformationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.i("POI_ID", getIntent().getIntExtra("poi_id", -1) + "");
+        savedInstanceState = new Bundle();
+        savedInstanceState.putSerializable("poi_id", getIntent().getIntExtra("poi_id", -1));
         view = new DetailedInformationViewImp(this);
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
 
@@ -86,5 +95,12 @@ public class DetailedInformationActivity extends AppCompatActivity {
     public void updateDetailedDescription(){
         String detailedInfo = getIntent().getStringExtra("detailed_info");
         view.setDetailedDescription(detailedInfo);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        Log.i("state%", "onNavigateup");
+        onBackPressed();
+        return true;
     }
 }

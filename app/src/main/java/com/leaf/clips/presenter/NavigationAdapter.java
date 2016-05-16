@@ -25,22 +25,30 @@ import java.util.List;
  * a mostrarle.
  */
 public class NavigationAdapter extends BaseAdapter {
+
     /**
      * Contesto dell'applicazione.
      */
     private Context context;
+
     /**
      * Lista delle istruzioni di navigazione utili per raggiungere un determinato POI.
      */
     private List<ProcessedInformation> navigationInformation;
 
+    /**
+     * Costruttore della classe NavigationAdapter
+     * @param context Contesto di esecuzione dell'applicazione
+     * @param navigationInformation Informazioni di navigazione da mostrare
+     */
     public NavigationAdapter(Context context, List<ProcessedInformation> navigationInformation) {
         this.context = context;
         this.navigationInformation = navigationInformation;
     }
 
     /**
-     * Restituisce il numero di istruzioni di navigazione contenute nella lista.
+     * Restituisce il numero di istruzioni di navigazione contenute nella lista
+     * @return int
      */
     @Override
     public int getCount() {
@@ -50,8 +58,8 @@ public class NavigationAdapter extends BaseAdapter {
     /**
      * Restituisce l'istruzione di navigazione che, nella lista, si trova nella posizione fornita
      * come parametro.
-     * @param position
-     * @return
+     * @param position Posizione dell'istruzione
+     * @return Object
      */
     @Override
     public Object getItem(int position) {
@@ -61,8 +69,8 @@ public class NavigationAdapter extends BaseAdapter {
     /**
      * Restituisce l'id dell'istruzione di navigazione che, nella lista, si trova nella posizione
      * fornita come parametro.
-     * @param position
-     * @return
+     * @param position Posizione dell'istruzione
+     * @return long
      */
     @Override
     public long getItemId(int position) {
@@ -97,11 +105,10 @@ public class NavigationAdapter extends BaseAdapter {
     /**
      * Metodo di utilità che associa la freccia corretta (Drawable) alla istruzione, in modo che ne
      * indichi visivamente la direzione da seguire.
-     * @param direction indicatore della direzione.
+     * @param direction indicatore della direzione
+     * @param image view da aggiornare
      */
     private void setDirectionArrow(int direction, ImageView image){
-        int directionArrowId = -1;
-
         switch (direction){
             case 0: image.setBackgroundResource(R.drawable.arrow_go_straight);
                     break;

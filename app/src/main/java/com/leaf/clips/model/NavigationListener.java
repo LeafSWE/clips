@@ -12,7 +12,14 @@ import com.leaf.clips.model.navigator.ProcessedInformation;
  */
 public interface NavigationListener extends Listener {
 
+    /**
+     * Metodo che viene invocato quando c'è un aggiornamento nelle informazioni di navigazione
+     * @param info informazioni aggiornate
+     */
     void informationUpdate(ProcessedInformation info);
 
+    /**
+     * Metodo che viene invocato in caso di errori di navigazione
+     */
     void pathError();
 }

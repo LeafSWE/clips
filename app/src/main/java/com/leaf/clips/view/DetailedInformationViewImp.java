@@ -19,11 +19,16 @@ import com.leaf.clips.presenter.DetailedInformationActivity;
  * comprendono le immagini del prossimo ROI da raggiungere ed i passi dettagliati da seguire.
  */
 public class DetailedInformationViewImp implements DetailedInformationView {
+
     /**
      * Riferimento al relativo Presenter.
      */
     DetailedInformationActivity presenter;
 
+    /**
+     * Costruttore della classe DetailedInformationViewImp
+     * @param presenter Presenter che si occupa del controllo dell'oggetto
+     */
     public DetailedInformationViewImp(DetailedInformationActivity presenter) {
         this.presenter = presenter;
         presenter.setContentView(R.layout.activity_detailed_information);

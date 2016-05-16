@@ -104,12 +104,7 @@ public abstract class AbsBeaconReceiverManager extends BroadcastReceiver {
     public void startService(){
         if(!isBound)
             context.bindService(serviceStart, serviceConnection,Context.BIND_AUTO_CREATE);
-        /*new Thread(new Runnable() {
-            @Override
-            public void run() {*/
-                context.startService(serviceStart);
-           /* }
-        }).start();*/
+        context.startService(serviceStart);
 
     }
 
@@ -123,20 +118,37 @@ public abstract class AbsBeaconReceiverManager extends BroadcastReceiver {
 
     }
 
+    /**
+     * Classe che permette la connessione al Service che si occupa del rilevamento dei beacon
+     */
     public class ServiceConnectionImp implements ServiceConnection {
 
+        /**
+         * Metodo che viene invocato alla connessione con il Service
+         * @param className Nome della classe del Service
+         * @param service Bind con il Service
+         */
         public void onServiceConnected(ComponentName className, IBinder service) {
             BeaconManagerAdapter.LocalBinder binder = (BeaconManagerAdapter.LocalBinder) service;
             beaconManagerAdapter = binder.getService();
             isBound = true;
         }
 
+        /**
+         * Metodo che viene invocato alla disconnessione con il service
+         * @param arg0
+         */
         public void onServiceDisconnected(ComponentName arg0) {
             isBound = false;
         }
 
     }
 
+    /**
+     * Metodo che viene invocato alla ricezione della lista di beacon rilevata
+     * @param context Contesto di esecuzione dell'applicazione
+     * @param intent Intent del messaggio mandato in broadcast
+     */
     @Override //Method of BroadcastReceiver
     abstract public void onReceive(Context context, Intent intent);
 

@@ -21,6 +21,10 @@ import java.io.File;
 
 import javax.inject.Inject;
 
+/**
+ * È una classe che estende AppCompactActivity e consente di gestire l'interazione tra MainDeveloperView ed il model.
+ * È usata per recuperare i log dal model e avviare la registrazione di un nuovo log. Gestisce tutte le possibile richieste effettuate da MainDeveloperView.
+ */
 public class MainDeveloperActivity extends AppCompatActivity {
 
     /**
@@ -34,6 +38,10 @@ public class MainDeveloperActivity extends AppCompatActivity {
    @Inject
     InformationManager infoManager;
 
+    /**
+     * Metodo che viene invocato alla creazione dell'oggetto
+     * @param savedInstanceState stato memorizzato dell'oggetto
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +79,6 @@ public class MainDeveloperActivity extends AppCompatActivity {
     /**
      * Metodo che permette di visualizzare il contenuto di un log
      * @param logPosition  Intero rappresentante la posizione del log selezionato all'interno della lista
-     * @return  void
      */
     public void showDetailedLog(int logPosition){
         Intent intent = new Intent(this, LogInformationActivity.class);
@@ -81,7 +88,6 @@ public class MainDeveloperActivity extends AppCompatActivity {
 
     /**
      * Metodo che avvia un nuovo log
-     * @return  void
      */
     public void startNewLog(){
         Intent intent = new Intent(this, LoggingActivity.class);

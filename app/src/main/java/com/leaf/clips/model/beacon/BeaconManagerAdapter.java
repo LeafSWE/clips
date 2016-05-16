@@ -63,19 +63,16 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
     /**
      * Insieme dei periodi di scan del BeaconManager
      */
-
-    Map<PeriodType, Long> periods;
+    private Map<PeriodType, Long> periods;
 
     /**
      * Indica se il BeaconManager è in background o meno
      */
-
     boolean isBackground = false;
 
     /**
      * Metodo che inizializza i parametri della classe alla creazione di un’istanza
      */
-
     @Override
     public void onCreate(){
 
@@ -116,6 +113,10 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
         super.onDestroy();
     }
 
+    /**
+     * Metodo che permette di impostare il MonitorNotifier per il Servidce
+     * @param monitorNotifier MonitorNotifier da impostare
+     */
     private void setMonitorNotifier(MonitorNotifier monitorNotifier) {
         Log.i("SERVICE", "SETTING MONITOR NOTIFIER");
         beaconManager.setMonitorNotifier(monitorNotifier);
@@ -124,7 +125,6 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
     /**
      * Metodo per decidere come comportarsi alla connessione del Service
      */
-
     @Override
     public void onBeaconServiceConnect() {
         try {
@@ -141,8 +141,9 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
      * Questo metodo serve per far partire il Ranging dei Beacon
      */
     private void startRanging() {
-        Log.i("SERVICE", "STARTING RANGING");
+
         try {
+            Log.i("SERVICE", "STARTING RANGING");
             beaconManager.startRangingBeaconsInRegion(region);
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -190,10 +191,22 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
             }
             Log.i("BEACON_MANAGER_ADAPTER", "Beacons are visible in the region");
         }
-        else
+        else{
+            try {
+                beaconManager.stopRangingBeaconsInRegion(region);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
             Log.i("BEACON_MANAGER_ADAPTER", "No beacons are visible in the region");
+        }
+
     }
 
+    /**
+     * Metodo che viene invocato quando vengono rilevati beacon nella Region
+     * @param collection Beacon rilevati
+     * @param region Region in cui sono rilevati i beacon
+     */
     @Override
     public void didRangeBeaconsInRegion(Collection<Beacon> collection, Region region) {
         if (collection.size() > 0) {

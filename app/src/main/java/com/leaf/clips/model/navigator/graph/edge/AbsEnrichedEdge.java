@@ -172,7 +172,6 @@ public abstract class AbsEnrichedEdge extends DefaultWeightedEdge implements Enr
     /**
      * Metodo che permette di impostare le preferenze di un utente per il calcolo del peso dell'arco
      * @param setting Preferenze da impostare
-     * @return  void
      */
     public void setUserPreference(Setting setting){
        switch (setting.getPathPreference()){

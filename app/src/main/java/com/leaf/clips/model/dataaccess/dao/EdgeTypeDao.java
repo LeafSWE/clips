@@ -15,7 +15,6 @@ public interface EdgeTypeDao {
     /**
      * Metodo che permette la rimozione delle informazioni di un tipo di Edge dalla tabella "EdgeType" del database locale
      * @param id Identificativo del tipo di Edge di cui rimuovere le informazioni dal database locale
-     * @return  void
      */
     void deleteEdgeType(int id);
 

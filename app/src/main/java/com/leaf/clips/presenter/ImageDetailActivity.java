@@ -2,6 +2,7 @@ package com.leaf.clips.presenter;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.leaf.clips.view.ImageDetailView;
 import com.leaf.clips.view.ImageDetailViewImp;
@@ -13,14 +14,17 @@ import java.util.List;
  * certa istruzione.
  */
 public class ImageDetailActivity extends AppCompatActivity {
+
     /**
      * Riferimento alla VIew associata.
      */
     private ImageDetailView view;
+
     /**
      * Riferimento alla lista di URI delle immagini associate all'istruzione scelta.
      */
     private List<String> listPhotos;
+
     /**
      * Riferimento alla prima immagine da visualizzare nello slideshow.
      */
@@ -50,5 +54,12 @@ public class ImageDetailActivity extends AppCompatActivity {
      */
     public List<String> getListPhotos() {
         return listPhotos;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        Log.i("state%", "onNavigateup");
+        onBackPressed();
+        return true;
     }
 }

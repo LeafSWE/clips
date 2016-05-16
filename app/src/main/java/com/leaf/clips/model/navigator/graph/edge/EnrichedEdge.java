@@ -60,7 +60,6 @@ public interface EnrichedEdge extends Edge {
     /**
      * Metodo che permette di impostare le preferenze di un utente per il calcolo del peso dell'arco
      * @param setting Preferenze da impostare
-     * @return  void
      */
     void setUserPreference(Setting setting);
 

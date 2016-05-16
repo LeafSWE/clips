@@ -387,6 +387,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     @Override
     public void onRemoteMapNotFound() {
+        //TODO
         Log.d("HOMEACTIVITY", "REMOTE MAP NOT FOUND");
     }
 
@@ -395,6 +396,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     @Override
     public void cannotRetrieveRemoteMapDetails() {
+        //TODO
         Log.d("HOMEACTIVITY", "CAN'T RETRIEVE REMOTE DETAILS");
     }
 
@@ -423,9 +425,13 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         return true;
     }
 
+    /**
+     * Metodo invocato ogni volta che vengono rilevati beacon
+     * @param visibleBeacons lista di beacon rilevati
+     */
     @Override
     public void getAllVisibleBeacons(PriorityQueue<MyBeacon> visibleBeacons) {
-
+        //non necessario che sia implementato
     }
 
     /**

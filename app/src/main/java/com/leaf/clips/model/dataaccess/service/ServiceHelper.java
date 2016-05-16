@@ -23,7 +23,9 @@ import com.leaf.clips.model.dataaccess.dao.SQLiteRoiPoiDao;
  * @author Davide Castello
  * @version 0.01
  * @since 0.00
- *
+ */
+
+/**
  * Classe che rappresenta un aiutante per la costruzione di un DatabaseService
  */
 public class ServiceHelper {

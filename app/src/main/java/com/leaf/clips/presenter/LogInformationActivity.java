@@ -2,21 +2,18 @@ package com.leaf.clips.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.beacon.LoggerImp;
 import com.leaf.clips.view.LogInformationView;
 import com.leaf.clips.view.LogInformationViewImp;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-
 import javax.inject.Inject;
+
 
 public class LogInformationActivity extends AppCompatActivity {
 

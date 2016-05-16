@@ -12,23 +12,28 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-
 import com.leaf.clips.model.InformationListener;
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.beacon.MyBeacon;
 import com.leaf.clips.view.LoggingView;
 import com.leaf.clips.view.LoggingViewImp;
-
 import java.util.PriorityQueue;
-
 import javax.inject.Inject;
 
+/**
+ * Classe che estende AppCompactActivity per la gestione dell'interazione tra il model e LoggingView.
+ * È usata per arrestare un'attività di logging avviata e per recuperare i beacon circostanti. Gestisce tutte le possibili richieste effettuate da LoggingView
+ */
 public class LoggingActivity extends AppCompatActivity implements InformationListener  {
+
     /**
      * View associata a tale Activity 
      */
     private LoggingView view;
 
+    /**
+     * Riferimento utilizzato per accedere alle informazioni trattate dal Model
+     */
     @Inject
     InformationManager informationManager;
 
@@ -55,7 +60,6 @@ public class LoggingActivity extends AppCompatActivity implements InformationLis
 
     /**
      * Metodo che viene utilizzato per interrompere l'attività di log
-     * @return  void
      */
     public void stopLogging(){
         Long tsLong = System.currentTimeMillis()/1000;

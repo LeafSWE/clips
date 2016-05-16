@@ -7,10 +7,6 @@ package com.leaf.clips.model.dataaccess.dao;
  *
  */
 
-import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
-
-import java.util.Collection;
-
 /**
  *Interfaccia che espone i metodi per un DAO per accedere alla tabella "ROIPOI" del database locale
  */

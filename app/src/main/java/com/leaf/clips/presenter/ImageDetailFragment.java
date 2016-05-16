@@ -25,14 +25,21 @@ public class ImageDetailFragment extends Fragment {
      * da mostrare.
      */
     private int mImageNum;
+
     /**
      * Riferimento al widget usato per mostrare l'immagine.
      */
     private ImageView mImageView;
+
     /**
      * Riferimento alla lista di URI delle immagini associate all'istruzione scelta.
      */
     private List<String> photoUris;
+
+    /**
+     * Costruttore di default
+     */
+    public ImageDetailFragment() {}
 
     /**
      * Usato per costruire un Fragment attraverso il passaggio di parametri. Best practice consigliata
@@ -51,9 +58,6 @@ public class ImageDetailFragment extends Fragment {
         f.setArguments(args);
         return f;
     }
-
-
-    public ImageDetailFragment() {}
 
     /**
      * @inheritDoc

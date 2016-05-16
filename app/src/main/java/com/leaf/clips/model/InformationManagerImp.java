@@ -1,7 +1,7 @@
 package com.leaf.clips.model;
 /**
  * @author Federico Tavella
- * @version 0.05
+ * @version 0.03
  * @since 0.00
  *
  *
@@ -58,6 +58,11 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
      * Variabile booleana che indica se debba essere effettuato o meno il log dei beacon rilevati
      */
     boolean shouldLog = false;
+
+    /**
+     * Variabile che rappresenta se è già in download una mappa oppure no
+     */
+    boolean proc = false;
 
     /**
      * Costruttore della classe InformationManagerImp
@@ -142,20 +147,27 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         if(lastBeaconsSeen.isEmpty())
             throw new NoBeaconSeenException();
 
-        ArrayList<PointOfInterest> list = new ArrayList<>();
+        LinkedList<PointOfInterest> list = new LinkedList<>();
         list.addAll(map.getNearbyPOIs(lastBeaconsSeen.peek()));
         return list;
 
     }
 
     /**
-     * Metodo che permette di recuperare una mappa dal database in base al major dei beacon rilevati
+     * Classe che estende AsyncTask per il controllo se una mappa è aggiornata
      */
-
     private class AsyncUpdateControl extends AsyncTask<Integer, Void, Boolean> {
-        private Boolean isUpdated = true;
+
+        /**
+         * Variabile che indica se si sono verificati errori di connessione
+         */
         private Boolean remoteError = false;
 
+        /**
+         * Metodo svolto in background per il controllo della versione della mappa
+         * @param params identificativo della mappa
+         * @return Boolean
+         */
         @Override
         protected Boolean doInBackground(Integer... params) {
             try {
@@ -167,6 +179,10 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
             return false;
         }
 
+        /**
+         * Metodo eseguito alla fine dell'AsyncTask che avverte di eventuali errori
+         * @param aBoolean Risultato del metodo doInBackground
+         */
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
@@ -176,9 +192,21 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         }
     }
 
+    /**
+     * Classe che estende AsyncTask per l'aggiornamento di una mappa
+     */
     private class AsyncUpdateDownload extends AsyncTask<Integer, Void, Boolean> {
+
+        /**
+         * Variabile che indica se si sono verificati errori di connessione
+         */
         private Boolean remoteError = false;
 
+        /**
+         * Metodo svolto in background per l'aggiornamento della mappa
+         * @param params identificativo della mappa
+         * @return Boolean
+         */
         @Override
         protected Boolean doInBackground(Integer... params) {
             try {
@@ -191,6 +219,10 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
             return false;
         }
 
+        /**
+         * Metodo eseguito alla fine dell'AsyncTask che avverte di eventuali errori
+         * @param aBoolean Risultato del metodo doInBackground
+         */
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
@@ -200,9 +232,21 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         }
     }
 
+    /**
+     * Classe che estende AsyncTask per il download di una mappa
+     */
     private class AsyncDownload extends AsyncTask<Integer, Void, Boolean> {
+
+        /**
+         * Variabile che indica se si sono verificati errori di connessione
+         */
         private Boolean remoteError = false;
 
+        /**
+         * Metodo svolto in background per il download della mappa
+         * @param params identificativo della mappa
+         * @return Boolean
+         */
         @Override
         protected Boolean doInBackground(Integer... params) {
             try {
@@ -215,6 +259,10 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
             return false;
         }
 
+        /**
+         * Metodo eseguito alla fine dell'AsyncTask che avverte di eventuali errori
+         * @param aBoolean Risultato del metodo doInBackground
+         */
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
@@ -224,9 +272,17 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         }
     }
 
+    /**
+     * Classe che estende AsyncTask per verificcare se una mappa è presente in remoto
+     */
     private class AsyncRemoteIsPresent extends AsyncTask<Integer, Void, Boolean> {
         private Boolean remoteError = false;
 
+        /**
+         * Metodo svolto in background per la verifica se una mappa è presente nel database remoto
+         * @param params identificativo della mappa
+         * @return Boolean
+         */
         @Override
         protected Boolean doInBackground(Integer... params) {
             try {
@@ -234,26 +290,26 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
             } catch (IOException e) {
                 e.printStackTrace();
                 remoteError = true;
-            } catch (NullPointerException e){
-                Log.i("NullPointerException" , "doInbackground");
             }
             return false;
         }
 
+        /**
+         * Metodo eseguito alla fine dell'AsyncTask che avverte di eventuali errori
+         * @param aBoolean Risultato del metodo doInBackground
+         */
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
-            try {
-                if (remoteError)
-                    for (Listener listener : listeners)
-                        ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
-            } catch (NullPointerException e) {
-                Log.i("NullPointerException" , "postExecute");
-            }
+            if (remoteError)
+                for (Listener listener : listeners)
+                    ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
         }
     }
 
-    boolean proc = false;
+    /**
+     * Metodo che permette di recuperare una mappa dal database in base al major dei beacon rilevati
+     */
     private  void loadMap(){
 
             final int major = lastBeaconsSeen.peek().getMajor();
@@ -397,7 +453,6 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
                     poisWithCategory.add(poi);
             }
         }
-
         return poisWithCategory;
     }
 
@@ -465,6 +520,10 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
             ((InformationListener) listener).onDatabaseLoaded();
     }
 
+    /**
+     * Metodo che permette di verificare se un utente è sviluppatore oppure no
+     * @return boolean
+     */
     private boolean isDeveloper(){
         return new SettingImp(getContext()).isDeveloper();
     }

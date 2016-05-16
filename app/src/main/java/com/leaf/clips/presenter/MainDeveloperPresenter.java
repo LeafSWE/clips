@@ -9,16 +9,25 @@ package com.leaf.clips.presenter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
 import com.leaf.clips.model.usersetting.Setting;
-
 import javax.inject.Inject;
 
+/**
+ * Classe che estende AppCompactActivity e controlla utilizzando il model, se l'utente è sviluppatore o meno.
+ * È utilizzata per discriminare la visualizzazione delle funzionalità sviluppatore tra un utente sviluppatore ed un utente che non lo è.
+ */
 public class MainDeveloperPresenter extends AppCompatActivity {
 
+    /**
+     * Riferimento alle preferenze utente
+     */
     @Inject
     Setting userSetting;
 
+    /**
+     * Metodo che viene invocato alla creazione dell'oggetto
+     * @param savedInstanceState satto dell'oggetto memorizzato
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

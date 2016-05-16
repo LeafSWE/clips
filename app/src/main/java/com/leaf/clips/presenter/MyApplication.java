@@ -21,7 +21,7 @@ import com.leaf.clips.di.modules.SettingModule;
  */
 public class MyApplication extends Application {
 
-    /*
+    /**
     * Riferimento all'oggetto di tipo InfoComponent che permette di risolvere le dipendenze tra i
     * tipi presenti nell'applicazione
     */

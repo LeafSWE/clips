@@ -62,6 +62,7 @@ public class SettingImp implements Setting {
 
     private static final String DEVELOPER_CODE = "developerKey"; // TODO: 01/05/2016 decidere la stringa
 
+
     /**
      * Costruttore della classe SettingImp
      * @param context Context dell'applicazione
@@ -71,6 +72,7 @@ public class SettingImp implements Setting {
         sharedPreferences = context.getSharedPreferences(USER_PREFERENCES, Context.MODE_PRIVATE);
         pathPreference = PathPreference.fromInt(sharedPreferences.getInt(PATH_PREFERENCES, 0));
         instructionPreference = InstructionPreference.fromInt(sharedPreferences.getInt(INSTRUCTION_PREFERENCES, 0));
+        preferencesEditor = sharedPreferences.edit();
     }
 
     /**
@@ -97,9 +99,13 @@ public class SettingImp implements Setting {
     */
     @Override
     public boolean isDeveloper(){
+        String hashedcode = "6a2387e9baac5778ab72dda120a3f2d7fe6c7611aaebc0571d1cb6e4b41f8a51";
+        if (sharedPreferences.getString(DEVELOPER_CODE,"Nessuna chiave settata")
+                .equals(hashedcode))
+            return true;
+        else
+            return false;
 
-        return new DeveloperCodeManager(sharedPreferences)
-                .isValid(sharedPreferences.getString(DEVELOPER_CODE, "")); // TODO: 01/05/2016 decidere la stringa
     }
 
     /**
@@ -132,8 +138,11 @@ public class SettingImp implements Setting {
     * @return  boolean
     */
     @Override
-    public boolean unlockDeveloper(String code){
-        return new DeveloperCodeManager(sharedPreferences).isValid(code);
+    public boolean unlockDeveloper(String code) {
+        if( new DeveloperCodeManager(sharedPreferences).isValid(code)){
+            return true;
+        }else
+            return false;
     }
 
 }

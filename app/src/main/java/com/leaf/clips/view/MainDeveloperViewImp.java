@@ -1,17 +1,13 @@
 package com.leaf.clips.view;
 
-import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.leaf.clips.R;
-import com.leaf.clips.presenter.LogInformationActivity;
-import com.leaf.clips.presenter.LoggingActivity;
 import com.leaf.clips.presenter.MainDeveloperActivity;
 
 import java.util.ArrayList;
@@ -92,7 +88,6 @@ public class MainDeveloperViewImp implements MainDeveloperView {
     /**
      * Metodo utilizzato per visualizzare la lista di tutti i log salvati in locale
      * @param stringLogs Collegamento tra la lista dei log e la view in cui essi devono essere mostrati
-     * @return  void
      */
     @Override
     public void setLogsAdapter(String [] stringLogs){

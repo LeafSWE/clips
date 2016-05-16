@@ -17,6 +17,7 @@ import com.leaf.clips.R;
  * presente (e conseguente impossibilità di scaricare la mappa dell'edificio rilevato).
  */
 public class BlankHomeFragment extends Fragment {
+
     /**
      * Costruttore di default. Richiesto dalla documentazione di {@link Fragment}.
      */
