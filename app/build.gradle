@@ -53,11 +53,11 @@ android {
 
             }
         }
-        androidTest {
+        /*androidTest {
             java {
-                exclude '**/presenter/**'
+                exclude '**//*presenter/**'
             }
-        }
+        }*/
     }
 }
 
@@ -78,6 +78,10 @@ dependencies {
 
     // Optional -- Mockito framework
     testCompile 'org.mockito:mockito-core:1.10.19'
+    // Per usare Mockito negli Instrumented Test
+    androidTestCompile 'org.mockito:mockito-core:1.10.19'
+    androidTestCompile "com.google.dexmaker:dexmaker:1.2"
+    androidTestCompile "com.google.dexmaker:dexmaker-mockito:1.2"
 
     // Android JUnit Runner
     androidTestCompile 'com.android.support.test:runner:0.5'
@@ -87,6 +91,8 @@ dependencies {
 
     // Espresso core
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    // Espresso intent
+    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
     // Espresso-web for WebView support
     androidTestCompile 'com.android.support.test.espresso:espresso-web:2.2.2'
     // Espresso-contrib for DatePicker, RecyclerView, Drawer actions, Accessibility checks, CountingIdlingResource
@@ -111,6 +117,8 @@ dependencies {
     compile 'junit:junit:4.12'
     compile 'org.jgrapht:jgrapht-core:0.9.1'
     compile 'com.google.dagger:dagger:2.0'
+
+    //Picasso
     compile 'com.squareup.picasso:picasso:2.5.2'
 }
 

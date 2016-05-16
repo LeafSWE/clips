@@ -113,7 +113,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                 //Trova il POI corrispondente al nome digitato
                 for(ListIterator<PointOfInterest> i = poiList.listIterator(); i.hasNext() && !found;){
                     PointOfInterest poi = i.next();
-                    if(poi.getName().equals(destinationPoiName)){
+                    if(poi.getName().toLowerCase().contains(destinationPoiName.toLowerCase())){
                         destinationPoi = poi;
                         found = true;
                     }
