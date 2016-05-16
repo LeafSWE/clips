@@ -82,27 +82,19 @@ public class HomeActivityTest {
         Mockito.verify(testView).setBuildingOpeningHours(Matchers.anyString());
     }
 
-   /* @Test
-    public void canIopenTheNavigationDrawerTest() throws Exception {
-        onView(withId(R.id.drawer_layout_home)).perform(DrawerActions.open());
-        onView(withId(R.id.drawer_layout_home)).check(matches(isOpen()));
+    @Test
+    public void arePoiCategoriesBeingUpdated() throws Exception{
 
+        testActivity.updatePoiCategoryList();
+
+        Mockito.verify(testView).setPoiCategoryListAdapter(Matchers.anyListOf(String.class));
     }
 
     @Test
-    public void canIclickTheExploreButton() throws Exception {
-        onView(withId(R.id.fab_explore_button)).check(matches(ViewMatchers.isEnabled()));
+    public void arePoiCategoriesBeingShowed() throws Exception{
+        Intents.init();
+        testActivity.showPoisCategory("Aule");
+        intended(hasComponent(PoiCategoryActivity.class.getName()));
+        Intents.release();
     }
-
-    @Test
-    public void doesFabOpensNearbyPoiActivity() throws Exception {
-        onView(withId(R.id.fab_explore_button)).perform(click());
-        intended(hasComponent("PoiCategoryActivity"));
-    }
-
-    @Test
-    public void canIopenMainDeveloperPresenterFromNavigationDrawer() throws Exception {
-        //TODO
-    }*/
-
 }
