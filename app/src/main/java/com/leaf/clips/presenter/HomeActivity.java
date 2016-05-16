@@ -1,9 +1,9 @@
 package com.leaf.clips.presenter;
 
 /**
- * @author Andrea Tombolato
- * @version 0.06
- * @since 0.04
+ * @author Federico Tavella
+ * @version 0.07
+ * @since 0.06
  */
 
 import android.Manifest;

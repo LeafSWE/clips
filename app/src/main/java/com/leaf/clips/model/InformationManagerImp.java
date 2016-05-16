@@ -1,7 +1,7 @@
 package com.leaf.clips.model;
 /**
  * @author Federico Tavella
- * @version 0.03
+ * @version 0.05
  * @since 0.00
  *
  *
@@ -23,6 +23,7 @@ import com.leaf.clips.model.usersetting.SettingImp;
 import junit.framework.Assert;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -141,7 +142,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         if(lastBeaconsSeen.isEmpty())
             throw new NoBeaconSeenException();
 
-        LinkedList<PointOfInterest> list = new LinkedList<>();
+        ArrayList<PointOfInterest> list = new ArrayList<>();
         list.addAll(map.getNearbyPOIs(lastBeaconsSeen.peek()));
         return list;
 
