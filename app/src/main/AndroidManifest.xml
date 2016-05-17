@@ -91,7 +91,6 @@
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
-
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.HomeActivity"/>
@@ -109,6 +108,9 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.DetailedInformationActivity"/>
         </activity>
+
+        <provider android:name=".presenter.SearchSuggestionsProvider"
+                  android:authorities="com.leaf.clips.presenter.SearchSuggestionsProvider" />
     </application>
 
 </manifest>
