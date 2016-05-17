@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NavigationListener;
@@ -97,6 +98,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
     private void handleIntent(Intent intent) {
         PointOfInterest destinationPoi = null;
         List<PointOfInterest> poiList = null;
+        poiId=-1;
         try {
             //TODO: Introdurre suggerimenti nella SearchBox
             poiList = (List<PointOfInterest>)informationManager.getBuildingMap().getAllPOIs();
@@ -104,12 +106,12 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
             //Se l'Intent è stato generato dalla SearchBox
             if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
                 String destinationPoiName = intent.getStringExtra(SearchManager.QUERY);
-
+                Log.d("RICERCA", "INIZIO");
                 boolean found = false;
                 //Trova il POI corrispondente al nome digitato
                 for(ListIterator<PointOfInterest> i = poiList.listIterator(); i.hasNext() && !found;){
                     PointOfInterest poi = i.next();
-                    if(poi.getName().toLowerCase().contains(destinationPoiName.toLowerCase())){
+                    if(poi.getName().toLowerCase().equals(destinationPoiName.toLowerCase())){
                         destinationPoi = poi;
                         found = true;
                     }
@@ -119,6 +121,8 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                 int destinationPOIid = getIntent().getIntExtra("poi_id",-1);
                 if(destinationPOIid != -1)
                     poiId = destinationPOIid;
+                else
+                    poiId = Integer.valueOf(getIntent().getDataString());
                 Log.d("DEST_POI_ID", Integer.toString(poiId));
 
                     boolean found = false;
@@ -131,11 +135,16 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                         }
                     }
             }
+            if(destinationPoi != null) {
+                Log.d("NAVIGAZIONE", "OK");
+                navigationManager.startNavigation(destinationPoi);
+                navigationInstruction = navigationManager.getAllNavigationInstruction();
+                view.setInstructionAdapter(navigationInstruction);
+            }else{
+                Toast.makeText(this,"Nessun Risultato",Toast.LENGTH_SHORT).show();
+                Log.d("NAVIGAZIONE", "NESSUN RISULTATO");
+            }
 
-            navigationManager.startNavigation(destinationPoi);
-            navigationInstruction = navigationManager.getAllNavigationInstruction();
-
-            view.setInstructionAdapter(navigationInstruction);
         } catch (NoBeaconSeenException e) {
             e.printStackTrace();
         } catch (NavigationExceptions navigationExceptions) {
