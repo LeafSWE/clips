@@ -455,10 +455,4 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         // TODO: 5/3/16
     }
 
-    /**
-     * Associa una lista di suggerimenti alla ricerca della destinazione.
-     */
-    public void enableSuggestions(){
-        // TODO: 5/3/16
-    }
 }
