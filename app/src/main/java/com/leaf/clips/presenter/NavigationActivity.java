@@ -141,7 +141,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                 navigationInstruction = navigationManager.getAllNavigationInstruction();
                 view.setInstructionAdapter(navigationInstruction);
             }else{
-                Toast.makeText(this,"Nessun Risultato",Toast.LENGTH_SHORT).show();
+                view.noResult();
                 Log.d("NAVIGAZIONE", "NESSUN RISULTATO");
             }
 
