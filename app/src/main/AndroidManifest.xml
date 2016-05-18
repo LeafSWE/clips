@@ -109,6 +109,16 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.DetailedInformationActivity"/>
         </activity>
+        <activity android:name=".presenter.PreferencesActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="com.leaf.clips.presenter.HomeActivity"/>
+        </activity>
+        <activity android:name=".presenter.HelpActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="com.leaf.clips.presenter.HomeActivity"/>
+        </activity>
     </application>
 
 </manifest>

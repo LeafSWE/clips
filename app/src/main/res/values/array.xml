@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="path_preferences">
+        <item>@string/default_path_preferences</item>
+        <item>@string/elevator_path_preferences</item>
+        <item>@string/stair_path_preferences</item>
+    </array>
+
+    <string-array name="instruction_preferences">
+        <item>@string/default_instruction_preferences</item>
+        <item>@string/tts_instruction_preferences</item>
+        <item>@string/sonar_instruction_prefereces</item>
+    </string-array>
+</resources>

@@ -91,6 +91,57 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
         beaconManager.setForegroundScanPeriod(1600);
         beaconManager.setRangeNotifier(this);
         beaconManager.bind(this);
+
+        /*new Thread(
+                new Runnable() {
+                    String minor = "0";
+            @Override
+            public void run() {
+
+                while(true){
+                    try {
+                        Thread.sleep(1*1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    LinkedList<Long> l = new LinkedList<Long>();
+                    l.add((long)0);
+                    l.add((long)0);
+                    l.add((long)0);
+                    l.add((long)0);
+                    l.add((long)0);
+                    l.add((long)0);
+                    l.add((long)0);
+                    l.add((long) 0);
+                    MyBeacon b = new MyBeaconImp(new Beacon.Builder()
+                            .setId1("f7826da6-4fa2-4e98-8024-bc5b71e0893e")
+                            .setId2("666").setId3(minor).setDataFields(l).build());
+                    PriorityQueue<MyBeacon> p = new PriorityQueue<>();
+
+                    p.add(b);
+
+                    Intent msg = new Intent("beaconsDetected");
+                    msg.putExtra("queueOfBeacons", p);
+                    LocalBroadcastManager.getInstance(BeaconManagerAdapter.this).sendBroadcast(msg);
+                    if (minor.equals("0"))
+                        minor = "1004";
+                    else if (minor.equals("1004"))
+                        minor = "1000";
+                    else if (minor.equals("1000"))
+                        minor = "1008";
+                    else
+                        minor = "0";
+                    try {
+                        if (minor.equals("0"))
+                            Thread.sleep(60*1000);
+                        else
+                            Thread.sleep(10*1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();*/
     }
 
     /**

@@ -7,8 +7,10 @@ package com.leaf.clips.presenter;
  */
 
 import android.app.SearchManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -87,7 +89,6 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
     }
 
 
-
     /**
      * @inheritDoc
      * @param intent {@link Intent} con il quale è stata avviata al corrente Activity.
@@ -142,6 +143,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
             if(destinationPoi!=null) {
                 navigationManager.startNavigation(destinationPoi);
                 navigationInstruction = navigationManager.getAllNavigationInstruction();
+                navigationManager.addListener(this);
                 view.setInstructionAdapter(navigationInstruction);
             }
         } catch (NoBeaconSeenException e) {
@@ -156,7 +158,42 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      * consigliato.
      */
     public void pathError(){
-        //TODO
+        stopNavigation();
+        Log.i("Removelistener", "pathError");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Percorso errato");
+        builder.setMessage("Sembra che tu abbia sbagliato percorso, vuoi ricalcolare il percorso?");
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setPositiveButton("Ricalcolo",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            List<PointOfInterest> poiList = (List<PointOfInterest>) informationManager.getBuildingMap().getAllPOIs();
+                            PointOfInterest destinationPoi = null;
+                            boolean found = false;
+                            //Trova il POI all'id scelto
+                            for (ListIterator<PointOfInterest> i = poiList.listIterator(); i.hasNext() && !found; ) {
+                                PointOfInterest poi = i.next();
+                                if (poi.getId() == poiId) {
+                                    destinationPoi = poi;
+                                    found = true;
+                                }
+                            }
+                            navigationManager.startNavigation(destinationPoi);
+                            navigationInstruction = navigationManager.getAllNavigationInstruction();
+                            navigationManager.addListener(NavigationActivity.this);
+                            view.setInstructionAdapter(navigationInstruction);
+                        } catch (NoBeaconSeenException e){}
+                        catch (NavigationExceptions e){}
+                    }
+                });
+        builder.setNegativeButton("Torna alla home",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        NavigationActivity.this.startActivity(new Intent(NavigationActivity.this, HomeActivity.class));
+                    }
+                });
+        builder.create().show();
     }
 
     /**
@@ -164,7 +201,20 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      * @param info: istruzioni di navigazione utili per attraversare il prossimo arco.
      */
     public void informationUpdate(ProcessedInformation info){
-        //TODO
+        Log.i("informationUpdate", info.getProcessedBasicInstruction());
+        int i = 0;
+        boolean found = false;
+        while (i<navigationInstruction.size() && !found) {
+            if (info.getProcessedBasicInstruction().equals(navigationInstruction.get(i)
+                    .getProcessedBasicInstruction()))
+                found = true;
+            else
+                i++;
+        }
+        Log.i("informationUpdate", i + "");
+        //view.refreshInstructions(i);
+        if(found)
+            view.refreshInstructions(i);
     }
 
     /**
@@ -195,7 +245,9 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      * Metodo che interrompe la navigazione in corso.
      */
     public void stopNavigation(){
-        //TODO
+        Log.i("Removelistener", "stopNavigation");
+        navigationManager.removeListener(this);
+        navigationManager.stopNavigation();
     }
 
     @Override

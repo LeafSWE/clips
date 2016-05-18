@@ -64,6 +64,7 @@ public class RegionOfInterestImp extends VertexImp implements RegionOfInterest {
      */
     @Override
     public boolean contains(MyBeacon beacon){
+
         if((beacon.getMajor() == this.major) && (beacon.getMinor() == this.minor) && (beacon.getUUID().equals(this.uuid)))
             return true;
         else

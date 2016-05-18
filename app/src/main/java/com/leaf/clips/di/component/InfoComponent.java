@@ -15,6 +15,7 @@ import com.leaf.clips.presenter.MainDeveloperPresenter;
 import com.leaf.clips.presenter.NavigationActivity;
 import com.leaf.clips.presenter.NearbyPoiActivity;
 import com.leaf.clips.presenter.PoiCategoryActivity;
+import com.leaf.clips.presenter.PreferencesActivity;
 
 import javax.inject.Singleton;
 
@@ -95,4 +96,9 @@ public interface InfoComponent {
      */
     void inject(LoggingActivity loggingActivity);
 
+    /**
+     * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo PreferencesActivity
+     * @param preferenceActivity Oggetto in cui devono essere iniettate le dipendenze
+     */
+    void inject(PreferencesActivity preferenceActivity);
 }

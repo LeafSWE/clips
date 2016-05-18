@@ -99,6 +99,9 @@ public class NavigationAdapter extends BaseAdapter {
         TextView distance = (TextView)convertView.findViewById(R.id.textView_distance);
         distance.setText(navigationInformation.getDistance());
 
+        if (position == 0)
+            convertView.setBackgroundColor(convertView.getResources().getColor(R.color.green));
+
         return  convertView;
     }
 
@@ -124,9 +127,12 @@ public class NavigationAdapter extends BaseAdapter {
                 break;
             case 6: image.setBackgroundResource(R.drawable.arrow_elevator_down);
                 break;
+            case 9: image.setBackgroundResource(R.drawable.destination);
             default: Log.d("DIRECTION_ARRAY_ERR","Non esiste una rappresentazione grafica per questa direzione");
                 break;
         }
 
     }
+
+
 }

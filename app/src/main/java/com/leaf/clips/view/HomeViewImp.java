@@ -19,8 +19,10 @@ import android.view.View;
 
 import com.leaf.clips.R;
 import com.leaf.clips.presenter.CompleteHomeFragment;
+import com.leaf.clips.presenter.HelpActivity;
 import com.leaf.clips.presenter.HomeActivity;
 import com.leaf.clips.presenter.MainDeveloperPresenter;
+import com.leaf.clips.presenter.PreferencesActivity;
 
 import java.util.List;
 
@@ -154,11 +156,15 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-
+        Intent intent = null;
         if (id == R.id.nav_developer) {
-            Intent intent = new Intent(homeActivity, MainDeveloperPresenter.class);
-            homeActivity.startActivity(intent);
+            intent = new Intent(homeActivity, MainDeveloperPresenter.class);
+        } else if (id == R.id.settings) {
+            intent = new Intent(homeActivity, PreferencesActivity.class);
+        } else if (id == R.id.help) {
+            intent = new Intent(homeActivity, HelpActivity.class);
         }
+        homeActivity.startActivity(intent);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

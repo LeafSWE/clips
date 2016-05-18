@@ -1,5 +1,6 @@
 package com.leaf.clips.view;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -62,13 +63,26 @@ public class NavigationViewImp implements NavigationView {
 
         listView.setAdapter(instructionAdapter);
 
-    }
+
+        /*int i = listView.getFirstVisiblePosition();
+        listView.getChildAt(i).setBackgroundColor(presenter.getResources().getColor(R.color.green));
+        for (int j = i+1 ; j< listView.getCount(); j++)
+            listView.getChildAt(j).setBackgroundColor(presenter.getResources().getColor(R.color.backroundGrey));
+    */}
 
     /**
      * @inheritDoc
      */
     @Override
     public void refreshInstructions() {
-        //TODO
+    }
+
+    @Override
+    public void refreshInstructions(int i) {
+        Log.i("informationUpdate", "refresh:" + i);
+        ListView listView = (ListView) presenter.findViewById(R.id.view_instruction_list);
+        listView.getChildAt(i).setBackgroundColor(presenter.getResources().getColor(R.color.green));
+        for(int j = 0; j < i; j++)
+            listView.getChildAt(j).setBackgroundColor(presenter.getResources().getColor(R.color.backroundGrey));
     }
 }
