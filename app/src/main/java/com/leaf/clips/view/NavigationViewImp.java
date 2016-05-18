@@ -65,4 +65,9 @@ public class NavigationViewImp implements NavigationView {
     public void refreshInstructions() {
         //TODO
     }
+
+    @Override
+    public void noResult(){
+        presenter.setContentView(R.layout.activity_navigation_error);
+    }
 }
