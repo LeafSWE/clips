@@ -57,8 +57,10 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
 
     /**
      * Rappresenta una stringa che identifica la marca del Beacon o del protocollo
+     * Per informazioni sui dati dei beacon https://support.kontakt.io/hc/en-gb/articles/201492522-Scan-response-packet-structure
+     * offset campo d 24
      */
-    private static String beaconLayout = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"; //AltBeacon beacons
+    private static String beaconLayout = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:47-47";//AltBeacon beacons
 
     /**
      * Insieme dei periodi di scan del BeaconManager
@@ -86,9 +88,9 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
         region = new Region("Region", Identifier.fromUuid(uuid), null, null);
         periods = new HashMap<>();
         setMonitorNotifier(this);
-        BeaconManager.setRegionExitPeriod(1000);
-        beaconManager.setForegroundBetweenScanPeriod(800);
-        beaconManager.setForegroundScanPeriod(1600);
+        BeaconManager.setRegionExitPeriod(500);
+        beaconManager.setForegroundBetweenScanPeriod(500);
+        beaconManager.setForegroundScanPeriod(1000);
         beaconManager.setRangeNotifier(this);
         beaconManager.bind(this);
 

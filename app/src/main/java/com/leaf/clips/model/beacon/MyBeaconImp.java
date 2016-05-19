@@ -123,7 +123,6 @@ public class MyBeaconImp extends Beacon implements MyBeacon, Comparable {
         s += "Distance: " + getDistance() + "\n";
         s += "Beacon type code" + getBeaconTypeCode() + "\n";
         s += "Bluetooth address: " + getBluetoothAddress();
-
         return s;
     }
 
