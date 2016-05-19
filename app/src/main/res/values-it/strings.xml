@@ -56,4 +56,6 @@
         Controlla la connessione a internet e riprova</string>
     <string name="retry_alert_help">Riprova</string>
     <string name="cancel_alert_help">Annulla</string>
+
+    <string name="no_result_found">Nessun risultato</string>
 </resources>

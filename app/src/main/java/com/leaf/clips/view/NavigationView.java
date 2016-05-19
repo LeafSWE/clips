@@ -29,4 +29,6 @@ public interface NavigationView {
      * Ricarica le istruzioni.
      */
     void refreshInstructions(int i);
+
+    public void noResult();
 }

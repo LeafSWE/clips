@@ -68,7 +68,6 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         FragmentManager fragmentManager = getSupportFragmentManager();
         super.onCreate(savedInstanceState);
         view = new HomeViewImp(this,fragmentManager);
-
         if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M ){
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -96,6 +95,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                 }
             }
         }
+        checkStoragePermissions();
     }
 
     /**
@@ -105,9 +105,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     @Override
     protected void onResume() {
         super.onResume();
-
         informationManager.addListener(this);
-
         try {
             informationManager.getBuildingMap();
             onDatabaseLoaded();
@@ -148,7 +146,6 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
 
             builder.create().show();
         }
-        checkStoragePermissions();
     }
 
     /**
@@ -464,10 +461,4 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         // TODO: 5/3/16
     }
 
-    /**
-     * Associa una lista di suggerimenti alla ricerca della destinazione.
-     */
-    public void enableSuggestions(){
-        // TODO: 5/3/16
-    }
 }
