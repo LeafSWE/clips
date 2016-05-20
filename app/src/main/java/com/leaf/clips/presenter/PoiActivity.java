@@ -39,7 +39,7 @@ public class PoiActivity extends AppCompatActivity {
     /**
      * View associata a tale Activity 
      */
-    private PoiCategoryView view;
+    private PoiActivityView view;
 
     /**
      *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
@@ -51,7 +51,7 @@ public class PoiActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        view = new PoiCategoryViewImp(this);
+        view = new PoiActivityViewImp(this);
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
 
         String chosenCategoryName = getIntent().getStringExtra("category_name");
@@ -70,12 +70,12 @@ public class PoiActivity extends AppCompatActivity {
     }
     
     /**
-     * Matodo che recupera l'id del POI scelto e lo passa a NavigationActivity, in modo che essa
-     * possa autonomamente recuperare il POI scelto e calcolare il percorso.
-     * @param selectedPoi POI da raggiungere selezionato tramite la View
+     * Matodo che recupera l'id del POI scelto e lo passa a DescriptionPoiActivity, in modo che essa
+     * possa visualizzare la descrizione del Poi scelto.
+     * @param selectedPoi POI di cui visualizzare la descrizione
      */
-    public void startNavigation(int selectedPoi){
-        Intent intent = new Intent(this, NavigationActivity.class);
+    public void showDescription(int selectedPoi){
+        Intent intent = new Intent(this, DescriptionPoiActivity.class);
 
         if(poiList != null){
             int chosenPoiId = poiList.get(selectedPoi).getId();
