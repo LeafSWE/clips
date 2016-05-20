@@ -22,6 +22,7 @@ import com.leaf.clips.presenter.CompleteHomeFragment;
 import com.leaf.clips.presenter.HelpActivity;
 import com.leaf.clips.presenter.HomeActivity;
 import com.leaf.clips.presenter.MainDeveloperPresenter;
+import com.leaf.clips.presenter.PoiActivity;
 import com.leaf.clips.presenter.PreferencesActivity;
 
 import java.util.List;

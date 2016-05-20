@@ -7,34 +7,60 @@ package com.leaf.clips.view;
 * 
 */
 
-/** 
-*Classe che si occupa di mostrare la lista dei POI relativi ad una certa categoria. La UI legata a questa classe permette all'utente di accedere alle informazioni di un certo POI appartenente alla categoria.
-*/ 
-public class PoiViewImp implements PoiView { 
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
-/** 
-* View che permette di visualizzare la lista delle categorie di POI 
-*/
-private ListView pois;
+import com.leaf.clips.R;
+import com.leaf.clips.presenter.PoiActivity;
 
-/** 
-* Presenter della View 
-*/
-private PoiCategoryActivity presenter;
+import java.util.List;
 
 /**
-* Costruttore della classe PoiCategoryViewImp
-* @param presenter Presenter della View che viene creata
-*/
-public PoiCategoryViewImp(PoiCategoryActivity presenter);
+    *Classe che si occupa di mostrare la lista dei POI relativi ad una certa categoria. La UI legata a questa classe permette all'utente di accedere alle informazioni di un certo POI appartenente alla categoria.
+    */
+    public class PoiViewImp implements PoiView {
 
-/**
-* Metodo utilizzato per visualizzare tutti i POI appartenenti ad una certa categoria
-* @param adapter Collegamento tra la lista delle categorie dei POI e la view in cui essi devono essere mostrati
-* @return  void
-*/
-@Override 
-public void setPoiListAdapter(ListAdapter adapter);
+    /**
+    * View che permette di visualizzare la lista delle categorie di POI
+    */
+    private ListView pois;
+
+    /**
+    * Presenter della View
+    */
+    private PoiActivity presenter;
+
+    /**
+    * Costruttore della classe PoiViewImp
+    * @param presenter Presenter della View che viene creata
+    */
+    public PoiViewImp(PoiActivity presenter){
+        this.presenter = presenter;
+        presenter.setContentView(R.layout.activity_all_poi);
+
+        pois = (ListView)presenter.findViewById(R.id.poi_list);
+
+        //Imposta il Listener sulla lista di categorie
+        pois.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                presenter.showDescription(position);
+            }
+        });
+    }
+
+    /**
+     * Metodo utilizzato per visualizzare tutti i POI
+     * @param poiList lista di stringhe che rappresentano tutti i POI
+     */
+    public void setPoiListAdapter(List<String> poiList){
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(presenter,android.R.layout.simple_list_item_1,poiList);
+
+        pois.setAdapter(adapter);
+    }
 
 }
 
