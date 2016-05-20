@@ -163,6 +163,8 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
             intent = new Intent(homeActivity, PreferencesActivity.class);
         } else if (id == R.id.help) {
             intent = new Intent(homeActivity, HelpActivity.class);
+        } else if (id == R.id.allpois) {
+            intent = new Intent(homeActivity, PoiActivity.class);
         }
         homeActivity.startActivity(intent);
         drawer.closeDrawer(GravityCompat.START);

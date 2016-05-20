@@ -14,6 +14,11 @@
                 android:id="@+id/help"
                 android:icon="@drawable/icon_help"
                 android:title="@string/help"/>
+
+        <item
+                android:id="@+id/allpois"
+                android:icon="@drawable/icon_all_pois"
+                android:title="@string/help"/>
     </group>
 
 </menu>
