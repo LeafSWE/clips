@@ -18,7 +18,7 @@
         <item
                 android:id="@+id/allpois"
                 android:icon="@drawable/icon_all_pois"
-                android:title="@string/help"/>
+                android:title="@string/all_pois"/>
     </group>
 
 </menu>

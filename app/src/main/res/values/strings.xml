@@ -66,4 +66,6 @@
         Check your internet connectivity and try again</string>
     <string name="retry_alert_help">Retry</string>
     <string name="cancel_alert_help">Cancel</string>
+
+    <string name="all_pois">All places</string>
 </resources>
