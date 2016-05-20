@@ -10,7 +10,6 @@ package com.leaf.clips.view;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.leaf.clips.R;
@@ -50,6 +49,8 @@ import java.util.List;
                 //presenter.showDescription(position);
             }
         });
+
+        presenter.setTitle(R.string.all_pois);
     }
 
     /**

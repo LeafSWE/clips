@@ -58,4 +58,6 @@
     <string name="cancel_alert_help">Annulla</string>
 
     <string name="no_result_found">Nessun risultato</string>
+
+    <string name="all_pois">Tutti i luoghi</string>
 </resources>
