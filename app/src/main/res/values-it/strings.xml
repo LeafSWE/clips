@@ -60,4 +60,10 @@
     <string name="no_result_found">Nessun risultato</string>
 
     <string name="all_pois">Tutti i luoghi</string>
+
+    <string name="name">Nome</string>
+    <string name="floor">Piano</string>
+    <string name="ground_floor">Piano terra</string>
+    <string name="category">Categoria</string>
+    <string name="description">Descrizione</string>
 </resources>

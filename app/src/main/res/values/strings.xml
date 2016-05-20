@@ -68,4 +68,12 @@
     <string name="cancel_alert_help">Cancel</string>
 
     <string name="all_pois">All places</string>
+
+    <!--for description-->
+    <string name="name">Name</string>
+    <string name="floor">Floor</string>
+    <string name="ground_floor">Ground floor</string>
+    <string name="category">Category</string>
+    <string name="description">Description</string>
+
 </resources>
