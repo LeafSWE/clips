@@ -47,7 +47,7 @@ import java.util.List;
         pois.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                presenter.showDescription(position);
+                //presenter.showDescription(position);
             }
         });
     }
