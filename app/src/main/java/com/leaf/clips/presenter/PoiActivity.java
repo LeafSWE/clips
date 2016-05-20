@@ -12,8 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
-import com.leaf.clips.view.PoiCategoryView;
-import com.leaf.clips.view.PoiCategoryViewImp;
+import com.leaf.clips.view.PoiView;
+import com.leaf.clips.view.PoiViewImp;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class PoiActivity extends AppCompatActivity {
     /**
      * View associata a tale Activity 
      */
-    private PoiActivityView view;
+    private PoiView view;
 
     /**
      *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
@@ -51,7 +51,7 @@ public class PoiActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        view = new PoiActivityViewImp(this);
+        view = new PoiViewImp(this);
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
 
         String chosenCategoryName = getIntent().getStringExtra("category_name");
@@ -75,12 +75,12 @@ public class PoiActivity extends AppCompatActivity {
      * @param selectedPoi POI di cui visualizzare la descrizione
      */
     public void showDescription(int selectedPoi){
-        Intent intent = new Intent(this, DescriptionPoiActivity.class);
+        /*Intent intent = new Intent(this, DescriptionPoiActivity.class);
 
         if(poiList != null){
             int chosenPoiId = poiList.get(selectedPoi).getId();
             intent.putExtra("poi_id",chosenPoiId);
             startActivity(intent);
-        }
+        }*/
     }
 }
