@@ -7,17 +7,18 @@ package com.leaf.clips.view;
 * 
 */
 
-/** 
-*Interfaccia che espone i metodi per aggiornare la UI contenente la lista dei POI appartenenti ad una data categoria
-*/ 
-public interface PoiView { 
+import java.util.List;
 
 /**
-* Metodo utilizzato per visualizzare tutti i POI appartenenti ad una certa categoria
-* @param adapter Collegamento tra la lista delle categorie dei POI e la view in cui essi devono essere mostrati
-* @return  void
-*/
- void setPoiListAdapter(ListAdapter adapter);
+*Interfaccia che espone i metodi per aggiornare la UI contenente la lista dei POI appartenenti ad una data categoria
+*/ 
+public interface PoiView {
+
+ /**
+  * Metodo utilizzato per visualizzare tutti i POI
+  * @param poiList lista di stringhe che rappresentano tutti i POI
+  */
+ void setPoiListAdapter(List<String> poiList);
 
 }
 
