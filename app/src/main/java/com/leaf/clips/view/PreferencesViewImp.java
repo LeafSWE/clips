@@ -43,6 +43,7 @@ public class PreferencesViewImp implements PreferencesView, SharedPreferences.On
         presenter.getFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, preferenceFragment)
                 .commit();
+
     }
 
     // TODO: 17/05/16 aggiungere tracy/uml se va bene

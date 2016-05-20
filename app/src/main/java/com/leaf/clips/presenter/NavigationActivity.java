@@ -147,6 +147,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                 Log.d("NAVIGAZIONE", "OK");
                 navigationManager.startNavigation(destinationPoi);
                 navigationInstruction = navigationManager.getAllNavigationInstruction();
+                navigationManager.addListener(this);
                 view.setInstructionAdapter(navigationInstruction);
             }else{
                 view.noResult();

@@ -41,6 +41,12 @@ public class PreferencesActivity extends AppCompatActivity {
         view = new PreferencesViewImp(this);
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        view.setPreferences(R.xml.preferences);
+    }
+
     // TODO: 17/05/16 se va bene aggiungere tracy/uml
     /**
      * Metodo che viene invocato ogni volta che si accede all'activity. Ha il compito di impostare le
@@ -49,7 +55,6 @@ public class PreferencesActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        view.setPreferences(R.xml.preferences);
     }
 
     /**

@@ -85,12 +85,12 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
         beaconManager.getBeaconParsers().clear();
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(beaconLayout));
         UUID uuid = UUID.fromString("f7826da6-4fa2-4e98-8024-bc5b71e0893e");
-        region = new Region("Region", Identifier.fromUuid(uuid), null, null);
+        region = new Region("Region", Identifier.fromUuid(uuid), Identifier.fromInt(666), null);
         periods = new HashMap<>();
         setMonitorNotifier(this);
-        BeaconManager.setRegionExitPeriod(500);
-        beaconManager.setForegroundBetweenScanPeriod(500);
-        beaconManager.setForegroundScanPeriod(1000);
+        BeaconManager.setRegionExitPeriod(2000);
+        beaconManager.setForegroundBetweenScanPeriod(10);
+        beaconManager.setForegroundScanPeriod(1800);
         beaconManager.setRangeNotifier(this);
         beaconManager.bind(this);
 

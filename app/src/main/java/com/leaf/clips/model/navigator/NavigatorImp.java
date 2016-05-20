@@ -177,7 +177,14 @@ public class NavigatorImp implements Navigator {
             result.add(new ProcessedInformationImp());
             return result;
         } else {
-            throw new NoNavigationInformationException();
+            if (buildingGraph==null)
+                throw new NoNavigationInformationException();
+            else{
+                List<ProcessedInformation> result = new ArrayList<>();
+                result.add(new ProcessedInformationImp());
+                return result;
+            }
+
         }
     }
 
@@ -315,19 +322,22 @@ public class NavigatorImp implements Navigator {
         MyBeacon beacon = getMostPowerfulBeacon(visibleBeacons);
         Log.i("MostPowBeacon", beacon.toString());
         Iterator<EnrichedEdge> newIt = path.iterator();
-        EnrichedEdge e = newIt.next();
-        while (newIt.hasNext() && !e.getStarterPoint().contains(beacon))
-            e = newIt.next();
-        Log.i("MostPowBeacon", e.getStarterPoint().getMinor()+"");
-        if (e.getStarterPoint().contains(beacon)) {
-            return new ProcessedInformationImp(e);
-        }
-        else {
-            if(!newIt.hasNext() && e.getEndPoint().contains(beacon)){
-                return new ProcessedInformationImp();
+        if (newIt.hasNext()) {
+            EnrichedEdge e = newIt.next();
+            while (newIt.hasNext() && !e.getStarterPoint().contains(beacon))
+                e = newIt.next();
+            Log.i("MostPowBeacon", e.getStarterPoint().getMinor() + "");
+            if (e.getStarterPoint().contains(beacon)) {
+                return new ProcessedInformationImp(e);
             } else {
-                throw new PathException();
+                if (!newIt.hasNext() && e.getEndPoint().contains(beacon)) {
+                    return new ProcessedInformationImp();
+                } else {
+                    throw new PathException();
+                }
             }
+        } else {
+            return new ProcessedInformationImp();
         }
     }
 
