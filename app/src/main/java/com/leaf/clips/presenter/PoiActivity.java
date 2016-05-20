@@ -9,7 +9,6 @@ package com.leaf.clips.presenter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NoBeaconSeenException;
@@ -63,7 +62,6 @@ public class PoiActivity extends AppCompatActivity {
                 String poiName = poi.getName();
                 poiNames.add(poiName);
             }
-
             view.setPoiListAdapter(poiNames);
         } catch (NoBeaconSeenException e) {
             e.printStackTrace();
