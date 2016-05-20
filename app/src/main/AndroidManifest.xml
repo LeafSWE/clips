@@ -124,6 +124,12 @@
                     android:value="com.leaf.clips.presenter.HomeActivity"/>
         </activity>
 
+        <activity android:name=".presenter.PoiDescriptionActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="com.leaf.clips.presenter.PoiActivity"/>
+        </activity>
+
         <provider android:name=".presenter.SearchSuggestionsProvider"
                   android:authorities="com.leaf.clips.presenter.SearchSuggestionsProvider" />
     </application>

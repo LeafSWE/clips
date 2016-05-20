@@ -9,6 +9,7 @@ package com.leaf.clips.presenter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NoBeaconSeenException;
@@ -57,17 +58,18 @@ public class PoiActivity extends AppCompatActivity {
 
         try {
             poiList = (List<PointOfInterest>) informationManager.getBuildingMap().getAllPOIs();
+            List<String> poiNames = new LinkedList<>();
+            for (PointOfInterest poi: poiList) {
+                String poiName = poi.getName();
+                poiNames.add(poiName);
+            }
+
+            view.setPoiListAdapter(poiNames);
         } catch (NoBeaconSeenException e) {
             e.printStackTrace();
         }
 
-        List<String> poiNames = new LinkedList<>();
-        for (PointOfInterest poi: poiList) {
-            String poiName = poi.getName();
-            poiNames.add(poiName);
-        }
 
-        view.setPoiListAdapter(poiNames);
     }
     
     /**
@@ -76,12 +78,13 @@ public class PoiActivity extends AppCompatActivity {
      * @param selectedPoi POI di cui visualizzare la descrizione
      */
     public void showDescription(int selectedPoi){
-        /*Intent intent = new Intent(this, DescriptionPoiActivity.class);
+        Intent intent = new Intent(this, PoiDescriptionActivity.class);
 
         if(poiList != null){
             int chosenPoiId = poiList.get(selectedPoi).getId();
             intent.putExtra("poi_id",chosenPoiId);
+
             startActivity(intent);
-        }*/
+        }
     }
 }

@@ -9,6 +9,8 @@ package com.leaf.clips.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -319,7 +321,11 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
                 asyncUpdateControl.execute(major);
                 boolean isUpdate = false;
                 try {
-                    isUpdate = asyncUpdateControl.get();
+                    ConnectivityManager connectivityManager =
+                            (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+                    if (networkInfo != null && networkInfo.isConnected())
+                        isUpdate = asyncUpdateControl.get();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {

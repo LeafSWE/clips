@@ -16,6 +16,7 @@ import com.leaf.clips.presenter.NavigationActivity;
 import com.leaf.clips.presenter.NearbyPoiActivity;
 import com.leaf.clips.presenter.PoiActivity;
 import com.leaf.clips.presenter.PoiCategoryActivity;
+import com.leaf.clips.presenter.PoiDescriptionActivity;
 import com.leaf.clips.presenter.PreferencesActivity;
 import com.leaf.clips.presenter.SearchSuggestionsProvider;
 
@@ -115,4 +116,6 @@ public interface InfoComponent {
      * @param poiActivity Oggetto in cui devono essere iniettate le dipendenze
      */
     void inject(PoiActivity poiActivity);
+
+    void inject(PoiDescriptionActivity poiDescriptionActivity);
 }
