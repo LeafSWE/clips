@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.leaf.clips.model.InformationManager;
+import com.leaf.clips.model.NoBeaconSeenException;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.view.PoiView;
 import com.leaf.clips.view.PoiViewImp;
@@ -54,11 +55,11 @@ public class PoiActivity extends AppCompatActivity {
         view = new PoiViewImp(this);
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
 
-        String chosenCategoryName = getIntent().getStringExtra("category_name");
-
-        setTitle(chosenCategoryName);
-
-        poiList = (List<PointOfInterest>) informationManager.getPOIsByCategory(chosenCategoryName);
+        try {
+            poiList = (List<PointOfInterest>) informationManager.getBuildingMap().getAllPOIs();
+        } catch (NoBeaconSeenException e) {
+            e.printStackTrace();
+        }
 
         List<String> poiNames = new LinkedList<>();
         for (PointOfInterest poi: poiList) {
