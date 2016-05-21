@@ -56,6 +56,8 @@
         Controlla la connessione a internet e riprova</string>
     <string name="retry_alert_help">Riprova</string>
     <string name="cancel_alert_help">Annulla</string>
+    <string name="navigation_internet_alert">Internet non disponibile. La mappa dell'edificio può
+        essere non aggiornata e il percorso presentato non corretto</string>
 
     <string name="no_result_found">Nessun risultato</string>
 

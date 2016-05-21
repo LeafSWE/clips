@@ -7,13 +7,17 @@ package com.leaf.clips.presenter;
  */
 
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.leaf.clips.R;
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NavigationListener;
 import com.leaf.clips.model.NavigationManager;
@@ -86,6 +90,24 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         else
             handleIntent(getIntent());
         Log.i("state%", "ONCREATE" + poiId);
+
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (!(networkInfo != null && networkInfo.isConnected())){
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+            alertBuilder.setTitle(R.string.no_connection_title_alert_help);
+            alertBuilder.setMessage(R.string.no_connection_message_alert_help);
+            alertBuilder.setIcon(android.R.drawable.ic_dialog_alert);
+            alertBuilder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //
+                }
+            });
+            alertBuilder.create().show();
+        }
+
     }
 
 

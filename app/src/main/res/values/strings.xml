@@ -66,6 +66,8 @@
         Check your internet connectivity and try again</string>
     <string name="retry_alert_help">Retry</string>
     <string name="cancel_alert_help">Cancel</string>
+    <string name="navigation_internet_alert">Internet not available. The map of the building could
+        be not updated and the path showed not correct</string>
 
     <string name="all_pois">All places</string>
 
