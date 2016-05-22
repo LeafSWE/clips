@@ -7,17 +7,13 @@ package com.leaf.clips.presenter;
  */
 
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.leaf.clips.R;
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NavigationListener;
 import com.leaf.clips.model.NavigationManager;
@@ -91,7 +87,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
             handleIntent(getIntent());
         Log.i("state%", "ONCREATE" + poiId);
 
-        ConnectivityManager connectivityManager =
+       /* ConnectivityManager connectivityManager =
                 (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (!(networkInfo != null && networkInfo.isConnected())){
@@ -106,7 +102,8 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                 }
             });
             alertBuilder.create().show();
-        }
+        }*/
+        new NoInternetAlert().showIfNoConnection(this);
 
     }
 

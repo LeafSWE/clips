@@ -324,21 +324,28 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
                     ConnectivityManager connectivityManager =
                             (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
                     NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-                    if (networkInfo != null && networkInfo.isConnected())
+                    if (networkInfo != null && networkInfo.isConnected()) {
                         isUpdate = asyncUpdateControl.get();
+                        if (!isUpdate) {
+                            for (Listener listener : listeners) {
+                                ((InformationListener) listener).noLastMapVersion();
+                            }
+                        } else {
+                            map = dbService.findBuildingByMajor(major);
+                            for (Listener listener : listeners)
+                                ((InformationListener) listener).onDatabaseLoaded();
+                        }
+                    } else {
+                        for (Listener listener : listeners)
+                            ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
+                        map = dbService.findBuildingByMajor(major);
+                        for (Listener listener : listeners)
+                            ((InformationListener) listener).onDatabaseLoaded();
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
-                }
-                if (!isUpdate) {
-                    for (Listener listener : listeners) {
-                        ((InformationListener) listener).noLastMapVersion();
-                    }
-                } else {
-                    map = dbService.findBuildingByMajor(major);
-                    for (Listener listener : listeners)
-                        ((InformationListener) listener).onDatabaseLoaded();
                 }
             } else {
                 for (Listener listener : listeners)
