@@ -59,7 +59,7 @@ import java.util.List;
      * @param poiList lista di stringhe che rappresentano tutti i POI
      */
     public void setPoiListAdapter(List<String> poiList){
-        Collections.sort(poiList);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(presenter,android.R.layout.simple_list_item_1,poiList);
 
         pois.setAdapter(adapter);

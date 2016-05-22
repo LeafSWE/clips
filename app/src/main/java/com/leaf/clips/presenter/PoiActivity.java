@@ -16,6 +16,8 @@ import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.view.PoiView;
 import com.leaf.clips.view.PoiViewImp;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -62,6 +64,13 @@ public class PoiActivity extends AppCompatActivity {
                 String poiName = poi.getName();
                 poiNames.add(poiName);
             }
+            Collections.sort(poiList, new Comparator<PointOfInterest>() {
+                @Override
+                public int compare(PointOfInterest lhs, PointOfInterest rhs) {
+                    return lhs.getName().compareTo(rhs.getName());
+                }
+            });
+            Collections.sort(poiNames);
             view.setPoiListAdapter(poiNames);
         } catch (NoBeaconSeenException e) {
             e.printStackTrace();
