@@ -101,7 +101,14 @@ public class NavigationAdapter extends BaseAdapter {
 
         if (position == 0)
             convertView.setBackgroundColor(convertView.getResources().getColor(R.color.green));
-
+        Log.i("NAVADP", ""+getCount());
+        if (position == getCount()-1)
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //tap on last instruction do nothing
+                }
+            });
         return  convertView;
     }
 

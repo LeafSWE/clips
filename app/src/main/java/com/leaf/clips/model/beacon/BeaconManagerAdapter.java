@@ -17,6 +17,7 @@ import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
+import org.altbeacon.beacon.Identifier;
 import org.altbeacon.beacon.MonitorNotifier;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
@@ -84,8 +85,8 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
         beaconManager.getBeaconParsers().clear();
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(beaconLayout));
         UUID uuid = UUID.fromString("19235dd2-574a-4702-a42e-caccac06e325");
-        //region = new Region("Region", Identifier.fromUuid(uuid), Identifier.fromInt(666), null);
-        region = new Region("Region", null, null, null);
+        region = new Region("Region", Identifier.fromUuid(uuid), null, null);
+        //region = new Region("Region", null, null, null);
         periods = new HashMap<>();
         setMonitorNotifier(this);
         BeaconManager.setRegionExitPeriod(2000);
