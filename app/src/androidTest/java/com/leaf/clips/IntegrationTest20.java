@@ -39,6 +39,8 @@ import java.lang.reflect.Field;
  * @version 0.01
  * @since 0.01
  */
+
+/*forse questo test può valere anche per 19 e 18*/
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class IntegrationTest20 extends InstrumentationTestCase {
