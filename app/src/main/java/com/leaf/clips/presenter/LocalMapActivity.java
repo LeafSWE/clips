@@ -8,9 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.leaf.clips.R;
+import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 import com.leaf.clips.model.dataaccess.service.DatabaseService;
 import com.leaf.clips.view.LocalMapManagerView;
 import com.leaf.clips.view.LocalMapManagerViewImp;
+
+import java.util.Collection;
 
 import javax.inject.Inject;
 
@@ -20,9 +23,9 @@ import javax.inject.Inject;
 
 public class LocalMapActivity extends AppCompatActivity {
 
-    // TODO: 5/24/16 Aggiungere Asta + Tracy 
+    // TODO: 5/24/16 Aggiungere Asta + Tracy
     @Inject
-    private DatabaseService databaseService;
+    DatabaseService databaseService;
     /**
      * View associata a tale Activity
      */
@@ -43,7 +46,15 @@ public class LocalMapActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
+        ((MyApplication)getApplication()).getInfoComponent().inject(this);
         view = new LocalMapManagerViewImp(this);
+
+        Collection<BuildingTable> buildingTable = databaseService.findAllBuildings();
+
+        for (BuildingTable buildingTableElement : buildingTable){
+
+            buildingTableElement.getDescription();
+        }
     }
 
 
