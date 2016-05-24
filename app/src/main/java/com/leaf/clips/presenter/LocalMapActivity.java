@@ -8,8 +8,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.leaf.clips.R;
+import com.leaf.clips.model.dataaccess.service.DatabaseService;
 import com.leaf.clips.view.LocalMapManagerView;
 import com.leaf.clips.view.LocalMapManagerViewImp;
+
+import javax.inject.Inject;
 
 /**
  *Classe che estende AppCompactActivity e per la gestione dell'interazione tra LocalMapView ed il model
@@ -17,6 +20,9 @@ import com.leaf.clips.view.LocalMapManagerViewImp;
 
 public class LocalMapActivity extends AppCompatActivity {
 
+    // TODO: 5/24/16 Aggiungere Asta + Tracy 
+    @Inject
+    private DatabaseService databaseService;
     /**
      * View associata a tale Activity
      */
