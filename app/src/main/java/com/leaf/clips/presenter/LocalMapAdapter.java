@@ -1,10 +1,12 @@
 package com.leaf.clips.presenter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.leaf.clips.R;
 import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 import com.leaf.clips.model.dataaccess.service.DatabaseService;
 
@@ -50,6 +52,11 @@ public class LocalMapAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+        if(convertView == null){
+            convertView = LayoutInflater.from(context).inflate(R.layout.local_map_row, null);
+        }
+
         return null;
     }
 }
