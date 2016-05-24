@@ -17,7 +17,7 @@
                 android:title="@string/settings"/>
         <item
                 android:id="@+id/mapManager"
-                android:icon="@drawable/icon_help"
+                android:icon="@drawable/ic_map_black_24dp"
                 android:title="@string/mapManager"/>
         <item
                 android:id="@+id/help"
