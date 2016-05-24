@@ -8,6 +8,7 @@ import com.leaf.clips.di.modules.SettingModule;
 import com.leaf.clips.presenter.DetailedInformationActivity;
 import com.leaf.clips.presenter.DeveloperUnlockerActivity;
 import com.leaf.clips.presenter.HomeActivity;
+import com.leaf.clips.presenter.LocalMapActivity;
 import com.leaf.clips.presenter.LogInformationActivity;
 import com.leaf.clips.presenter.LoggingActivity;
 import com.leaf.clips.presenter.MainDeveloperActivity;
@@ -94,5 +95,11 @@ public interface InfoComponent {
      * @param loggingActivity Oggetto in cui devono essere iniettate le dipendenze
      */
     void inject(LoggingActivity loggingActivity);
+
+    /**
+     * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo LocalMapActvity
+     * @param localMapActivity Oggetto in cui devono essere iniettate le dipendenze
+     */
+    void inject (LocalMapActivity localMapActivity);
 
 }
