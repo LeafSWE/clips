@@ -114,8 +114,7 @@
         <activity
                 android:name=".presenter.LocalMapActivity"
                 android:label="@string/title_activity_local_map"
-                android:parentActivityName=".presenter.HomeActivity"
-                android:theme="@style/AppTheme.NoActionBar" />
+                android:parentActivityName=".presenter.HomeActivity"/>
 
         <activity android:name=".presenter.PreferencesActivity">
             <meta-data

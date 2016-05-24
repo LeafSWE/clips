@@ -73,5 +73,6 @@
     <!--LocalMapManager-->
     <string name="update_map">Aggiorna mappa</string>
     <string name="delete_map">Rimuovi mappa</string>
+    <string name="title_activity_local_map">Le tue mappe</string>
 
 </resources>
