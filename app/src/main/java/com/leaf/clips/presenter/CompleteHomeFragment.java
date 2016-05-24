@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -84,6 +85,17 @@ public class CompleteHomeFragment extends Fragment {
         buildingDescription = (TextView)view.findViewById(R.id.view_building_description);
         buildingOpeningHours = (TextView)view.findViewById(R.id.view_building_opening_hours);
         poiCategories = (ListView)view.findViewById(R.id.view_poi_category_list);
+
+        //workaround per rendere scrollabile lista categorie // TODO: 18/05/16 togliere
+        poiCategories.setOnTouchListener(new View.OnTouchListener() {
+            // Setting on Touch Listener for handling the touch inside ScrollView
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Disallow the touch request for parent scroll on touch of child view
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
 
         //Imposta il Listener sugli item della lista di categorie
         poiCategories.setOnItemClickListener(new AdapterView.OnItemClickListener() {

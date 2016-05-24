@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Menu -->
+    <string name="settings">Impostazioni</string>
+    <string name="help">Guida</string>
     <string name="menu_developer">Area sviluppatore</string>
+
     <string name="navigation_drawer_close">Chiudi il navigation drawer</string>
     <string name="navigation_drawer_open">Apri il navigation drawer</string>
     <string name="splash_icon_desc">L\'icona dell\'applicazione</string>
@@ -34,4 +38,34 @@
         funzionalità di navigazione.
     </string>
     <string name="dialog_title_no_beacon_seen">Nessun edificio conosciuto nelle vicinanze.</string>
+
+    <!-- Preferences strings -->
+    <string name="default_path_preferences">Default</string>
+    <string name="elevator_path_preferences">Ascensore</string>
+    <string name="stair_path_preferences">Scale</string>
+    <string name="default_instruction_preferences">Default</string>
+    <string name="tts_instruction_preferences">Text to speech</string>
+    <string name="sonar_instruction_prefereces">Sonar</string>
+    <string name="navigation_preferences">Preferenze di navigazione</string>
+    <string name="path_preferences">Preferenze di percorso</string>
+    <string name="instruction_preferences">Preferenze sulle istruzioni</string>
+
+    <!-- NoConnectionAlertHelp -->
+    <string name="no_connection_title_alert_help">Internet non disponibile</string>
+    <string name="no_connection_message_alert_help">Internet non disponibile.
+        Controlla la connessione a internet e riprova</string>
+    <string name="retry_alert_help">Riprova</string>
+    <string name="cancel_alert_help">Annulla</string>
+    <string name="navigation_internet_alert">Internet non disponibile. La mappa dell\'edificio può
+        essere non aggiornata e le informazioni presentate non corrette</string>
+
+    <string name="no_result_found">Nessun risultato</string>
+
+    <string name="all_pois">Tutti i luoghi</string>
+
+    <string name="name">Nome</string>
+    <string name="floor">Piano</string>
+    <string name="ground_floor">Piano terra</string>
+    <string name="category">Categoria</string>
+    <string name="description">Descrizione</string>
 </resources>

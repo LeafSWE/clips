@@ -23,6 +23,8 @@ import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
 import com.leaf.clips.model.usersetting.SettingImp;
 
+import junit.framework.Assert;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -64,7 +66,8 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
         this.graph = graph;
         //lastBeaconsSeen = new PriorityQueue<>();
         this.graph.setSettingAllEdge(new SettingImp(getContext()));
-        navigator = new NavigatorImp(compass);
+        // TODO: 18/05/16 questo è stato corretto -> chiedere perchè diverso da uml
+        navigator = new NavigatorImp(compass, new SettingImp(context));
         navigator.setGraph(this.graph);
     }
 
@@ -148,7 +151,7 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
     @Override
     public ProcessedInformation startNavigation(PointOfInterest endPOI)
             throws NoNavigationInformationException {
-
+        //navigator = new NavigatorImp(compass, new SettingImp(getContext()));
         MyBeacon beacon = lastBeaconsSeen.peek();
         Iterator<RegionOfInterest> iterator = graph.getGraph().vertexSet().iterator();
         boolean found = false;
@@ -160,6 +163,9 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
         }
 
         try {
+            Assert.assertNotNull(startROI);
+            Assert.assertNotNull(endPOI);
+            Assert.assertNotNull(navigator);
             navigator.calculatePath(startROI, endPOI);
         } catch (NavigationExceptions navigationExceptions) {
             navigationExceptions.printStackTrace();
@@ -182,7 +188,10 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
         } catch (NavigationExceptions navigationExceptions) {
             navigationExceptions.printStackTrace();
         }
-
+        for(Listener listener : super.listeners){
+            NavigationListener nv = (NavigationListener) listener;
+            nv.informationUpdate(processedInfo);
+        }
         return processedInfo;
     }
 
@@ -200,7 +209,7 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
     @Override
     public void stopNavigation(){
         super.listeners.clear();
-        navigator = null;
+        //navigator = null;
     }
 
     /**
@@ -227,6 +236,8 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
                     nv.informationUpdate(navigator.toNextRegion(lastBeaconsSeen));
                 } catch (NoNavigationInformationException navigationExceptions) {
                     navigationExceptions.printStackTrace();
+                    nv.pathError();
+                } catch (PathException pathException){
                     nv.pathError();
                 } catch (NavigationExceptions navigationExceptions){
                     navigationExceptions.printStackTrace();

@@ -15,6 +15,7 @@ import com.leaf.clips.model.navigator.graph.MapGraph;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
 import com.leaf.clips.model.navigator.graph.edge.EnrichedEdge;
+import com.leaf.clips.model.usersetting.Setting;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,17 +54,21 @@ public class NavigatorImp implements Navigator {
      */
     private Iterator<EnrichedEdge> progress;
 
+    private Setting setting;
+
     /**
      * Costruttore della classe NavigatorImp
      *
      * @param compass Sensore di tipo Compass utilizzato durante la navigazione
      */
-    public NavigatorImp(Compass compass) {
+    // TODO: 18/05/16 questo è stato corretto -> chiedere perchè diverso da uml
+    public NavigatorImp(Compass compass, Setting setting) {
         this.compass = compass;
         this.pathFinder = new DijkstraPathFinder();
         this.path = null;
         this.buildingGraph = null;
         this.progress = null;
+        this.setting = setting;
     }
 
     /**
@@ -90,6 +95,8 @@ public class NavigatorImp implements Navigator {
     @Override
     public void calculatePath(RegionOfInterest startRoi, PointOfInterest endPoi) throws NavigationExceptions {
         if (buildingGraph != null) {
+            // TODO: 18/05/16 chiedere se va bene -> aggiunta modifica peso edge in base settings
+            buildingGraph.setSettingAllEdge(setting);
             Collection<RegionOfInterest> endRois = endPoi.getAllBelongingROIs();
             Iterator<RegionOfInterest> endRoisIterator = endRois.iterator();
 
@@ -112,7 +119,7 @@ public class NavigatorImp implements Navigator {
                 }
             }
             this.path = shortestPath;
-
+            progress=path.iterator();
 /*
             if (endRoisIterator.hasNext()) {
                 // prelevo il primo path considerandolo il migliore
@@ -167,9 +174,17 @@ public class NavigatorImp implements Navigator {
                 ProcessedInformation edgeProcessedInformation = new ProcessedInformationImp(edge);
                 result.add(edgeProcessedInformation);
             }
+            result.add(new ProcessedInformationImp());
             return result;
         } else {
-            throw new NoNavigationInformationException();
+            if (buildingGraph==null)
+                throw new NoNavigationInformationException();
+            else{
+                List<ProcessedInformation> result = new ArrayList<>();
+                result.add(new ProcessedInformationImp());
+                return result;
+            }
+
         }
     }
 
@@ -279,26 +294,50 @@ public class NavigatorImp implements Navigator {
     @Override
     public ProcessedInformation toNextRegion(PriorityQueue<MyBeacon> visibleBeacons) throws NavigationExceptions {
         String startInformation = "";
-        // Capisco se è la prima richiesta di informazioni
+        /*// Capisco se è la prima richiesta di informazioni
         if (progress == null) { // È all'inizio della navigazione
             this.initIterator();
             startInformation = this.getStarterInformation();
         }
         // Prelevo il beacon più potente per capire se l'utente è nel percorso previsto
         MyBeacon nearBeacon = this.getMostPowerfulBeacon(visibleBeacons);
+        Log.i("NavImp", nearBeacon.toString());
         if (progress.hasNext()) {
+
             EnrichedEdge nextEdge = progress.next();
-            RegionOfInterest endEdgeROI = nextEdge.getEndPoint();
+            Log.i("NavImp", ""+nextEdge.getEndPoint().getMinor());
+            RegionOfInterest endEdgeROI = nextEdge.getStarterPoint();
             if (endEdgeROI.contains(nearBeacon)) { // OK: percorso corretto
                 //TODO: non si utilizza il metodo this.createInformation(edge)
                 return new ProcessedInformationImp(nextEdge);
             } else { // ERROR: errore percorso seguito errato
+                Log.i("NavImp", "beaconTrovato"+nearBeacon.getMinor()+" beaconAtteso" + endEdgeROI.getMinor());
                 throw new PathException();
             }
         } else {
             //TODO lanciata eccezione alla fine della navigazione->trovare metodo migliore
             Log.d("NAVIGATOR", "toNextRegion: Progress iterator at end");
             throw new PathException("Navigation finish, progress iterator at end");
+        }*/
+        MyBeacon beacon = getMostPowerfulBeacon(visibleBeacons);
+        Log.i("MostPowBeacon", beacon.toString());
+        Iterator<EnrichedEdge> newIt = path.iterator();
+        if (newIt.hasNext()) {
+            EnrichedEdge e = newIt.next();
+            while (newIt.hasNext() && !e.getStarterPoint().contains(beacon))
+                e = newIt.next();
+            Log.i("MostPowBeacon", e.getStarterPoint().getMinor() + "");
+            if (e.getStarterPoint().contains(beacon)) {
+                return new ProcessedInformationImp(e);
+            } else {
+                if (!newIt.hasNext() && e.getEndPoint().contains(beacon)) {
+                    return new ProcessedInformationImp();
+                } else {
+                    throw new PathException();
+                }
+            }
+        } else {
+            return new ProcessedInformationImp();
         }
     }
 

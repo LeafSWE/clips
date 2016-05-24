@@ -174,14 +174,14 @@ public abstract class AbsEnrichedEdge extends DefaultWeightedEdge implements Enr
      * @param setting Preferenze da impostare
      */
     public void setUserPreference(Setting setting){
-       switch (setting.getPathPreference()){
+        switch (setting.getPathPreference()){
            case ELEVATOR_PREFERENCE:
-               userElevatorPreference=1;
-               userStairPreference=0;
+               userElevatorPreference=0;
+               userStairPreference=1;
                break;
            case STAIR_PREFERENCE:
-               userStairPreference=1;
-               userElevatorPreference=0;
+               userStairPreference=0;
+               userElevatorPreference=1;
                break;
            default:
                userElevatorPreference=0;

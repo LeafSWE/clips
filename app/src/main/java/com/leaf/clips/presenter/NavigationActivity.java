@@ -7,8 +7,10 @@ package com.leaf.clips.presenter;
  */
 
 import android.app.SearchManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -62,6 +64,11 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      */
     private int poiId;
 
+    // TODO: 5/24/16 Aggiornare Asta + Tracy per i due campi privati sottostanti + OnDestroy()
+    private AlertDialog dialogPathError;
+
+    private AlertDialog.Builder builder;
+
     /**
      *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
      * i campi dati.
@@ -84,7 +91,28 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         else
             handleIntent(getIntent());
         Log.i("state%", "ONCREATE" + poiId);
+
+       /* ConnectivityManager connectivityManager =
+                (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (!(networkInfo != null && networkInfo.isConnected())){
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+            alertBuilder.setTitle(R.string.no_connection_title_alert_help);
+            alertBuilder.setMessage(R.string.no_connection_message_alert_help);
+            alertBuilder.setIcon(android.R.drawable.ic_dialog_alert);
+            alertBuilder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //
+                }
+            });
+            alertBuilder.create().show();
+        }*/
+        new NoInternetAlert().showIfNoConnection(this);
+        builder = new AlertDialog.Builder(this);
+
     }
+
 
 
 
@@ -105,6 +133,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
     private void handleIntent(Intent intent) {
         PointOfInterest destinationPoi = null;
         List<PointOfInterest> poiList = null;
+        poiId=-1;
         try {
             //TODO: Introdurre suggerimenti nella SearchBox
             poiList = (List<PointOfInterest>)informationManager.getBuildingMap().getAllPOIs();
@@ -112,12 +141,12 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
             //Se l'Intent è stato generato dalla SearchBox
             if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
                 String destinationPoiName = intent.getStringExtra(SearchManager.QUERY);
-
+                Log.d("RICERCA", "INIZIO");
                 boolean found = false;
                 //Trova il POI corrispondente al nome digitato
                 for(ListIterator<PointOfInterest> i = poiList.listIterator(); i.hasNext() && !found;){
                     PointOfInterest poi = i.next();
-                    if(poi.getName().toLowerCase().contains(destinationPoiName.toLowerCase())){
+                    if(poi.getName().toLowerCase().equals(destinationPoiName.toLowerCase())){
                         destinationPoi = poi;
                         found = true;
                     }
@@ -127,6 +156,8 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                 int destinationPOIid = getIntent().getIntExtra("poi_id",-1);
                 if(destinationPOIid != -1)
                     poiId = destinationPOIid;
+                else
+                    poiId = Integer.valueOf(getIntent().getDataString());
                 Log.d("DEST_POI_ID", Integer.toString(poiId));
 
                     boolean found = false;
@@ -139,10 +170,15 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                         }
                     }
             }
-            if(destinationPoi!=null) {
+            if(destinationPoi != null) {
+                Log.d("NAVIGAZIONE", "OK");
                 navigationManager.startNavigation(destinationPoi);
                 navigationInstruction = navigationManager.getAllNavigationInstruction();
+                navigationManager.addListener(this);
                 view.setInstructionAdapter(navigationInstruction);
+            }else{
+                view.noResult();
+                Log.d("NAVIGAZIONE", "NESSUN RISULTATO");
             }
         } catch (NoBeaconSeenException e) {
             e.printStackTrace();
@@ -156,7 +192,46 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      * consigliato.
      */
     public void pathError(){
-        //TODO
+        stopNavigation();
+        Log.i("Removelistener", "pathError");
+        if(!isFinishing()){
+            builder.setTitle("Percorso errato");
+            builder.setMessage("Sembra che tu abbia sbagliato percorso, vuoi ricalcolare il percorso?");
+            builder.setIcon(android.R.drawable.ic_dialog_alert);
+            builder.setPositiveButton("Ricalcolo",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            try {
+                                List<PointOfInterest> poiList = (List<PointOfInterest>) informationManager.getBuildingMap().getAllPOIs();
+                                PointOfInterest destinationPoi = null;
+                                boolean found = false;
+                                //Trova il POI all'id scelto
+                                for (ListIterator<PointOfInterest> i = poiList.listIterator(); i.hasNext() && !found; ) {
+                                    PointOfInterest poi = i.next();
+                                    if (poi.getId() == poiId) {
+                                        destinationPoi = poi;
+                                        found = true;
+                                    }
+                                }
+                                navigationManager.startNavigation(destinationPoi);
+                                navigationInstruction = navigationManager.getAllNavigationInstruction();
+                                navigationManager.addListener(NavigationActivity.this);
+                                view.setInstructionAdapter(navigationInstruction);
+                            } catch (NoBeaconSeenException e){}
+                            catch (NavigationExceptions e){}
+                        }
+                    });
+            builder.setNegativeButton("Torna alla home",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            NavigationActivity.this.startActivity(new Intent(NavigationActivity.this, HomeActivity.class));
+                        }
+                    });
+            if (dialogPathError == null)
+                dialogPathError = builder.create();
+            dialogPathError.show();
+        }
+
     }
 
     /**
@@ -164,7 +239,18 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      * @param info: istruzioni di navigazione utili per attraversare il prossimo arco.
      */
     public void informationUpdate(ProcessedInformation info){
-        //TODO
+        Log.i("informationUpdate", info.getProcessedBasicInstruction());
+        int i = 0;
+        boolean found = false;
+        while (i<navigationInstruction.size() && !found) {
+            if ((info.compareTo(navigationInstruction.get(i))==0))
+                found = true;
+            else
+                i++;
+        }
+        Log.i("informationUpdate", i + "");
+        if(found)
+            view.refreshInstructions(i);
     }
 
     /**
@@ -195,12 +281,15 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      * Metodo che interrompe la navigazione in corso.
      */
     public void stopNavigation(){
-        //TODO
+        Log.i("Removelistener", "stopNavigation");
+        navigationManager.removeListener(this);
+        navigationManager.stopNavigation();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        builder = new AlertDialog.Builder(this);
     }
 
     @Override
@@ -221,5 +310,13 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt("poi_id", poiId);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if(dialogPathError != null)
+            dialogPathError.dismiss();
     }
 }

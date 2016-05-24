@@ -25,7 +25,7 @@ public class MyApplication extends Application {
     * Riferimento all'oggetto di tipo InfoComponent che permette di risolvere le dipendenze tra i
     * tipi presenti nell'applicazione
     */
-    private InfoComponent infoComponent;
+    private static InfoComponent infoComponent;
 
     /**
      * 	Metodo di callback che permette di ridefinire il comportamento dell'applicazione al momento
@@ -49,7 +49,7 @@ public class MyApplication extends Application {
      * utile per poter eseguire il metodo inject nella classi richieste
      * @return InfoComponent
      */
-    public InfoComponent getInfoComponent(){
+    public static InfoComponent getInfoComponent(){
         return infoComponent;
     }
 }

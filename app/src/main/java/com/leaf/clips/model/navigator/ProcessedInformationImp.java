@@ -41,6 +41,14 @@ public class ProcessedInformationImp implements ProcessedInformation {
      */
     private PhotoInformation photos;
 
+    ProcessedInformationImp(){
+        this.basic = "Destinazione Raggiunta";
+        this.detailed = "Hai raggiunto la tua destinazione. Questa dovrebbe trovarsi intorna a te.";
+        this.photos = null;
+        this.direction = 9;
+        this.distance = "La destinazione dovrebbe essere vicino a te";
+    }
+
     /**
      * Costruttore della classe ProcessedInformationImp
      * @param edge Edge da cui devono essere estratte le informazioni
@@ -120,5 +128,13 @@ public class ProcessedInformationImp implements ProcessedInformation {
         return this.distance;
     }
 
+    @Override
+    public int compareTo(ProcessedInformation another) {
+        if (basic.equals(another.getProcessedBasicInstruction()) && distance == another.getDistance() &&
+                detailed.equals(another.getDetailedInstruction()) && direction == another.getDirection())
+            return 0;
+        else
+            return 1;
+    }
 }
 

@@ -15,7 +15,11 @@ import com.leaf.clips.presenter.MainDeveloperActivity;
 import com.leaf.clips.presenter.MainDeveloperPresenter;
 import com.leaf.clips.presenter.NavigationActivity;
 import com.leaf.clips.presenter.NearbyPoiActivity;
+import com.leaf.clips.presenter.PoiActivity;
 import com.leaf.clips.presenter.PoiCategoryActivity;
+import com.leaf.clips.presenter.PoiDescriptionActivity;
+import com.leaf.clips.presenter.PreferencesActivity;
+import com.leaf.clips.presenter.SearchSuggestionsProvider;
 
 import javax.inject.Singleton;
 
@@ -101,5 +105,25 @@ public interface InfoComponent {
      * @param localMapActivity Oggetto in cui devono essere iniettate le dipendenze
      */
     void inject (LocalMapActivity localMapActivity);
+
+    /**
+     * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo PreferencesActivity
+     * @param preferenceActivity Oggetto in cui devono essere iniettate le dipendenze
+     */
+    void inject(PreferencesActivity preferenceActivity);
+
+    /**
+     * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo SearchSuggestionsProvider
+     * @param searchSuggestionsProvider Oggetto in cui devono essere iniettate le dipendenze
+     */
+    void inject(SearchSuggestionsProvider searchSuggestionsProvider);
+
+    /**
+     * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo PoiActivity
+     * @param poiActivity Oggetto in cui devono essere iniettate le dipendenze
+     */
+    void inject(PoiActivity poiActivity);
+
+    void inject(PoiDescriptionActivity poiDescriptionActivity);
 
 }

@@ -6,6 +6,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <!-- Menu -->
+    <string name="settings">Settings</string>
+    <string name="help">Help</string>
     <string name="menu_developer">Developer area</string>
 
     <string name="title_activity_developer_unlocker">Developer login</string>
@@ -41,9 +44,39 @@
     <string name="title_activity_log_information">Log Details</string>
     <string name="search_hint">Search inside the building</string>
     <string name="title_activity_navigation">Instructions</string>
+    <string name="no_result_found">No result found</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_local_map">LocalMapActivity</string>
+
+    <!-- Preferences strings -->
+    <string name="default_path_preferences">Default</string>
+    <string name="elevator_path_preferences">Elevator</string>
+    <string name="stair_path_preferences">Stair</string>
+    <string name="default_instruction_preferences">Default</string>
+    <string name="tts_instruction_preferences">Text to speech</string>
+    <string name="sonar_instruction_prefereces">Sonar</string>
+    <string name="navigation_preferences">Navigation Preferences</string>
+    <string name="path_preferences">Path preferences</string>
+    <string name="instruction_preferences">Instruction preferences</string>
+
+    <!-- NoConnectionAlertHelp -->
+    <string name="no_connection_title_alert_help">Internet not available</string>
+    <string name="no_connection_message_alert_help">Internet not available.
+        Check your internet connectivity and try again</string>
+    <string name="retry_alert_help">Retry</string>
+    <string name="cancel_alert_help">Cancel</string>
+    <string name="navigation_internet_alert">Internet not available. The map of the building could
+        be not updated and the information displayed not correct</string>
+
+    <string name="all_pois">All places</string>
+
+    <!--for description-->
+    <string name="name">Name</string>
+    <string name="floor">Floor</string>
+    <string name="ground_floor">Ground floor</string>
+    <string name="category">Category</string>
+    <string name="description">Description</string>
 
 </resources>

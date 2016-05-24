@@ -57,8 +57,10 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
 
     /**
      * Rappresenta una stringa che identifica la marca del Beacon o del protocollo
+     * Per informazioni sui dati dei beacon https://support.kontakt.io/hc/en-gb/articles/201492522-Scan-response-packet-structure
+     * offset campo d 24
      */
-    private static String beaconLayout = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"; //AltBeacon beacons
+    private static String beaconLayout = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:47-47";//AltBeacon beacons
 
     /**
      * Insieme dei periodi di scan del BeaconManager
@@ -82,15 +84,67 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
         beaconManager = BeaconManager.getInstanceForApplication(getApplicationContext());
         beaconManager.getBeaconParsers().clear();
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(beaconLayout));
-        UUID uuid = UUID.fromString("f7826da6-4fa2-4e98-8024-bc5b71e0893e");
+        UUID uuid = UUID.fromString("19235dd2-574a-4702-a42e-caccac06e325");
         region = new Region("Region", Identifier.fromUuid(uuid), null, null);
+        //region = new Region("Region", null, null, null);
         periods = new HashMap<>();
         setMonitorNotifier(this);
-        BeaconManager.setRegionExitPeriod(1000);
-        beaconManager.setForegroundBetweenScanPeriod(800);
-        beaconManager.setForegroundScanPeriod(1600);
+        BeaconManager.setRegionExitPeriod(2000);
+        beaconManager.setForegroundBetweenScanPeriod(10);
+        beaconManager.setForegroundScanPeriod(1800);
         beaconManager.setRangeNotifier(this);
         beaconManager.bind(this);
+
+        /*new Thread(
+                new Runnable() {
+                    String minor = "0";
+            @Override
+            public void run() {
+
+                while(true){
+                    try {
+                        Thread.sleep(1*1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    LinkedList<Long> l = new LinkedList<Long>();
+                    l.add((long)0);
+                    l.add((long)0);
+                    l.add((long)0);
+                    l.add((long)0);
+                    l.add((long)0);
+                    l.add((long)0);
+                    l.add((long)0);
+                    l.add((long) 0);
+                    MyBeacon b = new MyBeaconImp(new Beacon.Builder()
+                            .setId1("f7826da6-4fa2-4e98-8024-bc5b71e0893e")
+                            .setId2("666").setId3(minor).setDataFields(l).build());
+                    PriorityQueue<MyBeacon> p = new PriorityQueue<>();
+
+                    p.add(b);
+
+                    Intent msg = new Intent("beaconsDetected");
+                    msg.putExtra("queueOfBeacons", p);
+                    LocalBroadcastManager.getInstance(BeaconManagerAdapter.this).sendBroadcast(msg);
+                    if (minor.equals("0"))
+                        minor = "1004";
+                    else if (minor.equals("1004"))
+                        minor = "1000";
+                    else if (minor.equals("1000"))
+                        minor = "1008";
+                    else
+                        minor = "0";
+                    try {
+                        if (minor.equals("0"))
+                            Thread.sleep(60*1000);
+                        else
+                            Thread.sleep(10*1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();*/
     }
 
     /**
@@ -217,6 +271,7 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
 
             for (Beacon oneBeacon : collection) {
                 p.add(new MyBeaconImp(oneBeacon));
+                Log.i("Beaconz", new MyBeaconImp(oneBeacon).toString());
             }
 
             Intent msg = new Intent("beaconsDetected");
