@@ -64,6 +64,11 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      */
     private int poiId;
 
+    // TODO: 5/24/16 Aggiornare Asta + Tracy per i due campi privati sottostanti + OnDestroy()
+    private AlertDialog dialogPathError;
+
+    private AlertDialog.Builder builder;
+
     /**
      *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
      * i campi dati.
@@ -104,8 +109,11 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
             alertBuilder.create().show();
         }*/
         new NoInternetAlert().showIfNoConnection(this);
+        builder = new AlertDialog.Builder(this);
 
     }
+
+
 
 
     /**
@@ -186,40 +194,44 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
     public void pathError(){
         stopNavigation();
         Log.i("Removelistener", "pathError");
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Percorso errato");
-        builder.setMessage("Sembra che tu abbia sbagliato percorso, vuoi ricalcolare il percorso?");
-        builder.setIcon(android.R.drawable.ic_dialog_alert);
-        builder.setPositiveButton("Ricalcolo",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        try {
-                            List<PointOfInterest> poiList = (List<PointOfInterest>) informationManager.getBuildingMap().getAllPOIs();
-                            PointOfInterest destinationPoi = null;
-                            boolean found = false;
-                            //Trova il POI all'id scelto
-                            for (ListIterator<PointOfInterest> i = poiList.listIterator(); i.hasNext() && !found; ) {
-                                PointOfInterest poi = i.next();
-                                if (poi.getId() == poiId) {
-                                    destinationPoi = poi;
-                                    found = true;
+        if(!isFinishing()){
+            builder.setTitle("Percorso errato");
+            builder.setMessage("Sembra che tu abbia sbagliato percorso, vuoi ricalcolare il percorso?");
+            builder.setIcon(android.R.drawable.ic_dialog_alert);
+            builder.setPositiveButton("Ricalcolo",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            try {
+                                List<PointOfInterest> poiList = (List<PointOfInterest>) informationManager.getBuildingMap().getAllPOIs();
+                                PointOfInterest destinationPoi = null;
+                                boolean found = false;
+                                //Trova il POI all'id scelto
+                                for (ListIterator<PointOfInterest> i = poiList.listIterator(); i.hasNext() && !found; ) {
+                                    PointOfInterest poi = i.next();
+                                    if (poi.getId() == poiId) {
+                                        destinationPoi = poi;
+                                        found = true;
+                                    }
                                 }
-                            }
-                            navigationManager.startNavigation(destinationPoi);
-                            navigationInstruction = navigationManager.getAllNavigationInstruction();
-                            navigationManager.addListener(NavigationActivity.this);
-                            view.setInstructionAdapter(navigationInstruction);
-                        } catch (NoBeaconSeenException e){}
-                        catch (NavigationExceptions e){}
-                    }
-                });
-        builder.setNegativeButton("Torna alla home",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        NavigationActivity.this.startActivity(new Intent(NavigationActivity.this, HomeActivity.class));
-                    }
-                });
-        builder.create().show();
+                                navigationManager.startNavigation(destinationPoi);
+                                navigationInstruction = navigationManager.getAllNavigationInstruction();
+                                navigationManager.addListener(NavigationActivity.this);
+                                view.setInstructionAdapter(navigationInstruction);
+                            } catch (NoBeaconSeenException e){}
+                            catch (NavigationExceptions e){}
+                        }
+                    });
+            builder.setNegativeButton("Torna alla home",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            NavigationActivity.this.startActivity(new Intent(NavigationActivity.this, HomeActivity.class));
+                        }
+                    });
+            if (dialogPathError == null)
+                dialogPathError = builder.create();
+            dialogPathError.show();
+        }
+
     }
 
     /**
@@ -279,6 +291,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
     @Override
     protected void onResume() {
         super.onResume();
+        builder = new AlertDialog.Builder(this);
     }
 
     @Override
@@ -299,5 +312,13 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt("poi_id", poiId);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if(dialogPathError != null)
+            dialogPathError.dismiss();
     }
 }
