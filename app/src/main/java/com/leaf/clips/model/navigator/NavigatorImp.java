@@ -203,13 +203,13 @@ public class NavigatorImp implements Navigator {
             correctGrade += 360;
         }
         if (correctGrade > 30 && correctGrade < 150)
-            return "gira a destra";
+            return "gira a destra" + lastCoordinate + "\n";
         else if (correctGrade >= 210 && correctGrade < 330)
-            return "gira a sinistra";
+            return "gira a sinistra" + lastCoordinate + "\n";
         else if (correctGrade >= 150 && correctGrade <210)
-            return "girati";
+            return "girati" + lastCoordinate + "\n";
         else
-            return "vai dritto";
+            return "vai dritto" + lastCoordinate + "\n";
     }
 
     /**
