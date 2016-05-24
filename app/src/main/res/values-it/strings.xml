@@ -4,6 +4,7 @@
     <string name="settings">Impostazioni</string>
     <string name="help">Guida</string>
     <string name="menu_developer">Area sviluppatore</string>
+    <string name="mapManager">Gestione mappe</string>
 
     <string name="navigation_drawer_close">Chiudi il navigation drawer</string>
     <string name="navigation_drawer_open">Apri il navigation drawer</string>
@@ -69,5 +70,8 @@
     <string name="category">Categoria</string>
     <string name="description">Descrizione</string>
 
-    <string name="mapManager">Gestione mappe</string>
+    <!--LocalMapManager-->
+    <string name="update_map">Aggiorna mappa</string>
+    <string name="delete_map">Rimuovi mappa</string>
+
 </resources>
