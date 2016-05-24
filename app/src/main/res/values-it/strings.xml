@@ -68,4 +68,6 @@
     <string name="ground_floor">Piano terra</string>
     <string name="category">Categoria</string>
     <string name="description">Descrizione</string>
+
+    <string name="mapManager">Gestione mappe</string>
 </resources>

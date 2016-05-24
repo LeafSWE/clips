@@ -21,6 +21,7 @@ import com.leaf.clips.R;
 import com.leaf.clips.presenter.CompleteHomeFragment;
 import com.leaf.clips.presenter.HelpActivity;
 import com.leaf.clips.presenter.HomeActivity;
+import com.leaf.clips.presenter.LocalMapActivity;
 import com.leaf.clips.presenter.MainDeveloperPresenter;
 import com.leaf.clips.presenter.PoiActivity;
 import com.leaf.clips.presenter.PreferencesActivity;
@@ -166,6 +167,8 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
             intent = new Intent(homeActivity, HelpActivity.class);
         } else if (id == R.id.allpois) {
             intent = new Intent(homeActivity, PoiActivity.class);
+        } else if (id == R.id.mapManager) {
+            intent = new Intent(homeActivity, LocalMapActivity.class);
         }
         homeActivity.startActivity(intent);
         drawer.closeDrawer(GravityCompat.START);

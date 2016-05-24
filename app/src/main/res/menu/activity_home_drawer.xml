@@ -16,6 +16,10 @@
                 android:icon="@drawable/icon_setting"
                 android:title="@string/settings"/>
         <item
+                android:id="@+id/mapManager"
+                android:icon="@drawable/icon_help"
+                android:title="@string/mapManager"/>
+        <item
                 android:id="@+id/help"
                 android:icon="@drawable/icon_help"
                 android:title="@string/help"/>

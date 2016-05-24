@@ -79,4 +79,6 @@
     <string name="category">Category</string>
     <string name="description">Description</string>
 
+    <string name="mapManager">Map Manager</string>
+
 </resources>
