@@ -51,9 +51,10 @@ public class LocalMapActivity extends AppCompatActivity {
 
         Collection<BuildingTable> buildingTable = databaseService.findAllBuildings();
 
-        for (BuildingTable buildingTableElement : buildingTable){
-
-            buildingTableElement.getDescription();
+        //Se non trovo nessuna mappa passo l'adapter vuoto
+        if(buildingTable.size() == 0)
+            view.setAdapter(null);
+        else {
         }
     }
 
