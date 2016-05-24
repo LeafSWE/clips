@@ -1,7 +1,12 @@
 package com.leaf.clips.view;
 
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Adapter;
 
+import com.leaf.clips.R;
 import com.leaf.clips.presenter.LocalMapActivity;
 
 /**
@@ -24,7 +29,22 @@ public class LocalMapManagerViewImp implements LocalMapManagerView {
      * Costruttore della classe LocalMapManagerViewImp
      * @param presenter Presenter della View che viene creata
      */
-    public LocalMapManagerViewImp(LocalMapActivity presenter){}
+    public LocalMapManagerViewImp(LocalMapActivity presenter){
+        this.presenter = presenter;
+        this.presenter.setContentView(R.layout.activity_local_map);
+        Toolbar toolbar = (Toolbar) this.presenter.findViewById(R.id.toolbar);
+        this.presenter.setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) this.presenter.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+        this.presenter.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
     /**
      * Metodo che aggiorna la lista delle mappe salvate nel database locale

@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.leaf.clips.R;
 import com.leaf.clips.view.LocalMapManagerView;
+import com.leaf.clips.view.LocalMapManagerViewImp;
 
 /**
  *Classe che estende AppCompactActivity e per la gestione dell'interazione tra LocalMapView ed il model
@@ -36,19 +37,7 @@ public class LocalMapActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        setContentView(R.layout.activity_local_map);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        view = new LocalMapManagerViewImp(this);
     }
 
 
