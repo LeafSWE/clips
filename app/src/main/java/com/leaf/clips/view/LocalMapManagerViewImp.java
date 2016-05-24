@@ -5,9 +5,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.ListView;
 
 import com.leaf.clips.R;
 import com.leaf.clips.presenter.LocalMapActivity;
+import com.leaf.clips.presenter.LocalMapAdapter;
 
 /**
  * @author Oscar Elia Conti
@@ -59,5 +61,8 @@ public class LocalMapManagerViewImp implements LocalMapManagerView {
      * @return  void
      */
     @Override
-    public void setAdapter(Adapter adp){}
+    public void setAdapter(Adapter adp){
+        ListView listView = (ListView) presenter.findViewById(R.id.listViewLocalMaps);
+        listView.setAdapter((LocalMapAdapter)adp);
+    }
 }

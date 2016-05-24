@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.leaf.clips.R;
 import com.leaf.clips.model.dataaccess.dao.BuildingTable;
@@ -26,6 +27,8 @@ public class LocalMapAdapter extends BaseAdapter{
     private Context context;
 
     private Collection<BuildingTable> collectionBuildingTable;
+
+    private BuildingTable buildingTable;
 
     private DatabaseService databaseService;
 
@@ -57,6 +60,14 @@ public class LocalMapAdapter extends BaseAdapter{
             convertView = LayoutInflater.from(context).inflate(R.layout.local_map_row, null);
         }
 
-        return null;
+        buildingTable = (BuildingTable) getItem(position);
+
+        TextView txtViewName = (TextView) convertView.findViewById(R.id.textViewLocalMapName);
+        txtViewName.setText(buildingTable.getName());
+
+        TextView txtViewAddress = (TextView) convertView.findViewById(R.id.textViewLocalMapAddres);
+        txtViewAddress.setText(buildingTable.getAddress());
+
+        return convertView;
     }
 }

@@ -55,6 +55,7 @@ public class LocalMapActivity extends AppCompatActivity {
         if(buildingTable.size() == 0)
             view.setAdapter(null);
         else {
+            view.setAdapter(new LocalMapAdapter(this, databaseService));
         }
     }
 

@@ -1,7 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-</LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Via Giustiniani 2"
+                    android:id="@+id/textViewLocalMapAddres"
+                    android:textColor="@color/abc_primary_text_material_light"
+                    android:textSize="10dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Torre Archimede"
+                    android:id="@+id/textViewLocalMapName"
+                    android:layout_marginTop="3dp"
+                    android:textColor="#9B0014"
+                    android:textStyle="bold"
+                    android:textSize="26dp"
+                    android:textIsSelectable="true"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Dimensioni: 15 MB"
+                    android:id="@+id/textViewLocalMapSize"
+                    android:textColor="@color/abc_primary_text_material_light"
+                    android:textSize="14dp"/>
+            <TextView
+                    android:layout_width="147dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Version: 1.0"
+                    android:id="@+id/textViewLocalMapVersion"
+                    android:textColor="@color/abc_primary_text_material_light"
+                    android:textSize="14dp"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+            <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/updateLocalMap"
+                    android:background="@drawable/ic_get_app_black_24dp"
+                    android:layout_gravity="right"/>
+            <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/deleteLocalMap"
+                    android:background="@drawable/ic_close_black_24dp"
+                    />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
