@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.leaf.clips.R;
+import com.leaf.clips.view.LocalMapManagerView;
 
 /**
  *Classe che estende AppCompactActivity e per la gestione dell'interazione tra LocalMapView ed il model
@@ -18,9 +19,7 @@ public class LocalMapActivity extends AppCompatActivity {
     /**
      * View associata a tale Activity
      */
-
-    // TODO: 5/24/16 Aggiungere view
-    //private LocalMapManagerView view;
+    private LocalMapManagerView view;
 
     /**
      * Metodo che permettere di rimuovere una mappa del database locale
