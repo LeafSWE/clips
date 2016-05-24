@@ -128,5 +128,13 @@ public class ProcessedInformationImp implements ProcessedInformation {
         return this.distance;
     }
 
+    @Override
+    public int compareTo(ProcessedInformation another) {
+        if (basic.equals(another.getProcessedBasicInstruction()) && distance == another.getDistance() &&
+                detailed.equals(another.getDetailedInstruction()) && direction == another.getDirection())
+            return 0;
+        else
+            return 1;
+    }
 }
 

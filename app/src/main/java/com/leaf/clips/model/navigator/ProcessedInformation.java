@@ -13,7 +13,7 @@ import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoInformati
  * Interfaccia che espone i metodi per l'accesso alle informazioni di navigazione, pronte per essere
  * restituite ad un utilizzatore di tali informazioni
  */
-public interface ProcessedInformation {
+public interface ProcessedInformation extends Comparable<ProcessedInformation> {
 
     /**
      * Metodo che ritorna le istruzioni dettagliate per superare un certo arco nel percorso
@@ -46,5 +46,8 @@ public interface ProcessedInformation {
      * @return String
      */
     String getDistance();
+
+    @Override
+    int compareTo(ProcessedInformation another);
 }
 

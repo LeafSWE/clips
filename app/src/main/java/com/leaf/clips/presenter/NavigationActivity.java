@@ -243,14 +243,12 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         int i = 0;
         boolean found = false;
         while (i<navigationInstruction.size() && !found) {
-            if (info.getProcessedBasicInstruction().equals(navigationInstruction.get(i)
-                    .getProcessedBasicInstruction()))
+            if ((info.compareTo(navigationInstruction.get(i))==0))
                 found = true;
             else
                 i++;
         }
         Log.i("informationUpdate", i + "");
-        //view.refreshInstructions(i);
         if(found)
             view.refreshInstructions(i);
     }
