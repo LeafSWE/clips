@@ -2,7 +2,9 @@ package com.leaf.clips.di.modules;
 
 import android.app.Application;
 import android.content.Context;
+import android.hardware.SensorManager;
 
+import com.leaf.clips.model.compass.Compass;
 import com.leaf.clips.presenter.MyApplication;
 
 import javax.inject.Singleton;
@@ -16,6 +18,7 @@ import dagger.Provides;
  * @since 0.01
  */
 
+// TODO: 25/05/16 aggiornare tracy/uml
 /**
  * Classe nella quale vengono dichiarate le dipendenze verso oggetti di tipo Context e Application
  */
@@ -27,6 +30,8 @@ public class AppModule {
      */
     private final MyApplication mApplication;
 
+    private final Compass compass;
+
     /**
      * Costruttore della classe AppModule
      * @param application Applicazione in esecuzione nella quale ci sono oggetti in cui fare la
@@ -34,6 +39,8 @@ public class AppModule {
      */
     public AppModule(MyApplication application) {
         mApplication = application;
+        compass = new Compass((SensorManager) application.getSystemService(Context.SENSOR_SERVICE));
+        compass.registerListener();
     }
 
     /**
@@ -56,5 +63,11 @@ public class AppModule {
     @Singleton
     public Application providesApplication() {
         return mApplication;
+    }
+
+
+    @Provides @Singleton
+    public Compass providesCompass(){
+        return compass;
     }
 }

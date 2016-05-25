@@ -8,7 +8,6 @@ package com.leaf.clips.model;
 
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.SensorManager;
 
 import com.leaf.clips.model.beacon.MyBeacon;
 import com.leaf.clips.model.compass.Compass;
@@ -22,6 +21,7 @@ import com.leaf.clips.model.navigator.graph.MapGraph;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
 import com.leaf.clips.model.usersetting.SettingImp;
+import com.leaf.clips.presenter.MyApplication;
 
 import junit.framework.Assert;
 
@@ -30,16 +30,19 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import javax.inject.Inject;
+
 /**
  * Classe che si occupa della gestione della navigazione
  */
 
+// TODO: 25/05/16 aggiornare tracy/uml
 public class NavigationManagerImp extends AbsBeaconReceiverManager implements NavigationManager {
 
     /**
      * Oggetto che permette di recuperare i dati della bussola
      */
-    private final Compass compass = new Compass((SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE));
+   // private final Compass compass = new Compass((SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE));
 
     /**
      * Grafo rappresentante la mappa dell'edificio
@@ -50,6 +53,9 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
      * PriorityQueue, eventualmente vuota, contenente gli ultimi beacon rilevati
      */
     //private PriorityQueue<MyBeacon> lastBeaconsSeen;
+
+    @Inject
+    Compass compass;
 
     /**
      * Oggetto per la navigazione
@@ -67,6 +73,7 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
         //lastBeaconsSeen = new PriorityQueue<>();
         this.graph.setSettingAllEdge(new SettingImp(getContext()));
         // TODO: 18/05/16 questo è stato corretto -> chiedere perchè diverso da uml
+        MyApplication.getInfoComponent().inject(this);
         navigator = new NavigatorImp(compass, new SettingImp(context));
         navigator.setGraph(this.graph);
     }
