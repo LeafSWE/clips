@@ -104,14 +104,14 @@ public class NavigationAdapter extends BaseAdapter {
 
         if (position == 0)
             convertView.setBackgroundColor(convertView.getResources().getColor(R.color.green));
-        if (position == getCount() - 1)
+        /*if (position == getCount() - 1)
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                     
                 }
-            });
+            });*/
         Log.i("NAVADP", ""+getCount());
         return  convertView;
     }
@@ -158,5 +158,10 @@ public class NavigationAdapter extends BaseAdapter {
 
     }
 
-
+    @Override
+    public boolean isEnabled(int position) {
+        if(position == (navigationInformation.size()-1))
+            return false;
+        return super.isEnabled(position);
+    }
 }
