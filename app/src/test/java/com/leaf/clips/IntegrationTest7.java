@@ -21,7 +21,7 @@ import java.util.List;
  * @version 0.01
  * @since 0.01
  */
-public class IntegrationTest6 {
+public class IntegrationTest7 {
     @Test
     public void shouldCalculateTheRightPath() {
         RegionOfInterest a = new RegionOfInterestImp(1, "uuid", 666, 1);
