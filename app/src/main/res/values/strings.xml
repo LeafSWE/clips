@@ -15,7 +15,9 @@
     <string name="prompt_code">Please insert developer code</string>
     <string name="action_login">Login</string>
     <string name="title_activity_main_developer">Your logs</string>
+    <string name="action_beacon_power_area">Beacon Power Area</string>
     <string name="title_activity_logging">New log</string>
+    <string name="title_activity_beacon_power_area">Beacon Power Area</string>
     <string name="dialog_title_dev_code_error">Sorry!</string>
     <string name="dialog_dev_code_error">Wrong code.</string>
     <string name="dialog_title_not_updated_map">Do you want to update map?</string>

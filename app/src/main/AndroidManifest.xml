@@ -130,6 +130,18 @@
                     android:value="com.leaf.clips.presenter.PoiActivity"/>
         </activity>
 
+        <activity
+                android:name=".presenter.BeaconPowerAreaActivity"
+                android:hardwareAccelerated="true"
+                android:label="@string/title_activity_beacon_power_area"
+                android:parentActivityName=".presenter.MainDeveloperActivity">
+                <!--android:theme="@style/AppTheme.NoActionBar"-->
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="com.leaf.clips.presenter.MainDeveloperActivity"/>
+        </activity>
+
+
         <provider android:name=".presenter.SearchSuggestionsProvider"
                   android:authorities="com.leaf.clips.presenter.SearchSuggestionsProvider" />
     </application>

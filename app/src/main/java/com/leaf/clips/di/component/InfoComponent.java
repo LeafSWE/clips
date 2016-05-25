@@ -5,6 +5,7 @@ import com.leaf.clips.di.modules.DatabaseModule;
 import com.leaf.clips.di.modules.InfoModule;
 import com.leaf.clips.di.modules.NavModule;
 import com.leaf.clips.di.modules.SettingModule;
+import com.leaf.clips.presenter.BeaconPowerAreaActivity;
 import com.leaf.clips.presenter.DetailedInformationActivity;
 import com.leaf.clips.presenter.DeveloperUnlockerActivity;
 import com.leaf.clips.presenter.HomeActivity;
@@ -118,4 +119,11 @@ public interface InfoComponent {
     void inject(PoiActivity poiActivity);
 
     void inject(PoiDescriptionActivity poiDescriptionActivity);
+
+    /**
+     * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo BeaconPowerAreaActivity
+     * @param beaconPowerAreaActivity Oggetto in cui devono essere iniettate le dipendenze
+     */
+    void inject(BeaconPowerAreaActivity beaconPowerAreaActivity);
+
 }
