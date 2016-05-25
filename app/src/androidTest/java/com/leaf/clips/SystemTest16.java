@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.widget.EditText;
 
 import com.leaf.clips.model.usersetting.Setting;
 import com.leaf.clips.model.usersetting.SettingImp;
@@ -46,6 +47,12 @@ public class SystemTest16 {
         editor.remove(DEVELOPER_CODE);
         editor.commit();
         setting = new SettingImp(testActivity);
+    }
+
+    @Test
+    public void shouldInsertDeveloperCode() throws Exception {
+        onView(withId(R.id.developer_code)).perform(click(), typeText("miriade"));
+        Assert.assertTrue(!(((EditText) testActivity.findViewById(R.id.developer_code)).getText()).equals(""));
     }
 
     @Test
