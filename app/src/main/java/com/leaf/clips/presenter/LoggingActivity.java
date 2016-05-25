@@ -12,12 +12,17 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+
 import com.leaf.clips.model.InformationListener;
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.beacon.MyBeacon;
 import com.leaf.clips.view.LoggingView;
 import com.leaf.clips.view.LoggingViewImp;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.PriorityQueue;
+
 import javax.inject.Inject;
 
 /**
@@ -62,8 +67,13 @@ public class LoggingActivity extends AppCompatActivity implements InformationLis
      * Metodo che viene utilizzato per interrompere l'attività di log
      */
     public void stopLogging(){
-        Long tsLong = System.currentTimeMillis()/1000;
-        String ts = tsLong.toString();
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSS");
+
+        String ts = "Clips-" + simpleDateFormat.format(timestamp);
+
+
         informationManager.saveRecordedBeaconInformation(ts);
         Intent intent = new Intent(this, MainDeveloperActivity.class);
         startActivity(intent);
@@ -110,8 +120,10 @@ public class LoggingActivity extends AppCompatActivity implements InformationLis
      */
     @Override
     public void onBackPressed() {
-        Long tsLong = System.currentTimeMillis()/1000;
-        String ts = tsLong.toString();
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSS");
+
+        String ts = "Clips-" + simpleDateFormat.format(timestamp);
         informationManager.saveRecordedBeaconInformation(ts);
         Intent intent = getParentActivityIntent();
         startActivity(intent);
@@ -128,8 +140,10 @@ public class LoggingActivity extends AppCompatActivity implements InformationLis
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
-                Long tsLong = System.currentTimeMillis()/1000;
-                String ts = tsLong.toString();
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmssSS");
+
+                String ts = "Clips-" + simpleDateFormat.format(timestamp);
                 informationManager.saveRecordedBeaconInformation(ts);
                 Intent intent = getParentActivityIntent();
                 startActivity(intent);
