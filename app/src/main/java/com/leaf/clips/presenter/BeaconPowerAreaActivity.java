@@ -23,7 +23,10 @@ import java.util.Collection;
 import java.util.PriorityQueue;
 
 import javax.inject.Inject;
-
+/**
+ * Classe che permette di creare un'Activity che è in grado di rilevare il segnale emesso dai Beacon
+ * e visualizzarlo a video. Il segnale preso in considerazione è l'RSSI.
+ */
 
 public class BeaconPowerAreaActivity extends AppCompatActivity implements InformationListener{
 
@@ -31,7 +34,14 @@ public class BeaconPowerAreaActivity extends AppCompatActivity implements Inform
      * View associata a tale Activity
      */
     private BeaconPowerAreaView view;
+    /**
+     * Mappa dei Beacon con relativo segnale e posizione
+     */
     private Collection<BeaconPowerPos> map=new ArrayList<>();
+    /**
+     * Rappresenta lo stato di scansione. Il valore true indica che la scansione è attiva, false
+     * non è attiva
+     */
     private boolean scan=false;
     /**
      * Oggetto del Model per la gestione delle informazioni
@@ -52,29 +62,38 @@ public class BeaconPowerAreaActivity extends AppCompatActivity implements Inform
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
 
         buildMap();
-        //Controllo che l'iniziezione sia andata abuon fine
+        //Controllo che l'iniezione sia andata abuon fine
         Assert.assertNotNull(infoManager);
     }
 
-
+    /**
+     * Metodo che permette di avviare la scansione del segnale dei Beacon
+     */
     public void startScan(){
         infoManager.startRecordingBeacons();
         infoManager.addListener(this);
         scan=true;
     }
 
+    /**
+     * Metodo che permette di terminare la scansione del segnale dei Beacon
+     */
     public void stopScan(){
         infoManager.removeListener(this);
         scan=false;
     }
 
+    /**
+     * Metodo che permette di controllare lo stato della scansione. Se true indica che la scansione
+     * è attiva, false indica che la scansione non è attiva
+     */
     public boolean isScanning(){
         return scan;
     }
 
-
     /**
-     * @inheritDoc
+     * Metodo che permette di ottenere tutti i beacon rilevati e di creare una mappa che contiene i
+     * Beacon rilevati e i relativi segnali
      * @param visibleBeacons lista di beacon rilevati
      */
     @Override
@@ -91,6 +110,9 @@ public class BeaconPowerAreaActivity extends AppCompatActivity implements Inform
         view.setBeaconPowerMap(updateMap);
     }
 
+    /**
+     * Metodo che permette di creare la mappa dei Beacon
+     */
     public void buildMap(){
         Point size = new Point();
         getWindowManager().getDefaultDisplay().getSize(size);
@@ -111,7 +133,9 @@ public class BeaconPowerAreaActivity extends AppCompatActivity implements Inform
     }
 
     /**
-     * Metodo utilizzato per modificare il comportamento di default del tasto back
+     * Metodo che permette di fermare la scansione ogni volta che l'Activity entra nello stato
+     * onPause(). Questo metodo viene chiamato ogni qualvolta viene richiamata un'altra Activity
+     * o viene premuto il tasto di blocco del dispositivo
      */
 
     @Override
