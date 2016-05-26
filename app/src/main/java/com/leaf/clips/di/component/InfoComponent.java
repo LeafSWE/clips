@@ -128,6 +128,6 @@ public interface InfoComponent {
     void inject(PoiActivity poiActivity);
 
     void inject(PoiDescriptionActivity poiDescriptionActivity);
-    
+
     void inject(NavigationManagerImp navigationManagerImp);
 }
