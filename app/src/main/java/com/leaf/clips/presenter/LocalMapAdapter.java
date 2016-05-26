@@ -1,6 +1,8 @@
 package com.leaf.clips.presenter;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatImageButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +28,7 @@ import java.util.Collection;
 
 public class LocalMapAdapter extends BaseAdapter{
 
-    private Context context;
+    private LocalMapActivity presenter;
 
     private Collection<BuildingTable> collectionBuildingTable;
 
@@ -34,12 +36,12 @@ public class LocalMapAdapter extends BaseAdapter{
 
     private BuildingTable buildingTable;
 
-    private Button btnUpdateMap;
+    private AppCompatImageButton btnUpdateMap;
 
-    private Button btnDeleteMap;
+    private AppCompatImageButton btnDeleteMap;
 
-    public LocalMapAdapter(Context context, Collection<BuildingTable> collectionBuildingTable, boolean [] mapsVersionStatus){
-        this.context = context;
+    public LocalMapAdapter(LocalMapActivity presenter, Collection<BuildingTable> collectionBuildingTable, boolean [] mapsVersionStatus){
+        this.presenter = presenter;
         this.collectionBuildingTable = collectionBuildingTable;
         this.mapsVersionStatus = mapsVersionStatus;
     }
@@ -63,7 +65,7 @@ public class LocalMapAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if(convertView == null){
-            convertView = LayoutInflater.from(context).inflate(R.layout.local_map_row, null);
+            convertView = LayoutInflater.from(presenter).inflate(R.layout.local_map_row, null);
         }
 
         buildingTable = (BuildingTable) getItem(position);
@@ -77,7 +79,7 @@ public class LocalMapAdapter extends BaseAdapter{
         txtViewAddress.setText(buildingTable.getAddress());
 
         TextView txtViewMapVersion =  (TextView) convertView.findViewById(R.id.textViewLocalMapVersion);
-        txtViewMapVersion.setText(buildingTable.getVersion());
+        txtViewMapVersion.setText("v. " + String.valueOf(buildingTable.getVersion()));
 
         TextView txtViewMapSize = (TextView) convertView.findViewById(R.id.textViewLocalMapSize);
         txtViewMapSize.setText(buildingTable.getSize());
@@ -91,20 +93,20 @@ public class LocalMapAdapter extends BaseAdapter{
             txtViewMapStatus.setText("Mappa da aggiornare");
         }
 
-        btnUpdateMap = (Button) convertView.findViewById(R.id.updateLocalMap);
-        btnDeleteMap = (Button) convertView.findViewById(R.id.removeLocalMap);
+        btnUpdateMap = (AppCompatImageButton) convertView.findViewById(R.id.updateLocalMap);
+        btnDeleteMap = (AppCompatImageButton) convertView.findViewById(R.id.removeLocalMap);
 
         btnUpdateMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 5/26/16 Aspetto il buildingManager
+                presenter.updateMap(buildingTable.getMajor());
             }
         });
 
         btnDeleteMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 5/26/16 Aspetto il buildingManager
+                presenter.deleteMap(buildingTable.getMajor());
             }
         });
 
