@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.leaf.clips.R;
@@ -32,6 +33,10 @@ public class LocalMapAdapter extends BaseAdapter{
     private BuildingTable buildingTable;
 
     private DatabaseService databaseService;
+
+    private Button btnUpdateMap;
+
+    private Button btnDeleteMap;
 
     public LocalMapAdapter(Context context, DatabaseService databaseService){
         this.context = context;
@@ -91,6 +96,16 @@ public class LocalMapAdapter extends BaseAdapter{
         else {
             txtViewMapStatus.setText("Mappa da aggiornare");
         }
+
+        btnUpdateMap = (Button) convertView.findViewById(R.id.updateLocalMap);
+        btnDeleteMap = (Button) convertView.findViewById(R.id.removeLocalMap);
+
+        btnUpdateMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 5/26/16 Aspetto il buildingManager 
+            }
+        });
 
         return convertView;
     }
