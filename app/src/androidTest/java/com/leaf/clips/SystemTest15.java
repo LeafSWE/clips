@@ -36,7 +36,50 @@ public class SystemTest15 {
         onView(withId(R.id.nav_view_home)).perform(NavigationViewActions.navigateTo(R.id.mapManager));
     }
 
+    @Test
+    public void shouldInstallNewMap() throws Exception {
 
+    }
 
+    @Test
+    public void shouldSearchMaps() throws Exception {}
 
+    @Test
+    public void shouldRemoveMaps() throws Exception {}
+
+    @Test
+    public void shouldUpdateMaps() throws Exception {}
+
+    @Test
+    public void shouldAccessLocalMapName() throws Exception {}
+
+    @Test
+    public void shouldAccessLocalMapAddress() throws Exception {}
+
+    @Test
+    public void shouldAccessLocalMapDescription() throws Exception {}
+
+    @Test
+    public void shouldAccessLocalMapSize() throws Exception {}
+
+    @Test
+    public void shouldAccessLocalMapVersion() throws Exception {}
+
+    @Test
+    public void shouldAccessRemoteMapName() throws Exception {}
+
+    @Test
+    public void shouldAccessRemoteMapAddress() throws Exception {}
+
+    @Test
+    public void shouldAccessRemoteMapDescription() throws Exception {}
+
+    @Test
+    public void shouldAccessRemoteMapSize() throws Exception {}
+
+    @Test
+    public void shouldAccessRemoteMapVersion() throws Exception {}
+
+    @Test
+    public void shouldNotifyRemoteMapNotFound() throws Exception {}
 }
