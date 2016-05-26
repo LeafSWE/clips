@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 
+import android.os.StrictMode;
+
 import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 import com.leaf.clips.model.dataaccess.dao.RemoteBuildingDao;
 import com.leaf.clips.model.dataaccess.dao.SQLiteBuildingDao;
@@ -368,6 +370,10 @@ public class BuildingService implements DatabaseService {
      */
     @Override
     public boolean isBuildingMapUpdated(int major) throws IOException {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
 
         String url = databaseURL+"mapVersion/?major="+major;
         try (
