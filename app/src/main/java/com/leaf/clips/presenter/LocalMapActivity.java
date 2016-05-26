@@ -32,12 +32,13 @@ public class LocalMapActivity extends AppCompatActivity {
      */
     private LocalMapManagerView view;
 
+    // TODO: 5/26/16 Modificare nome attributo, Asta + Tracy
     /**
      * Metodo che permettere di rimuovere una mappa del database locale
      * @param mapPosition Posizione occupata dalla mappa da rimuovere
      * @return  void
      */
-    public void deleteMap(int mapPosition){}
+    public void deleteMap(int major){}
 
     /**
      * Metodo che inizializza la View associata a tale Activity
@@ -70,14 +71,16 @@ public class LocalMapActivity extends AppCompatActivity {
 
             view.setAdapter(buildingTable, mapVersionStatus);
         }
+
+
     }
 
-
+    // TODO: 5/26/16 Modificare nome attributo, Asta + Tracy
     /**
      * Metodo che permette di aggiornare una mappa del database locale
      * @param mapPosition Posizione della mappa da aggiornare
      * @return  void
      */
-    public void updateMap(int mapPosition){}
+    public void updateMap(int major){}
 
 }
