@@ -46,8 +46,7 @@
     <string name="title_activity_navigation">Instructions</string>
     <string name="no_result_found">No result found</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_preferences">Preferences</string>
 
     <!-- Preferences strings -->
     <string name="default_path_preferences">Default</string>
