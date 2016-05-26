@@ -180,6 +180,8 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
             homeActivity.showPreferences();
         } else if (id == R.id.help) {
             homeActivity.showHelp();
+        } else if (id == R.id.mapManager){
+            homeActivity.showLocalMaps();
         }
         //homeActivity.startActivity(intent);
         drawer.closeDrawer(GravityCompat.START);

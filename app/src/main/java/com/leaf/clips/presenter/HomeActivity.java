@@ -453,7 +453,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      * Avvia l'Activity deputata a gestire le mappe salvate sul dispositivo.
      */
     public void showLocalMaps(){
-        // TODO: 5/3/16
+        Intent intent = new Intent(this, LocalMapActivity.class);
+        startActivity(intent);
     }
 
     /**
