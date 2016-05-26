@@ -49,7 +49,7 @@
     <string name="title_activity_preferences">Preferences</string>
 
     <!-- Preferences strings -->
-    <string name="default_path_preferences">Default</string>
+    <string name="default_path_preferences">Fastest</string>
     <string name="elevator_path_preferences">Elevator</string>
     <string name="stair_path_preferences">Stair</string>
     <string name="default_instruction_preferences">Default</string>
