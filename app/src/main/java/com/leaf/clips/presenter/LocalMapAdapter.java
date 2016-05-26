@@ -68,6 +68,12 @@ public class LocalMapAdapter extends BaseAdapter{
         TextView txtViewAddress = (TextView) convertView.findViewById(R.id.textViewLocalMapAddres);
         txtViewAddress.setText(buildingTable.getAddress());
 
+        TextView txtViewMapVersion =  (TextView) convertView.findViewById(R.id.textViewLocalMapVersion);
+        txtViewMapVersion.setText(buildingTable.getVersion());
+
+        TextView txtViewMapSize = (TextView) convertView.findViewById(R.id.textViewLocalMapSize);
+        txtViewMapSize.setText(buildingTable.getSize());
+
         return convertView;
     }
 }
