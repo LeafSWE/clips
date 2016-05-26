@@ -57,6 +57,13 @@ public class PoiActivity extends AppCompatActivity {
         view = new PoiViewImp(this);
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
 
+        //Imposta il titolo della Activity in base all'edificio
+        try {
+            setTitle("In " + informationManager.getBuildingMap().getName());
+        } catch (NoBeaconSeenException e) {
+            e.printStackTrace();
+        }
+
         try {
             poiList = (List<PointOfInterest>) informationManager.getBuildingMap().getAllPOIs();
             List<String> poiNames = new LinkedList<>();
