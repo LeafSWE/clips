@@ -9,7 +9,10 @@ package com.leaf.clips.presenter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import com.leaf.clips.R;
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.beacon.LoggerImp;
 import com.leaf.clips.view.MainDeveloperView;
@@ -101,6 +104,24 @@ public class MainDeveloperActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = getParentActivityIntent();
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_developer, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_beacon_power_area) {
+            Intent intent = new Intent(this, BeaconPowerAreaActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }
