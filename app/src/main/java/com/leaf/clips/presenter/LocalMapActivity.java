@@ -13,6 +13,7 @@ import com.leaf.clips.model.dataaccess.service.DatabaseService;
 import com.leaf.clips.view.LocalMapManagerView;
 import com.leaf.clips.view.LocalMapManagerViewImp;
 
+import java.io.IOException;
 import java.util.Collection;
 
 import javax.inject.Inject;
@@ -53,9 +54,21 @@ public class LocalMapActivity extends AppCompatActivity {
 
         //Se non trovo nessuna mappa passo l'adapter vuoto
         if(buildingTable.size() == 0)
-            view.setAdapter(null);
+            view.setAdapter(null, null);
         else {
-            view.setAdapter(new LocalMapAdapter(this, databaseService));
+            boolean [] mapVersionStatus = new boolean[buildingTable.size()];
+
+            int i = 0;
+            for(BuildingTable building : buildingTable) {
+                try {
+                    mapVersionStatus[i] = databaseService.isBuildingMapUpdated(building.getMajor());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                i++;
+            }
+
+            view.setAdapter(buildingTable, mapVersionStatus);
         }
     }
 

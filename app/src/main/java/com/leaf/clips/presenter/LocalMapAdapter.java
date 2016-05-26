@@ -30,18 +30,18 @@ public class LocalMapAdapter extends BaseAdapter{
 
     private Collection<BuildingTable> collectionBuildingTable;
 
-    private BuildingTable buildingTable;
+    private boolean [] mapsVersionStatus;
 
-    private DatabaseService databaseService;
+    private BuildingTable buildingTable;
 
     private Button btnUpdateMap;
 
     private Button btnDeleteMap;
 
-    public LocalMapAdapter(Context context, DatabaseService databaseService){
+    public LocalMapAdapter(Context context, Collection<BuildingTable> collectionBuildingTable, boolean [] mapsVersionStatus){
         this.context = context;
-        this.databaseService = databaseService;
-        collectionBuildingTable = databaseService.findAllBuildings();
+        this.collectionBuildingTable = collectionBuildingTable;
+        this.mapsVersionStatus = mapsVersionStatus;
     }
 
     @Override
@@ -68,6 +68,8 @@ public class LocalMapAdapter extends BaseAdapter{
 
         buildingTable = (BuildingTable) getItem(position);
 
+        boolean buildingMapStatus = mapsVersionStatus[position];
+
         TextView txtViewName = (TextView) convertView.findViewById(R.id.textViewLocalMapName);
         txtViewName.setText(buildingTable.getName());
 
@@ -82,15 +84,7 @@ public class LocalMapAdapter extends BaseAdapter{
 
         TextView txtViewMapStatus = (TextView) convertView.findViewById(R.id.textViewMapStatus);
 
-        boolean isMapUpdate = false;
-
-        try {
-            isMapUpdate = databaseService.isBuildingMapUpdated(buildingTable.getMajor());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if(isMapUpdate){
+        if(buildingMapStatus){
             txtViewMapStatus.setText("Mappa aggiornata");
         }
         else {
@@ -103,7 +97,14 @@ public class LocalMapAdapter extends BaseAdapter{
         btnUpdateMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 5/26/16 Aspetto il buildingManager 
+                // TODO: 5/26/16 Aspetto il buildingManager
+            }
+        });
+
+        btnDeleteMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: 5/26/16 Aspetto il buildingManager
             }
         });
 

@@ -4,8 +4,11 @@ import android.widget.Adapter;
 import android.widget.ListView;
 
 import com.leaf.clips.R;
+import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 import com.leaf.clips.presenter.LocalMapActivity;
 import com.leaf.clips.presenter.LocalMapAdapter;
+
+import java.util.Collection;
 
 /**
  * @author Oscar Elia Conti
@@ -39,14 +42,15 @@ public class LocalMapManagerViewImp implements LocalMapManagerView {
     @Override
     public void refreshMaps(){}
 
+    // TODO: 5/26/16 Modificare asta + tracy
     /**
      * Metodo utilizzato per visualizzare la lista delle mappe salvate nel database locale
      * @param adp Collegamento tra la lista delle mappe salvate nel database locale e la view in cui esse devono essere mostrate
      * @return  void
      */
     @Override
-    public void setAdapter(Adapter adp){
+    public void setAdapter(Collection<BuildingTable> collectionBuildingTable, boolean [] mapsVersionStatus){
         ListView listView = (ListView) presenter.findViewById(R.id.listViewLocalMaps);
-        listView.setAdapter((LocalMapAdapter)adp);
+        listView.setAdapter(new LocalMapAdapter(presenter,collectionBuildingTable, mapsVersionStatus));
     }
 }
