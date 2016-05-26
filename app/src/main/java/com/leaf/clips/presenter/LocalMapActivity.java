@@ -13,6 +13,8 @@ import com.leaf.clips.model.dataaccess.service.DatabaseService;
 import com.leaf.clips.view.LocalMapManagerView;
 import com.leaf.clips.view.LocalMapManagerViewImp;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.inject.Inject;
@@ -24,6 +26,7 @@ import javax.inject.Inject;
 public class LocalMapActivity extends AppCompatActivity {
 
     // TODO: 5/24/16 Aggiungere Asta + Tracy
+    // TODO: 5/26/16 Accorpare codice ripetuto 
     @Inject
     DatabaseService databaseService;
     /**
@@ -31,12 +34,36 @@ public class LocalMapActivity extends AppCompatActivity {
      */
     private LocalMapManagerView view;
 
+    // TODO: 5/26/16 Modificare nome attributo, Asta + Tracy
     /**
      * Metodo che permettere di rimuovere una mappa del database locale
      * @param mapPosition Posizione occupata dalla mappa da rimuovere
      * @return  void
      */
-    public void deleteMap(int mapPosition){}
+    public void deleteMap(int major){
+        databaseService.deleteBuilding(databaseService.findBuildingByMajor(major));
+
+        Collection<BuildingTable> buildingTable = databaseService.findAllBuildings();
+
+        //Se non trovo nessuna mappa passo l'adapter vuoto
+        if(buildingTable.size() == 0)
+            view.setAdapter(new ArrayList<BuildingTable>(), new boolean [0]);
+        else {
+            boolean [] mapVersionStatus = new boolean[buildingTable.size()];
+
+            int i = 0;
+            for(BuildingTable building : buildingTable) {
+                try {
+                    mapVersionStatus[i] = databaseService.isBuildingMapUpdated(building.getMajor());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                i++;
+            }
+
+            view.setAdapter(buildingTable, mapVersionStatus);
+        }
+    }
 
     /**
      * Metodo che inizializza la View associata a tale Activity
@@ -53,18 +80,59 @@ public class LocalMapActivity extends AppCompatActivity {
 
         //Se non trovo nessuna mappa passo l'adapter vuoto
         if(buildingTable.size() == 0)
-            view.setAdapter(null);
+            view.setAdapter(new ArrayList<BuildingTable>(), new boolean [0]);
         else {
-            view.setAdapter(new LocalMapAdapter(this, databaseService));
+            boolean [] mapVersionStatus = new boolean[buildingTable.size()];
+
+            int i = 0;
+            for(BuildingTable building : buildingTable) {
+                try {
+                    mapVersionStatus[i] = databaseService.isBuildingMapUpdated(building.getMajor());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                i++;
+            }
+
+            view.setAdapter(buildingTable, mapVersionStatus);
         }
+
+
     }
 
-
+    // TODO: 5/26/16 Modificare nome attributo, Asta + Tracy
     /**
      * Metodo che permette di aggiornare una mappa del database locale
      * @param mapPosition Posizione della mappa da aggiornare
      * @return  void
      */
-    public void updateMap(int mapPosition){}
+    public void updateMap(int major){
+        try {
+            databaseService.updateBuildingMap(major);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Collection<BuildingTable> buildingTable = databaseService.findAllBuildings();
+
+        //Se non trovo nessuna mappa passo l'adapter vuoto
+        if(buildingTable.size() == 0)
+            view.setAdapter(new ArrayList<BuildingTable>(), new boolean [0]);
+        else {
+            boolean [] mapVersionStatus = new boolean[buildingTable.size()];
+
+            int i = 0;
+            for(BuildingTable building : buildingTable) {
+                try {
+                    mapVersionStatus[i] = databaseService.isBuildingMapUpdated(building.getMajor());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                i++;
+            }
+
+            view.setAdapter(buildingTable, mapVersionStatus);
+        }
+    }
 
 }
