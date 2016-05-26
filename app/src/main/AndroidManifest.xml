@@ -99,12 +99,16 @@
                     android:name="android.app.searchable"
                     android:resource="@xml/searchable"/>
         </activity>
-        <activity android:name=".presenter.DetailedInformationActivity">
+        <activity
+                android:name=".presenter.DetailedInformationActivity"
+                android:label="Nel dettaglio">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.NavigationActivity"/>
         </activity>
-        <activity android:name=".presenter.ImageDetailActivity">
+        <activity
+                android:name=".presenter.ImageDetailActivity"
+                android:label=" ">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.DetailedInformationActivity"/>
