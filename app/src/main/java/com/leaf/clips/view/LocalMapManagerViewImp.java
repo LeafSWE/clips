@@ -40,7 +40,9 @@ public class LocalMapManagerViewImp implements LocalMapManagerView {
      * @return  void
      */
     @Override
-    public void refreshMaps(){}
+    public void refreshMaps(){
+
+    }
 
     // TODO: 5/26/16 Modificare asta + tracy
     /**
@@ -51,6 +53,8 @@ public class LocalMapManagerViewImp implements LocalMapManagerView {
     @Override
     public void setAdapter(Collection<BuildingTable> collectionBuildingTable, boolean [] mapsVersionStatus){
         ListView listView = (ListView) presenter.findViewById(R.id.listViewLocalMaps);
-        listView.setAdapter(new LocalMapAdapter(presenter,collectionBuildingTable, mapsVersionStatus));
+
+
+            listView.setAdapter(new LocalMapAdapter(presenter,collectionBuildingTable, mapsVersionStatus));
     }
 }
