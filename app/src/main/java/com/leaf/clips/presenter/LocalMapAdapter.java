@@ -11,6 +11,7 @@ import com.leaf.clips.R;
 import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 import com.leaf.clips.model.dataaccess.service.DatabaseService;
 
+import java.io.IOException;
 import java.util.Collection;
 
 /**
@@ -73,6 +74,23 @@ public class LocalMapAdapter extends BaseAdapter{
 
         TextView txtViewMapSize = (TextView) convertView.findViewById(R.id.textViewLocalMapSize);
         txtViewMapSize.setText(buildingTable.getSize());
+
+        TextView txtViewMapStatus = (TextView) convertView.findViewById(R.id.textViewMapStatus);
+
+        boolean isMapUpdate = false;
+
+        try {
+            isMapUpdate = databaseService.isBuildingMapUpdated(buildingTable.getMajor());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(isMapUpdate){
+            txtViewMapStatus.setText("Mappa aggiornata");
+        }
+        else {
+            txtViewMapStatus.setText("Mappa da aggiornare");
+        }
 
         return convertView;
     }
