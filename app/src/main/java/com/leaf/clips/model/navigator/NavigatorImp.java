@@ -77,6 +77,7 @@ public class NavigatorImp implements Navigator {
      */
     public NavigatorImp(Compass compass, PathFinder dijkstraPathFinder) {
         this.compass = compass;
+        //MyApplication.getInfoComponent().inject(this);
         this.pathFinder = dijkstraPathFinder;
         this.path = null;
         this.buildingGraph = null;
@@ -170,8 +171,26 @@ public class NavigatorImp implements Navigator {
         //Log.i("getAllInstruction", "getAllInstruction");
         if (path != null) {
             ArrayList<ProcessedInformation> result = new ArrayList<>();
+            int i = 0;
             for (EnrichedEdge edge : path) {
-                ProcessedInformation edgeProcessedInformation = new ProcessedInformationImp(edge);
+                ProcessedInformation edgeProcessedInformation;
+                if(i==0 && path.size()>1) {
+                    double lastCoordinate = compass.getLastCoordinate();
+                    int correctGrade = path.get(i).getCoordinate() - (int)lastCoordinate;
+                    if (correctGrade < 0) {
+                        correctGrade += 360;
+                    }
+                    edgeProcessedInformation = new
+                            ProcessedInformationImp(edge, correctGrade);
+                }
+                else {
+                    if(i<path.size()-1)
+                        edgeProcessedInformation = new ProcessedInformationImp(edge,
+                                path.get(i+1).getCoordinate() - edge.getCoordinate());
+                    else
+                        edgeProcessedInformation = new ProcessedInformationImp(edge);
+                }
+                i++;
                 result.add(edgeProcessedInformation);
             }
             result.add(new ProcessedInformationImp());
@@ -188,17 +207,28 @@ public class NavigatorImp implements Navigator {
         }
     }
 
-    private String calcolaDestraSinistra(EnrichedEdge actual, EnrichedEdge next) {
-        int correctGrade = next.getCoordinate() - actual.getCoordinate();
+    private String calcolaDestraSinistra(EnrichedEdge next) {
+        double lastCoordinate = compass.getLastCoordinate();
+        int correctGrade = next.getCoordinate() - (int)lastCoordinate;
         if (correctGrade < 0) {
             correctGrade += 360;
         }
-        if (correctGrade > 30 && correctGrade < 180)
-            return "gira a destra";
-        else if (correctGrade >= 180 && correctGrade < 330)
-            return "gira a sinistra";
+        if (correctGrade > 20 && correctGrade < 150)
+            return "gira a destra" + lastCoordinate + "\n" +
+                    next.getCoordinate() + "\n" +
+                    correctGrade + "\n";
+        else if (correctGrade >= 210 && correctGrade < 340)
+            return "gira a sinistra" + lastCoordinate + "\n" +
+                    next.getCoordinate() + "\n" +
+                    correctGrade + "\n";
+        else if (correctGrade >= 150 && correctGrade <210)
+            return "girati" + lastCoordinate +  "\n" +
+                    next.getCoordinate() + "\n" +
+                    correctGrade + "\n";
         else
-            return "vai dritto";
+            return "vai dritto" + lastCoordinate  + "\n" +
+                    next.getCoordinate() + "\n" +
+                    correctGrade + "\n";
     }
 
     /**

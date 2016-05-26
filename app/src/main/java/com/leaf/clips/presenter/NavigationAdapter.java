@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leaf.clips.R;
+import com.leaf.clips.model.navigator.NavigationDirection;
 import com.leaf.clips.model.navigator.ProcessedInformation;
 
 import java.util.List;
@@ -19,6 +20,8 @@ import java.util.List;
  * @version 0.25
  * @since 0.00
  */
+
+// TODO: 25/05/16 aggiornare tracy/uml
 
 /**
  * Si occupa del binding tra le informazioni di navigazione fornite dal Model e la View deputata
@@ -89,7 +92,7 @@ public class NavigationAdapter extends BaseAdapter {
         ProcessedInformation navigationInformation = (ProcessedInformation)getItem(position);
 
         ImageView directionImage = (ImageView)convertView.findViewById(R.id.imageView_direction);
-        int direction = navigationInformation.getDirection();
+        NavigationDirection direction = navigationInformation.getDirection();
         setDirectionArrow(direction, directionImage);
 
         TextView basicDescription = (TextView)convertView.findViewById(R.id.textView_short_description);
@@ -101,16 +104,18 @@ public class NavigationAdapter extends BaseAdapter {
 
         if (position == 0)
             convertView.setBackgroundColor(convertView.getResources().getColor(R.color.green));
-        Log.i("NAVADP", ""+getCount());
-        if (position == getCount()-1)
+        /*if (position == getCount() - 1)
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //tap on last instruction do nothing
+
+                    
                 }
-            });
+            });*/
+        Log.i("NAVADP", ""+getCount());
         return  convertView;
     }
+
 
     /**
      * Metodo di utilità che associa la freccia corretta (Drawable) alla istruzione, in modo che ne
@@ -118,28 +123,45 @@ public class NavigationAdapter extends BaseAdapter {
      * @param direction indicatore della direzione
      * @param image view da aggiornare
      */
-    private void setDirectionArrow(int direction, ImageView image){
+    private void setDirectionArrow(NavigationDirection direction, ImageView image){
         switch (direction){
-            case 0: image.setBackgroundResource(R.drawable.arrow_go_straight);
-                    break;
-            case 1: image.setBackgroundResource(R.drawable.arrow_turn_left);
+            case STRAIGHT:
+                image.setBackgroundResource(R.drawable.arrow_go_straight);
                 break;
-            case 2: image.setBackgroundResource(R.drawable.arrow_turn_right);
+            case LEFT:
+                image.setBackgroundResource(R.drawable.arrow_turn_left);
                 break;
-            case 3: image.setBackgroundResource(R.drawable.arrow_stairs_up);
+            case RIGHT:
+                image.setBackgroundResource(R.drawable.arrow_turn_right);
                 break;
-            case 4: image.setBackgroundResource(R.drawable.arrow_stairs_down);
+            case STAIR_UP:
+                image.setBackgroundResource(R.drawable.arrow_stairs_up);
                 break;
-            case 5: image.setBackgroundResource(R.drawable.arrow_elevator_up);
+            case STAIR_DOWN:
+                image.setBackgroundResource(R.drawable.arrow_stairs_down);
                 break;
-            case 6: image.setBackgroundResource(R.drawable.arrow_elevator_down);
+            case ELEVATOR_UP:
+                image.setBackgroundResource(R.drawable.arrow_elevator_up);
                 break;
-            case 9: image.setBackgroundResource(R.drawable.destination);
+            case ELEVATOR_DOWN:
+                image.setBackgroundResource(R.drawable.arrow_elevator_down);
+                break;
+            case TURN:
+                image.setBackgroundResource(R.drawable.arrow_turn_around);
+                break;
+            case DESTINATION:
+                image.setBackgroundResource(R.drawable.destination);
+                break;
             default: Log.d("DIRECTION_ARRAY_ERR","Non esiste una rappresentazione grafica per questa direzione");
                 break;
         }
 
     }
 
-
+    @Override
+    public boolean isEnabled(int position) {
+        if(position == (navigationInformation.size()-1))
+            return false;
+        return super.isEnabled(position);
+    }
 }

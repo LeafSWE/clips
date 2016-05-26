@@ -4,9 +4,12 @@ package com.leaf.clips.view;
  * @version 0.01
  * @since 0.00
  */
+import com.leaf.clips.model.navigator.NavigationDirection;
 import com.leaf.clips.model.navigator.ProcessedInformation;
 
 import java.util.List;
+
+// TODO: 25/05/16 aggiornare tracy/uml
 
 /**
  * NavigationView espone i metodi utili al binding della View con la lista di istruzioni di
@@ -30,5 +33,7 @@ public interface NavigationView {
      */
     void refreshInstructions(int i);
 
-    public void noResult();
+    void noResult();
+
+    void updateArrow(NavigationDirection direction);
 }
