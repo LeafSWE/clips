@@ -147,6 +147,7 @@
                 android:authorities="com.leaf.clips.presenter.SearchSuggestionsProvider"/>
 
         <activity android:name=".presenter.RemoteMapManagerActivity"
+                  android:label="@string/title_activity_remote_map_manager"
                   android:parentActivityName=".presenter.LocalMapActivity">
         </activity>
         <activity

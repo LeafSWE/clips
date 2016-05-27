@@ -75,4 +75,7 @@
     <string name="delete_map">Rimuovi mappa</string>
     <string name="title_activity_local_map">Le tue mappe</string>
     <string name="title_activity_preferences">Preferenze</string>
+
+    <!--RemoteMapManager-->
+    <string name="title_activity_remote_map_manager">Scarica nuove mappe</string>
 </resources>

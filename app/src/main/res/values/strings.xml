@@ -87,5 +87,8 @@
     <string name="update_map">Update Map</string>
     <string name="delete_map">Delete Map</string>
 
+    <!--RemoteMapManager-->
+    <string name="title_activity_remote_map_manager">Download new maps</string>
+
 
 </resources>
