@@ -2,7 +2,10 @@ package com.leaf.clips.presenter;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import com.leaf.clips.R;
 import com.leaf.clips.model.dataaccess.service.DatabaseService;
 import com.leaf.clips.view.RemoteMapManagerView;
 import com.leaf.clips.view.RemoteMapManagerViewImp;
@@ -34,13 +37,22 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
-        this.view = new RemoteMapManagerViewImp(this);
+        //this.view = new RemoteMapManagerViewImp(this);
+
+        setContentView(R.layout.activity_remote_map_manager);
+
+        TextView text = (TextView) findViewById(R.id.textViewRemoteMapName);
+        text.setText("Ciao");
+
+        ListView list = (ListView) findViewById(R.id.listViewRemoteMaps);
+        list.setAdapter(null);
 
         try {
             view.setRemoteMaps(databaseService.findAllRemoteBuildings());
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     /**

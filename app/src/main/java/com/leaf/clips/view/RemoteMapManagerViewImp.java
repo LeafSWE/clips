@@ -1,10 +1,12 @@
 package com.leaf.clips.view;
 
 import android.widget.Adapter;
+import android.widget.ListView;
 
 import com.leaf.clips.R;
 import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 import com.leaf.clips.presenter.RemoteMapManagerActivity;
+import com.leaf.clips.presenter.RemoteMapManagerAdapter;
 
 import java.util.Collection;
 
@@ -30,10 +32,10 @@ public class RemoteMapManagerViewImp implements RemoteMapManagerView{
      */
     public RemoteMapManagerViewImp(RemoteMapManagerActivity presenter){
         this.presenter = presenter;
-        presenter.setContentView(R.layout.activity_remote_map_manager);
+        this.presenter.setContentView(R.layout.activity_remote_map_manager);
     }
 
-    // TODO: 5/27/16 Asta + Tracy, attributo modificato 
+    // TODO: 5/27/16 Asta + Tracy, attributo modificato
     /**
      * Metodo utilizzate per visualizzare le mappe che è possibile scaricare da un server remoto
      * @param adp Collegamento tra la lista delle mappe che è possibile scaricare e la view in cui esse devono essere mostrate
@@ -41,6 +43,7 @@ public class RemoteMapManagerViewImp implements RemoteMapManagerView{
      */
     @Override
     public void setRemoteMaps(Collection<BuildingTable> buildingTables){
-        
+        ListView listView = (ListView) presenter.findViewById(R.id.listViewRemoteMaps);
+        listView.setAdapter(new RemoteMapManagerAdapter(presenter,buildingTables));
     }
 }
