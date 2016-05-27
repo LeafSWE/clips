@@ -8,6 +8,8 @@ import com.leaf.clips.model.dataaccess.service.DatabaseService;
 import com.leaf.clips.view.RemoteMapManagerView;
 import com.leaf.clips.view.RemoteMapManagerViewImp;
 
+import javax.inject.Inject;
+
 /**
  *È una classe che estende AppCompactActivity che recupera tutte le mappe in remoto dal model e gestisce RemoteMapManagerView
  */
@@ -19,6 +21,7 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
     private RemoteMapManagerView view;
 
     // TODO: 5/27/16 Aggiungere Tracy + Asta
+    @Inject
     private DatabaseService databaseService;
 
     /**
@@ -29,6 +32,7 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
+        ((MyApplication)getApplication()).getInfoComponent().inject(this);
         this.view = new RemoteMapManagerViewImp(this);
     }
 
