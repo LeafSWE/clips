@@ -1,6 +1,7 @@
 package com.leaf.clips.presenter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageButton;
 import android.view.LayoutInflater;
@@ -91,6 +92,8 @@ public class LocalMapAdapter extends BaseAdapter{
         }
         else {
             txtViewMapStatus.setText("Mappa da aggiornare");
+            txtViewMapStatus.setTextColor(Color.RED);
+            txtViewMapVersion.setTextColor(Color.RED);
         }
 
         btnUpdateMap = (AppCompatImageButton) convertView.findViewById(R.id.updateLocalMap);
