@@ -413,7 +413,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                         informationManager.updateMapOfVisibleBeacons(true);
                     }
                 })
-                .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         informationManager.updateMapOfVisibleBeacons(false);
                     }
@@ -445,21 +445,40 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      * Avvia l'Activity deputata a gestire la guida utente.
      */
     public void showHelp(){
-        // TODO: 5/3/16
+        Intent intent = new Intent(this, HelpActivity.class);
+        startActivity(intent);
     }
 
     /**
      * Avvia l'Activity deputata a gestire le mappe salvate sul dispositivo.
      */
     public void showLocalMaps(){
-        // TODO: 5/3/16
+        Intent intent = new Intent(this, LocalMapActivity.class);
+        startActivity(intent);
     }
 
     /**
      * Avvia l'Activity deputata a gestire le mappe salvate sul dispositivo.
      */
     public void showPreferences(){
-        // TODO: 5/3/16
+        Intent intent = new Intent(this, PreferencesActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Avvia l'Activity deputata a mostrare al lista di tutti i POI dell'edificio.
+     */
+    public void showAllPois() {
+        Intent intent = new Intent(this, PoiActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Avvia l'Activity deputata alla gestione delle funzionalità sviluppatore.
+     */
+    public void showDeveloper() {
+        Intent intent = new Intent(this, MainDeveloperPresenter.class);
+        startActivity(intent);
     }
 
 }

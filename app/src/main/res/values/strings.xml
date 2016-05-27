@@ -16,7 +16,9 @@
     <string name="prompt_code">Please insert developer code</string>
     <string name="action_login">Login</string>
     <string name="title_activity_main_developer">Your logs</string>
+    <string name="action_beacon_power_area">Beacon Power Area</string>
     <string name="title_activity_logging">New log</string>
+    <string name="title_activity_beacon_power_area">Beacon Power Area</string>
     <string name="dialog_title_dev_code_error">Sorry!</string>
     <string name="dialog_dev_code_error">Wrong code.</string>
     <string name="dialog_title_not_updated_map">Do you want to update map?</string>
@@ -47,12 +49,11 @@
     <string name="title_activity_navigation">Instructions</string>
     <string name="no_result_found">No result found</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_local_map">Your Maps</string>
+    <string name="title_activity_preferences">Preferences</string>
 
     <!-- Preferences strings -->
-    <string name="default_path_preferences">Default</string>
+    <string name="default_path_preferences">Fastest</string>
     <string name="elevator_path_preferences">Elevator</string>
     <string name="stair_path_preferences">Stair</string>
     <string name="default_instruction_preferences">Default</string>

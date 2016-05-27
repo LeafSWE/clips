@@ -47,7 +47,7 @@ public class ProcessedInformationImpTest {
 
         processedInformation = new ProcessedInformationImp(mockEnrichedEdge);
         processedInformationWithStart = new ProcessedInformationImp(mockEnrichedEdge,
-                FAKE_STARTER_INFORMATION);
+                1);
     }
 
     /*@Test

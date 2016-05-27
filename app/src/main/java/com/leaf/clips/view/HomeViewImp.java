@@ -19,12 +19,7 @@ import android.view.View;
 
 import com.leaf.clips.R;
 import com.leaf.clips.presenter.CompleteHomeFragment;
-import com.leaf.clips.presenter.HelpActivity;
 import com.leaf.clips.presenter.HomeActivity;
-import com.leaf.clips.presenter.LocalMapActivity;
-import com.leaf.clips.presenter.MainDeveloperPresenter;
-import com.leaf.clips.presenter.PoiActivity;
-import com.leaf.clips.presenter.PreferencesActivity;
 
 import java.util.List;
 
@@ -65,6 +60,14 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
      */
     private FloatingActionButton exploreButton;
 
+    /**
+     * Riferimento al bottone che che mostra tutti i POI dell'edificio.
+     */
+    private FloatingActionButton allPoisButton;
+
+    /**
+     * Riferimento alla hamburger icon del Drawer.
+     */
     private ActionBarDrawerToggle toggle;
 
     /**
@@ -88,6 +91,18 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
                 @Override
                 public void onClick(View view) {
                     homeActivity.showExplorer();
+                }
+            });
+        }
+
+        allPoisButton = (FloatingActionButton) homeActivity.findViewById(R.id.fab_all_poi_button);
+
+        // Listener del tap su allPoisButton
+        if(allPoisButton != null){
+            allPoisButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    homeActivity.showAllPois();
                 }
             });
         }
@@ -160,17 +175,15 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
         int id = item.getItemId();
         Intent intent = null;
         if (id == R.id.nav_developer) {
-            intent = new Intent(homeActivity, MainDeveloperPresenter.class);
+            homeActivity.showDeveloper();
         } else if (id == R.id.settings) {
-            intent = new Intent(homeActivity, PreferencesActivity.class);
+            homeActivity.showPreferences();
         } else if (id == R.id.help) {
-            intent = new Intent(homeActivity, HelpActivity.class);
-        } else if (id == R.id.allpois) {
-            intent = new Intent(homeActivity, PoiActivity.class);
-        } else if (id == R.id.mapManager) {
-            intent = new Intent(homeActivity, LocalMapActivity.class);
+            homeActivity.showHelp();
+        } else if (id == R.id.mapManager){
+            homeActivity.showLocalMaps();
         }
-        homeActivity.startActivity(intent);
+        //homeActivity.startActivity(intent);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

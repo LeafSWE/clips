@@ -7,9 +7,15 @@ package com.leaf.clips.model.navigator;
  *
  */
 
+import android.util.Log;
+
 import com.leaf.clips.model.navigator.graph.edge.DefaultEdge;
+import com.leaf.clips.model.navigator.graph.edge.ElevatorEdge;
 import com.leaf.clips.model.navigator.graph.edge.EnrichedEdge;
+import com.leaf.clips.model.navigator.graph.edge.StairEdge;
 import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoInformation;
+
+// TODO: 25/05/16 aggiornare tracy/uml
 
 /**
  *Classe che rappresenta le informazioni di navigazione pronte per essere restituite ad un eventuale utilizzatore
@@ -29,7 +35,7 @@ public class ProcessedInformationImp implements ProcessedInformation {
     /**
      * La prossima direzione verso cui dirigersi
      */
-    private int direction;
+    private NavigationDirection direction;
 
     /**
      * Indicazioni dettagliate di un Edge
@@ -41,11 +47,11 @@ public class ProcessedInformationImp implements ProcessedInformation {
      */
     private PhotoInformation photos;
 
-    ProcessedInformationImp(){
+    public ProcessedInformationImp(){
         this.basic = "Destinazione Raggiunta";
         this.detailed = "Hai raggiunto la tua destinazione. Questa dovrebbe trovarsi intorna a te.";
         this.photos = null;
-        this.direction = 9;
+        this.direction = NavigationDirection.DESTINATION;
         this.distance = "La destinazione dovrebbe essere vicino a te";
     }
 
@@ -57,7 +63,19 @@ public class ProcessedInformationImp implements ProcessedInformation {
         this.basic = edge.getBasicInformation();
         this.detailed = edge.getDetailedInformation();
         this.photos = edge.getPhotoInformation();
-        this.direction = edge.getCoordinate();
+        if(edge instanceof ElevatorEdge)
+            if((edge.getEndPoint().getFloor()-edge.getStarterPoint().getFloor())>0)
+                this.direction = NavigationDirection.ELEVATOR_UP;
+            else
+                this.direction = NavigationDirection.ELEVATOR_DOWN;
+        else if (edge instanceof StairEdge)
+            if((edge.getEndPoint().getFloor()-edge.getStarterPoint().getFloor())>0)
+                this.direction = NavigationDirection.STAIR_UP;
+            else
+                this.direction = NavigationDirection.STAIR_DOWN;
+        else{
+            this.direction = NavigationDirection.STRAIGHT;
+        }
         int dist = (int)edge.getDistance();
         if(edge instanceof DefaultEdge)
             this.distance = dist+" m";
@@ -71,12 +89,31 @@ public class ProcessedInformationImp implements ProcessedInformation {
      * @param starterInformation Informazioni aggiuntive per costruire le informazioni associate ad
      *                           un arco del percorso per superarlo
      */
-    public ProcessedInformationImp(EnrichedEdge edge, String starterInformation) {
+    public ProcessedInformationImp(EnrichedEdge edge, int starterInformation) {
         //TODO: fare get da edge e includere le starterInformation come ???
-        this.basic = starterInformation + " " + edge.getBasicInformation();
+        this.basic = edge.getBasicInformation();
         this.detailed = edge.getDetailedInformation();
         this.photos = edge.getPhotoInformation();
-        this.direction = edge.getCoordinate();
+        if(edge instanceof ElevatorEdge)
+            if((edge.getEndPoint().getFloor()-edge.getStarterPoint().getFloor())>0)
+                this.direction = NavigationDirection.ELEVATOR_UP;
+            else
+                this.direction = NavigationDirection.ELEVATOR_DOWN;
+        else if (edge instanceof StairEdge)
+            if((edge.getEndPoint().getFloor()-edge.getStarterPoint().getFloor())>0)
+                this.direction = NavigationDirection.STAIR_UP;
+            else
+                this.direction = NavigationDirection.STAIR_DOWN;
+        else{
+            if (starterInformation > 20 && starterInformation < 150)
+                this.direction = NavigationDirection.RIGHT;
+            else if (starterInformation >= 210 && starterInformation < 340)
+                this.direction = NavigationDirection.LEFT;
+            else if (starterInformation >= 150 && starterInformation <210)
+                this.direction = NavigationDirection.TURN;
+            else
+                this.direction = NavigationDirection.STRAIGHT;
+        }
         int dist = (int)edge.getDistance();
         if(edge instanceof DefaultEdge)
             this.distance = dist+" m";
@@ -117,7 +154,7 @@ public class ProcessedInformationImp implements ProcessedInformation {
      * @return  int
      */
     @Override
-    public int getDirection() {return this.direction;}
+    public NavigationDirection getDirection() {return this.direction;}
 
     /**
      * Metodo che ritorna la distanza da percorrere nell'arco in cui ci si trova
@@ -129,12 +166,20 @@ public class ProcessedInformationImp implements ProcessedInformation {
     }
 
     @Override
-    public int compareTo(ProcessedInformation another) {
-        if (basic.equals(another.getProcessedBasicInstruction()) && distance == another.getDistance() &&
-                detailed.equals(another.getDetailedInstruction()) && direction == another.getDirection())
-            return 0;
-        else
-            return 1;
+    public boolean equals(Object o) {
+        boolean rx;
+        if (o instanceof ProcessedInformation) {
+            ProcessedInformation another = (ProcessedInformation)o;
+            if (basic.equals(another.getProcessedBasicInstruction()) &&
+                    detailed.equals(another.getDetailedInstruction()) &&
+                    distance.equals(another.getDistance()))
+                rx = true;
+            else
+                rx = false;
+        } else
+            rx = false;
+        Log.i("EQUALSRX", rx+"");
+        return rx;
     }
 }
 

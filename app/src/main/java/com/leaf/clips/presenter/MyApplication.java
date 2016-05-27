@@ -42,6 +42,7 @@ public class MyApplication extends Application {
         infoComponent = DaggerInfoComponent.builder().appModule(new AppModule(this)).
             infoModule(new InfoModule()).
             databaseModule(new DatabaseModule("http://52.49.217.118/")).settingModule(new SettingModule(this)).build();
+
     }
 
     /**

@@ -13,29 +13,31 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NavigationListener;
 import com.leaf.clips.model.NavigationManager;
 import com.leaf.clips.model.NoBeaconSeenException;
+import com.leaf.clips.model.compass.Compass;
+import com.leaf.clips.model.compass.CompassListener;
+import com.leaf.clips.model.navigator.NavigationDirection;
 import com.leaf.clips.model.navigator.NavigationExceptions;
 import com.leaf.clips.model.navigator.ProcessedInformation;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoRef;
 import com.leaf.clips.view.NavigationView;
 import com.leaf.clips.view.NavigationViewImp;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
-
 import javax.inject.Inject;
+
+// TODO: 25/05/16 aggiornare tracy/uml
 
 /**
  * Una NavigationActivity si occupa di recuperare e gestire le istruzioni di navigazione utili perchè
  * l'utente possa raggiungere la destinazione scelta.
  */
-public class NavigationActivity extends AppCompatActivity implements NavigationListener {
+public class NavigationActivity extends AppCompatActivity implements NavigationListener, CompassListener {
 
     /**
      * Riferimento utilizzato per accedere alle informazioni trattate dal model
@@ -54,6 +56,8 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      */
     private NavigationView view;
 
+    @Inject
+    Compass compass;
     /**
      * Riferimento alla lista di istruzioni di navigazione.
      */
@@ -176,6 +180,8 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                 navigationInstruction = navigationManager.getAllNavigationInstruction();
                 navigationManager.addListener(this);
                 view.setInstructionAdapter(navigationInstruction);
+                compass.addListener(this);
+
             }else{
                 view.noResult();
                 Log.d("NAVIGAZIONE", "NESSUN RISULTATO");
@@ -186,6 +192,8 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
             navigationExceptions.printStackTrace();
         }
     }
+
+
 
     /**
      * Metodo che lancia un avviso in caso il sistema rilevi che l'utente è uscito dal percorso
@@ -243,7 +251,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         int i = 0;
         boolean found = false;
         while (i<navigationInstruction.size() && !found) {
-            if ((info.compareTo(navigationInstruction.get(i))==0))
+            if ((info.equals(navigationInstruction.get(i))))
                 found = true;
             else
                 i++;
@@ -284,6 +292,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         Log.i("Removelistener", "stopNavigation");
         navigationManager.removeListener(this);
         navigationManager.stopNavigation();
+        view.refreshInstructions();
     }
 
     @Override
@@ -318,5 +327,20 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
 
         if(dialogPathError != null)
             dialogPathError.dismiss();
+    }
+
+    @Override
+    public void changed(float orientation) {
+        int orientationInt = (int)orientation;
+        NavigationDirection direction;
+        if (orientationInt > 20 && orientationInt < 150)
+            direction = NavigationDirection.RIGHT;
+        else if (orientationInt >= 210 && orientationInt < 340)
+            direction = NavigationDirection.LEFT;
+        else if (orientationInt >= 150 && orientationInt <210)
+            direction = NavigationDirection.TURN;
+        else
+            direction = NavigationDirection.STRAIGHT;
+        view.updateArrow(direction);
     }
 }

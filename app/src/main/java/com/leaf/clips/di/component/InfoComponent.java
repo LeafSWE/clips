@@ -5,6 +5,8 @@ import com.leaf.clips.di.modules.DatabaseModule;
 import com.leaf.clips.di.modules.InfoModule;
 import com.leaf.clips.di.modules.NavModule;
 import com.leaf.clips.di.modules.SettingModule;
+import com.leaf.clips.model.NavigationManagerImp;
+import com.leaf.clips.presenter.BeaconPowerAreaActivity;
 import com.leaf.clips.presenter.DetailedInformationActivity;
 import com.leaf.clips.presenter.DeveloperUnlockerActivity;
 import com.leaf.clips.presenter.HomeActivity;
@@ -30,6 +32,8 @@ import dagger.Component;
  * @version 0.01
  * @since 0.01
  */
+
+// TODO: 25/05/16 aggiornare tracy/uml
 
 /**
  * Interfaccia che viene implementata in autonomia da Dagger2 nella quale devono essere dichiarati
@@ -126,4 +130,11 @@ public interface InfoComponent {
 
     void inject(PoiDescriptionActivity poiDescriptionActivity);
 
+    void inject(NavigationManagerImp navigationManagerImp);
+
+    /**
+     * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo BeaconPowerAreaActivity
+     * @param beaconPowerAreaActivity Oggetto in cui devono essere iniettate le dipendenze
+     */
+    void inject(BeaconPowerAreaActivity beaconPowerAreaActivity);
 }

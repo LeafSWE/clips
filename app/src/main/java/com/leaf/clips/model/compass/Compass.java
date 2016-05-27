@@ -11,11 +11,15 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.util.Log;
 
+// TODO: 25/05/16 aggiornare tracy/uml
 /**
  *Classe che si occupa di gestire i dati ricavabili dai sensori e calcolare l'orientamento del device
  */
 public class Compass implements SensorEventListener {
+
+    private CompassListener listener;
 
     /**
      * Sensore che misura l'accelerazione del device sui tre assi fisici
@@ -109,6 +113,8 @@ public class Compass implements SensorEventListener {
             SensorManager.getRotationMatrix(rotationMatrix, null, lastAccelerometerData, lastMagnetometerData);
             SensorManager.getOrientation(rotationMatrix, orientation);
         }
+        if(listener!=null)
+            listener.changed(getLastCoordinate());
     }
 
     /**
@@ -125,6 +131,11 @@ public class Compass implements SensorEventListener {
     public void unregisterListener() {
         sensorManager.unregisterListener(this, accelerometer);
         sensorManager.unregisterListener(this, magnetometer);
+    }
+
+    public void addListener(CompassListener listener){
+        this.listener = listener;
+        Log.i("LISTENER", "add listener");
     }
 
 }

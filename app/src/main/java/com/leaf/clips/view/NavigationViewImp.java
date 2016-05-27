@@ -3,9 +3,11 @@ package com.leaf.clips.view;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.leaf.clips.R;
+import com.leaf.clips.model.navigator.NavigationDirection;
 import com.leaf.clips.model.navigator.ProcessedInformation;
 import com.leaf.clips.presenter.NavigationActivity;
 import com.leaf.clips.presenter.NavigationAdapter;
@@ -17,6 +19,8 @@ import java.util.List;
  * @version 0.04
  * @since 0.00
  */
+
+// TODO: 25/05/16 aggiornare tracy/uml
 
 /**
  * INavigationViewImp si occupa di gestire direttamente i widget della UI deputati a mostrare
@@ -70,7 +74,10 @@ public class NavigationViewImp implements NavigationView {
      */
     @Override
     public void refreshInstructions() {
+        lastRefresh = 0;
     }
+
+    int lastRefresh = 0;
 
     @Override
     public void refreshInstructions(int i) {
@@ -81,10 +88,43 @@ public class NavigationViewImp implements NavigationView {
             listView.getChildAt(j).setBackgroundColor(presenter.getResources().getColor(R.color.backroundGrey));
         for(int j = i+1; j < listView.getCount(); j++)
             listView.getChildAt(j).setBackgroundColor(presenter.getResources().getColor(R.color.white));
+        lastRefresh = i;
     }
 
     @Override
     public void noResult(){
         presenter.setContentView(R.layout.activity_navigation_error);
+    }
+
+
+
+    @Override
+    public void updateArrow(NavigationDirection direction) {
+
+        ListView listView = (ListView) presenter.findViewById(R.id.view_instruction_list);
+        if(listView != null && listView.getChildAt(lastRefresh) != null) {
+            ImageView image = (ImageView) listView.getChildAt(lastRefresh).findViewById(R.id.imageView_direction);
+            if (image != null) {
+                NavigationDirection direction1 = ((ProcessedInformation)instructionAdapter.getItem(lastRefresh)).getDirection();
+                if (!(direction1 == NavigationDirection.DESTINATION || direction1 == NavigationDirection.ELEVATOR_DOWN ||
+                        direction1 == NavigationDirection.ELEVATOR_UP || direction1 == NavigationDirection.STAIR_DOWN ||
+                        direction1 == NavigationDirection.STAIR_UP)) {
+                    switch (direction) {
+                        case STRAIGHT:
+                            image.setBackgroundResource(R.drawable.arrow_go_straight);
+                            break;
+                        case LEFT:
+                            image.setBackgroundResource(R.drawable.arrow_turn_left);
+                            break;
+                        case RIGHT:
+                            image.setBackgroundResource(R.drawable.arrow_turn_right);
+                            break;
+                        case TURN:
+                            image.setBackgroundResource(R.drawable.arrow_turn_around);
+                            break;
+                    }
+                }
+            }
+        }
     }
 }

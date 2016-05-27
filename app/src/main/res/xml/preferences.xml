@@ -5,25 +5,20 @@
         android:layout_width="match_parent"
         android:layout="@layout/preferences_layout">
 
-    <PreferenceCategory android:title="@string/navigation_preferences"
-                        android:key="preference">
 
         <ListPreference
                 android:key="path_pref"
                 android:title="@string/path_preferences"
-                android:dialogTitle="@string/path_preferences"
                 android:entries="@array/path_preferences"
                 android:entryValues="@array/path_preferences"
-                android:defaultValue="Default" />
+                android:defaultValue="@string/default_path_preferences" />
 
-        <ListPreference
+        <!--<ListPreference
                 android:key="instr_pref"
                 android:title="@string/instruction_preferences"
                 android:dialogTitle="@string/instruction_preferences"
                 android:entries="@array/instruction_preferences"
                 android:entryValues="@array/instruction_preferences"
-                android:defaultValue="Default" />
-
-    </PreferenceCategory>
+                android:defaultValue="Default" />-->
 
 </PreferenceScreen>
