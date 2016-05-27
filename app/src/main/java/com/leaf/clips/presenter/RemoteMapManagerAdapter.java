@@ -55,16 +55,16 @@ public class RemoteMapManagerAdapter extends BaseAdapter {
 
         buildingTable = (BuildingTable) getItem(position);
 
-        TextView textViewMapName = (TextView) presenter.findViewById(R.id.textViewRemoteMapName);
-        textViewMapName.setText("ciaoo");
+        TextView textViewMapName = (TextView) convertView.findViewById(R.id.textViewRemoteMapName);
+        textViewMapName.setText(buildingTable.getName());
 
-        TextView textViewMapAddress = (TextView) presenter.findViewById(R.id.textViewRemoteMapAddress);
+        TextView textViewMapAddress = (TextView) convertView.findViewById(R.id.textViewRemoteMapAddress);
         textViewMapAddress.setText(buildingTable.getAddress());
 
-        TextView textViewMapVersion = (TextView) presenter.findViewById(R.id.textViewRemoteMapVersion);
+        TextView textViewMapVersion = (TextView) convertView.findViewById(R.id.textViewRemoteMapVersion);
         textViewMapVersion.setText(buildingTable.getVersion());
 
-        TextView textViewMapSize = (TextView) presenter.findViewById(R.id.textViewRemoteMapSize);
+        TextView textViewMapSize = (TextView) convertView.findViewById(R.id.textViewRemoteMapSize);
         textViewMapSize.setText(buildingTable.getSize());
 
         return convertView;

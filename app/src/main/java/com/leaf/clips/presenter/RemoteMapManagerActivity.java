@@ -37,15 +37,7 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
-        //this.view = new RemoteMapManagerViewImp(this);
-
-        setContentView(R.layout.activity_remote_map_manager);
-
-        TextView text = (TextView) findViewById(R.id.textViewRemoteMapName);
-        text.setText("Ciao");
-
-        ListView list = (ListView) findViewById(R.id.listViewRemoteMaps);
-        list.setAdapter(null);
+        this.view = new RemoteMapManagerViewImp(this);
 
         try {
             view.setRemoteMaps(databaseService.findAllRemoteBuildings());
