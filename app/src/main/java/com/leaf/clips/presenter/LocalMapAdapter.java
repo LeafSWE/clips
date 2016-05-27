@@ -89,17 +89,19 @@ public class LocalMapAdapter extends BaseAdapter{
 
         TextView txtViewMapStatus = (TextView) convertView.findViewById(R.id.textViewMapStatus);
 
+
+        btnUpdateMap = (AppCompatImageButton) convertView.findViewById(R.id.updateLocalMap);
+        btnDeleteMap = (AppCompatImageButton) convertView.findViewById(R.id.removeLocalMap);
+
         if(buildingMapStatus){
             txtViewMapStatus.setText("Mappa aggiornata");
+            btnDeleteMap.setEnabled(false);
         }
         else {
             txtViewMapStatus.setText("Mappa da aggiornare");
             txtViewMapStatus.setTextColor(Color.RED);
             txtViewMapVersion.setTextColor(Color.RED);
         }
-
-        btnUpdateMap = (AppCompatImageButton) convertView.findViewById(R.id.updateLocalMap);
-        btnDeleteMap = (AppCompatImageButton) convertView.findViewById(R.id.removeLocalMap);
 
         btnUpdateMap.setOnClickListener(new View.OnClickListener() {
             @Override
