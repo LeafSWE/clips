@@ -93,6 +93,7 @@
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.HomeActivity"/>
@@ -114,18 +115,17 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.DetailedInformationActivity"/>
         </activity>
-
         <activity
                 android:name=".presenter.LocalMapActivity"
                 android:label="@string/title_activity_local_map"
                 android:parentActivityName=".presenter.HomeActivity"/>
         <activity android:name=".presenter.PreferencesActivity"
                 android:label="@string/title_activity_preferences">
+
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.HomeActivity"/>
         </activity>
-
         <activity android:name=".presenter.HelpActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
@@ -136,13 +136,19 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.HomeActivity"/>
         </activity>
-
         <activity android:name=".presenter.PoiDescriptionActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.PoiActivity"/>
         </activity>
 
+        <provider
+                android:name=".presenter.SearchSuggestionsProvider"
+                android:authorities="com.leaf.clips.presenter.SearchSuggestionsProvider"/>
+
+        <activity android:name=".presenter.RemoteMapManagerActivity"
+                  android:parentActivityName=".presenter.LocalMapActivity">
+        </activity>
         <activity
                 android:name=".presenter.BeaconPowerAreaActivity"
                 android:hardwareAccelerated="true"
@@ -154,9 +160,6 @@
                     android:value="com.leaf.clips.presenter.MainDeveloperActivity"/>
         </activity>
 
-
-        <provider android:name=".presenter.SearchSuggestionsProvider"
-                  android:authorities="com.leaf.clips.presenter.SearchSuggestionsProvider" />
     </application>
 
 </manifest>

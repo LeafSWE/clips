@@ -81,7 +81,6 @@ public class LogInformationViewImp implements LogInformationView {
                 "Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // TODO: 5/6/16 Capire quale sia il nome
                         presenter.deleteLog("Nome");
                         dialog.cancel();
                     }

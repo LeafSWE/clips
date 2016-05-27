@@ -32,7 +32,7 @@ public class MyBeaconImpTest {
         List<Long> data = new LinkedList<>();
         data.add((long) 88);
         beacon = new MyBeaconImp(new AltBeacon.Builder().setId1("DF7E1C79-43E9-44FF-886F-1D1F7DA6997A")
-                .setId2("1").setId3("1").setRssi(-55).setTxPower(-55).setBluetoothAddress("prova").setDataFields(data).setBeaconTypeCode(1).build());//TO-DO
+                .setId2("1").setId3("1").setRssi(-55).setTxPower(-55).setBluetoothAddress("prova").setDataFields(data).setBeaconTypeCode(1).build());
     }
 
     @Test
