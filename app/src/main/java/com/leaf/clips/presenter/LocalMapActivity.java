@@ -1,6 +1,7 @@
 package com.leaf.clips.presenter;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
@@ -98,7 +99,8 @@ public class LocalMapActivity extends AppCompatActivity {
 
     // TODO: 5/27/16 Aggiungere asta + tracy
     public void DownloadNewMap() {
-
+        Intent intent = new Intent(this,RemoteMapManagerActivity.class);
+        startActivity(intent);
     }
 }
 

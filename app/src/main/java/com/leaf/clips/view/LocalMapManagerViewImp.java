@@ -1,5 +1,6 @@
 package com.leaf.clips.view;
 
+import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -35,7 +36,7 @@ public class LocalMapManagerViewImp implements LocalMapManagerView {
         this.presenter = presenter;
         this.presenter.setContentView(R.layout.activity_local_map);
 
-        Button btnAddNewMap = (Button) presenter.findViewById(R.id.fab_add_new_map);
+        FloatingActionButton btnAddNewMap = (FloatingActionButton) presenter.findViewById(R.id.fab_add_new_map);
         btnAddNewMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
