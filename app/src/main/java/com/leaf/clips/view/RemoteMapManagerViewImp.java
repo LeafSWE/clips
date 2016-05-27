@@ -2,6 +2,7 @@ package com.leaf.clips.view;
 
 import android.widget.Adapter;
 
+import com.leaf.clips.R;
 import com.leaf.clips.presenter.RemoteMapManagerActivity;
 
 /**
@@ -24,7 +25,10 @@ public class RemoteMapManagerViewImp implements RemoteMapManagerView{
      * Costruttore della classe RemoteMapManagerViewImp
      * @param presenter Presenter della View che viene creata
      */
-    public RemoteMapManagerViewImp(RemoteMapManagerActivity presenter){}
+    public RemoteMapManagerViewImp(RemoteMapManagerActivity presenter){
+        this.presenter = presenter;
+        presenter.setContentView(R.layout.activity_remote_map_manager);
+    }
 
     /**
      * Metodo utilizzate per visualizzare le mappe che è possibile scaricare da un server remoto

@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.leaf.clips.R;
+import com.leaf.clips.model.dataaccess.service.DatabaseService;
+import com.leaf.clips.view.RemoteMapManagerView;
+import com.leaf.clips.view.RemoteMapManagerViewImp;
 
 /**
  *È una classe che estende AppCompactActivity che recupera tutte le mappe in remoto dal model e gestisce RemoteMapManagerView
@@ -13,7 +16,10 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
     /**
      * View associata a tale Activity
      */
-    //private RemoteMapManagerView view;
+    private RemoteMapManagerView view;
+
+    // TODO: 5/27/16 Aggiungere Tracy + Asta
+    private DatabaseService databaseService;
 
     /**
      * Metodo che inizializza la View associata
@@ -23,7 +29,7 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        setContentView(R.layout.activity_remote_map_manager);
+        this.view = new RemoteMapManagerViewImp(this);
     }
 
     /**
