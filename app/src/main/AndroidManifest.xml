@@ -93,6 +93,7 @@
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.HomeActivity"/>
@@ -110,18 +111,15 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.DetailedInformationActivity"/>
         </activity>
-
         <activity
                 android:name=".presenter.LocalMapActivity"
                 android:label="@string/title_activity_local_map"
                 android:parentActivityName=".presenter.HomeActivity"/>
-
         <activity android:name=".presenter.PreferencesActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.HomeActivity"/>
         </activity>
-
         <activity android:name=".presenter.HelpActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
@@ -132,15 +130,18 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.HomeActivity"/>
         </activity>
-
         <activity android:name=".presenter.PoiDescriptionActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.PoiActivity"/>
         </activity>
 
-        <provider android:name=".presenter.SearchSuggestionsProvider"
-                  android:authorities="com.leaf.clips.presenter.SearchSuggestionsProvider" />
+        <provider
+                android:name=".presenter.SearchSuggestionsProvider"
+                android:authorities="com.leaf.clips.presenter.SearchSuggestionsProvider"/>
+
+        <activity android:name=".presenter.RemoteMapManagerActivity">
+        </activity>
     </application>
 
 </manifest>
