@@ -1,5 +1,7 @@
 package com.leaf.clips.view;
 
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.leaf.clips.R;
@@ -29,10 +31,20 @@ public class LocalMapManagerViewImp implements LocalMapManagerView {
      * Costruttore della classe LocalMapManagerViewImp
      * @param presenter Presenter della View che viene creata
      */
-    public LocalMapManagerViewImp(LocalMapActivity presenter){
+    public LocalMapManagerViewImp(final LocalMapActivity presenter){
         this.presenter = presenter;
         this.presenter.setContentView(R.layout.activity_local_map);
+
+        Button btnAddNewMap = (Button) presenter.findViewById(R.id.fab_add_new_map);
+        btnAddNewMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.DownloadNewMap();
+            }
+        });
     }
+
+    // TODO: 5/27/16 Valutare se rimuovere questo metodo + Asta + Tracy
 
     /**
      * Metodo che aggiorna la lista delle mappe salvate nel database locale

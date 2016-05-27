@@ -95,6 +95,11 @@ public class LocalMapActivity extends AppCompatActivity {
             view.setAdapter(buildingTable, mapVersionStatus);
         }
     }
+
+    // TODO: 5/27/16 Aggiungere asta + tracy
+    public void DownloadNewMap() {
+
+    }
 }
 
 
