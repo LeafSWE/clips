@@ -26,7 +26,6 @@ import javax.inject.Inject;
 public class LocalMapActivity extends AppCompatActivity {
 
     // TODO: 5/24/16 Aggiungere Asta + Tracy
-    // TODO: 5/26/16 Accorpare codice ripetuto 
     @Inject
     DatabaseService databaseService;
     /**
@@ -43,26 +42,7 @@ public class LocalMapActivity extends AppCompatActivity {
     public void deleteMap(int major){
         databaseService.deleteBuilding(databaseService.findBuildingByMajor(major));
 
-        Collection<BuildingTable> buildingTable = databaseService.findAllBuildings();
-
-        //Se non trovo nessuna mappa passo l'adapter vuoto
-        if(buildingTable.size() == 0)
-            view.setAdapter(new ArrayList<BuildingTable>(), new boolean [0]);
-        else {
-            boolean [] mapVersionStatus = new boolean[buildingTable.size()];
-
-            int i = 0;
-            for(BuildingTable building : buildingTable) {
-                try {
-                    mapVersionStatus[i] = databaseService.isBuildingMapUpdated(building.getMajor());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                i++;
-            }
-
-            view.setAdapter(buildingTable, mapVersionStatus);
-        }
+        LoadMaps();
     }
 
     /**
@@ -76,28 +56,7 @@ public class LocalMapActivity extends AppCompatActivity {
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
         view = new LocalMapManagerViewImp(this);
 
-        Collection<BuildingTable> buildingTable = databaseService.findAllBuildings();
-
-        //Se non trovo nessuna mappa passo l'adapter vuoto
-        if(buildingTable.size() == 0)
-            view.setAdapter(new ArrayList<BuildingTable>(), new boolean [0]);
-        else {
-            boolean [] mapVersionStatus = new boolean[buildingTable.size()];
-
-            int i = 0;
-            for(BuildingTable building : buildingTable) {
-                try {
-                    mapVersionStatus[i] = databaseService.isBuildingMapUpdated(building.getMajor());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                i++;
-            }
-
-            view.setAdapter(buildingTable, mapVersionStatus);
-        }
-
-
+        LoadMaps();
     }
 
     // TODO: 5/26/16 Modificare nome attributo, Asta + Tracy
@@ -113,6 +72,11 @@ public class LocalMapActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        LoadMaps();
+    }
+
+    // TODO: 5/27/16 Aggiungere asta + tracy
+    private void LoadMaps() {
         Collection<BuildingTable> buildingTable = databaseService.findAllBuildings();
 
         //Se non trovo nessuna mappa passo l'adapter vuoto
