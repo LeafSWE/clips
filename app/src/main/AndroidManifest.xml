@@ -146,7 +146,8 @@
                 android:name=".presenter.SearchSuggestionsProvider"
                 android:authorities="com.leaf.clips.presenter.SearchSuggestionsProvider"/>
 
-        <activity android:name=".presenter.RemoteMapManagerActivity">
+        <activity android:name=".presenter.RemoteMapManagerActivity"
+                  android:parentActivityName=".presenter.LocalMapActivity">
         </activity>
         <activity
                 android:name=".presenter.BeaconPowerAreaActivity"
