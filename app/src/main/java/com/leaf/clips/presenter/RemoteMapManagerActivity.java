@@ -22,7 +22,7 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
 
     // TODO: 5/27/16 Aggiungere Tracy + Asta
     @Inject
-    private DatabaseService databaseService;
+    DatabaseService databaseService;
 
     /**
      * Metodo che inizializza la View associata
