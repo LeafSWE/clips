@@ -73,7 +73,7 @@ public class LocalMapAdapter extends BaseAdapter{
 
         buildingTable = (BuildingTable) getItem(position);
 
-        boolean buildingMapStatus = mapsVersionStatus[position];
+        final boolean isBuildingMapUpdate = mapsVersionStatus[position];
 
         TextView txtViewName = (TextView) convertView.findViewById(R.id.textViewLocalMapName);
         txtViewName.setText(buildingTable.getName());
@@ -93,9 +93,8 @@ public class LocalMapAdapter extends BaseAdapter{
         btnUpdateMap = (AppCompatImageButton) convertView.findViewById(R.id.updateLocalMap);
         btnDeleteMap = (AppCompatImageButton) convertView.findViewById(R.id.removeLocalMap);
 
-        if(buildingMapStatus){
+        if(isBuildingMapUpdate){
             txtViewMapStatus.setText("Mappa aggiornata");
-            btnDeleteMap.setEnabled(false);
         }
         else {
             txtViewMapStatus.setText("Mappa da aggiornare");
@@ -106,29 +105,12 @@ public class LocalMapAdapter extends BaseAdapter{
         btnUpdateMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(presenter);
-                builder1.setMessage("Vuoi veramente aggiornare la mappa selezionata?");
-                builder1.setCancelable(true);
-
-                builder1.setPositiveButton(
-                        "Si",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                presenter.updateMap(buildingTable.getMajor());
-                                dialog.cancel();
-                            }
-                        });
-
-                builder1.setNegativeButton(
-                        "No",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
+                if(isBuildingMapUpdate) {
+                    showNoUpdateDialog();
+                }
+                else {
+                    showUpdateDialog();
+                }
             }
         });
 
@@ -163,5 +145,45 @@ public class LocalMapAdapter extends BaseAdapter{
         });
 
         return convertView;
+    }
+    
+    private void showNoUpdateDialog () {
+        AlertDialog.Builder builder = new AlertDialog.Builder(presenter);
+        builder.setMessage("Mappa già aggiornata")
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //do things
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+    
+    private void showUpdateDialog () {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(presenter);
+
+        builder1.setMessage("Vuoi veramente aggiornare la mappa selezionata?");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Si",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        presenter.updateMap(buildingTable.getMajor());
+                        dialog.cancel();
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 }
