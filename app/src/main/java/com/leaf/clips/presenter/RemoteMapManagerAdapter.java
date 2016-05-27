@@ -62,7 +62,7 @@ public class RemoteMapManagerAdapter extends BaseAdapter {
         textViewMapAddress.setText(buildingTable.getAddress());
 
         TextView textViewMapVersion = (TextView) convertView.findViewById(R.id.textViewRemoteMapVersion);
-        textViewMapVersion.setText(buildingTable.getVersion());
+        textViewMapVersion.setText(String.valueOf("v. " + buildingTable.getVersion()));
 
         TextView textViewMapSize = (TextView) convertView.findViewById(R.id.textViewRemoteMapSize);
         textViewMapSize.setText(buildingTable.getSize());
