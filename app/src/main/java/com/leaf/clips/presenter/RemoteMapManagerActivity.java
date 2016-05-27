@@ -3,7 +3,6 @@ package com.leaf.clips.presenter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.leaf.clips.R;
 import com.leaf.clips.model.dataaccess.service.DatabaseService;
 import com.leaf.clips.view.RemoteMapManagerView;
 import com.leaf.clips.view.RemoteMapManagerViewImp;
