@@ -1,8 +1,15 @@
 package com.leaf.clips.presenter;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+import com.leaf.clips.R;
+import com.leaf.clips.model.dataaccess.dao.BuildingTable;
+
+import java.util.Collection;
 
 /**
  * @author Oscar Elia Conti
@@ -13,23 +20,53 @@ import android.widget.BaseAdapter;
 // TODO: 5/27/16 Asta + Tracy, classe nuova 
 
 public class RemoteMapManagerAdapter extends BaseAdapter {
+
+    private RemoteMapManagerActivity presenter;
+
+    private Collection<BuildingTable> buildingTables;
+
+    private BuildingTable buildingTable;
+
+    RemoteMapManagerAdapter(RemoteMapManagerActivity presenter, Collection<BuildingTable> buildingTables){
+        this.presenter = presenter;
+        this.buildingTables = buildingTables;
+    }
+
     @Override
     public int getCount() {
-        return 0;
+        return buildingTables.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return buildingTables.toArray()[position];
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return buildingTables.toArray()[position].hashCode();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+        if(convertView == null) {
+            convertView = LayoutInflater.from(presenter).inflate(R.layout.remote_map_row, null);
+        }
+
+        buildingTable = (BuildingTable) getItem(position);
+
+        TextView textViewMapName = (TextView) presenter.findViewById(R.id.textViewRemoteMapName);
+        textViewMapName.setText(buildingTable.getName());
+
+        TextView textViewMapAddress = (TextView) presenter.findViewById(R.id.textViewRemoteMapAddress);
+        textViewMapAddress.setText(buildingTable.getAddress());
+
+        TextView textViewMapVersion = (TextView) presenter.findViewById(R.id.textViewRemoteMapVersion);
+        textViewMapVersion.setText(buildingTable.getVersion());
+
+        TextView textViewMapSize = (TextView) presenter.findViewById(R.id.textViewRemoteMapSize);
+        textViewMapSize.setText(buildingTable.getSize());
+
+        return convertView;
     }
 }
