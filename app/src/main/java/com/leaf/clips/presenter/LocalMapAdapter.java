@@ -1,23 +1,19 @@
 package com.leaf.clips.presenter;
 
-import android.content.Context;
+
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.leaf.clips.R;
 import com.leaf.clips.model.dataaccess.dao.BuildingTable;
-import com.leaf.clips.model.dataaccess.service.DatabaseService;
 
-import java.io.IOException;
 import java.util.Collection;
 
 /**

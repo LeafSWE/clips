@@ -1,16 +1,10 @@
 package com.leaf.clips.presenter;
 
-import android.content.DialogInterface;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
-import com.leaf.clips.R;
+import android.os.Bundle;
+
+import android.support.v7.app.AppCompatActivity;
+
 import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 import com.leaf.clips.model.dataaccess.service.DatabaseService;
 import com.leaf.clips.view.LocalMapManagerView;

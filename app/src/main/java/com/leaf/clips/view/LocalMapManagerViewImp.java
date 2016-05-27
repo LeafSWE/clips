@@ -1,6 +1,5 @@
 package com.leaf.clips.view;
 
-import android.widget.Adapter;
 import android.widget.ListView;
 
 import com.leaf.clips.R;
