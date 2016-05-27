@@ -8,6 +8,8 @@ import com.leaf.clips.model.dataaccess.service.DatabaseService;
 import com.leaf.clips.view.RemoteMapManagerView;
 import com.leaf.clips.view.RemoteMapManagerViewImp;
 
+import java.io.IOException;
+
 import javax.inject.Inject;
 
 /**
@@ -35,6 +37,11 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
         this.view = new RemoteMapManagerViewImp(this);
 
+        try {
+            view.setRemoteMaps(databaseService.findAllRemoteBuildings());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
