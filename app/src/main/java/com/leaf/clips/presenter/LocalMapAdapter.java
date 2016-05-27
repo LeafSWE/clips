@@ -1,7 +1,9 @@
 package com.leaf.clips.presenter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageButton;
 import android.view.LayoutInflater;
@@ -102,14 +104,59 @@ public class LocalMapAdapter extends BaseAdapter{
         btnUpdateMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.updateMap(buildingTable.getMajor());
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(presenter);
+                builder1.setMessage("Vuoi veramente aggiornare la mappa selezionata?");
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "Si",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                presenter.updateMap(buildingTable.getMajor());
+                                dialog.cancel();
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
             }
         });
 
         btnDeleteMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.deleteMap(buildingTable.getMajor());
+
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(presenter);
+                builder1.setMessage("Vuoi veramente cancellare la mappa selezionata?");
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "Si",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                presenter.deleteMap(buildingTable.getMajor());
+                                dialog.cancel();
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
             }
         });
 

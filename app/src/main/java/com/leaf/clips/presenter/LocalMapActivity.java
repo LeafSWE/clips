@@ -1,8 +1,11 @@
 package com.leaf.clips.presenter;
 
+import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -41,9 +44,9 @@ public class LocalMapActivity extends AppCompatActivity {
      */
     public void deleteMap(int major){
         databaseService.deleteBuilding(databaseService.findBuildingByMajor(major));
-
         LoadMaps();
     }
+
 
     /**
      * Metodo che inizializza la View associata a tale Activity
@@ -72,7 +75,7 @@ public class LocalMapActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        LoadMaps();
+        //LoadMaps();
     }
 
     // TODO: 5/27/16 Aggiungere asta + tracy
@@ -98,5 +101,6 @@ public class LocalMapActivity extends AppCompatActivity {
             view.setAdapter(buildingTable, mapVersionStatus);
         }
     }
-
 }
+
+
