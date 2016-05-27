@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:padding="8dp" android:backgroundTint="@android:color/white">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Via Trieste, 63 - 35121 Padova"
+            android:id="@+id/textViewLocalMapAddres"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Torre Archimede"
+            android:id="@+id/textViewLocalMapName"
+            android:textSize="22sp"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_below="@+id/textViewLocalMapAddres"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="15 MB"
+            android:id="@+id/textViewLocalMapSize"
+            android:layout_below="@+id/textViewLocalMapName"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="v1.0"
+            android:id="@+id/textViewLocalMapVersion"
+            android:layout_alignParentEnd="true"/>
+
+    <android.support.v7.widget.AppCompatImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/download_remote_map"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_get_map_24dp"
+            android:layout_alignParentBottom="false"
+            android:layout_below="@+id/textViewLocalMapName" android:clickable="true"
+            android:focusable="true" android:contextClickable="true"
+            android:cropToPadding="false" android:backgroundTint="#ffffff"/>
+
+</RelativeLayout>
