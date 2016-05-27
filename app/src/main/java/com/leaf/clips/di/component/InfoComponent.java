@@ -139,6 +139,6 @@ public interface InfoComponent {
      */
     void inject(BeaconPowerAreaActivity beaconPowerAreaActivity);
 
-    // TODO: 5/27/16 Aggiungere tracy + asta 
+    // TODO: 5/27/16 Aggiungere tracy + asta
     void inject(RemoteMapManagerActivity remoteMapManagerActivity);
 }

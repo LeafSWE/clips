@@ -34,6 +34,7 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
         super.onCreate(bundle);
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
         this.view = new RemoteMapManagerViewImp(this);
+
     }
 
     /**
