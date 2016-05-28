@@ -20,10 +20,11 @@ public interface MapDownloaderView {
      */
     void setDowloadingMap(Adapter adp);
 
+    // TODO: 5/28/16 Correggere nome metodo errato Asta + Tracy 
     /**
      * Metodo utilizzato per visualizzare il progresso nel download di una mappa
      * @param prg Attuale progresso del download
      * @return  void
      */
-    void setProgressDowload(int prg);
+    void setProgressDownload(int prg);
 }
