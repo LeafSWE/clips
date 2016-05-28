@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.leaf.clips.R;
 import com.leaf.clips.model.dataaccess.service.DatabaseService;
 import com.leaf.clips.view.MapDownloaderView;
+import com.leaf.clips.view.MapDownloaderViewImp;
 
 import javax.inject.Inject;
 
@@ -32,7 +33,8 @@ public class MapDownloaderActivity extends AppCompatActivity {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
-        setContentView(R.layout.activity_map_dowloader);
+
+        view = new MapDownloaderViewImp(this);
     }
 
 

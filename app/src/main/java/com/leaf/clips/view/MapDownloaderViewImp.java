@@ -8,6 +8,7 @@ package com.leaf.clips.view;
 
 import android.widget.Adapter;
 
+import com.leaf.clips.R;
 import com.leaf.clips.model.dataaccess.service.DatabaseService;
 import com.leaf.clips.presenter.MapDownloaderActivity;
 
@@ -24,8 +25,10 @@ public class MapDownloaderViewImp implements MapDownloaderView {
     // TODO: 5/28/16 Aggiungere campi + Costruttore su Asta + Tracy
     private MapDownloaderActivity presenter;
     
-    MapDownloaderViewImp(MapDownloaderActivity presenter){
+    public MapDownloaderViewImp(MapDownloaderActivity presenter){
         this.presenter = presenter;
+
+        presenter.setContentView(R.layout.activity_map_dowloader);
     }
     
     /**
