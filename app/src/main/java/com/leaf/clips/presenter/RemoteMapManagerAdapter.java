@@ -1,5 +1,6 @@
 package com.leaf.clips.presenter;
 
+import android.support.v7.widget.AppCompatImageButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,15 @@ public class RemoteMapManagerAdapter extends BaseAdapter {
 
         TextView textViewMapSize = (TextView) convertView.findViewById(R.id.textViewRemoteMapSize);
         textViewMapSize.setText(buildingTable.getSize());
+
+        AppCompatImageButton btnUpdateMap = (AppCompatImageButton) convertView.findViewById(R.id.download_remote_map);
+
+        btnUpdateMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.downloadMap(buildingTable.getMajor());
+            }
+        });
 
         return convertView;
     }
