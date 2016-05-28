@@ -3,7 +3,6 @@ package com.leaf.clips.presenter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.leaf.clips.R;
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NoBeaconSeenException;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
@@ -59,42 +58,23 @@ public class PoiDescriptionActivity extends AppCompatActivity {
                     view = new DescriptionViewImp(this);
                     setTitle(poi.getName());
 
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.append(getString(R.string.name));
-                    stringBuilder.append(": ");
-                    stringBuilder.append(poi.getName());
-                    stringBuilder.append("\n\n");
-
-                    stringBuilder.append(getString(R.string.floor));
-                    stringBuilder.append(": ");
+                    String floorString;
                     int floor = poi.getAllBelongingROIs().iterator().next().getFloor();
                     if (floor == 0)
-                        stringBuilder.append(getString(R.string.ground_floor));
+                        floorString = "Piano terra";
                     else {
-                        stringBuilder.append(floor);
-                        stringBuilder.append(" ");
-                        stringBuilder.append(getString(R.string.floor));
+                        floorString = floor + "° piano";
                     }
-                    stringBuilder.append("\n\n");
+                    view.setGround(floorString);
 
+                    view.setCategory(poi.getCategory());
 
-                    stringBuilder.append(getString(R.string.category));
-                    stringBuilder.append(": ");
-                    stringBuilder.append(poi.getCategory());
-                    stringBuilder.append("\n\n");
-
-                    stringBuilder.append(getString(R.string.description));
-                    stringBuilder.append(": ");
-                    stringBuilder.append(poi.getDescription());
-                    stringBuilder.append("\n\n");
-
-                    view.setDescription(stringBuilder.toString());
+                    view.setDescription(poi.getDescription());
                 }
             } catch (NoBeaconSeenException e) {
                 e.printStackTrace();
             }
         }
-
     }
 
     @Override
