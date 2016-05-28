@@ -1,5 +1,7 @@
 package com.leaf.clips.view;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.widget.Adapter;
 import android.widget.ListView;
 
@@ -45,5 +47,19 @@ public class RemoteMapManagerViewImp implements RemoteMapManagerView{
     public void setRemoteMaps(Collection<BuildingTable> buildingTables){
         ListView listView = (ListView) presenter.findViewById(R.id.listViewRemoteMaps);
         listView.setAdapter(new RemoteMapManagerAdapter(presenter,buildingTables));
+    }
+
+    // TODO: 5/28/16 Aggiungere Asta + Tracy 
+    public void showMapAlreadyPresent () {
+        AlertDialog.Builder builder = new AlertDialog.Builder(presenter);
+        builder.setMessage(R.string.remote_map_already_downloaded)
+                .setCancelable(false)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //do nothing
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

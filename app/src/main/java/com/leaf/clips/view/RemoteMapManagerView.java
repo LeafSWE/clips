@@ -26,4 +26,7 @@ public interface RemoteMapManagerView {
      * @return  void
      */
     void setRemoteMaps(Collection<BuildingTable> buildingTables);
+
+    // TODO: 5/28/16 Aggiungere Asta + Tracy 
+    void showMapAlreadyPresent ();
 }

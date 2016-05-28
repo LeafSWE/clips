@@ -52,7 +52,7 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
     public void downloadMap(int major){
 
         if(databaseService.isBuildingMapPresent(Integer.valueOf(major))){
-            // TODO: 5/28/16 Inviare un messaggio alla view
+            view.showMapAlreadyPresent();
         }
         else{
             // TODO: 5/28/16 Scaricare la nuova mappa
