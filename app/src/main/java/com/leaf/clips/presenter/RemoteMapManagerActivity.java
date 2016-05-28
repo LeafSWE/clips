@@ -57,6 +57,7 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
         }
         else{
             Intent intent = new Intent(this, MapDownloaderActivity.class);
+            intent.putExtra("mapMajor", major);
             startActivity(intent);
         }
 
