@@ -74,11 +74,11 @@ public class LogInformationViewImp implements LogInformationView {
     private void showAlertDialog () {
 
         AlertDialog.Builder builder1 = new AlertDialog.Builder(presenter);
-        builder1.setMessage("Do you really want delete this log?");
+        builder1.setMessage(R.string.delete_log_question);
         builder1.setCancelable(true);
 
         builder1.setPositiveButton(
-                "Yes",
+                R.string.ok,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         presenter.deleteLog("Nome");
@@ -87,7 +87,7 @@ public class LogInformationViewImp implements LogInformationView {
                 });
 
         builder1.setNegativeButton(
-                "No",
+                R.string.cancel,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
@@ -95,6 +95,8 @@ public class LogInformationViewImp implements LogInformationView {
                 });
 
         AlertDialog alert11 = builder1.create();
-        alert11.show();
+
+        if(!presenter.isFinishing())
+            alert11.show();
     }
 }

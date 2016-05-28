@@ -88,4 +88,8 @@
     <string name="wrong_path_question">Sembra che tu abbia sbagliato percorso, vuoi ricalcolare il percorso?</string>
     <string name="recalculate">Ricalcolo</string>
     <string name="back_to_home">Torna alla home</string>
+
+    <!--AlertDeleteLog-->
+    <string name="delete_log_question">Vuoi veramente cancellare questo log?</string>
+
 </resources>
