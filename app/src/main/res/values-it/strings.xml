@@ -84,6 +84,9 @@
     <string name="title_activity_remote_map_manager">Scarica nuove mappe</string>
     <string name="remote_map_already_downloaded">Mappa già scaricata</string>
 
+    <!--MapDownloader-->
+    <string name="title_activity_map_downloader">Download in corso</string>
+
     <!--AlertPathError-->
     <string name="wrong_path">Percorso errato</string>
     <string name="wrong_path_question">Sembra che tu abbia sbagliato percorso, vuoi ricalcolare il percorso?</string>
