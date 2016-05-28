@@ -40,9 +40,9 @@
     <string name="dialog_title_no_beacon_seen">Nessun edificio conosciuto nelle vicinanze.</string>
 
     <!-- Preferences strings -->
-    <string name="default_path_preferences">Default</string>
-    <string name="elevator_path_preferences">Ascensore</string>
-    <string name="stair_path_preferences">Scale</string>
+    <string name="default_path_preferences">Percorso veloce</string>
+    <string name="elevator_path_preferences">Percorso accessibile</string>
+    <string name="stair_path_preferences">Percorso senza ascensori</string>
     <string name="default_instruction_preferences">Default</string>
     <string name="tts_instruction_preferences">Text to speech</string>
     <string name="sonar_instruction_prefereces">Sonar</string>
@@ -68,4 +68,5 @@
     <string name="ground_floor">Piano terra</string>
     <string name="category">Categoria</string>
     <string name="description">Descrizione</string>
+    <string name="title_activity_preferences">Preferenze</string>
 </resources>

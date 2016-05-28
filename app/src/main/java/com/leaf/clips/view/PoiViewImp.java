@@ -15,7 +15,6 @@ import android.widget.ListView;
 import com.leaf.clips.R;
 import com.leaf.clips.presenter.PoiActivity;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
