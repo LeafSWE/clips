@@ -1,5 +1,6 @@
 package com.leaf.clips.presenter;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.leaf.clips.model.dataaccess.service.DatabaseService;
@@ -55,7 +56,8 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
             view.showMapAlreadyPresent();
         }
         else{
-            // TODO: 5/28/16 Scaricare la nuova mappa
+            Intent intent = new Intent(this, MapDownloaderActivity.class);
+            startActivity(intent);
         }
 
     }
