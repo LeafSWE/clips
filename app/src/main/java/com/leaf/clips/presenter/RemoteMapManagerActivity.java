@@ -2,10 +2,6 @@ package com.leaf.clips.presenter;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import com.leaf.clips.R;
 import com.leaf.clips.model.dataaccess.service.DatabaseService;
 import com.leaf.clips.view.RemoteMapManagerView;
 import com.leaf.clips.view.RemoteMapManagerViewImp;
@@ -47,11 +43,21 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
 
     }
 
+    // TODO: 5/28/16 Modificare attributo Asta + Tracy
     /**
      * Metodo che permette di eseguire il download di una mappa da un database remoto
      * @param mapPosition Posizione della mappa di cui fare il download
      * @return  void
      */
-    public void downloadMap(int mapPosition){}
+    public void downloadMap(int major){
+
+        if(databaseService.isBuildingMapPresent(Integer.valueOf(major))){
+            // TODO: 5/28/16 Inviare un messaggio alla view
+        }
+        else{
+            // TODO: 5/28/16 Scaricare la nuova mappa
+        }
+
+    }
 
 }
