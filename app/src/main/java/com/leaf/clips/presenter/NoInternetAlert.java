@@ -1,5 +1,6 @@
 package com.leaf.clips.presenter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
@@ -17,7 +18,7 @@ import com.leaf.clips.R;
 public class NoInternetAlert {
     private static AlertDialog alert = null;
 
-    public void showIfNoConnection(Context context){
+    public void showIfNoConnection(Activity context){
         ConnectivityManager connectivityManager =
                 (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -36,10 +37,11 @@ public class NoInternetAlert {
                         });
                 alert = alertBuilder.create();
             }
-            alert.show();
+            if(!context.isFinishing())
+                alert.show();
         }
     }
-    public void show(Context context){
+    public void show(Activity context){
         if (alert == null) {
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
             alertBuilder.setTitle(R.string.no_connection_title_alert_help);
@@ -54,6 +56,7 @@ public class NoInternetAlert {
                     });
             alert = alertBuilder.create();
         }
-        alert.show();
+        if(!context.isFinishing())
+            alert.show();
     }
 }
