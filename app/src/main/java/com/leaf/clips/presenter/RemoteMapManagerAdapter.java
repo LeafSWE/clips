@@ -26,8 +26,6 @@ public class RemoteMapManagerAdapter extends BaseAdapter {
 
     private Collection<BuildingTable> buildingTables;
 
-    private BuildingTable buildingTable;
-
     public RemoteMapManagerAdapter(RemoteMapManagerActivity presenter, Collection<BuildingTable> buildingTables){
         this.presenter = presenter;
         this.buildingTables = buildingTables;
@@ -54,7 +52,7 @@ public class RemoteMapManagerAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(presenter).inflate(R.layout.remote_map_row, null);
         }
 
-        buildingTable = (BuildingTable) getItem(position);
+        final BuildingTable buildingTable = (BuildingTable) getItem(position);
 
         TextView textViewMapName = (TextView) convertView.findViewById(R.id.textViewRemoteMapName);
         textViewMapName.setText(buildingTable.getName());
