@@ -57,6 +57,7 @@ public class PoiDescriptionActivity extends AppCompatActivity {
                 }
                 if (found) {
                     view = new DescriptionViewImp(this);
+                    setTitle(poi.getName());
 
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append(getString(R.string.name));
