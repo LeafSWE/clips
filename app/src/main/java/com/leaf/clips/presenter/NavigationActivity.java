@@ -112,7 +112,6 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
             });
             alertBuilder.create().show();
         }*/
-        new NoInternetAlert().showIfNoConnection(this);
         builder = new AlertDialog.Builder(this);
 
     }
@@ -176,6 +175,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
             }
             if(destinationPoi != null) {
                 Log.d("NAVIGAZIONE", "OK");
+                new NoInternetAlert().showIfNoConnection(this);
                 navigationManager.startNavigation(destinationPoi);
                 navigationInstruction = navigationManager.getAllNavigationInstruction();
                 navigationManager.addListener(this);
