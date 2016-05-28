@@ -1,5 +1,6 @@
 package com.leaf.clips;
 
+import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
 
@@ -90,6 +91,9 @@ public class SystemTest15 {
         t.start();
         Thread.sleep(5000);
         t.join();
+        try {
+            onView(withText(R.string.ok)).perform(click());;
+        } catch (NoMatchingViewException e) {}
     }
 
     //TS15.1
@@ -125,12 +129,6 @@ public class SystemTest15 {
     }
 
     //TS15.3
-    //@Test
-    public void shouldSearchMaps() throws Exception {
-        // TODO: 27/05/16 ricerca mappe verrà implementata?
-    }
-
-    //TS15.4
     @Test
     public void shouldRemoveMaps() throws Exception {
         Field field = HomeActivity.class.getDeclaredField("informationManager");
@@ -150,7 +148,7 @@ public class SystemTest15 {
         Assert.assertFalse(informationManager.getDatabaseService().isBuildingMapPresent(666));
     }
 
-    //TS15.5
+    //TS15.4
     @Test
     public void shouldUpdateMaps() throws Exception {
         Field field = HomeActivity.class.getDeclaredField("informationManager");
@@ -170,7 +168,7 @@ public class SystemTest15 {
         Assert.assertTrue(informationManager.getDatabaseService().isBuildingMapUpdated(666));
     }
 
-    //TS15.6
+    //TS15.5
     @Test
     public void shouldAccessLocalMapName() throws Exception {
         Field field = HomeActivity.class.getDeclaredField("informationManager");
@@ -188,7 +186,7 @@ public class SystemTest15 {
                 .check(matches(not(withText(""))));
     }
 
-    //TS15.7
+    //TS15.6
     @Test
     public void shouldAccessLocalMapAddress() throws Exception {
         Field field = HomeActivity.class.getDeclaredField("informationManager");
@@ -206,13 +204,13 @@ public class SystemTest15 {
                 .check(matches(not(withText(""))));
     }
 
-    //TS15.8
+    //TS15.7
     //@Test
     public void shouldAccessLocalMapDescription() throws Exception {
         //non implementato
     }
 
-    //TS15.9
+    //TS15.8
     @Test
     public void shouldAccessLocalMapSize() throws Exception {
         Field field = HomeActivity.class.getDeclaredField("informationManager");
@@ -230,7 +228,7 @@ public class SystemTest15 {
                 .check(matches(not(withText(""))));
     }
 
-    //TS15.10
+    //TS15.9
     @Test
     public void shouldAccessLocalMapVersion() throws Exception {
         Field field = HomeActivity.class.getDeclaredField("informationManager");
@@ -248,7 +246,7 @@ public class SystemTest15 {
                 .check(matches(not(withText(""))));
     }
 
-    //TS15.11
+    //TS15.10
     @Test
     public void shouldAccessRemoteMapName() throws Exception {
         onView(withId(R.id.drawer_layout_home)).perform(open());
@@ -263,7 +261,7 @@ public class SystemTest15 {
                 .check(matches(not(withText(""))));
     }
 
-    //TS15.12
+    //TS15.11
     @Test
     public void shouldAccessRemoteMapAddress() throws Exception {
         onView(withId(R.id.drawer_layout_home)).perform(open());
@@ -278,13 +276,13 @@ public class SystemTest15 {
                 .check(matches(not(withText(""))));
     }
 
-    //TS15.13
+    //TS15.12
     @Test
     public void shouldAccessRemoteMapDescription() throws Exception {
         // TODO: 27/05/16 quando implementata funzione mappe remote
     }
 
-    //TS15.14
+    //TS15.13
     @Test
     public void shouldAccessRemoteMapSize() throws Exception {
         onView(withId(R.id.drawer_layout_home)).perform(open());
@@ -299,7 +297,7 @@ public class SystemTest15 {
                 .check(matches(not(withText(""))));
     }
 
-    //TS15.15
+    //TS15.14
     @Test
     public void shouldAccessRemoteMapVersion() throws Exception {
         onView(withId(R.id.drawer_layout_home)).perform(open());
@@ -314,9 +312,4 @@ public class SystemTest15 {
                 .check(matches(not(withText(""))));
     }
 
-    //TS15.16
-    //@Test
-    public void shouldNotifyRemoteMapNotFound() throws Exception {
-        // TODO: 27/05/16 verrà implementata?
-    }
 }
