@@ -229,8 +229,9 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                                 navigationInstruction = navigationManager.getAllNavigationInstruction();
                                 navigationManager.addListener(NavigationActivity.this);
                                 view.setInstructionAdapter(navigationInstruction);
-                            } catch (NoBeaconSeenException e){}
-                            catch (NavigationExceptions e){}
+                            } catch (NoBeaconSeenException e) {
+                            } catch (NavigationExceptions e) {
+                            }
                         }
                     });
             builder.setNegativeButton(R.string.back_to_home,
@@ -239,10 +240,13 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                             NavigationActivity.this.startActivity(new Intent(NavigationActivity.this, HomeActivity.class));
                         }
                     });
-            if (dialogPathError == null)
+            if (dialogPathError == null) {
                 dialogPathError = builder.create();
+                dialogPathError.setCanceledOnTouchOutside(false);
+            }
             if(!isFinishing())
                 dialogPathError.show();
+
         }
 
     }
