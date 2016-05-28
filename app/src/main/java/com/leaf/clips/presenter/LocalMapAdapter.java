@@ -90,10 +90,10 @@ public class LocalMapAdapter extends BaseAdapter{
         btnDeleteMap = (AppCompatImageButton) convertView.findViewById(R.id.removeLocalMap);
 
         if(isBuildingMapUpdate){
-            txtViewMapStatus.setText("Mappa aggiornata");
+            txtViewMapStatus.setText(R.string.updated_map);
         }
         else {
-            txtViewMapStatus.setText("Mappa da aggiornare");
+            txtViewMapStatus.setText(R.string.update_map);
             txtViewMapStatus.setTextColor(Color.RED);
             txtViewMapVersion.setTextColor(Color.RED);
         }
@@ -115,11 +115,11 @@ public class LocalMapAdapter extends BaseAdapter{
             public void onClick(View v) {
 
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(presenter);
-                builder1.setMessage("Vuoi veramente cancellare la mappa selezionata?");
+                builder1.setMessage(R.string.remove_map_question);
                 builder1.setCancelable(true);
 
                 builder1.setPositiveButton(
-                        "Si",
+                        R.string.ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 presenter.deleteMap(buildingTable.getMajor());
@@ -128,7 +128,7 @@ public class LocalMapAdapter extends BaseAdapter{
                         });
 
                 builder1.setNegativeButton(
-                        "No",
+                        R.string.cancel,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
@@ -145,9 +145,9 @@ public class LocalMapAdapter extends BaseAdapter{
     
     private void showNoUpdateDialog () {
         AlertDialog.Builder builder = new AlertDialog.Builder(presenter);
-        builder.setMessage("Mappa già aggiornata")
+        builder.setMessage(R.string.already_updated_map)
                 .setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         //do things
                     }
@@ -159,11 +159,11 @@ public class LocalMapAdapter extends BaseAdapter{
     private void showUpdateDialog () {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(presenter);
 
-        builder1.setMessage("Vuoi veramente aggiornare la mappa selezionata?");
+        builder1.setMessage(R.string.update_map_question);
         builder1.setCancelable(true);
 
         builder1.setPositiveButton(
-                "Si",
+                R.string.ok,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         presenter.updateMap(buildingTable.getMajor());
@@ -172,7 +172,7 @@ public class LocalMapAdapter extends BaseAdapter{
                 });
 
         builder1.setNegativeButton(
-                "No",
+                R.string.cancel,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();

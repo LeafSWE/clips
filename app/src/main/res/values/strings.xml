@@ -85,7 +85,11 @@
 
     <!--LocalMapManager-->
     <string name="update_map">Update Map</string>
+    <string name="updated_map">Updated Map</string>
     <string name="delete_map">Delete Map</string>
+    <string name="remove_map_question">Do you really want to delete the selected map?</string>
+    <string name="already_updated_map">Map already update</string>
+    <string name="update_map_question">Do you really want to update the selected map?</string>
 
     <!--RemoteMapManager-->
     <string name="title_activity_remote_map_manager">Download new maps</string>

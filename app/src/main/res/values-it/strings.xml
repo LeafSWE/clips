@@ -72,9 +72,13 @@
 
     <!--LocalMapManager-->
     <string name="update_map">Aggiorna mappa</string>
+    <string name="updated_map">Mappa aggiornata</string>
     <string name="delete_map">Rimuovi mappa</string>
     <string name="title_activity_local_map">Le tue mappe</string>
     <string name="title_activity_preferences">Preferenze</string>
+    <string name="remove_map_question">Vuoi veramente cancellare la mappa selezionata?</string>
+    <string name="already_updated_map">Mappa già aggiornata</string>
+    <string name="update_map_question">Vuoi veramente aggiornare la mappa selezionata?</string>
 
     <!--RemoteMapManager-->
     <string name="title_activity_remote_map_manager">Scarica nuove mappe</string>
