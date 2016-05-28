@@ -33,8 +33,6 @@ public class LocalMapAdapter extends BaseAdapter{
 
     private boolean [] mapsVersionStatus;
 
-    private BuildingTable buildingTable;
-
     private AppCompatImageButton btnUpdateMap;
 
     private AppCompatImageButton btnDeleteMap;
@@ -67,7 +65,7 @@ public class LocalMapAdapter extends BaseAdapter{
             convertView = LayoutInflater.from(presenter).inflate(R.layout.local_map_row, null);
         }
 
-        buildingTable = (BuildingTable) getItem(position);
+        final BuildingTable buildingTable = (BuildingTable) getItem(position);
 
         final boolean isBuildingMapUpdate = mapsVersionStatus[position];
 
@@ -105,7 +103,7 @@ public class LocalMapAdapter extends BaseAdapter{
                     showNoUpdateDialog();
                 }
                 else {
-                    showUpdateDialog();
+                    showUpdateDialog(buildingTable.getMajor());
                 }
             }
         });
@@ -156,7 +154,8 @@ public class LocalMapAdapter extends BaseAdapter{
         alert.show();
     }
     
-    private void showUpdateDialog () {
+    private void showUpdateDialog (final int major) {
+
         AlertDialog.Builder builder1 = new AlertDialog.Builder(presenter);
 
         builder1.setMessage(R.string.update_map_question);
@@ -166,7 +165,7 @@ public class LocalMapAdapter extends BaseAdapter{
                 R.string.ok,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        presenter.updateMap(buildingTable.getMajor());
+                        presenter.updateMap(major);
                         dialog.cancel();
                     }
                 });
