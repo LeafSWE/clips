@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import com.leaf.clips.R;
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NavigationListener;
 import com.leaf.clips.model.NavigationManager;
@@ -26,9 +28,11 @@ import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoRef;
 import com.leaf.clips.view.NavigationView;
 import com.leaf.clips.view.NavigationViewImp;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+
 import javax.inject.Inject;
 
 // TODO: 25/05/16 aggiornare tracy/uml
@@ -203,10 +207,10 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         stopNavigation();
         Log.i("Removelistener", "pathError");
         if(!isFinishing()){
-            builder.setTitle("Percorso errato");
-            builder.setMessage("Sembra che tu abbia sbagliato percorso, vuoi ricalcolare il percorso?");
+            builder.setTitle(R.string.wrong_path);
+            builder.setMessage(R.string.wrong_path_question);
             builder.setIcon(android.R.drawable.ic_dialog_alert);
-            builder.setPositiveButton("Ricalcolo",
+            builder.setPositiveButton(R.string.recalculate,
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             try {
@@ -229,7 +233,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                             catch (NavigationExceptions e){}
                         }
                     });
-            builder.setNegativeButton("Torna alla home",
+            builder.setNegativeButton(R.string.back_to_home,
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             NavigationActivity.this.startActivity(new Intent(NavigationActivity.this, HomeActivity.class));
@@ -237,7 +241,8 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                     });
             if (dialogPathError == null)
                 dialogPathError = builder.create();
-            dialogPathError.show();
+            if(!isFinishing())
+                dialogPathError.show();
         }
 
     }

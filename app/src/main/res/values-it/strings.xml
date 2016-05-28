@@ -82,4 +82,10 @@
 
     <!--RemoteMapManager-->
     <string name="title_activity_remote_map_manager">Scarica nuove mappe</string>
+
+    <!--AlertPathError-->
+    <string name="wrong_path">Percorso errato</string>
+    <string name="wrong_path_question">Sembra che tu abbia sbagliato percorso, vuoi ricalcolare il percorso?</string>
+    <string name="recalculate">Ricalcolo</string>
+    <string name="back_to_home">Torna alla home</string>
 </resources>

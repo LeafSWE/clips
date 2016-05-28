@@ -94,5 +94,9 @@
     <!--RemoteMapManager-->
     <string name="title_activity_remote_map_manager">Download new maps</string>
 
-
+    <!--AlertPathError-->
+    <string name="wrong_path">Wrong path</string>
+    <string name="wrong_path_question">It seems that you have taken the wrong path, want to calculate a new route?</string>
+    <string name="recalculate">Recalculate</string>
+    <string name="back_to_home">Back to the home</string>
 </resources>
