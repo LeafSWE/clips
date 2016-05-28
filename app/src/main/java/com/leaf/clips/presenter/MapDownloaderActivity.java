@@ -8,6 +8,7 @@ import com.leaf.clips.view.MapDownloaderView;
 
 public class MapDownloaderActivity extends AppCompatActivity {
 
+
     /**
      * View associata a tale Activity
      */

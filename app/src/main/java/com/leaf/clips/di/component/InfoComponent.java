@@ -15,6 +15,7 @@ import com.leaf.clips.presenter.LogInformationActivity;
 import com.leaf.clips.presenter.LoggingActivity;
 import com.leaf.clips.presenter.MainDeveloperActivity;
 import com.leaf.clips.presenter.MainDeveloperPresenter;
+import com.leaf.clips.presenter.MapDownloaderActivity;
 import com.leaf.clips.presenter.NavigationActivity;
 import com.leaf.clips.presenter.NearbyPoiActivity;
 import com.leaf.clips.presenter.PoiActivity;
@@ -141,4 +142,5 @@ public interface InfoComponent {
 
     // TODO: 5/27/16 Aggiungere tracy + asta
     void inject(RemoteMapManagerActivity remoteMapManagerActivity);
+    void inject(MapDownloaderActivity mapDownloaderActivity);
 }
