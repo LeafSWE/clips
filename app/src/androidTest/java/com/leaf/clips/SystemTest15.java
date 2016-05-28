@@ -7,6 +7,7 @@ import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.InformationManagerImp;
 import com.leaf.clips.model.beacon.MyBeacon;
 import com.leaf.clips.model.beacon.MyBeaconImp;
+import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 import com.leaf.clips.model.navigator.BuildingMap;
 import com.leaf.clips.presenter.HomeActivity;
 
@@ -17,7 +18,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -47,73 +47,49 @@ public class SystemTest15 {
     @Before
     public void setUp() throws Exception {
         testActivity = mActivityRule.getActivity();
-        new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-
-                Field field = null;
                 try {
+                    Field field = null;
                     field = HomeActivity.class.getDeclaredField("informationManager");
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                }
-                field.setAccessible(true);
-                InformationManagerImp informationManager = null;
-                try {
+                    field.setAccessible(true);
+                    InformationManagerImp informationManager = null;
+
                     informationManager = (InformationManagerImp) field.get(testActivity);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-                if(!informationManager.getDatabaseService().isBuildingMapPresent(666))
-                    try {
+                    if (!informationManager.getDatabaseService().isBuildingMapPresent(666))
                         informationManager.getDatabaseService().findRemoteBuildingByMajor(666);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                try {
                     field = InformationManagerImp.class.getDeclaredField("lastBeaconsSeen");
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                }
-                field.setAccessible(true);
-                PriorityQueue<MyBeacon> lastBeaconsSeen = null;
-                try {
+                    field.setAccessible(true);
+                    PriorityQueue<MyBeacon> lastBeaconsSeen = null;
                     lastBeaconsSeen = (PriorityQueue<MyBeacon>) field.get(informationManager);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-                LinkedList<Long> l = new LinkedList<Long>();
-                l.add((long) 0);
-                l.add((long) 0);
-                l.add((long) 0);
-                l.add((long) 0);
-                l.add((long) 0);
-                l.add((long) 0);
-                l.add((long) 0);
-                l.add((long) 0);
-                MyBeacon b = new MyBeaconImp(new Beacon.Builder()
-                        .setId1("19235dd2-574a-4702-a42e-caccac06e325")
-                        .setId2("666").setId3("0").setDataFields(l).build());
-                lastBeaconsSeen.add(b);
-
-                try {
+                    LinkedList<Long> l = new LinkedList<Long>();
+                    l.add((long) 0);
+                    l.add((long) 0);
+                    l.add((long) 0);
+                    l.add((long) 0);
+                    l.add((long) 0);
+                    l.add((long) 0);
+                    l.add((long) 0);
+                    l.add((long) 0);
+                    MyBeacon b = new MyBeaconImp(new Beacon.Builder()
+                            .setId1("19235dd2-574a-4702-a42e-caccac06e325")
+                            .setId2("666").setId3("0").setDataFields(l).build());
+                    lastBeaconsSeen.add(b);
                     field = InformationManagerImp.class.getDeclaredField("map");
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                }
-                field.setAccessible(true);
-                BuildingMap map = null;
-                try {
+                    field.setAccessible(true);
+                    BuildingMap map = null;
                     map = (BuildingMap) field.get(informationManager);
-                } catch (IllegalAccessException e) {
+
+                    map = informationManager.getDatabaseService().findBuildingByMajor(666);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                map = informationManager.getDatabaseService().findBuildingByMajor(666);
-
-            }}).run();
-
-        Thread.sleep(8000);
+            }});
+        t.start();
+        Thread.sleep(5000);
+        t.join();
     }
 
     //TS15.1
@@ -126,11 +102,30 @@ public class SystemTest15 {
     //TS15.2
     @Test
     public void shouldInstallNewMap() throws Exception {
-        // TODO: 27/05/16 quando implementata funzione mappe remote
+        Field field = HomeActivity.class.getDeclaredField("informationManager");
+        field.setAccessible(true);
+        InformationManager informationManager = (InformationManager)field.get(testActivity);
+        BuildingTable firstRemoteBuilding = informationManager.getDatabaseService()
+                                                .findAllRemoteBuildings()
+                                                .iterator()
+                                                .next();
+        int major = firstRemoteBuilding.getMajor();
+        onView(withId(R.id.drawer_layout_home)).perform(open());
+        onView(withId(R.id.nav_view_home)).perform(NavigationViewActions.navigateTo(R.id.mapManager));
+        Thread.sleep(1000);
+        onView(withId(R.id.fab_add_new_map)).perform(click());
+        Thread.sleep(1000);
+        onData(anything())
+                .inAdapterView(withId(R.id.listViewRemoteMaps))
+                .atPosition(0)
+                .onChildView(withId(R.id.download_remote_map))
+                .perform(click());
+        //onView(withText(R.string.ok)).perform(click());
+        Assert.assertTrue(informationManager.getDatabaseService().isBuildingMapPresent(major));
     }
 
     //TS15.3
-    @Test
+    //@Test
     public void shouldSearchMaps() throws Exception {
         // TODO: 27/05/16 ricerca mappe verrà implementata?
     }
@@ -151,6 +146,7 @@ public class SystemTest15 {
                 .atPosition(0)
                 .onChildView(withId(R.id.removeLocalMap))
                 .perform(click());
+        onView(withText(R.string.ok)).perform(click());
         Assert.assertFalse(informationManager.getDatabaseService().isBuildingMapPresent(666));
     }
 
@@ -168,9 +164,10 @@ public class SystemTest15 {
         onData(anything())
                 .inAdapterView(withId(R.id.listViewLocalMaps))
                 .atPosition(0)
-                .onChildView(withId(R.id.removeLocalMap))
+                .onChildView(withId(R.id.updateLocalMap))
                 .perform(click());
-        //Assert.assertTrue(informationManager.getDatabaseService().isBuildingMapUpdated(666));
+        onView(withText(R.string.ok)).perform(click());
+        Assert.assertTrue(informationManager.getDatabaseService().isBuildingMapUpdated(666));
     }
 
     //TS15.6
@@ -210,7 +207,7 @@ public class SystemTest15 {
     }
 
     //TS15.8
-    @Test
+    //@Test
     public void shouldAccessLocalMapDescription() throws Exception {
         //non implementato
     }
@@ -254,13 +251,31 @@ public class SystemTest15 {
     //TS15.11
     @Test
     public void shouldAccessRemoteMapName() throws Exception {
-        // TODO: 27/05/16 quando implementata funzione mappe remote
+        onView(withId(R.id.drawer_layout_home)).perform(open());
+        onView(withId(R.id.nav_view_home)).perform(NavigationViewActions.navigateTo(R.id.mapManager));
+        Thread.sleep(1000);
+        onView(withId(R.id.fab_add_new_map)).perform(click());
+        Thread.sleep(1000);
+        onData(anything())
+                .inAdapterView(withId(R.id.listViewRemoteMaps))
+                .atPosition(0)
+                .onChildView(withId(R.id.textViewRemoteMapName))
+                .check(matches(not(withText(""))));
     }
 
     //TS15.12
     @Test
     public void shouldAccessRemoteMapAddress() throws Exception {
-        // TODO: 27/05/16 quando implementata funzione mappe remote
+        onView(withId(R.id.drawer_layout_home)).perform(open());
+        onView(withId(R.id.nav_view_home)).perform(NavigationViewActions.navigateTo(R.id.mapManager));
+        Thread.sleep(1000);
+        onView(withId(R.id.fab_add_new_map)).perform(click());
+        Thread.sleep(1000);
+        onData(anything())
+                .inAdapterView(withId(R.id.listViewRemoteMaps))
+                .atPosition(0)
+                .onChildView(withId(R.id.textViewRemoteMapAddress))
+                .check(matches(not(withText(""))));
     }
 
     //TS15.13
@@ -272,17 +287,35 @@ public class SystemTest15 {
     //TS15.14
     @Test
     public void shouldAccessRemoteMapSize() throws Exception {
-        // TODO: 27/05/16 quando implementata funzione mappe remote
+        onView(withId(R.id.drawer_layout_home)).perform(open());
+        onView(withId(R.id.nav_view_home)).perform(NavigationViewActions.navigateTo(R.id.mapManager));
+        Thread.sleep(1000);
+        onView(withId(R.id.fab_add_new_map)).perform(click());
+        Thread.sleep(1000);
+        onData(anything())
+                .inAdapterView(withId(R.id.listViewRemoteMaps))
+                .atPosition(0)
+                .onChildView(withId(R.id.textViewRemoteMapSize))
+                .check(matches(not(withText(""))));
     }
 
     //TS15.15
     @Test
     public void shouldAccessRemoteMapVersion() throws Exception {
-        // TODO: 27/05/16 quando implementata funzione mappe remote
+        onView(withId(R.id.drawer_layout_home)).perform(open());
+        onView(withId(R.id.nav_view_home)).perform(NavigationViewActions.navigateTo(R.id.mapManager));
+        Thread.sleep(1000);
+        onView(withId(R.id.fab_add_new_map)).perform(click());
+        Thread.sleep(1000);
+        onData(anything())
+                .inAdapterView(withId(R.id.listViewRemoteMaps))
+                .atPosition(0)
+                .onChildView(withId(R.id.textViewRemoteMapVersion))
+                .check(matches(not(withText(""))));
     }
 
     //TS15.16
-    @Test
+    //@Test
     public void shouldNotifyRemoteMapNotFound() throws Exception {
         // TODO: 27/05/16 verrà implementata?
     }
