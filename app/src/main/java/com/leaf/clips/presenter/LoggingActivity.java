@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.leaf.clips.R;
 import com.leaf.clips.model.InformationListener;
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.beacon.MyBeacon;
@@ -57,7 +58,7 @@ public class LoggingActivity extends AppCompatActivity implements InformationLis
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
 
         informationManager.startRecordingBeacons();
-        view.setBeaconListAdapter(new StringBuffer("Waiting for nearby beacons..."));
+        view.setBeaconListAdapter(new StringBuffer(getString(R.string.beacon_waiting)));
 
         informationManager.addListener(this);
     }

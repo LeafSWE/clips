@@ -92,4 +92,6 @@
     <!--AlertDeleteLog-->
     <string name="delete_log_question">Vuoi veramente cancellare questo log?</string>
 
+    <!--LoggingActivity-->
+    <string name="beacon_waiting">In attesa di beacon nelle vicinanze...</string>
 </resources>
