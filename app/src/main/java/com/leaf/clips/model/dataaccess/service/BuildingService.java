@@ -159,6 +159,9 @@ public class BuildingService implements DatabaseService {
          * Raccolgo tutti gli oggetti BuildingTable in una lista che ritorno.
          */
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         String url = databaseURL+"allMaps";
         try (
                 InputStream input = new URL(url).openStream();
