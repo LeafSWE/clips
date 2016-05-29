@@ -79,6 +79,7 @@ public class LocalMapActivity extends AppCompatActivity {
 
     /**
      * Meotodo utilizzato per leggere le mappe dal database e aggiornare la view
+     * @return void
      */
     private void LoadMaps() {
         Collection<BuildingTable> buildingTable = databaseService.findAllBuildings();
@@ -107,6 +108,7 @@ public class LocalMapActivity extends AppCompatActivity {
 
     /**
      * Metodo utilizzato per poter avviare l'activity che si occupa della gestione delle mappe remote
+     * @return void
      */
     public void DownloadNewMap() {
         Intent intent = new Intent(this,RemoteMapManagerActivity.class);
