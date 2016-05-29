@@ -103,7 +103,7 @@ public class NavigationAdapter extends BaseAdapter {
         distance.setText(navigationInformation.getDistance());
 
         if (position == 0)
-            convertView.findViewById(R.id.imageView_check).setVisibility(View.VISIBLE);
+            convertView.setBackgroundColor(convertView.getResources().getColor(R.color.currentInstructionColor));
         /*if (position == getCount() - 1)
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override

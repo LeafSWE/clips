@@ -136,10 +136,9 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      */
     private void handleIntent(Intent intent) {
         PointOfInterest destinationPoi = null;
-        List<PointOfInterest> poiList = null;
+        List<PointOfInterest> poiList;
         poiId=-1;
         try {
-            //TODO: Introdurre suggerimenti nella SearchBox
             poiList = (List<PointOfInterest>)informationManager.getBuildingMap().getAllPOIs();
 
             //Se l'Intent è stato generato dalla SearchBox
@@ -175,6 +174,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                     }
             }
             if(destinationPoi != null) {
+                setTitle("Raggiungi " + destinationPoi.getName());
                 Log.d("NAVIGAZIONE", "OK");
                 navigationManager.startNavigation(destinationPoi);
                 navigationInstruction = navigationManager.getAllNavigationInstruction();
@@ -225,8 +225,12 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                                 navigationInstruction = navigationManager.getAllNavigationInstruction();
                                 navigationManager.addListener(NavigationActivity.this);
                                 view.setInstructionAdapter(navigationInstruction);
-                            } catch (NoBeaconSeenException e){}
-                            catch (NavigationExceptions e){}
+                            } catch (NoBeaconSeenException e){
+                                e.printStackTrace();
+                            }
+                            catch (NavigationExceptions e){
+                                e.printStackTrace();
+                            }
                         }
                     });
             builder.setNegativeButton("Torna alla home",
