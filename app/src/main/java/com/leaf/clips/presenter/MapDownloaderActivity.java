@@ -21,7 +21,9 @@ import javax.inject.Inject;
 
 public class MapDownloaderActivity extends AppCompatActivity {
 
-    // TODO: 5/28/16 Aggiungere attributo Asta + Tracy
+    /**
+     * Riferimento al model per poter accedere alla gestione delle mappe
+     */
     @Inject
     DatabaseService databaseService;
     /**
@@ -64,12 +66,11 @@ public class MapDownloaderActivity extends AppCompatActivity {
     public void downloadFinished(){}
 
 
-
+    // TODO: 5/30/16 Valutare se aggiungere questa classe
     /**
      * Classe che estende AsyncTask per il download di una mappa
      */
     private class AsyncDownload extends AsyncTask<Integer, Void, Boolean> {
-
         /**
          * Variabile che indica se si sono verificati errori di connessione
          */
