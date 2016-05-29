@@ -22,30 +22,58 @@ import java.util.Collection;
 
 public class RemoteMapManagerAdapter extends BaseAdapter {
 
+    /**
+     * Riferimentio all'activity che si occupa della sua gestione.
+     */
     private RemoteMapManagerActivity presenter;
 
+    /**
+     * Collezione di BuildingTable contenente tutte le informazioni associate ad una certa mappa.
+     */
     private Collection<BuildingTable> buildingTables;
 
+    /**
+     * Costruttore della classe LocalMapAdapter
+     * @param presenter Riferimento al model utile per avere anche il contesto dell'applicazione
+     * @param buildingTables Insieme di mappe disponibili
+     */
     public RemoteMapManagerAdapter(RemoteMapManagerActivity presenter, Collection<BuildingTable> buildingTables){
         this.presenter = presenter;
         this.buildingTables = buildingTables;
     }
 
+    /**
+     * Restituisce il numero di mappe disponibili
+     * @return int numero di mappe disponibili
+     */
     @Override
     public int getCount() {
         return buildingTables.size();
     }
 
+    /**
+     * Restituisce la mappa della collezione che si trova nella posizione fornita come parametro.
+     * @param position Posizione della mappa
+     * @return Object mappa nella posizione selezionata
+     */
     @Override
     public Object getItem(int position) {
         return buildingTables.toArray()[position];
     }
 
+    /**
+     * Restituisce l'id della mappa della collezione che si trova nella posizione fornita come parametro fornita come parametro.
+     * @param position Posizione della mappa
+     * @return long
+     */
     @Override
     public long getItemId(int position) {
         return buildingTables.toArray()[position].hashCode();
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView == null) {
