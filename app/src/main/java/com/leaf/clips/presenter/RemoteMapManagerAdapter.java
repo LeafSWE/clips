@@ -18,8 +18,10 @@ import java.util.Collection;
  * @since 0.00
  */
 
-// TODO: 5/27/16 Asta + Tracy, classe nuova 
-
+/**
+ * Si occupa del binding tra le mappe fornite dal Model e la View deputata
+ * a mostrarle.
+ */
 public class RemoteMapManagerAdapter extends BaseAdapter {
 
     /**
@@ -33,8 +35,8 @@ public class RemoteMapManagerAdapter extends BaseAdapter {
     private Collection<BuildingTable> buildingTables;
 
     /**
-     * Costruttore della classe LocalMapAdapter
-     * @param presenter Riferimento al model utile per avere anche il contesto dell'applicazione
+     * Costruttore della classe RemoteMapAdapter
+     * @param presenter Riferimento al presenter utile per avere anche il contesto dell'applicazione
      * @param buildingTables Insieme di mappe disponibili
      */
     public RemoteMapManagerAdapter(RemoteMapManagerActivity presenter, Collection<BuildingTable> buildingTables){

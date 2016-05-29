@@ -23,7 +23,7 @@ import java.util.Collection;
  */
 
 /**
- * Si occupa del binding tra le informazioni di navigazione fornite dal Model e la View deputata
+ * Si occupa del binding tra le mappe fornite dal Model e la View deputata
  * a mostrarle.
  */
 public class LocalMapAdapter extends BaseAdapter{
