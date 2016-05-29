@@ -22,9 +22,10 @@ import java.util.Collection;
  * @since 0.00
  */
 
-
-// TODO: 5/24/16 Asta + Tracy, classe nuova
-
+/**
+ * Si occupa del binding tra le informazioni di navigazione fornite dal Model e la View deputata
+ * a mostrarle.
+ */
 public class LocalMapAdapter extends BaseAdapter{
 
     /**
@@ -38,14 +39,14 @@ public class LocalMapAdapter extends BaseAdapter{
     private Collection<BuildingTable> collectionBuildingTable;
 
     /**
-     * Array che contenente lo stato di ogni mappa presente nel telefono. Se vero allora la mappa è da aggiornare, se falso non lo è.
+     * Array contenente lo stato di ogni mappa installata. Se vero allora la mappa è da aggiornare, se falso non lo è.
      */
     private boolean [] mapsVersionStatus;
 
     /**
      * Costruttore della classe LocalMapAdapter
      * @param presenter Riferimento al model utile per avere anche il contesto dell'applicazione
-     * @param collectionBuildingTable Insieme di mappe salvata sul telefono
+     * @param collectionBuildingTable Insieme di mappe installate sul dispositivo
      * @param mapsVersionStatus Array contenente lo stato delle mappe
      */
     public LocalMapAdapter(LocalMapActivity presenter, Collection<BuildingTable> collectionBuildingTable, boolean [] mapsVersionStatus){
