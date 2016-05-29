@@ -10,6 +10,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.leaf.clips.presenter.MyApplication;
+
 /**
  *Classe che rappresenta un aiutante per ottenere informazioni su come accedere al database locale e remoto
  */
@@ -33,7 +35,7 @@ public class MapsDbHelper extends SQLiteOpenHelper {
     /**
      * URL del database remoto
      */
-    public final static String REMOTE_DB_URL = "http://52.49.217.118/";
+    public final static String REMOTE_DB_URL = MyApplication.getConfiguration().getRemoteDBPath();
 
     /**
      * Costruttore della classe MapsDbHelper
