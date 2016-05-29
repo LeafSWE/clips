@@ -23,7 +23,6 @@ import javax.inject.Inject;
 
 public class LocalMapActivity extends AppCompatActivity {
 
-    // TODO: 5/24/16 Aggiungere Asta + Tracy
     /**
      * Riferimento al model per poter accedere alla gestione delle mappe
      */
@@ -33,18 +32,6 @@ public class LocalMapActivity extends AppCompatActivity {
      * View associata a tale Activity
      */
     private LocalMapManagerView view;
-
-    // TODO: 5/26/16 Modificare nome attributo, Asta + Tracy
-    /**
-     * Metodo che permettere di rimuovere una mappa del database locale
-     * @param major Posizione occupata dalla mappa da rimuovere
-     * @return  void
-     */
-    public void deleteMap(int major){
-        databaseService.deleteBuilding(databaseService.findBuildingByMajor(major));
-        LoadMaps();
-    }
-
 
     /**
      * Metodo che inizializza la View associata a tale Activity
@@ -60,10 +47,19 @@ public class LocalMapActivity extends AppCompatActivity {
         LoadMaps();
     }
 
-    // TODO: 5/26/16 Modificare nome attributo, Asta + Tracy
+    /**
+     * Metodo che permettere di rimuovere una mappa del database locale
+     * @param major Major dalla mappa da rimuovere
+     * @return  void
+     */
+    public void deleteMap(int major){
+        databaseService.deleteBuilding(databaseService.findBuildingByMajor(major));
+        LoadMaps();
+    }
+
     /**
      * Metodo che permette di aggiornare una mappa del database locale
-     * @param major Posizione della mappa da aggiornare
+     * @param major Major della mappa da aggiornare
      * @return  void
      */
     public void updateMap(int major){
@@ -74,8 +70,6 @@ public class LocalMapActivity extends AppCompatActivity {
         }
         LoadMaps();
     }
-
-    // TODO: 5/27/16 Aggiungere asta + tracy
 
     /**
      * Meotodo utilizzato per leggere le mappe dal database e aggiornare la view
@@ -103,8 +97,6 @@ public class LocalMapActivity extends AppCompatActivity {
             view.setAdapter(buildingTable, mapVersionStatus);
         }
     }
-
-    // TODO: 5/27/16 Aggiungere asta + tracy
 
     /**
      * Metodo utilizzato per poter avviare l'activity che si occupa della gestione delle mappe remote
