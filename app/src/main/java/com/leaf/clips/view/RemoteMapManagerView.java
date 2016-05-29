@@ -18,15 +18,15 @@ import java.util.Collection;
  */
 
 public interface RemoteMapManagerView {
-
-    // TODO: 5/27/16 Modificare attributo asta + tracy 
     /**
      * Metodo utilizzate per visualizzare le mappe che è possibile scaricare da un server remoto
-     * @param adp Collegamento tra la lista delle mappe che è possibile scaricare e la view in cui esse devono essere mostrate
+     * @param buildingTables Collegamento tra la lista delle mappe che è possibile scaricare e la view in cui esse devono essere mostrate
      * @return  void
      */
     void setRemoteMaps(Collection<BuildingTable> buildingTables);
 
-    // TODO: 5/28/16 Aggiungere Asta + Tracy 
+    /**
+     * Metodo utilizzato per infomrare l'utente che la mappa selezionata è già installata sul dispositivo
+     */
     void showMapAlreadyPresent ();
 }

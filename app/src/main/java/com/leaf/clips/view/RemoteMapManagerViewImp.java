@@ -37,10 +37,9 @@ public class RemoteMapManagerViewImp implements RemoteMapManagerView{
         this.presenter.setContentView(R.layout.activity_remote_map_manager);
     }
 
-    // TODO: 5/27/16 Asta + Tracy, attributo modificato
     /**
      * Metodo utilizzate per visualizzare le mappe che è possibile scaricare da un server remoto
-     * @param adp Collegamento tra la lista delle mappe che è possibile scaricare e la view in cui esse devono essere mostrate
+     * @param buildingTables Collegamento tra la lista delle mappe che è possibile scaricare e la view in cui esse devono essere mostrate
      * @return  void
      */
     @Override
@@ -49,7 +48,9 @@ public class RemoteMapManagerViewImp implements RemoteMapManagerView{
         listView.setAdapter(new RemoteMapManagerAdapter(presenter,buildingTables));
     }
 
-    // TODO: 5/28/16 Aggiungere Asta + Tracy 
+    /**
+     * Metodo utilizzato per infomrare l'utente che la mappa selezionata è già installata sul dispositivo
+     */
     public void showMapAlreadyPresent () {
         AlertDialog.Builder builder = new AlertDialog.Builder(presenter);
         builder.setMessage(R.string.remote_map_already_downloaded)
