@@ -3,19 +3,12 @@ package com.leaf.clips.presenter;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.leaf.clips.R;
-import com.leaf.clips.model.InformationListener;
-import com.leaf.clips.model.Listener;
-import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 import com.leaf.clips.model.dataaccess.service.DatabaseService;
-import com.leaf.clips.model.navigator.BuildingMap;
 import com.leaf.clips.view.MapDownloaderView;
 import com.leaf.clips.view.MapDownloaderViewImp;
-
-import junit.framework.Assert;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
