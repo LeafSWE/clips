@@ -124,7 +124,6 @@ public class SystemTest15 {
                 .atPosition(0)
                 .onChildView(withId(R.id.download_remote_map))
                 .perform(click());
-        //onView(withText(R.string.ok)).perform(click());
         Assert.assertTrue(informationManager.getDatabaseService().isBuildingMapPresent(major));
     }
 
