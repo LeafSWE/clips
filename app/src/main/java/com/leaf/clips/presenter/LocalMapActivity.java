@@ -24,6 +24,9 @@ import javax.inject.Inject;
 public class LocalMapActivity extends AppCompatActivity {
 
     // TODO: 5/24/16 Aggiungere Asta + Tracy
+    /**
+     * Riferimento al model per poter accedere alla gestione delle mappe
+     */
     @Inject
     DatabaseService databaseService;
     /**
@@ -34,7 +37,7 @@ public class LocalMapActivity extends AppCompatActivity {
     // TODO: 5/26/16 Modificare nome attributo, Asta + Tracy
     /**
      * Metodo che permettere di rimuovere una mappa del database locale
-     * @param mapPosition Posizione occupata dalla mappa da rimuovere
+     * @param major Posizione occupata dalla mappa da rimuovere
      * @return  void
      */
     public void deleteMap(int major){
@@ -60,7 +63,7 @@ public class LocalMapActivity extends AppCompatActivity {
     // TODO: 5/26/16 Modificare nome attributo, Asta + Tracy
     /**
      * Metodo che permette di aggiornare una mappa del database locale
-     * @param mapPosition Posizione della mappa da aggiornare
+     * @param major Posizione della mappa da aggiornare
      * @return  void
      */
     public void updateMap(int major){
@@ -69,11 +72,14 @@ public class LocalMapActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        //LoadMaps();
+        LoadMaps();
     }
 
     // TODO: 5/27/16 Aggiungere asta + tracy
+
+    /**
+     * Meotodo utilizzato per leggere le mappe dal database e aggiornare la view
+     */
     private void LoadMaps() {
         Collection<BuildingTable> buildingTable = databaseService.findAllBuildings();
 
@@ -98,6 +104,10 @@ public class LocalMapActivity extends AppCompatActivity {
     }
 
     // TODO: 5/27/16 Aggiungere asta + tracy
+
+    /**
+     * Metodo utilizzato per poter avviare l'activity che si occupa della gestione delle mappe remote
+     */
     public void DownloadNewMap() {
         Intent intent = new Intent(this,RemoteMapManagerActivity.class);
         startActivity(intent);
