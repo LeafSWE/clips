@@ -27,37 +27,64 @@ import java.util.Collection;
 
 public class LocalMapAdapter extends BaseAdapter{
 
+    /**
+     * Riferimentio all'activity che si occupa della sua gestione.
+     */
     private LocalMapActivity presenter;
 
+    /**
+     * Collezione di BuildingTable contenente tutte le informazioni associate ad una certa mappa.
+     */
     private Collection<BuildingTable> collectionBuildingTable;
 
+    /**
+     * Array che contenente lo stato di ogni mappa presente nel telefono. Se vero allora la mappa è da aggiornare, se falso non lo è.
+     */
     private boolean [] mapsVersionStatus;
 
-    private AppCompatImageButton btnUpdateMap;
-
-    private AppCompatImageButton btnDeleteMap;
-
+    /**
+     * Costruttore della classe LocalMapAdapter
+     * @param presenter Riferimento al model utile per avere anche il contesto dell'applicazione
+     * @param collectionBuildingTable Insieme di mappe salvata sul telefono
+     * @param mapsVersionStatus Array contenente lo stato delle mappe
+     */
     public LocalMapAdapter(LocalMapActivity presenter, Collection<BuildingTable> collectionBuildingTable, boolean [] mapsVersionStatus){
         this.presenter = presenter;
         this.collectionBuildingTable = collectionBuildingTable;
         this.mapsVersionStatus = mapsVersionStatus;
     }
-
+    /**
+     * Restituisce il numero di mappe installate nel telefono
+     * @return int numero di mappe installate
+     */
     @Override
     public int getCount() {
         return collectionBuildingTable.size();
     }
 
+    /**
+     * Restituisce la mappa della collezione che si trova nella posizione fornita come parametro.
+     * @param position Posizione della mappa
+     * @return Object mappa nella posizione selezionata
+     */
     @Override
     public Object getItem(int position) {
         return collectionBuildingTable.toArray()[position];
     }
 
+    /**
+     * Restituisce l'id della mappa della collezione che si trova nella posizione fornita come parametro fornita come parametro.
+     * @param position Posizione della mappa
+     * @return long
+     */
     @Override
     public long getItemId(int position) {
         return collectionBuildingTable.toArray()[position].hashCode();
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -84,8 +111,8 @@ public class LocalMapAdapter extends BaseAdapter{
         TextView txtViewMapStatus = (TextView) convertView.findViewById(R.id.textViewMapStatus);
 
 
-        btnUpdateMap = (AppCompatImageButton) convertView.findViewById(R.id.updateLocalMap);
-        btnDeleteMap = (AppCompatImageButton) convertView.findViewById(R.id.removeLocalMap);
+        AppCompatImageButton btnUpdateMap = (AppCompatImageButton) convertView.findViewById(R.id.updateLocalMap);
+        AppCompatImageButton btnDeleteMap = (AppCompatImageButton) convertView.findViewById(R.id.removeLocalMap);
 
         if(isBuildingMapUpdate){
             txtViewMapStatus.setText(R.string.updated_map);
@@ -140,7 +167,10 @@ public class LocalMapAdapter extends BaseAdapter{
 
         return convertView;
     }
-    
+
+    /**
+     * Metodo utilizzato per mostrare il dialog che indica che la mappa è già aggiornata
+     */
     private void showNoUpdateDialog () {
         AlertDialog.Builder builder = new AlertDialog.Builder(presenter);
         builder.setMessage(R.string.already_updated_map)
@@ -153,7 +183,11 @@ public class LocalMapAdapter extends BaseAdapter{
         AlertDialog alert = builder.create();
         alert.show();
     }
-    
+
+    /**
+     * Metodo utilizzato per mostrare un dialog che chiede la conferma dell'utente per aggiornare la mappa
+     * @param major parametro contente il major della mappa selezionata
+     */
     private void showUpdateDialog (final int major) {
 
         AlertDialog.Builder builder1 = new AlertDialog.Builder(presenter);
