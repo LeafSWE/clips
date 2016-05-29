@@ -46,25 +46,22 @@ public class LocalMapManagerViewImp implements LocalMapManagerView {
     }
 
     // TODO: 5/27/16 Valutare se rimuovere questo metodo + Asta + Tracy
-
     /**
      * Metodo che aggiorna la lista delle mappe salvate nel database locale
      * @return  void
      */
     @Override
-    public void refreshMaps(){
-
-    }
-
-    // TODO: 5/26/16 Modificare asta + tracy
+    public void refreshMaps(){}
+    
     /**
      * Metodo utilizzato per visualizzare la lista delle mappe salvate nel database locale
-     * @param adp Collegamento tra la lista delle mappe salvate nel database locale e la view in cui esse devono essere mostrate
+     * @param buildingTables Collegamento tra la lista delle mappe salvate nel database locale e la view in cui esse devono essere mostrate
+     * @param mapVersionStatus Array contenente lo stato di ogni mappa installata. Se vero allora la mappa è da aggiornare, se falso non lo è
      * @return  void
      */
     @Override
-    public void setAdapter(Collection<BuildingTable> collectionBuildingTable, boolean [] mapsVersionStatus){
+    public void setAdapter(Collection<BuildingTable> buildingTables, boolean [] mapVersionStatus){
         ListView listView = (ListView) presenter.findViewById(R.id.listViewLocalMaps);
-        listView.setAdapter(new LocalMapAdapter(presenter,collectionBuildingTable, mapsVersionStatus));
+        listView.setAdapter(new LocalMapAdapter(presenter,buildingTables, mapVersionStatus));
     }
 }
