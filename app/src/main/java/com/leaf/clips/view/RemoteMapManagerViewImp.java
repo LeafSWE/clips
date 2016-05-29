@@ -2,7 +2,6 @@ package com.leaf.clips.view;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.widget.Adapter;
 import android.widget.ListView;
 
 import com.leaf.clips.R;
