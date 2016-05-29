@@ -22,6 +22,9 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
     private RemoteMapManagerView view;
 
     // TODO: 5/27/16 Aggiungere Tracy + Asta
+    /**
+     * Riferimento al model per poter accedere alla gestione delle mappe
+     */
     @Inject
     DatabaseService databaseService;
 
@@ -47,7 +50,7 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
     // TODO: 5/28/16 Modificare attributo Asta + Tracy
     /**
      * Metodo che permette di eseguire il download di una mappa da un database remoto
-     * @param mapPosition Posizione della mappa di cui fare il download
+     * @param major Posizione della mappa di cui fare il download
      * @return  void
      */
     public void downloadMap(int major){
