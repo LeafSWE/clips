@@ -16,7 +16,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -66,8 +65,15 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     protected void onCreate(Bundle savedInstanceState) {
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
         FragmentManager fragmentManager = getSupportFragmentManager();
+        BlankHomeFragment blankHomeFragment = new BlankHomeFragment();
+
         super.onCreate(savedInstanceState);
         view = new HomeViewImp(this,fragmentManager);
+
+        fragmentManager.beginTransaction()
+                .add(R.id.linear_layout_home, blankHomeFragment)
+                .commit();
+
         if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M ){
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -338,12 +344,12 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     @Override
     public void onDatabaseLoaded() {
         CompleteHomeFragment completeHomeFragment = new CompleteHomeFragment();
-        List<Fragment> fragments= getSupportFragmentManager().getFragments();
-        if(fragments == null ){
+        /*List<Fragment> fragments= getSupportFragmentManager().getFragments();
+        if(fragments == null ){*/
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.linear_layout_home, completeHomeFragment, "COMPLETE_FRAGMENT")
-                    .addToBackStack("COMPLETE_FRAGMENT")
-                    .commitAllowingStateLoss();
+                    .replace(R.id.linear_layout_home, completeHomeFragment, "COMPLETE_FRAGMENT")
+                    .addToBackStack("COMPLETE_FRAGMENT").commit();
+//                    .commitAllowingStateLoss();
             getSupportFragmentManager().executePendingTransactions();
 
             updateBuildingAddress();
@@ -351,7 +357,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
             updateBuildingDescription();
             updateBuildingOpeningHours();
             updatePoiCategoryList();
-        }
+        //}
     }
 
     /**

@@ -271,7 +271,6 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      * @param instructionPosition la posizione, nella lista, dell'istruzione selezionata
      */
     public void showDetailedInformation(int instructionPosition){
-        //TODO
         ProcessedInformation information = navigationInstruction.get(instructionPosition);
 
         String detailedInformation = information.getDetailedInstruction();
