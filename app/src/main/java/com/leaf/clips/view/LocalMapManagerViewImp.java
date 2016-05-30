@@ -36,12 +36,14 @@ public class LocalMapManagerViewImp implements LocalMapManagerView {
         this.presenter.setContentView(R.layout.activity_local_map);
 
         FloatingActionButton btnAddNewMap = (FloatingActionButton) presenter.findViewById(R.id.fab_add_new_map);
-        btnAddNewMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.DownloadNewMap();
-            }
-        });
+        if (btnAddNewMap != null) {
+            btnAddNewMap.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    presenter.DownloadNewMap();
+                }
+            });
+        }
     }
     
     /**
@@ -52,6 +54,8 @@ public class LocalMapManagerViewImp implements LocalMapManagerView {
     @Override
     public void setAdapter(Collection<BuildingTable> buildingTables, boolean [] mapVersionStatus){
         ListView listView = (ListView) presenter.findViewById(R.id.listViewLocalMaps);
-        listView.setAdapter(new LocalMapAdapter(presenter,buildingTables, mapVersionStatus));
+        if (listView != null) {
+            listView.setAdapter(new LocalMapAdapter(presenter,buildingTables, mapVersionStatus));
+        }
     }
 }

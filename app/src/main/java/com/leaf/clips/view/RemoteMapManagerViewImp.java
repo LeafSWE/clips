@@ -43,7 +43,9 @@ public class RemoteMapManagerViewImp implements RemoteMapManagerView{
     @Override
     public void setRemoteMaps(Collection<BuildingTable> buildingTables){
         ListView listView = (ListView) presenter.findViewById(R.id.listViewRemoteMaps);
-        listView.setAdapter(new RemoteMapManagerAdapter(presenter,buildingTables));
+        if (listView != null) {
+            listView.setAdapter(new RemoteMapManagerAdapter(presenter,buildingTables));
+        }
     }
 
     /**

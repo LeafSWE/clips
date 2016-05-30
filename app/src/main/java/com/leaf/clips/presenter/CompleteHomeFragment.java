@@ -150,12 +150,20 @@ public class CompleteHomeFragment extends Fragment {
     public void setPoiCategoryListAdapter(List<String> list) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, list);
 
-        LinearLayout categoryLayout = (LinearLayout)getView().findViewById(R.id.category_search);
+        LinearLayout categoryLayout = (LinearLayout) getView();
+        if (categoryLayout != null) {
+            categoryLayout.findViewById(R.id.category_search);
+        }
 
         //Imposta l'altezza della ListView in modo da mostrarne tutti gli item, evitando scroll interno.
-        ViewGroup.LayoutParams params = categoryLayout.getLayoutParams();
+        ViewGroup.LayoutParams params = null;
+        if (categoryLayout != null) {
+            params = categoryLayout.getLayoutParams();
+        }
         //height = altezza_titolo + numero_item * altezza_item
-        params.height = 100 + list.size()*100;
+        if (params != null) {
+            params.height = 100 + list.size()*100;
+        }
 
         poiCategories.setAdapter(adapter);
     }

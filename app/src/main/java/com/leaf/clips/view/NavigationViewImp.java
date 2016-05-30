@@ -91,11 +91,17 @@ public class NavigationViewImp implements NavigationView {
             listView.getChildAt(i).setBackgroundColor(presenter.getResources().getColor(R.color.currentInstructionColor));
         }
         for(int j = 0; j < i; j++){
-            listView.getChildAt(j).setBackgroundColor(presenter.getResources().getColor(R.color.white));
-            listView.getChildAt(j).findViewById(R.id.imageView_check).setVisibility(View.VISIBLE);
+            if (listView != null) {
+                listView.getChildAt(j).setBackgroundColor(presenter.getResources().getColor(R.color.white));
+            }
+            if (listView != null) {
+                listView.getChildAt(j).findViewById(R.id.imageView_check).setVisibility(View.VISIBLE);
+            }
         }
-        for(int j = i+1; j < listView.getCount(); j++)
-            listView.getChildAt(j).setBackgroundColor(presenter.getResources().getColor(R.color.white));
+        if (listView != null) {
+            for(int j = i+1; j < listView.getCount(); j++)
+                listView.getChildAt(j).setBackgroundColor(presenter.getResources().getColor(R.color.white));
+        }
         lastRefresh = i;
     }
 

@@ -1,6 +1,7 @@
 package com.leaf.clips.view;
 
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
@@ -59,13 +60,15 @@ public class MainDeveloperViewImp implements MainDeveloperView {
         /**
          * Imposta il Listener sui click effettuati sugli item della ListView. (I log)
          */
-        logList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-                presenter.showDetailedLog(position);
-            }
+        if (logList != null) {
+            logList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+                    presenter.showDetailedLog(position);
+                }
 
-        });
+            });
+        }
 
         /**
          * Controlla le azioni sul fab, e carica l'activity di un nuovo log
@@ -79,8 +82,10 @@ public class MainDeveloperViewImp implements MainDeveloperView {
             }
         });
 
-
-        presenter.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = presenter.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
 
     }

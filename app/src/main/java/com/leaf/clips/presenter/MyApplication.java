@@ -53,7 +53,10 @@ public class MyApplication extends Application {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            JsonObject jsonObject = null;
+            if (jsonElement != null) {
+                jsonObject = jsonElement.getAsJsonObject();
+            }
             configuration = new Gson().fromJson(jsonObject, Configuration.class);
         }
 

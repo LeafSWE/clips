@@ -2,6 +2,7 @@ package com.leaf.clips.view;
 
 import android.content.DialogInterface;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -55,8 +56,10 @@ public class LogInformationViewImp implements LogInformationView {
             }
         });
 
-
-        presenter.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = presenter.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     /**
