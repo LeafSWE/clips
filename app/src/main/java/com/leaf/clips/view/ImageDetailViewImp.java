@@ -98,7 +98,7 @@ public class ImageDetailViewImp implements ImageDetailView{
          */
         @Override
         public Fragment getItem(int position) {
-            return ImageDetailFragment.newInstance((ArrayList)presenter.getListPhotos(), position);
+            return ImageDetailFragment.newInstance((ArrayList<String>)presenter.getListPhotos(), position);
         }
     }
 }

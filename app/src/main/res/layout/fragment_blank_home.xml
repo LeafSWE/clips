@@ -3,5 +3,12 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context="com.leaf.clips.presenter.BlankHomeFragment"
-             android:background="@color/backroundGrey">
+             android:background="#424242">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_nearby_building_message"
+            android:id="@+id/textView_no_nearby_building"
+            android:layout_gravity="center" android:textColor="#ffffff" android:textSize="16sp"
+            android:padding="4dp"/>
 </FrameLayout>

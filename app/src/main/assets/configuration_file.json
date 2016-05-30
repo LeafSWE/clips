@@ -1,0 +1,9 @@
+{
+  "remoteDBPath":"http://52.49.217.118/",
+  "remoteDBMapRequest":"mapVersion/?major=",
+  "beaconLayout":"m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:47-47",
+  "applicationUUID":"19235dd2-574a-4702-a42e-caccac06e325",
+  "logsDirectory":"/clips/logs",
+  "elevatorFactor":"1.9999",
+  "stairFactor":"1.9999"
+}

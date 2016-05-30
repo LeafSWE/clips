@@ -13,11 +13,11 @@ public class BeaconPos{
     /*
      * Rappresenta la posizione di un Beacon
      */
-    float[] position;
+    private float[] position;
     /*
      * Rappresenta il minor di un Beacon
      */
-    int minor;
+    private int minor;
 
     /**
      * Costruttore della classe

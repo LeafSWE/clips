@@ -4,22 +4,12 @@
                 android:background="@android:color/white"
                 android:padding="8dp">
 
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView_direction"
                 android:background="@android:drawable/btn_star_big_off"
                 android:layout_margin="8dp" />
-
-        <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
             <TextView
                     android:layout_width="wrap_content"
@@ -28,7 +18,9 @@
                     android:id="@+id/textView_short_description"
                     android:textSize="16dp"
                     android:textColor="@android:color/black"
-                    android:layout_margin="8dp" />
+                    android:layout_margin="8dp"
+                    android:layout_toRightOf="@+id/imageView_direction"
+                    android:layout_toLeftOf="@+id/imageView_check"/>
 
             <TextView
                     android:layout_width="wrap_content"
@@ -36,8 +28,15 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="17 m"
                     android:id="@+id/textView_distance"
-                    android:layout_marginLeft="8dp" />
-        </LinearLayout>
-    </LinearLayout>
+                    android:layout_marginLeft="8dp"
+                    android:layout_below="@+id/textView_short_description"
+                    android:layout_toRightOf="@+id/imageView_direction"/>
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView_check"
+            android:layout_margin="8dp" android:layout_alignParentEnd="true"
+            android:src="@drawable/icon_done" android:visibility="invisible"/>
 
 </RelativeLayout>

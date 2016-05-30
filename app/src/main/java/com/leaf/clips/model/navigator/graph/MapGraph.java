@@ -28,7 +28,7 @@ public class MapGraph {
      */
     //TODO Aggiungere costruttore
     public MapGraph(){
-        graph = new SimpleDirectedWeightedGraph<RegionOfInterest, EnrichedEdge>(EnrichedEdge.class);
+        graph = new SimpleDirectedWeightedGraph<>(EnrichedEdge.class);
     }
 
 
@@ -71,7 +71,7 @@ public class MapGraph {
     /**
      * Metodo che permette di restituire il grafo che rappresenta la distribuzione
      * degli oggetti RegionOfInterest ed EnrichedEdge
-     * @return SimpleDirectedWeightedGraph<RegionOfInterest,EnrichedEdge>
+     * @return SimpleDirectedWeightedGraph
      */
     public SimpleDirectedWeightedGraph<RegionOfInterest, EnrichedEdge> getGraph() {
         return graph;

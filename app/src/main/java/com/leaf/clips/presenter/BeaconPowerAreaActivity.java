@@ -59,7 +59,7 @@ public class BeaconPowerAreaActivity extends AppCompatActivity implements Inform
 
         view = new BeaconPowerAreaViewImp(this);
 
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+        MyApplication.getInfoComponent().inject(this);
 
         buildMap();
         //Controllo che l'iniezione sia andata abuon fine

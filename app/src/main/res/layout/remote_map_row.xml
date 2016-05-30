@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:padding="8dp" android:backgroundTint="@android:color/white">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Via Trieste, 63 - 35121 Padova"
+            android:id="@+id/textViewRemoteMapAddress"
+            android:layout_alignParentTop="true" android:layout_alignParentStart="true"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Torre Archimede"
+            android:id="@+id/textViewRemoteMapName"
+            android:textSize="22sp"
+            android:textColor="@android:color/black"
+            android:layout_below="@+id/textViewRemoteMapAddress"
+            android:layout_alignParentStart="true" android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="15 MB"
+            android:id="@+id/textViewRemoteMapSize"
+            android:layout_below="@+id/textViewRemoteMapDescription"
+            android:layout_alignParentStart="true" android:layout_marginTop="6dp"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="v1.0"
+            android:id="@+id/textViewRemoteMapVersion"
+            android:layout_alignParentEnd="true"/>
+
+    <android.support.v7.widget.AppCompatImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/download_remote_map"
+            android:src="@drawable/ic_get_map_24dp"
+            android:clickable="true"
+            android:focusable="true" android:contextClickable="true"
+            android:cropToPadding="false" android:backgroundTint="#ffffff"
+            android:layout_below="@+id/textViewRemoteMapDescription"
+            android:layout_alignEnd="@+id/textViewRemoteMapVersion" android:layout_marginTop="6dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Descrizione"
+            android:id="@+id/textViewRemoteMapDescription"
+            android:layout_below="@+id/textViewRemoteMapName"
+            android:layout_alignParentStart="true"/>
+
+</RelativeLayout>

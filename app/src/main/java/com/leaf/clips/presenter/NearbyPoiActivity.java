@@ -52,7 +52,7 @@ public class NearbyPoiActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         view = new NearbyPoiViewImp(this);
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+        MyApplication.getInfoComponent().inject(this);
 
         try {
             pois = (List<PointOfInterest>) informationManager.getNearbyPOIs();

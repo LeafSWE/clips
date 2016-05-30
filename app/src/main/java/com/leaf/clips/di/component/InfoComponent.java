@@ -21,6 +21,7 @@ import com.leaf.clips.presenter.PoiActivity;
 import com.leaf.clips.presenter.PoiCategoryActivity;
 import com.leaf.clips.presenter.PoiDescriptionActivity;
 import com.leaf.clips.presenter.PreferencesActivity;
+import com.leaf.clips.presenter.RemoteMapManagerActivity;
 import com.leaf.clips.presenter.SearchSuggestionsProvider;
 
 import javax.inject.Singleton;
@@ -137,4 +138,7 @@ public interface InfoComponent {
      * @param beaconPowerAreaActivity Oggetto in cui devono essere iniettate le dipendenze
      */
     void inject(BeaconPowerAreaActivity beaconPowerAreaActivity);
+
+    // TODO: 5/27/16 Aggiungere tracy + asta
+    void inject(RemoteMapManagerActivity remoteMapManagerActivity);
 }

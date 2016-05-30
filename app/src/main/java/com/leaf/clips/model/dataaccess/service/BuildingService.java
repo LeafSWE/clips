@@ -16,6 +16,7 @@ import com.leaf.clips.model.navigator.BuildingMapImp;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
 import com.leaf.clips.model.navigator.graph.edge.EnrichedEdge;
+import com.leaf.clips.presenter.MyApplication;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -158,6 +159,9 @@ public class BuildingService implements DatabaseService {
          * remoteBuildingDao.fromJSONToTable() che mi ritorna una BuildingTable.
          * Raccolgo tutti gli oggetti BuildingTable in una lista che ritorno.
          */
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         String url = databaseURL+"allMaps";
         try (
@@ -339,7 +343,7 @@ public class BuildingService implements DatabaseService {
      */
     @Override
     public boolean isRemoteMapPresent(int major) throws IOException {
-        String url = databaseURL+"mapVersion/?major="+major;
+        String url = MyApplication.getConfiguration().getRemoteDBMapRequest(major);
         try (
                 InputStream input = new URL(url).openStream();
                 BufferedReader streamReader = new BufferedReader(new InputStreamReader(input));
@@ -375,7 +379,7 @@ public class BuildingService implements DatabaseService {
         StrictMode.setThreadPolicy(policy);
 
 
-        String url = databaseURL+"mapVersion/?major="+major;
+        String url = MyApplication.getConfiguration().getRemoteDBMapRequest(major);
         try (
                 InputStream input = new URL(url).openStream();
                 BufferedReader streamReader = new BufferedReader(new InputStreamReader(input));

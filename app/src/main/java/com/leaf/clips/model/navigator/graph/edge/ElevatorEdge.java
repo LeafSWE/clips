@@ -8,6 +8,7 @@ package com.leaf.clips.model.navigator.graph.edge;
 
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
 import com.leaf.clips.model.navigator.graph.navigationinformation.NavigationInformation;
+import com.leaf.clips.presenter.MyApplication;
 
 /**
  *Classe che implementa AbsEnrichedEdge e rappresenta un arco del grafo che corrisponde ad un ascensore
@@ -17,7 +18,7 @@ public class ElevatorEdge extends AbsEnrichedEdge {
     /**
      * Fattore da aggiungere al peso dell'arco in base alle preferenze di navigazione
      */
-    private final static int NO_ELEVATOR_FACTOR = 0;
+    private final static double ELEVATOR_FACTOR = MyApplication.getConfiguration().getElevatorFactor();
 
     /**
      * Costruttore della classe ElevatorEdge
@@ -56,7 +57,7 @@ public class ElevatorEdge extends AbsEnrichedEdge {
      */
     @Override
     public double getWeight(){
-        return Math.exp(-1*(getDistance()-1.9999)) + maxDistance * userElevatorPreference;
+        return Math.exp( -1 * ( getDistance() - ELEVATOR_FACTOR ) ) + maxDistance * userElevatorPreference;
     }
 
 }

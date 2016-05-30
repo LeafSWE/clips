@@ -73,7 +73,7 @@ public class MainDeveloperActivity extends AppCompatActivity {
         else
             mainDeveloperView.setLogsAdapter(null);
 
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+        MyApplication.getInfoComponent().inject(this);
 
         //Controllo che l'iniziezione sia andata abuon fine
         Assert.assertNotNull(infoManager);

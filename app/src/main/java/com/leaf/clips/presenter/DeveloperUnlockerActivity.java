@@ -44,7 +44,7 @@ public class DeveloperUnlockerActivity extends AppCompatActivity {
 
         developerUnlockerView = new DeveloperUnlockerViewImp(this);
 
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+        MyApplication.getInfoComponent().inject(this);
     }
 
     /**

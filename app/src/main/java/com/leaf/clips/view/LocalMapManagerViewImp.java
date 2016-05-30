@@ -2,7 +2,6 @@ package com.leaf.clips.view;
 
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.leaf.clips.R;
@@ -37,34 +36,26 @@ public class LocalMapManagerViewImp implements LocalMapManagerView {
         this.presenter.setContentView(R.layout.activity_local_map);
 
         FloatingActionButton btnAddNewMap = (FloatingActionButton) presenter.findViewById(R.id.fab_add_new_map);
-        btnAddNewMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.DownloadNewMap();
-            }
-        });
+        if (btnAddNewMap != null) {
+            btnAddNewMap.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    presenter.DownloadNewMap();
+                }
+            });
+        }
     }
-
-    // TODO: 5/27/16 Valutare se rimuovere questo metodo + Asta + Tracy
-
-    /**
-     * Metodo che aggiorna la lista delle mappe salvate nel database locale
-     * @return  void
-     */
-    @Override
-    public void refreshMaps(){
-
-    }
-
-    // TODO: 5/26/16 Modificare asta + tracy
+    
     /**
      * Metodo utilizzato per visualizzare la lista delle mappe salvate nel database locale
-     * @param adp Collegamento tra la lista delle mappe salvate nel database locale e la view in cui esse devono essere mostrate
-     * @return  void
+     * @param buildingTables Collegamento tra la lista delle mappe salvate nel database locale e la view in cui esse devono essere mostrate
+     * @param mapVersionStatus Array contenente lo stato di ogni mappa installata. Se vero allora la mappa è da aggiornare, se falso non lo è
      */
     @Override
-    public void setAdapter(Collection<BuildingTable> collectionBuildingTable, boolean [] mapsVersionStatus){
+    public void setAdapter(Collection<BuildingTable> buildingTables, boolean [] mapVersionStatus){
         ListView listView = (ListView) presenter.findViewById(R.id.listViewLocalMaps);
-        listView.setAdapter(new LocalMapAdapter(presenter,collectionBuildingTable, mapsVersionStatus));
+        if (listView != null) {
+            listView.setAdapter(new LocalMapAdapter(presenter,buildingTables, mapVersionStatus));
+        }
     }
 }

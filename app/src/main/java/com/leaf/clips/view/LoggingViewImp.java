@@ -1,6 +1,7 @@
 package com.leaf.clips.view;
 
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -46,13 +47,20 @@ public class LoggingViewImp implements LoggingView {
 
 
         FloatingActionButton fab = (FloatingActionButton) presenter.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.stopLogging();
-            }
-        });
-        presenter.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    presenter.stopLogging();
+                }
+            });
+        }
+
+        ActionBar actionBar = presenter.getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     /**

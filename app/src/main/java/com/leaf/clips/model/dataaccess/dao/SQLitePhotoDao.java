@@ -99,7 +99,7 @@ public class SQLitePhotoDao implements PhotoDao, CursorConverter {
             return photoTables;
         }
         else
-            return new PriorityQueue<PhotoTable>();
+            return new PriorityQueue<>();
     }
 
     /**

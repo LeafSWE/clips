@@ -173,7 +173,6 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        Intent intent = null;
         if (id == R.id.nav_developer) {
             homeActivity.showDeveloper();
         } else if (id == R.id.settings) {
@@ -183,7 +182,6 @@ public class HomeViewImp implements HomeView, NavigationView.OnNavigationItemSel
         } else if (id == R.id.mapManager){
             homeActivity.showLocalMaps();
         }
-        //homeActivity.startActivity(intent);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

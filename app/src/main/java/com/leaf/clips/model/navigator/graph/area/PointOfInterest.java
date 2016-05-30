@@ -46,7 +46,6 @@ public interface PointOfInterest {
     /**
      * Metodo che permette di settare l'insieme di RegionOfInterest nelle quali tale PointOfInterest è contenuto
      * @param rois Insieme di RegionOfInterest alle quali appartiene il PointOfInterest
-     * @return  void
      */
     void setBelongingROIs(Collection<RegionOfInterest> rois);
 

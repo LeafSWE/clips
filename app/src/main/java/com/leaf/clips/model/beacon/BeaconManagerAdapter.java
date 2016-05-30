@@ -13,6 +13,8 @@ import android.os.RemoteException;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.leaf.clips.presenter.MyApplication;
+
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
@@ -60,7 +62,8 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
      * Per informazioni sui dati dei beacon https://support.kontakt.io/hc/en-gb/articles/201492522-Scan-response-packet-structure
      * offset campo d 24
      */
-    private static String beaconLayout = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:47-47";//AltBeacon beacons
+    //AltBeacon beacons
+    private static String beaconLayout = MyApplication.getConfiguration().getBeaconLayout();
 
     /**
      * Insieme dei periodi di scan del BeaconManager
@@ -84,7 +87,7 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
         beaconManager = BeaconManager.getInstanceForApplication(getApplicationContext());
         beaconManager.getBeaconParsers().clear();
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(beaconLayout));
-        UUID uuid = UUID.fromString("19235dd2-574a-4702-a42e-caccac06e325");
+        UUID uuid = UUID.fromString(MyApplication.getConfiguration().getApplicationUUID());
         region = new Region("Region", Identifier.fromUuid(uuid), null, null);
         //region = new Region("Region", null, null, null);
         periods = new HashMap<>();

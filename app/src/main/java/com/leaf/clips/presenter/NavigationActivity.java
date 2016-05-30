@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import com.leaf.clips.R;
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NavigationListener;
 import com.leaf.clips.model.NavigationManager;
@@ -26,9 +28,11 @@ import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoRef;
 import com.leaf.clips.view.NavigationView;
 import com.leaf.clips.view.NavigationViewImp;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+
 import javax.inject.Inject;
 
 // TODO: 25/05/16 aggiornare tracy/uml
@@ -85,7 +89,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         super.onCreate(savedInstanceState);
         //poiId = savedInstanceState.getInt("poi_id");
         view = new NavigationViewImp(this);
-                ((MyApplication) getApplication()).getInfoComponent().inject(this);
+        MyApplication.getInfoComponent().inject(this);
 
         if(savedInstanceState != null){
             poiId = savedInstanceState.getInt("poi_id");
@@ -96,22 +100,6 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
             handleIntent(getIntent());
         Log.i("state%", "ONCREATE" + poiId);
 
-       /* ConnectivityManager connectivityManager =
-                (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (!(networkInfo != null && networkInfo.isConnected())){
-            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-            alertBuilder.setTitle(R.string.no_connection_title_alert_help);
-            alertBuilder.setMessage(R.string.no_connection_message_alert_help);
-            alertBuilder.setIcon(android.R.drawable.ic_dialog_alert);
-            alertBuilder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    //
-                }
-            });
-            alertBuilder.create().show();
-        }*/
         new NoInternetAlert().showIfNoConnection(this);
         builder = new AlertDialog.Builder(this);
 
@@ -136,10 +124,9 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      */
     private void handleIntent(Intent intent) {
         PointOfInterest destinationPoi = null;
-        List<PointOfInterest> poiList = null;
+        List<PointOfInterest> poiList;
         poiId=-1;
         try {
-            //TODO: Introdurre suggerimenti nella SearchBox
             poiList = (List<PointOfInterest>)informationManager.getBuildingMap().getAllPOIs();
 
             //Se l'Intent è stato generato dalla SearchBox
@@ -175,7 +162,9 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                     }
             }
             if(destinationPoi != null) {
+                setTitle("Raggiungi " + destinationPoi.getName());
                 Log.d("NAVIGAZIONE", "OK");
+                new NoInternetAlert().showIfNoConnection(this);
                 navigationManager.startNavigation(destinationPoi);
                 navigationInstruction = navigationManager.getAllNavigationInstruction();
                 navigationManager.addListener(this);
@@ -203,10 +192,10 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         stopNavigation();
         Log.i("Removelistener", "pathError");
         if(!isFinishing()){
-            builder.setTitle("Percorso errato");
-            builder.setMessage("Sembra che tu abbia sbagliato percorso, vuoi ricalcolare il percorso?");
+            builder.setTitle(R.string.wrong_path);
+            builder.setMessage(R.string.wrong_path_question);
             builder.setIcon(android.R.drawable.ic_dialog_alert);
-            builder.setPositiveButton("Ricalcolo",
+            builder.setPositiveButton(R.string.recalculate,
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             try {
@@ -225,19 +214,27 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                                 navigationInstruction = navigationManager.getAllNavigationInstruction();
                                 navigationManager.addListener(NavigationActivity.this);
                                 view.setInstructionAdapter(navigationInstruction);
-                            } catch (NoBeaconSeenException e){}
-                            catch (NavigationExceptions e){}
+                            }catch (NavigationExceptions e){
+                                    e.printStackTrace();
+                            }
+                            catch (NoBeaconSeenException e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
-            builder.setNegativeButton("Torna alla home",
+            builder.setNegativeButton(R.string.back_to_home,
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             NavigationActivity.this.startActivity(new Intent(NavigationActivity.this, HomeActivity.class));
                         }
                     });
-            if (dialogPathError == null)
+            if (dialogPathError == null) {
                 dialogPathError = builder.create();
-            dialogPathError.show();
+                dialogPathError.setCanceledOnTouchOutside(false);
+            }
+            if(!isFinishing())
+                dialogPathError.show();
+
         }
 
     }
@@ -267,7 +264,6 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      * @param instructionPosition la posizione, nella lista, dell'istruzione selezionata
      */
     public void showDetailedInformation(int instructionPosition){
-        //TODO
         ProcessedInformation information = navigationInstruction.get(instructionPosition);
 
         String detailedInformation = information.getDetailedInstruction();

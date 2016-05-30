@@ -52,7 +52,7 @@ public class PoiCategoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = new PoiCategoryViewImp(this);
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+        MyApplication.getInfoComponent().inject(this);
 
         String chosenCategoryName = getIntent().getStringExtra("category_name");
 

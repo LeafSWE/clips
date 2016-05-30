@@ -23,7 +23,9 @@ import javax.inject.Inject;
 
 public class LocalMapActivity extends AppCompatActivity {
 
-    // TODO: 5/24/16 Aggiungere Asta + Tracy
+    /**
+     * Riferimento al model per poter accedere alla gestione delle mappe
+     */
     @Inject
     DatabaseService databaseService;
     /**
@@ -31,37 +33,31 @@ public class LocalMapActivity extends AppCompatActivity {
      */
     private LocalMapManagerView view;
 
-    // TODO: 5/26/16 Modificare nome attributo, Asta + Tracy
+    /**
+     * Metodo che inizializza la View associata a tale Activity
+     * @param bundle Componente per salvare lo stato dell'applicazione
+     */
+    @Override
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+        MyApplication.getInfoComponent().inject(this);
+        view = new LocalMapManagerViewImp(this);
+
+        LoadMaps();
+    }
+
     /**
      * Metodo che permettere di rimuovere una mappa del database locale
-     * @param mapPosition Posizione occupata dalla mappa da rimuovere
-     * @return  void
+     * @param major Major dalla mappa da rimuovere
      */
     public void deleteMap(int major){
         databaseService.deleteBuilding(databaseService.findBuildingByMajor(major));
         LoadMaps();
     }
 
-
-    /**
-     * Metodo che inizializza la View associata a tale Activity
-     * @param bundle Componente per salvare lo stato dell'applicazione
-     * @return  void
-     */
-    @Override
-    protected void onCreate(Bundle bundle) {
-        super.onCreate(bundle);
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
-        view = new LocalMapManagerViewImp(this);
-
-        LoadMaps();
-    }
-
-    // TODO: 5/26/16 Modificare nome attributo, Asta + Tracy
     /**
      * Metodo che permette di aggiornare una mappa del database locale
-     * @param mapPosition Posizione della mappa da aggiornare
-     * @return  void
+     * @param major Major della mappa da aggiornare
      */
     public void updateMap(int major){
         try {
@@ -69,11 +65,12 @@ public class LocalMapActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        //LoadMaps();
+        LoadMaps();
     }
 
-    // TODO: 5/27/16 Aggiungere asta + tracy
+    /**
+     * Meotodo utilizzato per leggere le mappe dal database e aggiornare la view
+     */
     private void LoadMaps() {
         Collection<BuildingTable> buildingTable = databaseService.findAllBuildings();
 
@@ -97,7 +94,9 @@ public class LocalMapActivity extends AppCompatActivity {
         }
     }
 
-    // TODO: 5/27/16 Aggiungere asta + tracy
+    /**
+     * Metodo utilizzato per poter avviare l'activity che si occupa della gestione delle mappe remote
+     */
     public void DownloadNewMap() {
         Intent intent = new Intent(this,RemoteMapManagerActivity.class);
         startActivity(intent);
