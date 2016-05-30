@@ -111,6 +111,8 @@ public class LocalMapAdapter extends BaseAdapter{
 
         TextView txtViewMapStatus = (TextView) convertView.findViewById(R.id.textViewMapStatus);
 
+        TextView textViewMapDescription = (TextView) convertView.findViewById(R.id.textViewLocalMapDescription);
+        textViewMapDescription.setText(buildingTable.getDescription());
 
         AppCompatImageButton btnUpdateMap = (AppCompatImageButton) convertView.findViewById(R.id.updateLocalMap);
         AppCompatImageButton btnDeleteMap = (AppCompatImageButton) convertView.findViewById(R.id.removeLocalMap);

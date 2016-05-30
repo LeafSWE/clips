@@ -28,7 +28,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="15 MB"
             android:id="@+id/textViewLocalMapSize"
-            android:layout_below="@+id/textViewLocalMapName"/>
+            android:layout_below="@+id/textViewLocalMapDescription" android:layout_marginTop="6dp"/>
 
     <TextView
             android:layout_width="wrap_content"
@@ -45,9 +45,10 @@
             android:layout_alignParentEnd="true"
             android:src="@drawable/button_map_update"
             android:layout_alignParentBottom="false"
-            android:layout_below="@+id/textViewLocalMapName" android:clickable="true"
+            android:layout_below="@+id/textViewLocalMapDescription" android:clickable="true"
             android:focusable="true" android:contextClickable="true"
-            android:cropToPadding="false" android:backgroundTint="#ffffff"/>
+            android:cropToPadding="false" android:backgroundTint="#ffffff"
+            android:layout_marginTop="6dp"/>
 
     <android.support.v7.widget.AppCompatImageButton
             android:layout_width="wrap_content"
@@ -55,15 +56,25 @@
             android:id="@+id/removeLocalMap"
             android:src="@drawable/button_remove_map"
             android:layout_toLeftOf="@+id/updateLocalMap"
-            android:layout_below="@+id/textViewLocalMapName"
+            android:layout_below="@+id/textViewLocalMapDescription"
             android:layout_marginRight="16dp" android:clickable="false"
-            android:baselineAligned="true" android:backgroundTint="#ffffff"/>
+            android:baselineAligned="true" android:backgroundTint="#ffffff"
+            android:layout_marginTop="6dp"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:text="Mappa aggiornata"
-            android:id="@+id/textViewMapStatus" android:layout_below="@+id/textViewLocalMapSize"
-            android:layout_alignParentStart="true"/>
+            android:id="@+id/textViewMapStatus"
+            android:layout_alignParentStart="false"
+            android:layout_below="@+id/textViewLocalMapSize"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Descrizione"
+            android:id="@+id/textViewLocalMapDescription"
+            android:layout_centerVertical="true" android:layout_alignParentStart="true"
+            android:layout_below="@+id/textViewLocalMapName"/>
 
 </RelativeLayout>
