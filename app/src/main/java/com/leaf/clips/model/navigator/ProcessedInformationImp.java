@@ -47,6 +47,9 @@ public class ProcessedInformationImp implements ProcessedInformation {
      */
     private PhotoInformation photos;
 
+    /**
+     * Costruttore della classe ProcessedInformationImp
+     */
     public ProcessedInformationImp(){
         this.basic = "Destinazione Raggiunta";
         this.detailed = "Hai raggiunto la tua destinazione. Questa dovrebbe trovarsi intorna a te.";
@@ -165,6 +168,11 @@ public class ProcessedInformationImp implements ProcessedInformation {
         return this.distance;
     }
 
+    /**
+     * Metodo che permette di comparare un oggetto con una istanza della classe ProcessedInformationImp
+     * @param o Oggetto da comparare
+     * @return boolean
+     */
     @Override
     public boolean equals(Object o) {
         boolean rx;
