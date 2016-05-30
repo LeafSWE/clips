@@ -26,7 +26,6 @@ public class NoInternetAlert {
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
                 alertBuilder.setTitle(R.string.no_connection_title_alert_help);
                 alertBuilder.setMessage(R.string.navigation_internet_alert);
-                alertBuilder.setIcon(android.R.drawable.ic_dialog_alert);
                 alertBuilder.setPositiveButton(context.getResources().getString(R.string.ok),
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -44,7 +43,6 @@ public class NoInternetAlert {
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
             alertBuilder.setTitle(R.string.no_connection_title_alert_help);
             alertBuilder.setMessage(R.string.navigation_internet_alert);
-            alertBuilder.setIcon(android.R.drawable.ic_dialog_alert);
             alertBuilder.setPositiveButton(context.getResources().getString(R.string.ok),
                     new DialogInterface.OnClickListener() {
                         @Override

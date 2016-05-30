@@ -96,22 +96,6 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
             handleIntent(getIntent());
         Log.i("state%", "ONCREATE" + poiId);
 
-       /* ConnectivityManager connectivityManager =
-                (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (!(networkInfo != null && networkInfo.isConnected())){
-            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-            alertBuilder.setTitle(R.string.no_connection_title_alert_help);
-            alertBuilder.setMessage(R.string.no_connection_message_alert_help);
-            alertBuilder.setIcon(android.R.drawable.ic_dialog_alert);
-            alertBuilder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    //
-                }
-            });
-            alertBuilder.create().show();
-        }*/
         new NoInternetAlert().showIfNoConnection(this);
         builder = new AlertDialog.Builder(this);
 
