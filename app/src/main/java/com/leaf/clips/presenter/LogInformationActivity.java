@@ -40,7 +40,7 @@ public class LogInformationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.view = new LogInformationViewImp(this);
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+        MyApplication.getInfoComponent().inject(this);
 
         int logPosition = getIntent().getExtras().getInt("logNumber");
 

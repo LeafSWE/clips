@@ -41,7 +41,7 @@ public class LocalMapActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+        MyApplication.getInfoComponent().inject(this);
         view = new LocalMapManagerViewImp(this);
 
         LoadMaps();

@@ -41,7 +41,7 @@ public class PoiDescriptionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+        MyApplication.getInfoComponent().inject(this);
         int poiId = getIntent().getIntExtra("poi_id", -1);
         if (poiId!=-1){
             boolean found = false;

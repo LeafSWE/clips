@@ -78,7 +78,7 @@ public class DetailedInformationActivity extends AppCompatActivity {
         savedInstanceState = new Bundle();
         savedInstanceState.putSerializable("poi_id", getIntent().getIntExtra("poi_id", -1));
         view = new DetailedInformationViewImp(this);
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+        MyApplication.getInfoComponent().inject(this);
 
         ArrayList<String> uris = getIntent().getStringArrayListExtra("photo_uri");
 

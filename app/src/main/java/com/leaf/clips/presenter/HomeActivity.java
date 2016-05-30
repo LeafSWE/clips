@@ -65,7 +65,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+        MyApplication.getInfoComponent().inject(this);
         FragmentManager fragmentManager = getSupportFragmentManager();
         BlankHomeFragment blankHomeFragment = new BlankHomeFragment();
 

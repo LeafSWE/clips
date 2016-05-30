@@ -89,7 +89,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         super.onCreate(savedInstanceState);
         //poiId = savedInstanceState.getInt("poi_id");
         view = new NavigationViewImp(this);
-                ((MyApplication) getApplication()).getInfoComponent().inject(this);
+        MyApplication.getInfoComponent().inject(this);
 
         if(savedInstanceState != null){
             poiId = savedInstanceState.getInt("poi_id");

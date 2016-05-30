@@ -55,7 +55,7 @@ public class LoggingActivity extends AppCompatActivity implements InformationLis
         super.onCreate(savedInstanceState);
 
         view = new LoggingViewImp(this);
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+        MyApplication.getInfoComponent().inject(this);
 
         informationManager.startRecordingBeacons();
         view.setBeaconListAdapter(new StringBuffer(getString(R.string.beacon_waiting)));

@@ -38,7 +38,7 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+        MyApplication.getInfoComponent().inject(this);
         this.view = new RemoteMapManagerViewImp(this);
 
         try {
@@ -62,7 +62,7 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
         else{
             final int id = 1;
 
-            final NotificationManager mNotifyManager = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
+            final NotificationManager mNotifyManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
             mBuilder.setContentTitle(getString(R.string.map_download_title)).setContentText(getString(R.string.map_download)).setSmallIcon(R.drawable.ic_sync_white_24dp);
             // Start a lengthy operation in a background thread
