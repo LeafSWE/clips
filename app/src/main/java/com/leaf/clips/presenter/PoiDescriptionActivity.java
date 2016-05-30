@@ -77,6 +77,10 @@ public class PoiDescriptionActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Metodo che ridefinisce il comportamento del bottone di navigazione
+     * @return true
+     */
     @Override
     public boolean onNavigateUp() {
         onBackPressed();
