@@ -15,9 +15,21 @@ import com.leaf.clips.R;
  * @version 0.01
  * @since 0.01
  */
+
+/**
+ * Classe per creare alert che avvisano che non è disponibile la connessione internet
+ */
 public class NoInternetAlert {
+
+    /**
+     * Alert che viene mostrato nel caso in cui la connessione internet non sia attiva
+     */
     private static AlertDialog alert = null;
 
+    /**
+     * Metodo che controlla se presente la connessione internet. Se non presente viene mostrato un Alert
+     * @param context Contesto in cui deve essere mostrato l'Alert
+     */
     public void showIfNoConnection(Activity context){
         ConnectivityManager connectivityManager =
                 (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -40,6 +52,11 @@ public class NoInternetAlert {
                 alert.show();
         }
     }
+
+    /**
+     * Metodo che permette di mostrare l'Alert senza controllare se la connessione internet sia attiva
+     * @param context Contesto in cui deve essere mostrato l'Alert
+     */
     public void show(Activity context){
         if (alert == null) {
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
