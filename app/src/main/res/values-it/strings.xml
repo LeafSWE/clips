@@ -100,4 +100,5 @@
 
     <!--LoggingActivity-->
     <string name="beacon_waiting">In attesa di beacon nelle vicinanze...</string>
+    <string name="no_nearby_building_message">Nessun edificio rilevato.</string>
 </resources>

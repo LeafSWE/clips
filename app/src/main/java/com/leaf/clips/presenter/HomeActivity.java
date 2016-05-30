@@ -16,7 +16,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -24,6 +23,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.leaf.clips.R;
 import com.leaf.clips.model.InformationListener;
@@ -66,8 +67,15 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     protected void onCreate(Bundle savedInstanceState) {
         ((MyApplication)getApplication()).getInfoComponent().inject(this);
         FragmentManager fragmentManager = getSupportFragmentManager();
+        BlankHomeFragment blankHomeFragment = new BlankHomeFragment();
+
         super.onCreate(savedInstanceState);
         view = new HomeViewImp(this,fragmentManager);
+
+        fragmentManager.beginTransaction()
+                .add(R.id.linear_layout_home, blankHomeFragment)
+                .commit();
+
         if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M ){
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -273,9 +281,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     public void updateBuildingAddress(){
         try {
-            Log.d("ENTERED","yess");
             String address = informationManager.getBuildingMap().getAddress();
-            Log.d("AZZ",address);
             view.setBuildingAddress(address);
         } catch (NoBeaconSeenException e) {
             e.printStackTrace();
@@ -338,20 +344,22 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     @Override
     public void onDatabaseLoaded() {
         CompleteHomeFragment completeHomeFragment = new CompleteHomeFragment();
-        List<Fragment> fragments= getSupportFragmentManager().getFragments();
-        if(fragments == null ){
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.linear_layout_home, completeHomeFragment, "COMPLETE_FRAGMENT")
-                    .addToBackStack("COMPLETE_FRAGMENT")
-                    .commitAllowingStateLoss();
-            getSupportFragmentManager().executePendingTransactions();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.linear_layout_home, completeHomeFragment, "COMPLETE_FRAGMENT")
+                .addToBackStack("COMPLETE_FRAGMENT").commit();
 
-            updateBuildingAddress();
+        getSupportFragmentManager().executePendingTransactions();
+
+        RelativeLayout fabLayout = (RelativeLayout)findViewById(R.id.layout_fab_home);
+        if (fabLayout != null) {
+            fabLayout.setVisibility(View.VISIBLE);
+        }
+
+        updateBuildingAddress();
             updateBuildingName();
             updateBuildingDescription();
             updateBuildingOpeningHours();
             updatePoiCategoryList();
-        }
     }
 
     /**

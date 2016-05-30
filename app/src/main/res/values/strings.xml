@@ -94,6 +94,8 @@
     <!--RemoteMapManager-->
     <string name="title_activity_remote_map_manager">Download new maps</string>
     <string name="remote_map_already_downloaded">Map already downloaded</string>
+    <string name="no_nearby_building_message">No nearby buildings</string>
+
 
     <!--MapDownload-->
     <string name="map_download">Downloading map</string>

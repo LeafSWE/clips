@@ -139,10 +139,9 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      */
     private void handleIntent(Intent intent) {
         PointOfInterest destinationPoi = null;
-        List<PointOfInterest> poiList = null;
+        List<PointOfInterest> poiList;
         poiId=-1;
         try {
-            //TODO: Introdurre suggerimenti nella SearchBox
             poiList = (List<PointOfInterest>)informationManager.getBuildingMap().getAllPOIs();
 
             //Se l'Intent è stato generato dalla SearchBox
@@ -178,6 +177,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                     }
             }
             if(destinationPoi != null) {
+                setTitle("Raggiungi " + destinationPoi.getName());
                 Log.d("NAVIGAZIONE", "OK");
                 new NoInternetAlert().showIfNoConnection(this);
                 navigationManager.startNavigation(destinationPoi);
@@ -229,8 +229,11 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                                 navigationInstruction = navigationManager.getAllNavigationInstruction();
                                 navigationManager.addListener(NavigationActivity.this);
                                 view.setInstructionAdapter(navigationInstruction);
-                            } catch (NoBeaconSeenException e) {
-                            } catch (NavigationExceptions e) {
+                            }catch (NavigationExceptions e){
+                                    e.printStackTrace();
+                            }
+                            catch (NoBeaconSeenException e) {
+                                e.printStackTrace();
                             }
                         }
                     });
@@ -276,7 +279,6 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      * @param instructionPosition la posizione, nella lista, dell'istruzione selezionata
      */
     public void showDetailedInformation(int instructionPosition){
-        //TODO
         ProcessedInformation information = navigationInstruction.get(instructionPosition);
 
         String detailedInformation = information.getDetailedInstruction();
