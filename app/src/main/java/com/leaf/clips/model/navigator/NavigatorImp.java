@@ -209,30 +209,6 @@ public class NavigatorImp implements Navigator {
         }
     }
 
-    private String calcolaDestraSinistra(EnrichedEdge next) {
-        double lastCoordinate = compass.getLastCoordinate();
-        int correctGrade = next.getCoordinate() - (int)lastCoordinate;
-        if (correctGrade < 0) {
-            correctGrade += 360;
-        }
-        if (correctGrade > 20 && correctGrade < 150)
-            return "gira a destra" + lastCoordinate + "\n" +
-                    next.getCoordinate() + "\n" +
-                    correctGrade + "\n";
-        else if (correctGrade >= 210 && correctGrade < 340)
-            return "gira a sinistra" + lastCoordinate + "\n" +
-                    next.getCoordinate() + "\n" +
-                    correctGrade + "\n";
-        else if (correctGrade >= 150 && correctGrade <210)
-            return "girati" + lastCoordinate +  "\n" +
-                    next.getCoordinate() + "\n" +
-                    correctGrade + "\n";
-        else
-            return "vai dritto" + lastCoordinate  + "\n" +
-                    next.getCoordinate() + "\n" +
-                    correctGrade + "\n";
-    }
-
     /**
      * Metodo che ritorna il beacon con potenza maggiore tra quelli rilevati
      *
