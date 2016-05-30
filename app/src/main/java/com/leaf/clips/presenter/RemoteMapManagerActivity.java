@@ -56,7 +56,7 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
      */
     public void downloadMap(final int major){
 
-        if(databaseService.isBuildingMapPresent(Integer.valueOf(major))){
+        if(databaseService.isBuildingMapPresent(major)){
             view.showMapAlreadyPresent();
         }
         else{
@@ -83,7 +83,7 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
                                 // Sleeps the thread, simulating an operation
                                 // that takes time
                                 try {
-                                    databaseService.findRemoteBuildingByMajor(Integer.valueOf(major));
+                                    databaseService.findRemoteBuildingByMajor(major);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
