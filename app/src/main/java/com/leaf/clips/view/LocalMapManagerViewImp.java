@@ -2,7 +2,6 @@ package com.leaf.clips.view;
 
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.leaf.clips.R;

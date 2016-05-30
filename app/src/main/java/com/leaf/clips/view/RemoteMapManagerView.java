@@ -1,7 +1,5 @@
 package com.leaf.clips.view;
 
-import android.widget.Adapter;
-
 import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 
 import java.util.Collection;
