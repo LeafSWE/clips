@@ -86,8 +86,7 @@ public class PhotoService {
      */
     public PhotoRef findPhoto(int id) {
         PhotoTable photoTable = sqlitePhotoDao.findPhoto(id);
-        PhotoRef photoRef = fromTableToBo(photoTable);
-        return photoRef;
+        return fromTableToBo(photoTable);
     }
 
     /**
