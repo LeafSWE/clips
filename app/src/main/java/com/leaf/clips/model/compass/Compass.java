@@ -13,6 +13,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 // TODO: 25/05/16 aggiornare tracy/uml
 /**
@@ -75,6 +76,7 @@ public class Compass implements SensorEventListener {
      * @param sensorManager Classe Android che permette di ottenere i riferimenti dei sensori del device
      */
     public Compass(SensorManager sensorManager) {
+        listeners = new HashSet<>();
         this.sensorManager = sensorManager;
         accelerometer = this.sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetometer = this.sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
