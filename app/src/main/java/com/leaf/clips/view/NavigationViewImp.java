@@ -105,13 +105,18 @@ public class NavigationViewImp implements NavigationView {
         lastRefresh = i;
     }
 
+    /**
+     * Metodo che viene invocato nel caso in cui non siano presenti risultati
+     */
     @Override
     public void noResult(){
         presenter.setContentView(R.layout.activity_navigation_error);
     }
 
-
-
+    /**
+     * Metodo che permette di aggiornare la direzione della freccia per la navigazione
+     * @param direction Direzione in cui la freccia deve puntare
+     */
     @Override
     public void updateArrow(NavigationDirection direction) {
 

@@ -33,7 +33,14 @@ public interface NavigationView {
      */
     void refreshInstructions(int i);
 
+    /**
+     * Metodo che viene invocato nel caso in cui non siano presenti risultati
+     */
     void noResult();
 
+    /**
+     * Metodo che permette di aggiornare la direzione della freccia per la navigazione
+     * @param direction Direzione in cui la freccia deve puntare
+     */
     void updateArrow(NavigationDirection direction);
 }

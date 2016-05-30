@@ -17,6 +17,10 @@ public class DescriptionViewImp implements DescriptionView {
      */
     private PoiDescriptionActivity presenter;
 
+    /**
+     * Costruttore della classe DescriptionViewImp
+     * @param presenter Presenter che si occupa del controllo dell'oggetto
+     */
     public DescriptionViewImp(PoiDescriptionActivity presenter){
         this.presenter = presenter;
         presenter.setContentView(R.layout.activity_poi_description);
@@ -48,6 +52,10 @@ public class DescriptionViewImp implements DescriptionView {
         }
     }
 
+    /**
+     * Imposta la descrizione del POI nel widget deputato a mostrarla.
+     * @param description descrizione del POI
+     */
     @Override
     public void setDescription(String description) {
         TextView detailedDesc = (TextView)presenter.findViewById(R.id.poi_description);
