@@ -16,7 +16,7 @@ import com.leaf.clips.presenter.MyApplication;
 public class ElevatorEdge extends AbsEnrichedEdge {
 
     /**
-     * Fattore da aggiungere al peso dell'arco in base alle preferenze di navigazione
+     * Costante per il calcolo del peso degli archi
      */
     private final static double ELEVATOR_FACTOR = MyApplication.getConfiguration().getElevatorFactor();
 
