@@ -42,13 +42,13 @@
 
     <!-- Preferences strings -->
     <string name="default_path_preferences">Percorso veloce</string>
-    <string name="elevator_path_preferences">Percorso accessibile</string>
-    <string name="stair_path_preferences">Percorso senza ascensori</string>
+    <string name="elevator_path_preferences">Evita scale</string>
+    <string name="stair_path_preferences">Evita ascensori</string>
     <string name="default_instruction_preferences">Default</string>
     <string name="tts_instruction_preferences">Text to speech</string>
     <string name="sonar_instruction_prefereces">Sonar</string>
     <string name="navigation_preferences">Preferenze di navigazione</string>
-    <string name="path_preferences">Preferenze di percorso</string>
+    <string name="path_preferences">Opzioni percorso</string>
     <string name="instruction_preferences">Preferenze sulle istruzioni</string>
 
     <!-- NoConnectionAlertHelp -->
@@ -57,8 +57,9 @@
         Controlla la connessione a internet e riprova</string>
     <string name="retry_alert_help">Riprova</string>
     <string name="cancel_alert_help">Annulla</string>
-    <string name="navigation_internet_alert">Internet non disponibile. La mappa dell\'edificio può
-        essere non aggiornata e le informazioni presentate non corrette</string>
+    <string name="navigation_internet_alert">La mappa dell\'edificio può
+        essere non aggiornata e le informazioni presentate non corrette
+    </string>
 
     <string name="no_result_found">Nessun risultato</string>
 
@@ -101,4 +102,8 @@
     <!--LoggingActivity-->
     <string name="beacon_waiting">In attesa di beacon nelle vicinanze...</string>
     <string name="no_nearby_building_message">Nessun edificio rilevato.</string>
+    <string name="no_connection_photo_alert">Per accedere alle foto aggiornate, controlla la
+        connessione e
+        riprova.
+    </string>
 </resources>

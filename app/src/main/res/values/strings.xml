@@ -65,9 +65,10 @@
 
     <!-- NoConnectionAlertHelp -->
     <string name="no_connection_title_alert_help">Internet not available</string>
-    <string name="no_connection_message_alert_help">Internet not available.
-        Check your internet connectivity and try again
+    <string name="no_connection_message_alert_help">
+        Check your internet connectivity and try again.
     </string>
+    <string name="no_connection_photo_alert">Photos may be not updated.</string>
     <string name="retry_alert_help">Retry</string>
     <string name="cancel_alert_help">Cancel</string>
     <string name="navigation_internet_alert">Internet not available. The map of the building could
