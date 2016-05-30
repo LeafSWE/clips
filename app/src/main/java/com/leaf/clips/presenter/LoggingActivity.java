@@ -81,22 +81,45 @@ public class LoggingActivity extends AppCompatActivity implements InformationLis
         finish();
     }
 
+    /**
+     * Metodo che viene invocato al caricamento del database. Non implementato
+     */
     @Override
     public void onDatabaseLoaded() {}
 
+    /**
+     * Metodo che viene invocato nel caso in cui la mappa non venga trovata in locale. Non implementato
+     * @return false
+     */
     @Override
     public boolean onLocalMapNotFound() {
+        // non implementato
         return false;
     }
 
+    /**
+     * Metodo che viene invocato nel caso in cui la mappa non venga trovata nel database remoto. Non implementato
+     */
     @Override
-    public void onRemoteMapNotFound() {}
+    public void onRemoteMapNotFound() {
+        // non implementato
+    }
 
+    /**
+     * Metodo che viene invocato nel caso in cui non si possano recuperare le informazioni di una mappa in remoto. Non implementato
+     */
     @Override
-    public void cannotRetrieveRemoteMapDetails() {}
+    public void cannotRetrieveRemoteMapDetails() {
+        // non implementato
+    }
 
+    /**
+     * Metodo che viene invocato nel caso in cui la mappa presenta in locale non sia aggiornata. Non implementato
+     * @return false
+     */
     @Override
     public boolean noLastMapVersion() {
+        // non implementato
         return false;
     }
 
