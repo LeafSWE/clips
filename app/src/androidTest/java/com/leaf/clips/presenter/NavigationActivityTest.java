@@ -97,7 +97,9 @@ public class NavigationActivityTest {
 
     @Test
     public void isAnErrorPath() {
-        // TODO: 5/16/16
+        mockInformationManager = Mockito.mock(InformationManager.class);
+
+
     }
 
     @Test
