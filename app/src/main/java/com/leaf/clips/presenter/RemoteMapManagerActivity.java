@@ -69,7 +69,6 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
                         @Override
                         public void run() {
 
-                            int incr;
                             // Do the "lengthy" operation 20 times
 
                                 // Sets the progress indicator to a max value, the
