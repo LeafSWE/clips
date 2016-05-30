@@ -12,6 +12,7 @@ import java.util.PriorityQueue;
  * alle funzionalità di un logger
  */
 public interface Logger {
+
     /**
      * Metodo che salva le informazioni contenute nell'oggetto su di un
      * file
