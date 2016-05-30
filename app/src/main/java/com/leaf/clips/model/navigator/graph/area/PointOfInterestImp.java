@@ -46,7 +46,7 @@ public class PointOfInterestImp implements PointOfInterest {
      */
     @Override
     public Collection<RegionOfInterest> getAllBelongingROIs(){
-        return new ArrayList<RegionOfInterest>(this.rois);
+        return new ArrayList<>(this.rois);
     }
 
     /**
@@ -91,7 +91,7 @@ public class PointOfInterestImp implements PointOfInterest {
      */
     @Override
     public void setBelongingROIs(Collection<RegionOfInterest> rois){
-        this.rois = new ArrayList<RegionOfInterest>(rois);
+        this.rois = new ArrayList<>(rois);
     }
 
 }

@@ -28,7 +28,7 @@ public class MapGraph {
      */
     //TODO Aggiungere costruttore
     public MapGraph(){
-        graph = new SimpleDirectedWeightedGraph<RegionOfInterest, EnrichedEdge>(EnrichedEdge.class);
+        graph = new SimpleDirectedWeightedGraph<>(EnrichedEdge.class);
     }
 
 

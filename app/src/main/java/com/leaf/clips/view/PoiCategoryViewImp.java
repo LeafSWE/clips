@@ -55,7 +55,7 @@ public class PoiCategoryViewImp implements PoiCategoryView {
      */
     @Override
     public void setPoiListAdapter(List<String> poiCategoryList) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(presenter,android.R.layout.simple_list_item_1,poiCategoryList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(presenter, android.R.layout.simple_list_item_1, poiCategoryList);
 
         pois.setAdapter(adapter);
     }

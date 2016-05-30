@@ -148,7 +148,7 @@ public class CompleteHomeFragment extends Fragment {
      * @param list lista contenente i nomi delle categorie di POI presenti nell'edificio.
      */
     public void setPoiCategoryListAdapter(List<String> list) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,list);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, list);
 
         LinearLayout categoryLayout = (LinearLayout)getView().findViewById(R.id.category_search);
 

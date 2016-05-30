@@ -91,7 +91,7 @@ public class MainDeveloperViewImp implements MainDeveloperView {
      */
     @Override
     public void setLogsAdapter(String [] stringLogs){
-        final ArrayList<String> list = new ArrayList<String>();
+        final ArrayList<String> list = new ArrayList<>();
 
         if(stringLogs != null){
             for (int i = 0; i < stringLogs.length; ++i) {

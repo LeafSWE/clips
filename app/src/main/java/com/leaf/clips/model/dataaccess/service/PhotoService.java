@@ -70,7 +70,7 @@ public class PhotoService {
     public Collection<PhotoRef> findAllPhotosOfEdge(int id) {
         Collection<PhotoTable> tables = sqlitePhotoDao.findAllPhotosOfEdge(id);
         Iterator<PhotoTable> iter = tables.iterator();
-        List<PhotoRef> photoRefs = new LinkedList<PhotoRef>();
+        List<PhotoRef> photoRefs = new LinkedList<>();
         while(iter.hasNext()) {
             PhotoTable p = iter.next();
             PhotoRef ref = fromTableToBo(p);
