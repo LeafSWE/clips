@@ -291,12 +291,19 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         view.refreshInstructions();
     }
 
+    /**
+     * Metodo che viene invocato al Resume dell'activity
+     */
     @Override
     protected void onResume() {
         super.onResume();
         builder = new AlertDialog.Builder(this);
     }
 
+    /**
+     * Metodo che viene invocato quando viene ripristinato lo stato dell'Activity
+     * @param savedInstanceState Stato precedente dell'activity
+     */
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         poiId = savedInstanceState.getInt("poi_id");
@@ -317,6 +324,9 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         super.onSaveInstanceState(outState);
     }
 
+    /**
+     * Metodo che viene invocato alla distruzione dell'Activity
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -325,6 +335,10 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
             dialogPathError.dismiss();
     }
 
+    /**
+     * Metodo che viene invocato al cambio di gradazione rilevato dalla bussola
+     * @param orientation Gradazione rilevata dalla bussola
+     */
     @Override
     public void changed(float orientation) {
         int orientationInt = (int)orientation;
