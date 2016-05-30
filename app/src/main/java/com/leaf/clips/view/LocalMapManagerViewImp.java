@@ -44,14 +44,6 @@ public class LocalMapManagerViewImp implements LocalMapManagerView {
             }
         });
     }
-
-    // TODO: 5/27/16 Valutare se rimuovere questo metodo + Asta + Tracy
-    /**
-     * Metodo che aggiorna la lista delle mappe salvate nel database locale
-     * @return  void
-     */
-    @Override
-    public void refreshMaps(){}
     
     /**
      * Metodo utilizzato per visualizzare la lista delle mappe salvate nel database locale
