@@ -44,7 +44,6 @@ public class SearchSuggestionsProvider extends ContentProvider{
     private static final String[] COLUMNS = { //colonne per impostare le informazioni da attribuire il suggerimento
             "_id", // must include this column
             SearchManager.SUGGEST_COLUMN_TEXT_1,
-            SearchManager.SUGGEST_COLUMN_TEXT_2,
             SearchManager.SUGGEST_COLUMN_INTENT_DATA,
     };
 
@@ -79,7 +78,7 @@ public class SearchSuggestionsProvider extends ContentProvider{
                 for (PointOfInterest s : pois) {
                     if (s.getName().matches("(?i:^(" + query + ").*)")) {
                         //creazione di un suggerimento in base alle colonne define in COLUMNS
-                        cursor.addRow(new Object[]{n, s.getName(), s.getDescription(), s.getId()});
+                        cursor.addRow(new Object[]{n, s.getName(), s.getId()});
                         n++;
                     }
                 }
