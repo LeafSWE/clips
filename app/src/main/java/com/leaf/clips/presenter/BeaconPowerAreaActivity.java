@@ -23,26 +23,29 @@ import java.util.Collection;
 import java.util.PriorityQueue;
 
 import javax.inject.Inject;
+
 /**
  * Classe che permette di creare un'Activity che è in grado di rilevare il segnale emesso dai Beacon
  * e visualizzarlo a video. Il segnale preso in considerazione è l'RSSI.
  */
-
 public class BeaconPowerAreaActivity extends AppCompatActivity implements InformationListener{
 
     /**
      * View associata a tale Activity
      */
     private BeaconPowerAreaView view;
+
     /**
      * Mappa dei Beacon con relativo segnale e posizione
      */
     private Collection<BeaconPowerPos> map=new ArrayList<>();
+
     /**
      * Rappresenta lo stato di scansione. Il valore true indica che la scansione è attiva, false
      * non è attiva
      */
     private boolean scan=false;
+
     /**
      * Oggetto del Model per la gestione delle informazioni
      */
@@ -148,22 +151,47 @@ public class BeaconPowerAreaActivity extends AppCompatActivity implements Inform
 
     }
 
+    /**
+     * Metodo che viene invocato al caricamento del database. Non implementato
+     */
     @Override
-    public void onDatabaseLoaded() {}
+    public void onDatabaseLoaded() {
+        // non implementato
+    }
 
+    /**
+     * Metodo che viene invocato nel caso in cui la mappa non venga trovata in locale. Non implementato
+     * @return false
+     */
     @Override
     public boolean onLocalMapNotFound() {
+        // non implementato
         return false;
     }
 
+    /**
+     * Metodo che viene invocato nel caso in cui la mappa non venga trovata nel database remoto. Non implementato
+     */
     @Override
-    public void onRemoteMapNotFound() {}
+    public void onRemoteMapNotFound() {
+        // non implementato
+    }
 
+    /**
+     * Metodo che viene invocato nel caso in cui non si possano recuperare le informazioni di una mappa in remoto. Non implementato
+     */
     @Override
-    public void cannotRetrieveRemoteMapDetails() {}
+    public void cannotRetrieveRemoteMapDetails() {
+        // non implementato
+    }
 
+    /**
+     * Metodo che viene invocato nel caso in cui la mappa presenta in locale non sia aggiornata. Non implementato
+     * @return false
+     */
     @Override
     public boolean noLastMapVersion() {
+        // non implementato
         return false;
     }
 
