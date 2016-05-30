@@ -56,6 +56,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     private HomeView view;
 
+    private boolean loadMap;
+
     /**
      *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
      *i campi dati.
@@ -65,6 +67,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        loadMap = true;
         MyApplication.getInfoComponent().inject(this);
         FragmentManager fragmentManager = getSupportFragmentManager();
         BlankHomeFragment blankHomeFragment = new BlankHomeFragment();
@@ -118,6 +121,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
             informationManager.getBuildingMap();
             onDatabaseLoaded();
         } catch (NoBeaconSeenException e) {
+            informationManager.haveToLoadMap(true);
             e.printStackTrace();
         }
     }
@@ -356,10 +360,12 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         }
 
         updateBuildingAddress();
-            updateBuildingName();
-            updateBuildingDescription();
-            updateBuildingOpeningHours();
-            updatePoiCategoryList();
+        updateBuildingName();
+        updateBuildingDescription();
+        updateBuildingOpeningHours();
+        updatePoiCategoryList();
+
+        loadMap = false;
     }
 
     /**
@@ -377,7 +383,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                         informationManager.downloadMapOfVisibleBeacons(true);
                     }
                 })
-                .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         informationManager.downloadMapOfVisibleBeacons(false);
                     }
@@ -437,7 +443,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     @Override
     public void getAllVisibleBeacons(PriorityQueue<MyBeacon> visibleBeacons) {
-        //non necessario che sia implementato
+        //non implementata
     }
 
     /**
@@ -446,7 +452,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     @Override
     public void onDestroy(){
         super.onDestroy();
-        informationManager = null;
+        informationManager.removeListener(this);
     }
 
     /**
@@ -489,4 +495,10 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         startActivity(intent);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        informationManager.removeListener(this);
+        informationManager.haveToLoadMap(false);
+    }
 }
