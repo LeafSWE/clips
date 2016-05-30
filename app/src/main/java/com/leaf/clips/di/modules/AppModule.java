@@ -30,6 +30,9 @@ public class AppModule {
      */
     private final MyApplication mApplication;
 
+    /**
+     * Riferimento ad un oggetto Compass per la lettura dei dati della bussola
+     */
     private final Compass compass;
 
     /**
@@ -65,7 +68,11 @@ public class AppModule {
         return mApplication;
     }
 
-
+    /**
+     * Metodo che permette di risolvere le dipendenze verso campi dati annotati con Inject e di
+     * tipo Compass. L'istanza ritornata sarà sempre la stessa utilizzando lo stesso modulo.
+     * @return Compass
+     */
     @Provides @Singleton
     public Compass providesCompass(){
         return compass;

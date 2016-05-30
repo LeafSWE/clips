@@ -129,8 +129,24 @@ public interface InfoComponent {
      */
     void inject(PoiActivity poiActivity);
 
+    // TODO: 5/27/16 Aggiungere tracy + asta
+
+    /**
+     * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo RemoteMapManagerActivity
+     * @param remoteMapManagerActivity Oggetto in cui devono essere iniettate le dipendenze
+     */
+    void inject(RemoteMapManagerActivity remoteMapManagerActivity);
+
+    /**
+     * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo PoiDescriptionActivity
+     * @param poiDescriptionActivity Oggetto in cui devono essere iniettate le dipendenze
+     */
     void inject(PoiDescriptionActivity poiDescriptionActivity);
 
+    /**
+     * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo NavigationManagerImp
+     * @param navigationManagerImp Oggetto in cui devono essere iniettate le dipendenze
+     */
     void inject(NavigationManagerImp navigationManagerImp);
 
     /**
@@ -138,7 +154,4 @@ public interface InfoComponent {
      * @param beaconPowerAreaActivity Oggetto in cui devono essere iniettate le dipendenze
      */
     void inject(BeaconPowerAreaActivity beaconPowerAreaActivity);
-
-    // TODO: 5/27/16 Aggiungere tracy + asta
-    void inject(RemoteMapManagerActivity remoteMapManagerActivity);
 }
