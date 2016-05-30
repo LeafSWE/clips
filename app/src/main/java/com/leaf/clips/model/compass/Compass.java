@@ -11,7 +11,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.util.Log;
+
+import java.util.Collection;
 
 // TODO: 25/05/16 aggiornare tracy/uml
 /**
@@ -19,7 +20,10 @@ import android.util.Log;
  */
 public class Compass implements SensorEventListener {
 
-    private CompassListener listener;
+    /**
+     * Collezione dei listener dei valori della bussola
+     */
+    private Collection<CompassListener> listeners;
 
     /**
      * Sensore che misura l'accelerazione del device sui tre assi fisici
@@ -113,7 +117,8 @@ public class Compass implements SensorEventListener {
             SensorManager.getRotationMatrix(rotationMatrix, null, lastAccelerometerData, lastMagnetometerData);
             SensorManager.getOrientation(rotationMatrix, orientation);
         }
-        if(listener!=null)
+
+        for(CompassListener listener : listeners)
             listener.changed(getLastCoordinate());
     }
 
@@ -133,9 +138,20 @@ public class Compass implements SensorEventListener {
         sensorManager.unregisterListener(this, magnetometer);
     }
 
-    public void addListener(CompassListener listener){
-        this.listener = listener;
-        Log.i("LISTENER", "add listener");
+    /**
+     * Metodo che permette di aggiungere un listener sui valori della bussola
+     * @param listener Listener per i valori della bussola
+     */
+    public void addListener(CompassListener listener) {
+        listeners.add(listener);
+    }
+
+    /**
+     * Metodo che permette di rimuovere un listener sui valori della bussola
+     * @param listener Listener da rimuovere dalla collezione di listener dei valori della bussola
+     */
+    public void removeListener(CompassListener listener) {
+        listeners.remove(listener);
     }
 
 }
