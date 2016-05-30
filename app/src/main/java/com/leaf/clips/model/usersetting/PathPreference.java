@@ -18,7 +18,6 @@ public enum PathPreference {
      * @param i Intero da convertire a PathPreference
      * @return PathPreference Preferenza dell'utente
      */
-
     public static PathPreference fromInt(int i){
         switch (i){
             case 0:
