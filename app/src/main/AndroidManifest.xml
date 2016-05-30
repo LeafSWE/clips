@@ -163,10 +163,6 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.MainDeveloperActivity"/>
         </activity>
-        <activity android:name=".presenter.MapDownloaderActivity"
-                  android:label="@string/title_activity_map_downloader"
-                  android:parentActivityName=".presenter.LocalMapActivity">
-        </activity>
     </application>
 
 </manifest>

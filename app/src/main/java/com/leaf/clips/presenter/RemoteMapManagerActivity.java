@@ -1,8 +1,11 @@
 package com.leaf.clips.presenter;
 
-import android.content.Intent;
+import android.app.NotificationManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
+
+import com.leaf.clips.R;
 import com.leaf.clips.model.dataaccess.service.DatabaseService;
 import com.leaf.clips.view.RemoteMapManagerView;
 import com.leaf.clips.view.RemoteMapManagerViewImp;
@@ -51,15 +54,47 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
      * @param major Major della mappa di cui fare il download
      * @return  void
      */
-    public void downloadMap(int major){
+    public void downloadMap(final int major){
 
         if(databaseService.isBuildingMapPresent(Integer.valueOf(major))){
             view.showMapAlreadyPresent();
         }
         else{
-            Intent intent = new Intent(this, MapDownloaderActivity.class);
-            intent.putExtra("mapMajor", major);
-            startActivity(intent);
+            final int id = 1;
+
+            final NotificationManager mNotifyManager = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
+            final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+            mBuilder.setContentTitle(getString(R.string.map_download_title)).setContentText(getString(R.string.map_download)).setSmallIcon(R.drawable.ic_sync_white_24dp);
+            // Start a lengthy operation in a background thread
+            new Thread(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+
+                            int incr;
+                            // Do the "lengthy" operation 20 times
+
+                                // Sets the progress indicator to a max value, the
+                                // current completion percentage, and "determinate"
+                                // state
+                                mBuilder.setProgress(0, 0, true);
+                                // Displays the progress bar for the first time.
+                                mNotifyManager.notify(id, mBuilder.build());
+                                // Sleeps the thread, simulating an operation
+                                // that takes time
+                                try {
+                                    databaseService.findRemoteBuildingByMajor(Integer.valueOf(major));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                            // When the loop is finished, updates the notification
+                            mBuilder.setContentText(getString(R.string.map_downloaded)).setProgress(0,0,false).setSmallIcon(R.drawable.ic_vertical_align_bottom_white_24dp);
+                            mNotifyManager.notify(id, mBuilder.build());
+                        }
+                    }
+            // Starts the thread by calling the run() method in its Runnable
+            ).start();
         }
 
     }

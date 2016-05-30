@@ -95,8 +95,10 @@
     <string name="title_activity_remote_map_manager">Download new maps</string>
     <string name="remote_map_already_downloaded">Map already downloaded</string>
 
-    <!--MapDownloader-->
-    <string name="title_activity_map_downloader">Downloading the new map</string>
+    <!--MapDownload-->
+    <string name="map_download">Downloading map</string>
+    <string name="map_downloaded">Map downloaded</string>
+    <string name="map_download_title">Map download</string>
 
     <!--AlertPathError-->
     <string name="wrong_path">Wrong path</string>
