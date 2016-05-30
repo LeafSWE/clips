@@ -120,7 +120,9 @@ public class NavigatorImp implements Navigator {
                 }
             }
             this.path = shortestPath;
-            progress=path.iterator();
+            if (path != null) {
+                progress=path.iterator();
+            }
 /*
             if (endRoisIterator.hasNext()) {
                 // prelevo il primo path considerandolo il migliore

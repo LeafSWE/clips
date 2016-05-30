@@ -7,7 +7,6 @@ package com.leaf.clips.model.navigator.graph.edge;
  */
 
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
-import com.leaf.clips.model.navigator.graph.vertex.Vertex;
 
 /**
  *Interfaccia che serve per descrivere le funzionalità di un arco di un grafo

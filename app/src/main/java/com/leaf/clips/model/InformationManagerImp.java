@@ -482,9 +482,9 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
             boolean isRemotePresent = true;
             try {
                 isRemotePresent = asyncRemoteIsPresent.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             Assert.assertNotNull(isRemotePresent);

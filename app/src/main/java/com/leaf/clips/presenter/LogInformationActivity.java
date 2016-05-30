@@ -40,7 +40,7 @@ public class LogInformationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.view = new LogInformationViewImp(this);
-        ((MyApplication)getApplication()).getInfoComponent().inject(this);
+        MyApplication.getInfoComponent().inject(this);
 
         int logPosition = getIntent().getExtras().getInt("logNumber");
 
@@ -53,7 +53,7 @@ public class LogInformationActivity extends AppCompatActivity {
         int i = 0;
         for (File file : fList) {
             if (file.isFile() && i == logPosition)
-                stringLogName = file.getName().toString();
+                stringLogName = file.getName();
             i++;
         }
 
@@ -84,7 +84,6 @@ public class LogInformationActivity extends AppCompatActivity {
     /**
      * Metodo che viene utilizzato per rimuovere un log salvato
      * @param name Nome del log da eliminare
-     * @return  void
      */
     public void deleteLog(String name){
         int logPosition = getIntent().getExtras().getInt("logNumber");
@@ -98,7 +97,7 @@ public class LogInformationActivity extends AppCompatActivity {
         int i = 0;
         for (File file : fList) {
             if (file.isFile() && i == logPosition)
-                stringLogName = file.getName().toString();
+                stringLogName = file.getName();
             i++;
         }
 

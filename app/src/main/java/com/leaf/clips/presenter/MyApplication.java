@@ -1,6 +1,12 @@
 package com.leaf.clips.presenter;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import android.app.Application;
+import android.os.Environment;
 
 import com.leaf.clips.di.component.DaggerInfoComponent;
 import com.leaf.clips.di.component.InfoComponent;
@@ -8,6 +14,9 @@ import com.leaf.clips.di.modules.AppModule;
 import com.leaf.clips.di.modules.DatabaseModule;
 import com.leaf.clips.di.modules.InfoModule;
 import com.leaf.clips.di.modules.SettingModule;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * @author Marco Zanella
@@ -35,13 +44,30 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        if(configuration == null){
+            JsonParser parser = new JsonParser();
+            JsonElement jsonElement = null;
+            try {
+                jsonElement = parser.parse(new InputStreamReader(getAssets().open("configuration_file.json")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            JsonObject jsonObject = null;
+            if (jsonElement != null) {
+                jsonObject = jsonElement.getAsJsonObject();
+            }
+            configuration = new Gson().fromJson(jsonObject, Configuration.class);
+        }
+
         /*ATTENZIONE: se non viene trovato dal compilatore DaggerInfoComponent:
          *  >Menu Build
          *  >Rebuild Project
          */
         infoComponent = DaggerInfoComponent.builder().appModule(new AppModule(this)).
             infoModule(new InfoModule()).
-            databaseModule(new DatabaseModule("http://52.49.217.118/")).settingModule(new SettingModule(this)).build();
+            databaseModule(new DatabaseModule(getConfiguration().getRemoteDBPath()))
+                .settingModule(new SettingModule(this)).build();
 
     }
 
@@ -52,5 +78,54 @@ public class MyApplication extends Application {
      */
     public static InfoComponent getInfoComponent(){
         return infoComponent;
+    }
+
+    private static Configuration configuration = null;
+
+    public static class Configuration {
+        private String remoteDBPath;
+        private String remoteDBMapRequest;
+        private String beaconLayout;
+        private String applicationUUID;
+        private String logsDirectory;
+        private double elevatorFactor;
+        private double stairFactor;
+
+        public String getRemoteDBMapRequest(int major) {
+            return remoteDBPath + remoteDBMapRequest + major;
+        }
+
+        public String getBeaconLayout() {
+            return beaconLayout;
+        }
+
+        public String getApplicationUUID() {
+            return applicationUUID;
+        }
+
+        public String getLogsDirectory() {
+            return Environment.getExternalStorageDirectory().toString() + logsDirectory;
+        }
+
+        public double getElevatorFactor() {
+            return elevatorFactor;
+        }
+
+        public double getStairFactor() {
+            return stairFactor;
+        }
+
+        public String getRemoteDBPath() {
+            return remoteDBPath;
+        }
+
+        private Configuration() {}
+
+    }
+
+
+
+    public static Configuration getConfiguration() {
+        return configuration;
     }
 }

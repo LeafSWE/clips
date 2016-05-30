@@ -47,12 +47,14 @@ public class NavigationViewImp implements NavigationView {
         presenter.setContentView(R.layout.activity_navigation);
 
         ListView instruction = (ListView)presenter.findViewById(R.id.view_instruction_list);
-        instruction.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                presenter.showDetailedInformation(position);
-            }
-        });
+        if (instruction != null) {
+            instruction.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    presenter.showDetailedInformation(position);
+                }
+            });
+        }
     }
 
     /**
@@ -65,7 +67,9 @@ public class NavigationViewImp implements NavigationView {
         instructionAdapter.notifyDataSetChanged();
         ListView listView = (ListView) presenter.findViewById(R.id.view_instruction_list);
 
-        listView.setAdapter(instructionAdapter);
+        if (listView != null) {
+            listView.setAdapter(instructionAdapter);
+        }
 
     }
 
@@ -83,11 +87,21 @@ public class NavigationViewImp implements NavigationView {
     public void refreshInstructions(int i) {
         Log.i("informationUpdate", "refresh:" + i);
         ListView listView = (ListView) presenter.findViewById(R.id.view_instruction_list);
-        listView.getChildAt(i).setBackgroundColor(presenter.getResources().getColor(R.color.green));
-        for(int j = 0; j < i; j++)
-            listView.getChildAt(j).setBackgroundColor(presenter.getResources().getColor(R.color.backroundGrey));
-        for(int j = i+1; j < listView.getCount(); j++)
-            listView.getChildAt(j).setBackgroundColor(presenter.getResources().getColor(R.color.white));
+        if (listView != null) {
+            listView.getChildAt(i).setBackgroundColor(presenter.getResources().getColor(R.color.currentInstructionColor));
+        }
+        for(int j = 0; j < i; j++){
+            if (listView != null) {
+                listView.getChildAt(j).setBackgroundColor(presenter.getResources().getColor(R.color.white));
+            }
+            if (listView != null) {
+                listView.getChildAt(j).findViewById(R.id.imageView_check).setVisibility(View.VISIBLE);
+            }
+        }
+        if (listView != null) {
+            for(int j = i+1; j < listView.getCount(); j++)
+                listView.getChildAt(j).setBackgroundColor(presenter.getResources().getColor(R.color.white));
+        }
         lastRefresh = i;
     }
 

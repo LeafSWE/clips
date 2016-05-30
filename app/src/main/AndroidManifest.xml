@@ -16,11 +16,12 @@
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="portrait">
-        <service android:name=".model.beacon.BeaconManagerAdapter" android:stopWithTask="true"/>
-
+            android:theme="@style/AppTheme">
+        <service
+                android:name=".model.beacon.BeaconManagerAdapter"
+                android:stopWithTask="true"/>
 
         <activity
                 android:name=".presenter.MainActivity"
@@ -119,9 +120,9 @@
                 android:name=".presenter.LocalMapActivity"
                 android:label="@string/title_activity_local_map"
                 android:parentActivityName=".presenter.HomeActivity"/>
-        <activity android:name=".presenter.PreferencesActivity"
+        <activity
+                android:name=".presenter.PreferencesActivity"
                 android:label="@string/title_activity_preferences">
-
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.HomeActivity"/>
@@ -146,20 +147,22 @@
                 android:name=".presenter.SearchSuggestionsProvider"
                 android:authorities="com.leaf.clips.presenter.SearchSuggestionsProvider"/>
 
-        <activity android:name=".presenter.RemoteMapManagerActivity"
-                  android:parentActivityName=".presenter.LocalMapActivity">
+        <activity
+                android:name=".presenter.RemoteMapManagerActivity"
+                android:label="@string/title_activity_remote_map_manager"
+                android:parentActivityName=".presenter.LocalMapActivity">
         </activity>
         <activity
                 android:name=".presenter.BeaconPowerAreaActivity"
                 android:hardwareAccelerated="true"
                 android:label="@string/title_activity_beacon_power_area"
                 android:parentActivityName=".presenter.MainDeveloperActivity">
-                <!--android:theme="@style/AppTheme.NoActionBar"-->
+
+            <!-- android:theme="@style/AppTheme.NoActionBar" -->
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.MainDeveloperActivity"/>
         </activity>
-
     </application>
 
 </manifest>

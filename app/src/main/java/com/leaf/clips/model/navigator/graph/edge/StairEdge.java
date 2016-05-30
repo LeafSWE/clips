@@ -8,6 +8,7 @@ package com.leaf.clips.model.navigator.graph.edge;
 
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
 import com.leaf.clips.model.navigator.graph.navigationinformation.NavigationInformation;
+import com.leaf.clips.presenter.MyApplication;
 
 /**
  *Classe che implementa AbsEnrichedEdge e rappresenta un arco del grafo corrispondente ad una rampa di scale
@@ -17,7 +18,7 @@ public class StairEdge extends AbsEnrichedEdge {
     /**
      * Fattore da aggiungere al peso dell'arco in base alle preferenze di navigazione
      */
-    private final static int NO_STAIR_FACTOR = 0;
+    private final static double STAIR_FACTOR = MyApplication.getConfiguration().getStairFactor();
 
     /**
      * Costruttore della classe StairEdge
@@ -56,7 +57,7 @@ public class StairEdge extends AbsEnrichedEdge {
      */
     @Override
     public double getWeight(){
-        return Math.exp(getDistance()-1.9999)  + maxDistance * userStairPreference;
+        return Math.exp( getDistance() - STAIR_FACTOR )  + maxDistance * userStairPreference;
     }
 
 }

@@ -22,44 +22,70 @@ import java.util.Collection;
  * @since 0.00
  */
 
-
-// TODO: 5/24/16 Asta + Tracy, classe nuova
-
+/**
+ * Si occupa del binding tra le mappe fornite dal Model e la View deputata
+ * a mostrarle.
+ */
 public class LocalMapAdapter extends BaseAdapter{
 
+    /**
+     * Riferimentio all'activity che si occupa della sua gestione.
+     */
     private LocalMapActivity presenter;
 
+    /**
+     * Collezione di BuildingTable contenente tutte le informazioni associate ad una certa mappa.
+     */
     private Collection<BuildingTable> collectionBuildingTable;
 
+    /**
+     * Array contenente lo stato di ogni mappa installata. Se vero allora la mappa è da aggiornare, se falso non lo è.
+     */
     private boolean [] mapsVersionStatus;
 
-    private BuildingTable buildingTable;
-
-    private AppCompatImageButton btnUpdateMap;
-
-    private AppCompatImageButton btnDeleteMap;
-
+    /**
+     * Costruttore della classe LocalMapAdapter
+     * @param presenter Riferimento al model utile per avere anche il contesto dell'applicazione
+     * @param collectionBuildingTable Insieme di mappe installate sul dispositivo
+     * @param mapsVersionStatus Array contenente lo stato delle mappe
+     */
     public LocalMapAdapter(LocalMapActivity presenter, Collection<BuildingTable> collectionBuildingTable, boolean [] mapsVersionStatus){
         this.presenter = presenter;
         this.collectionBuildingTable = collectionBuildingTable;
         this.mapsVersionStatus = mapsVersionStatus;
     }
-
+    /**
+     * Restituisce il numero di mappe installate nel telefono
+     * @return int numero di mappe installate
+     */
     @Override
     public int getCount() {
         return collectionBuildingTable.size();
     }
 
+    /**
+     * Restituisce la mappa della collezione che si trova nella posizione fornita come parametro.
+     * @param position Posizione della mappa
+     * @return Object mappa nella posizione selezionata
+     */
     @Override
     public Object getItem(int position) {
         return collectionBuildingTable.toArray()[position];
     }
 
+    /**
+     * Restituisce l'id della mappa della collezione che si trova nella posizione fornita come parametro fornita come parametro.
+     * @param position Posizione della mappa
+     * @return long
+     */
     @Override
     public long getItemId(int position) {
         return collectionBuildingTable.toArray()[position].hashCode();
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -67,7 +93,7 @@ public class LocalMapAdapter extends BaseAdapter{
             convertView = LayoutInflater.from(presenter).inflate(R.layout.local_map_row, null);
         }
 
-        buildingTable = (BuildingTable) getItem(position);
+        final BuildingTable buildingTable = (BuildingTable) getItem(position);
 
         final boolean isBuildingMapUpdate = mapsVersionStatus[position];
 
@@ -85,15 +111,17 @@ public class LocalMapAdapter extends BaseAdapter{
 
         TextView txtViewMapStatus = (TextView) convertView.findViewById(R.id.textViewMapStatus);
 
+        TextView textViewMapDescription = (TextView) convertView.findViewById(R.id.textViewLocalMapDescription);
+        textViewMapDescription.setText(buildingTable.getDescription());
 
-        btnUpdateMap = (AppCompatImageButton) convertView.findViewById(R.id.updateLocalMap);
-        btnDeleteMap = (AppCompatImageButton) convertView.findViewById(R.id.removeLocalMap);
+        AppCompatImageButton btnUpdateMap = (AppCompatImageButton) convertView.findViewById(R.id.updateLocalMap);
+        AppCompatImageButton btnDeleteMap = (AppCompatImageButton) convertView.findViewById(R.id.removeLocalMap);
 
         if(isBuildingMapUpdate){
-            txtViewMapStatus.setText("Mappa aggiornata");
+            txtViewMapStatus.setText(R.string.updated_map);
         }
         else {
-            txtViewMapStatus.setText("Mappa da aggiornare");
+            txtViewMapStatus.setText(R.string.update_map);
             txtViewMapStatus.setTextColor(Color.RED);
             txtViewMapVersion.setTextColor(Color.RED);
         }
@@ -105,7 +133,7 @@ public class LocalMapAdapter extends BaseAdapter{
                     showNoUpdateDialog();
                 }
                 else {
-                    showUpdateDialog();
+                    showUpdateDialog(buildingTable.getMajor());
                 }
             }
         });
@@ -115,11 +143,11 @@ public class LocalMapAdapter extends BaseAdapter{
             public void onClick(View v) {
 
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(presenter);
-                builder1.setMessage("Vuoi veramente cancellare la mappa selezionata?");
+                builder1.setMessage(R.string.remove_map_question);
                 builder1.setCancelable(true);
 
                 builder1.setPositiveButton(
-                        "Si",
+                        R.string.ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 presenter.deleteMap(buildingTable.getMajor());
@@ -128,7 +156,7 @@ public class LocalMapAdapter extends BaseAdapter{
                         });
 
                 builder1.setNegativeButton(
-                        "No",
+                        R.string.cancel,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
@@ -142,12 +170,15 @@ public class LocalMapAdapter extends BaseAdapter{
 
         return convertView;
     }
-    
+
+    /**
+     * Metodo utilizzato per mostrare il dialog che indica che la mappa è già aggiornata
+     */
     private void showNoUpdateDialog () {
         AlertDialog.Builder builder = new AlertDialog.Builder(presenter);
-        builder.setMessage("Mappa già aggiornata")
+        builder.setMessage(R.string.already_updated_map)
                 .setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         //do things
                     }
@@ -155,24 +186,29 @@ public class LocalMapAdapter extends BaseAdapter{
         AlertDialog alert = builder.create();
         alert.show();
     }
-    
-    private void showUpdateDialog () {
+
+    /**
+     * Metodo utilizzato per mostrare un dialog che chiede la conferma dell'utente per aggiornare la mappa
+     * @param major parametro contente il major della mappa selezionata
+     */
+    private void showUpdateDialog (final int major) {
+
         AlertDialog.Builder builder1 = new AlertDialog.Builder(presenter);
 
-        builder1.setMessage("Vuoi veramente aggiornare la mappa selezionata?");
+        builder1.setMessage(R.string.update_map_question);
         builder1.setCancelable(true);
 
         builder1.setPositiveButton(
-                "Si",
+                R.string.ok,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        presenter.updateMap(buildingTable.getMajor());
+                        presenter.updateMap(major);
                         dialog.cancel();
                     }
                 });
 
         builder1.setNegativeButton(
-                "No",
+                R.string.cancel,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();

@@ -30,7 +30,6 @@ public interface Logger {
      * Metodo che, dato il nome di un file di log, ritorna l’informazione
      * in esso contenuta sotto forma di stringa
      * @param name Nome del file di log da cui reperire le informazioni
-     * @return
      */
     String open(String name);
 

@@ -59,7 +59,7 @@ import java.util.List;
      */
     public void setPoiListAdapter(List<String> poiList){
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(presenter,android.R.layout.simple_list_item_1,poiList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(presenter, android.R.layout.simple_list_item_1, poiList);
 
         pois.setAdapter(adapter);
     }

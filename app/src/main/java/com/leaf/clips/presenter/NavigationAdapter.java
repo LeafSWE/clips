@@ -103,7 +103,7 @@ public class NavigationAdapter extends BaseAdapter {
         distance.setText(navigationInformation.getDistance());
 
         if (position == 0)
-            convertView.setBackgroundColor(convertView.getResources().getColor(R.color.green));
+            convertView.setBackgroundColor(convertView.getResources().getColor(R.color.currentInstructionColor));
         /*if (position == getCount() - 1)
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -112,7 +112,7 @@ public class NavigationAdapter extends BaseAdapter {
                     
                 }
             });*/
-        Log.i("NAVADP", ""+getCount());
+        Log.i("NAVADP", "" + getCount());
         return  convertView;
     }
 
@@ -160,8 +160,6 @@ public class NavigationAdapter extends BaseAdapter {
 
     @Override
     public boolean isEnabled(int position) {
-        if(position == (navigationInformation.size()-1))
-            return false;
-        return super.isEnabled(position);
+        return position != (navigationInformation.size() - 1) && super.isEnabled(position);
     }
 }

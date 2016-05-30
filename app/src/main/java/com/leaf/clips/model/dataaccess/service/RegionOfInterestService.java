@@ -120,7 +120,7 @@ public class RegionOfInterestService {
         Collection<RegionOfInterestTable> tables =
                 sqliteRegionOfInterestDao.findAllRegionsWithMajor(major);
         Iterator<RegionOfInterestTable> iter = tables.iterator();
-        List<RegionOfInterest> rois = new LinkedList<RegionOfInterest>();
+        List<RegionOfInterest> rois = new LinkedList<>();
         while(iter.hasNext()) {
             RegionOfInterestTable table = iter.next();
             RegionOfInterest roi = fromTableToBo(table);

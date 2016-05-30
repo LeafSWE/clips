@@ -65,9 +65,10 @@
 
     <!-- NoConnectionAlertHelp -->
     <string name="no_connection_title_alert_help">Internet not available</string>
-    <string name="no_connection_message_alert_help">Internet not available.
-        Check your internet connectivity and try again
+    <string name="no_connection_message_alert_help">
+        Check your internet connectivity and try again.
     </string>
+    <string name="no_connection_photo_alert">Photos may be not updated.</string>
     <string name="retry_alert_help">Retry</string>
     <string name="cancel_alert_help">Cancel</string>
     <string name="navigation_internet_alert">Internet not available. The map of the building could
@@ -85,7 +86,34 @@
 
     <!--LocalMapManager-->
     <string name="update_map">Update Map</string>
+    <string name="updated_map">Updated Map</string>
     <string name="delete_map">Delete Map</string>
+    <string name="remove_map_question">Do you really want to delete the selected map?</string>
+    <string name="already_updated_map">Map already update</string>
+    <string name="update_map_question">Do you really want to update the selected map?</string>
+
+    <!--RemoteMapManager-->
+    <string name="title_activity_remote_map_manager">Download new maps</string>
+    <string name="remote_map_already_downloaded">Map already downloaded</string>
+    <string name="no_nearby_building_message">No nearby buildings</string>
 
 
+    <!--MapDownload-->
+    <string name="map_download">Downloading map</string>
+    <string name="map_downloaded">Map downloaded</string>
+    <string name="map_download_title">Map download</string>
+
+    <!--AlertPathError-->
+    <string name="wrong_path">Wrong path</string>
+    <string name="wrong_path_question">It seems that you have taken the wrong path, want to
+        calculate a new route?
+    </string>
+    <string name="recalculate">Recalculate</string>
+    <string name="back_to_home">Back to the home</string>
+
+    <!--AlertDeleteLog-->
+    <string name="delete_log_question">Do you really want delete this log?</string>
+
+    <!--LoggingActivity-->
+    <string name="beacon_waiting">Waiting for nearby beacons...</string>
 </resources>

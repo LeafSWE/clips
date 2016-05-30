@@ -1,7 +1,5 @@
 package com.leaf.clips.view;
 
-import android.widget.Adapter;
-
 import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 
 import java.util.Collection;
@@ -17,16 +15,9 @@ import java.util.Collection;
  */
 public interface LocalMapManagerView {
     /**
-     * Metodo che aggiorna la lista delle mappe salvate nel database locale
-     * @return  void
-     */
-    void refreshMaps();
-
-    // TODO: 5/26/16 Tracy + Asta 
-    /**
      * Metodo utilizzato per visualizzare la lista delle mappe salvate nel database locale
-     * @param adp Collegamento tra la lista delle mappe salvate nel database locale e la view in cui esse devono essere mostrate
-     * @return  void
+     * @param buildingTables Collegamento tra la lista delle mappe salvate nel database locale e la view in cui esse devono essere mostrate
+     * @param mapVersionStatus Array contenente lo stato di ogni mappa installata. Se vero allora la mappa è da aggiornare, se falso non lo è
      */
     void setAdapter(Collection<BuildingTable> buildingTables, boolean [] mapVersionStatus);
 }

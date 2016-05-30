@@ -42,13 +42,13 @@
 
     <!-- Preferences strings -->
     <string name="default_path_preferences">Percorso veloce</string>
-    <string name="elevator_path_preferences">Percorso accessibile</string>
-    <string name="stair_path_preferences">Percorso senza ascensori</string>
+    <string name="elevator_path_preferences">Evita scale</string>
+    <string name="stair_path_preferences">Evita ascensori</string>
     <string name="default_instruction_preferences">Default</string>
     <string name="tts_instruction_preferences">Text to speech</string>
     <string name="sonar_instruction_prefereces">Sonar</string>
     <string name="navigation_preferences">Preferenze di navigazione</string>
-    <string name="path_preferences">Preferenze di percorso</string>
+    <string name="path_preferences">Opzioni percorso</string>
     <string name="instruction_preferences">Preferenze sulle istruzioni</string>
 
     <!-- NoConnectionAlertHelp -->
@@ -57,8 +57,9 @@
         Controlla la connessione a internet e riprova</string>
     <string name="retry_alert_help">Riprova</string>
     <string name="cancel_alert_help">Annulla</string>
-    <string name="navigation_internet_alert">Internet non disponibile. La mappa dell\'edificio può
-        essere non aggiornata e le informazioni presentate non corrette</string>
+    <string name="navigation_internet_alert">La mappa dell\'edificio può
+        essere non aggiornata e le informazioni presentate non corrette
+    </string>
 
     <string name="no_result_found">Nessun risultato</string>
 
@@ -72,7 +73,37 @@
 
     <!--LocalMapManager-->
     <string name="update_map">Aggiorna mappa</string>
+    <string name="updated_map">Mappa aggiornata</string>
     <string name="delete_map">Rimuovi mappa</string>
     <string name="title_activity_local_map">Le tue mappe</string>
     <string name="title_activity_preferences">Preferenze</string>
+    <string name="remove_map_question">Vuoi veramente cancellare la mappa selezionata?</string>
+    <string name="already_updated_map">Mappa già aggiornata</string>
+    <string name="update_map_question">Vuoi veramente aggiornare la mappa selezionata?</string>
+
+    <!--RemoteMapManager-->
+    <string name="title_activity_remote_map_manager">Scarica nuove mappe</string>
+    <string name="remote_map_already_downloaded">Mappa già scaricata</string>
+
+    <!--MapDownload-->
+    <string name="map_download">Download in corso</string>
+    <string name="map_downloaded">Mappa scaricata</string>
+    <string name="map_download_title">Download della mappa</string>
+
+    <!--AlertPathError-->
+    <string name="wrong_path">Percorso errato</string>
+    <string name="wrong_path_question">Sembra che tu abbia sbagliato percorso, vuoi ricalcolare il percorso?</string>
+    <string name="recalculate">Ricalcolo</string>
+    <string name="back_to_home">Torna alla home</string>
+
+    <!--AlertDeleteLog-->
+    <string name="delete_log_question">Vuoi veramente cancellare questo log?</string>
+
+    <!--LoggingActivity-->
+    <string name="beacon_waiting">In attesa di beacon nelle vicinanze...</string>
+    <string name="no_nearby_building_message">Nessun edificio rilevato.</string>
+    <string name="no_connection_photo_alert">Per accedere alle foto aggiornate, controlla la
+        connessione e
+        riprova.
+    </string>
 </resources>
