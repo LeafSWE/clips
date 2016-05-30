@@ -53,7 +53,7 @@ public class LogInformationActivity extends AppCompatActivity {
         int i = 0;
         for (File file : fList) {
             if (file.isFile() && i == logPosition)
-                stringLogName = file.getName().toString();
+                stringLogName = file.getName();
             i++;
         }
 
@@ -97,7 +97,7 @@ public class LogInformationActivity extends AppCompatActivity {
         int i = 0;
         for (File file : fList) {
             if (file.isFile() && i == logPosition)
-                stringLogName = file.getName().toString();
+                stringLogName = file.getName();
             i++;
         }
 
