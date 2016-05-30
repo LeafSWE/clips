@@ -30,6 +30,11 @@ import static org.mockito.Mockito.when;
  * @version 0.01
  * @since 0.00
  */
+
+/**
+ * Testi di unità 117 + 118
+ */
+
 public class NavigationActivityTest {
     private NavigationActivity navigationActivity;
     private NavigationViewImp mockNavigationViewImp;
@@ -55,8 +60,8 @@ public class NavigationActivityTest {
         List<PointOfInterest> listPois = new LinkedList<>();
         listPois.add(new PointOfInterestImp(1, new PointOfInterestInformation("1c150", "aula didattica", "aula")));
 
-        when(mockBuildingMap)
-        when(mockInformationManager.getBuildingMap()).thenReturn();
+        //when(mockBuildingMap)
+        //when(mockInformationManager.getBuildingMap()).thenReturn();
 
         Field field = navigationActivity.getClass().getDeclaredField("infoManager");
         Field field2 = navigationActivity.getClass().getDeclaredField("navigationManager");
