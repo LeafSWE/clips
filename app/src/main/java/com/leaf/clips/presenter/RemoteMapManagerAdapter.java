@@ -96,6 +96,9 @@ public class RemoteMapManagerAdapter extends BaseAdapter {
         TextView textViewMapSize = (TextView) convertView.findViewById(R.id.textViewRemoteMapSize);
         textViewMapSize.setText(buildingTable.getSize());
 
+        TextView textViewMapDescription = (TextView) convertView.findViewById(R.id.textViewRemoteMapDescription);
+        textViewMapDescription.setText(buildingTable.getDescription());
+
         AppCompatImageButton btnUpdateMap = (AppCompatImageButton) convertView.findViewById(R.id.download_remote_map);
 
         btnUpdateMap.setOnClickListener(new View.OnClickListener() {

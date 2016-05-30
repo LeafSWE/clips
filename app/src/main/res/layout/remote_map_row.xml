@@ -29,8 +29,8 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="15 MB"
             android:id="@+id/textViewRemoteMapSize"
-            android:layout_below="@+id/textViewRemoteMapName"
-            android:layout_alignParentStart="true"/>
+            android:layout_below="@+id/textViewRemoteMapDescription"
+            android:layout_alignParentStart="true" android:layout_marginTop="6dp"/>
 
     <TextView
             android:layout_width="wrap_content"
@@ -48,7 +48,15 @@
             android:clickable="true"
             android:focusable="true" android:contextClickable="true"
             android:cropToPadding="false" android:backgroundTint="#ffffff"
-            android:layout_alignTop="@+id/textViewRemoteMapSize"
-            android:layout_alignEnd="@+id/textViewRemoteMapVersion"/>
+            android:layout_below="@+id/textViewRemoteMapDescription"
+            android:layout_alignEnd="@+id/textViewRemoteMapVersion" android:layout_marginTop="6dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Descrizione"
+            android:id="@+id/textViewRemoteMapDescription"
+            android:layout_below="@+id/textViewRemoteMapName"
+            android:layout_alignParentStart="true"/>
 
 </RelativeLayout>
