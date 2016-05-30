@@ -39,7 +39,6 @@ public class RemoteMapManagerViewImp implements RemoteMapManagerView{
     /**
      * Metodo utilizzate per visualizzare le mappe che è possibile scaricare da un server remoto
      * @param buildingTables Collegamento tra la lista delle mappe che è possibile scaricare e la view in cui esse devono essere mostrate
-     * @return  void
      */
     @Override
     public void setRemoteMaps(Collection<BuildingTable> buildingTables){

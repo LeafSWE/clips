@@ -84,7 +84,6 @@ public class LogInformationActivity extends AppCompatActivity {
     /**
      * Metodo che viene utilizzato per rimuovere un log salvato
      * @param name Nome del log da eliminare
-     * @return  void
      */
     public void deleteLog(String name){
         int logPosition = getIntent().getExtras().getInt("logNumber");

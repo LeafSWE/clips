@@ -33,7 +33,6 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
     /**
      * Metodo che inizializza la View associata
      * @param bundle Componente per salvare lo stato dell'applicazione
-     * @return  void
      */
     @Override
     protected void onCreate(Bundle bundle) {
@@ -52,7 +51,6 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
     /**
      * Metodo che permette di eseguire il download di una mappa da un database remoto
      * @param major Major della mappa di cui fare il download
-     * @return  void
      */
     public void downloadMap(final int major){
 

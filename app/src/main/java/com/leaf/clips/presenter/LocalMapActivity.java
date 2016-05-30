@@ -36,7 +36,6 @@ public class LocalMapActivity extends AppCompatActivity {
     /**
      * Metodo che inizializza la View associata a tale Activity
      * @param bundle Componente per salvare lo stato dell'applicazione
-     * @return  void
      */
     @Override
     protected void onCreate(Bundle bundle) {
@@ -50,7 +49,6 @@ public class LocalMapActivity extends AppCompatActivity {
     /**
      * Metodo che permettere di rimuovere una mappa del database locale
      * @param major Major dalla mappa da rimuovere
-     * @return  void
      */
     public void deleteMap(int major){
         databaseService.deleteBuilding(databaseService.findBuildingByMajor(major));
@@ -60,7 +58,6 @@ public class LocalMapActivity extends AppCompatActivity {
     /**
      * Metodo che permette di aggiornare una mappa del database locale
      * @param major Major della mappa da aggiornare
-     * @return  void
      */
     public void updateMap(int major){
         try {
@@ -73,7 +70,6 @@ public class LocalMapActivity extends AppCompatActivity {
 
     /**
      * Meotodo utilizzato per leggere le mappe dal database e aggiornare la view
-     * @return void
      */
     private void LoadMaps() {
         Collection<BuildingTable> buildingTable = databaseService.findAllBuildings();
@@ -100,7 +96,6 @@ public class LocalMapActivity extends AppCompatActivity {
 
     /**
      * Metodo utilizzato per poter avviare l'activity che si occupa della gestione delle mappe remote
-     * @return void
      */
     public void DownloadNewMap() {
         Intent intent = new Intent(this,RemoteMapManagerActivity.class);
