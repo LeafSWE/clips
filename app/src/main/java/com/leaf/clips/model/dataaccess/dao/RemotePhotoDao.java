@@ -15,8 +15,6 @@ import com.google.gson.JsonObject;
  */
 public class RemotePhotoDao {
 
-
-    
     /**
      * Costruttore di default per la classe RemotePhotoDao
      */
