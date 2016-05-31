@@ -116,4 +116,7 @@
 
     <!--LoggingActivity-->
     <string name="beacon_waiting">Waiting for nearby beacons...</string>
+
+    <!--HelpActivity-->
+    <string name="title_activity_help">Help</string>
 </resources>

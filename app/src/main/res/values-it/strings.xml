@@ -82,7 +82,7 @@
     <string name="update_map_question">Vuoi veramente aggiornare la mappa selezionata?</string>
 
     <!--RemoteMapManager-->
-    <string name="title_activity_remote_map_manager">Scarica nuove mappe</string>
+    <string name="title_activity_remote_map_manager">Scarica mappa</string>
     <string name="remote_map_already_downloaded">Mappa già scaricata</string>
 
     <!--MapDownload-->
@@ -106,4 +106,5 @@
         connessione e
         riprova.
     </string>
+    <string name="title_activity_help">Guida</string>
 </resources>
