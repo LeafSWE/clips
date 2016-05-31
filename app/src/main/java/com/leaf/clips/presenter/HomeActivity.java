@@ -383,7 +383,9 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                     }
                 });
 
-        builder.create().show();
+        if(!isFinishing()){
+            builder.create().show();
+        }
         return true;
     }
 

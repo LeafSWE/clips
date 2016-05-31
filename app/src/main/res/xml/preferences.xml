@@ -11,7 +11,7 @@
                 android:title="@string/path_preferences"
                 android:entries="@array/path_preferences"
                 android:entryValues="@array/path_preferences"
-                android:defaultValue="@string/default_path_preferences" />
+                android:defaultValue="Default" />
 
         <!--<ListPreference
                 android:key="instr_pref"
