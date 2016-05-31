@@ -76,8 +76,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Descrizione"
             android:layout_marginBottom="6dp"
+            android:text="Descrizione"
             android:id="@+id/textViewLocalMapDescription"
             android:layout_centerVertical="true" android:layout_alignParentStart="true"
             android:layout_below="@+id/textViewLocalMapName"/>
