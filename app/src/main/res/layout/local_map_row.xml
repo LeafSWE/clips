@@ -7,6 +7,7 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Via Trieste, 63 - 35121 Padova"
             android:id="@+id/textViewLocalMapAddres"/>
@@ -17,7 +18,7 @@
             android:text="Torre Archimede"
             android:id="@+id/textViewLocalMapName"
             android:textSize="20sp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/colorPrimary"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"
             android:layout_below="@+id/textViewLocalMapAddres"/>
@@ -26,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/black"
             android:text="15 MB"
             android:id="@+id/textViewLocalMapSize"
             android:layout_below="@+id/textViewLocalMapDescription" android:layout_marginTop="6dp"/>
@@ -33,6 +35,7 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="v1.0"
             android:id="@+id/textViewLocalMapVersion"
@@ -63,6 +66,7 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:text="Mappa aggiornata"
             android:id="@+id/textViewMapStatus"
@@ -71,8 +75,9 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Descrizione"
+            android:layout_marginBottom="6dp"
             android:id="@+id/textViewLocalMapDescription"
             android:layout_centerVertical="true" android:layout_alignParentStart="true"
             android:layout_below="@+id/textViewLocalMapName"/>
