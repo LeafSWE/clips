@@ -76,6 +76,39 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                 .add(R.id.linear_layout_home, blankHomeFragment)
                 .commit();
 
+
+    }
+
+    /**
+     * Recupera le informazioni dell'edificio dal database ed utilizza la View associata per
+     * mostrarle all'utente.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        informationManager.addListener(this);
+        try {
+            informationManager.getBuildingMap();
+            onDatabaseLoaded();
+        } catch (NoBeaconSeenException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Si occupa di controllare che Bluetooth e servizi di Localizzazione siano attivati sul
+     * dispositivo.
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkLocationPermissions();
+        checkLocationService();
+        checkStoragePermissions();
+        checkBluetoothConnection();
+    }
+
+    public void checkLocationPermissions(){
         if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M ){
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -103,35 +136,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                 }
             }
         }
-        checkStoragePermissions();
     }
-
-    /**
-     * Recupera le informazioni dell'edificio dal database ed utilizza la View associata per
-     * mostrarle all'utente.
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        informationManager.addListener(this);
-        try {
-            informationManager.getBuildingMap();
-            onDatabaseLoaded();
-        } catch (NoBeaconSeenException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Si occupa di controllare che Bluetooth e servizi di Localizzazione siano attivati sul
-     * dispositivo.
-     */
-    @Override
-    protected void onStart() {
-        super.onStart();
-        checkBluetoothConnection();
-    }
-
     /**
      * Controlla che la connettività Bluetoooth sia attiva. In caso negativo domanda il permesso di
      * attivarla.
@@ -148,7 +153,6 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             mBluetoothAdapter.enable();
-                            checkLocationService();
                         }
                     });
 
@@ -377,7 +381,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                         informationManager.downloadMapOfVisibleBeacons(true);
                     }
                 })
-                .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         informationManager.downloadMapOfVisibleBeacons(false);
                     }
