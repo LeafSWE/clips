@@ -57,7 +57,7 @@ import static org.mockito.Mockito.when;
  */
 
 /**
- * Testi di unità 117 + 118
+ * Test di unità 117 + 118
  */
 
 public class NavigationActivityTest {
