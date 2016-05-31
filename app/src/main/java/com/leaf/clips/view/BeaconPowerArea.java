@@ -19,6 +19,7 @@ import java.util.Collection;
  * @since 0.00
  */
 
+//TODO: astah - aggiungere classe
 /**
  * Classe ausiliara che permette definire una View in grado di aggiornarsi in tempo reale attraverso
  * l'aiuto dei Canvas. La classe in questione permette di visualizzare una mappa dell'edificio

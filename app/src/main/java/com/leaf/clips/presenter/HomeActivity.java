@@ -491,4 +491,5 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         startActivity(intent);
     }
 
+    //TODO: astah - rimosso enableSuggestion()
 }

@@ -26,7 +26,7 @@ public class ProcessedInformationImpTest {
     private static final String FAKE_BASIC_INFORMATION = "FakeBasicInformation";
     private static final String FAKE_DETAIL_INFORMATION = "FakeDetailInformation";
     private static final String FAKE_STARTER_INFORMATION = "FakeStartInformation";
-    private static final int FAKE_DIRECTION = 1;
+    private static final int FAKE_DIRECTION = -1;
     @Mock
     private PhotoInformation mockPhotoInformation;
 
@@ -68,7 +68,7 @@ public class ProcessedInformationImpTest {
         assertEquals("Different PhotoInformation info", processedInformation.getPhotoInstruction(),
                 mockPhotoInformation);
         assertEquals("Different direction", processedInformation.getDirection(),
-                FAKE_DIRECTION);
+                NavigationDirection.fromInt(FAKE_DIRECTION));
     }
 
     @Test

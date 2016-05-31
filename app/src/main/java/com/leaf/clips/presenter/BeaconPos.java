@@ -5,6 +5,8 @@ package com.leaf.clips.presenter;
  * @version 0.01
  * @since 0.00
  */
+
+//TODO: astah - aggiungere classe
 /*
  *Classe che permette di rappresentare la posizione di un Beacon in base al minor
  */
