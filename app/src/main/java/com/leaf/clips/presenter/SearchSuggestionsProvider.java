@@ -22,6 +22,7 @@ import com.leaf.clips.model.NoBeaconSeenException;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 
 import javax.inject.Inject;
+//TODO: astah - rimuovere riferimento homeactivity e aggiungere informationManager e pois
 /**
  *Classe che estende content Provider e si occupa della gestione suggerimenti di ricerca per la navigazione
  */
@@ -36,7 +37,7 @@ public class SearchSuggestionsProvider extends ContentProvider{
     /**
      * Insieme di tutti i PointOfInterest di un edificio
      */
-    Collection<PointOfInterest> pois;
+    private Collection<PointOfInterest> pois;
 
     /**
      * Identifica la struttura di un singolo suggerimento
