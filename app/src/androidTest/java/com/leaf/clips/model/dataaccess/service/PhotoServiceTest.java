@@ -35,6 +35,10 @@ import java.util.Map;
  * @version 0.01
  * @since 0.01
  */
+
+/**
+ * TU46 & TU47
+ */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class PhotoServiceTest {

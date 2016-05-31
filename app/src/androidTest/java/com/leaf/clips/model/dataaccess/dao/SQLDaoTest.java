@@ -23,6 +23,9 @@ import android.util.Log;
  * @since 0.01
  */
 
+/**
+ * TU97
+ */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class SQLDaoTest extends InstrumentationTestCase {

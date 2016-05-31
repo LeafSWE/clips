@@ -14,6 +14,9 @@ import static org.junit.Assert.*;
  *
  */
 
+/**
+ * TU74
+ */
 public class RoiPoiTableTest {
     private int poi;
     private int roi;

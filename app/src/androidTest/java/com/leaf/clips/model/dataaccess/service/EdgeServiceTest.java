@@ -59,6 +59,10 @@ import java.util.List;
  * @version 0.01
  * @since 0.01
  */
+
+/**
+ * TU50 & TU51 & TU52 & TU15
+ */
 public class EdgeServiceTest {
 
     public class DatabaseTest implements BaseColumns {

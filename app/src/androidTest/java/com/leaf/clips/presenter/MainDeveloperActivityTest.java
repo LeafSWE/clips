@@ -29,6 +29,7 @@ import static org.mockito.Mockito.when;
  * @version 0.01
  * @since 0.01
  *
+ * TU123
  * Viene verificato che sia possibile avviare un nuovo log e accedere ai log salvati sul
  * dispositivo utilizzando la classe MainDeveloperActivity
  */

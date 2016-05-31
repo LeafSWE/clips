@@ -44,6 +44,10 @@ import java.util.List;
  * @version 0.01
  * @since 0.01
  */
+
+/**
+ * TU53 & TU54 & TU55 & TU56 & TU155
+ */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class PointOfInterestServiceTest {

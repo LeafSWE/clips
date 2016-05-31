@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 /**
- *
+ * TU42
  */
 // TODO: 05/05/2016 associare ad un test? Unit o Integration
 // TODO: 5/6/16 Controllare perché è stato dato un conflitto. Ho preso la version f/model 

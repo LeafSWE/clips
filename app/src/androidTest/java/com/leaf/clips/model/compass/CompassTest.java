@@ -14,6 +14,10 @@ import static org.junit.Assert.*;
 /**
  * Created by Eduard on 28/04/2016.
  */
+
+/**
+ * TU101 & TU102
+ */
 @RunWith(AndroidJUnit4.class)
 public class CompassTest {
 
