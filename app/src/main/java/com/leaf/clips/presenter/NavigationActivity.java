@@ -105,9 +105,6 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
 
     }
 
-
-
-
     /**
      * @inheritDoc
      * @param intent {@link Intent} con il quale è stata avviata al corrente Activity.
