@@ -56,10 +56,6 @@ import static org.mockito.Mockito.when;
  * @since 0.00
  */
 
-/**
- * Test di unità 117 + 118
- */
-
 public class NavigationActivityTest {
     private NavigationActivity navigationActivity;
 
@@ -72,6 +68,9 @@ public class NavigationActivityTest {
         navigationActivity = mActivityRule.getActivity();
     }
 
+    /**
+     * T.U. 118
+     */
     @Test
     public void isAnErrorPath() {
         InformationManager mockInformationManager;
@@ -110,6 +109,9 @@ public class NavigationActivityTest {
 
     }
 
+    /**
+     * T.U. 118
+     */
     @Test
     public void isInformationUpdate() {
 
@@ -162,6 +164,10 @@ public class NavigationActivityTest {
         verify(mockNavigationView,times(1)).refreshInstructions(0);
     }
 
+    /**
+     * T.U. 117
+     * @throws Exception
+     */
     @Test
     public void isShownDetailedInformation () throws Exception {
         List<ProcessedInformation> mockNavigationInstruction;
