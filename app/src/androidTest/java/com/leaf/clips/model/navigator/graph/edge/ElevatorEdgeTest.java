@@ -1,5 +1,7 @@
 package com.leaf.clips.model.navigator.graph.edge;
 
+import android.support.test.runner.AndroidJUnit4;
+
 import com.leaf.clips.model.beacon.MyBeacon;
 import com.leaf.clips.model.beacon.MyBeaconImp;
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
@@ -16,6 +18,7 @@ import junit.framework.Assert;
 import org.altbeacon.beacon.AltBeacon;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -32,6 +35,7 @@ import static org.junit.Assert.*;
  * @since 0.00
  */
 
+@RunWith(AndroidJUnit4.class)
 public class ElevatorEdgeTest {
     private ElevatorEdge elevatorEdge;
 
