@@ -19,6 +19,10 @@ import org.junit.runner.RunWith;
  * @version 0.01
  * @since 0.01
  */
+
+/**
+ * TU98
+ */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class MapsDbHelperTest extends InstrumentationTestCase {

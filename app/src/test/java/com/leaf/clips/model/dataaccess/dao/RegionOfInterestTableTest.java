@@ -14,6 +14,9 @@ import static org.junit.Assert.*;
  *
  */
 
+/**
+ * TU73
+ */
 public class RegionOfInterestTableTest {
 
     private String uuid;

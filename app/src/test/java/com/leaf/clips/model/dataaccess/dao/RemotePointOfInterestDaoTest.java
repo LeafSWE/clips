@@ -15,6 +15,10 @@ import static org.junit.Assert.*;
  * @version 0.01
  * @since 0.01
  */
+
+/**
+ * TU64
+ */
 public class RemotePointOfInterestDaoTest {
 
     private JsonObject js;

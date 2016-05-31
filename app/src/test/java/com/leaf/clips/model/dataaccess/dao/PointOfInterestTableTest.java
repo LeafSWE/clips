@@ -14,6 +14,10 @@ import static org.junit.Assert.*;
  *
  */
 
+/**
+ * TU72
+ */
+
 public class PointOfInterestTableTest {
 
     private String description;

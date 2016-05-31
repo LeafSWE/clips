@@ -30,6 +30,10 @@ import static org.mockito.Mockito.when;
  * @version 0.01
  * @since 0.00
  */
+
+/**
+ * TU116
+ */
 @RunWith(AndroidJUnit4.class)
 public class PoiCategoryActivityTest {
     private PoiCategoryActivity testActivity;

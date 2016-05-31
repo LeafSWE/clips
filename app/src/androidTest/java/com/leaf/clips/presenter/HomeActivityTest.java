@@ -22,6 +22,10 @@ import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static org.mockito.Mockito.when;
 
+/**
+ * TU105 & TU106 & TU107 & TU108 & TU109 & TU111
+ */
+
 @RunWith(AndroidJUnit4.class)
 public class HomeActivityTest {
     HomeActivity testActivity;

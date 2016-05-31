@@ -37,19 +37,12 @@ public class DeveloperCodeManagerTest {
 
     @Test
     public void shouldAcceptDeveloperCode(){
-
-        //Assert.assertTrue(dev.isValid(""));
-        // TODO: 01/05/2016 decidere la stringa
-
-
+        Assert.assertTrue(dev.isValid("miriade"));
     }
 
 
     @Test
     public void shouldRejectDeveloperCode(){
-
-        //Assert.assertFalse(dev.isValid(""));
-        // TODO: 01/05/2016 decidere la stringa
-
+        Assert.assertFalse(dev.isValid(""));
     }
 }

@@ -15,6 +15,10 @@ import static org.junit.Assert.*;
  * @version 0.01
  * @since 0.01
  */
+
+/**
+ * TU63
+ */
 public class RemoteBuildingDaoTest {
 
     private JsonObject js;

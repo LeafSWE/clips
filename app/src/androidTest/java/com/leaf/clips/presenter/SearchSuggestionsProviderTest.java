@@ -39,7 +39,9 @@ import static org.mockito.Mockito.when;
  * @since 0.00
  */
 
-//Test di unità TU104 e TU110
+/**
+ * TU104 & TU110
+ */
 
 @RunWith(AndroidJUnit4.class)
 public class SearchSuggestionsProviderTest extends ProviderTestCase2<SearchSuggestionsProvider>{

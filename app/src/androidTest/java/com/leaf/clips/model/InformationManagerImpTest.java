@@ -28,7 +28,7 @@ import java.util.LinkedList;
 import java.util.PriorityQueue;
 
 /**
- * Unit test 172
+ * Unit test 150
  */
 @RunWith(AndroidJUnit4.class)
 @SmallTest

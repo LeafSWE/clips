@@ -14,6 +14,10 @@ import static org.junit.Assert.*;
  *
  */
 
+/**
+ * TU76
+ */
+
 public class EdgeTypeTableTest {
 
     private int id;

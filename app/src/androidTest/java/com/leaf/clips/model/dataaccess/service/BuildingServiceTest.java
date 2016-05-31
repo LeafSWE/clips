@@ -68,6 +68,10 @@ import java.util.Collection;
  * @version 0.01
  * @since 0.01
  */
+
+/**
+ * TU57 & TU58 & TU59 & TU60 & TU156
+ */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class BuildingServiceTest {

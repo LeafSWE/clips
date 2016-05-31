@@ -23,6 +23,7 @@ import static org.mockito.Mockito.when;
  * @version 0.01
  * @since 0.01
  *
+ * TU121
  * Viene verificato che sia possibile gestire le opzioni sviluppatore utilizzando
  * la classe MainDeveloperPresenter
  */

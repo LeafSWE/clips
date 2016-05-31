@@ -38,6 +38,10 @@ import java.util.List;
  * @version 0.01
  * @since 0.01
  */
+
+/**
+ * TU48 & TU49 & & TU152 & TU153 & TU154
+ */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class RegionOfInterestServiceTest {
