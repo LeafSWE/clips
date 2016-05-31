@@ -70,9 +70,10 @@ public class SearchSuggestionsProvider extends ContentProvider{
         if (query == null || query.length() == 0) {
             return null;
         }else {
+            if(informationManager == null)
+            MyApplication.getInfoComponent().inject(this);
             MatrixCursor cursor = new MatrixCursor(COLUMNS);
             try {
-                MyApplication.getInfoComponent().inject(this);
                 pois = informationManager.getBuildingMap().getAllPOIs();
                 int n = 0;
                 for (PointOfInterest s : pois) {

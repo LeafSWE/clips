@@ -199,14 +199,26 @@ public class SystemTest15 {
         onData(anything())
                 .inAdapterView(withId(R.id.listViewLocalMaps))
                 .atPosition(0)
-                .onChildView(withId(R.id.textViewLocalMapAddres))
+                .onChildView(withId(R.id.textViewLocalMapDescription))
                 .check(matches(not(withText(""))));
     }
 
     //TS15.7
-    //@Test
+    @Test
     public void shouldAccessLocalMapDescription() throws Exception {
-        //non implementato
+        Field field = HomeActivity.class.getDeclaredField("informationManager");
+        field.setAccessible(true);
+        InformationManager informationManager = (InformationManager)field.get(testActivity);
+        if(!informationManager.getDatabaseService().isBuildingMapPresent(666))
+            informationManager.getDatabaseService().findRemoteBuildingByMajor(666);
+        onView(withId(R.id.drawer_layout_home)).perform(open());
+        onView(withId(R.id.nav_view_home)).perform(NavigationViewActions.navigateTo(R.id.mapManager));
+        Thread.sleep(1000);
+        onData(anything())
+                .inAdapterView(withId(R.id.listViewLocalMaps))
+                .atPosition(0)
+                .onChildView(withId(R.id.textViewLocalMapAddres))
+                .check(matches(not(withText(""))));
     }
 
     //TS15.8
@@ -278,7 +290,16 @@ public class SystemTest15 {
     //TS15.12
     @Test
     public void shouldAccessRemoteMapDescription() throws Exception {
-        // TODO: 27/05/16 quando implementata funzione mappe remote
+        onView(withId(R.id.drawer_layout_home)).perform(open());
+        onView(withId(R.id.nav_view_home)).perform(NavigationViewActions.navigateTo(R.id.mapManager));
+        Thread.sleep(1000);
+        onView(withId(R.id.fab_add_new_map)).perform(click());
+        Thread.sleep(1000);
+        onData(anything())
+                .inAdapterView(withId(R.id.listViewRemoteMaps))
+                .atPosition(0)
+                .onChildView(withId(R.id.textViewRemoteMapDescription))
+                .check(matches(not(withText(""))));
     }
 
     //TS15.13
