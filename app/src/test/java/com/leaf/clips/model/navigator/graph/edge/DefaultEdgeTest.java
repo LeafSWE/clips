@@ -115,6 +115,6 @@ public class DefaultEdgeTest {
      */
     @Test
     public void testGetWeight() throws Exception {
-       //TODO da implementare quando sarà deciso il peso
+       assertEquals(distance,defaultEdge.getWeight(),0.01f);
     }
 }

@@ -23,6 +23,9 @@ import java.util.Collection;
 import java.util.PriorityQueue;
 
 import javax.inject.Inject;
+
+//TODO: astah - aggiungere classe
+
 /**
  * Classe che permette di creare un'Activity che è in grado di rilevare il segnale emesso dai Beacon
  * e visualizzarlo a video. Il segnale preso in considerazione è l'RSSI.

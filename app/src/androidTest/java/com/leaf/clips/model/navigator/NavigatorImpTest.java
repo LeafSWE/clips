@@ -5,11 +5,12 @@ package com.leaf.clips.model.navigator;
  * @since 0.00
  */
 
+import android.support.test.runner.AndroidJUnit4;
+
 import com.leaf.clips.BuildConfig;
 import com.leaf.clips.model.beacon.MyBeacon;
 import com.leaf.clips.model.compass.Compass;
 import com.leaf.clips.model.navigator.algorithm.DijkstraPathFinder;
-import com.leaf.clips.model.navigator.algorithm.PathFinder;
 import com.leaf.clips.model.navigator.graph.MapGraph;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
@@ -20,7 +21,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -34,7 +36,7 @@ import static org.junit.Assert.*;
 /**
  * TU33, TU34, TU35
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(AndroidJUnit4.class)
 public class NavigatorImpTest {
 
     final static String FAKE_BASIC_INFO = "FakeBasicInfo";
@@ -43,61 +45,61 @@ public class NavigatorImpTest {
     final static String FAKE_CORRECT_DIRECTION_INFO = "Direzione corretta";
 
 
-    @Mock
-    private PhotoInformation mockEdgePhotos;
+    //@Mock
+    private PhotoInformation mockEdgePhotos = Mockito.mock(PhotoInformation.class);
 
     private NavigatorImp navigatorImp;
 
-    @Mock
-    private Compass mockCompass;
+    //@Mock
+    private Compass mockCompass = Mockito.mock(Compass.class);
 
-    @Mock
-    private RegionOfInterest mockStartRoi;
+    //@Mock
+    private RegionOfInterest mockStartRoi = Mockito.mock(RegionOfInterest.class);
 
-    @Mock
-    private PointOfInterest mockNullEndPoi;
+    //@Mock
+    private PointOfInterest mockNullEndPoi = Mockito.mock(PointOfInterest.class);
 
-    @Mock
-    private RegionOfInterest mockEndRoi;
+    //@Mock
+    private RegionOfInterest mockEndRoi = Mockito.mock(RegionOfInterest.class);
 
-    @Mock
-    private PriorityQueue<MyBeacon> mockVisibleBeacons;
+    //@Mock
+    private PriorityQueue<MyBeacon> mockVisibleBeacons = Mockito.mock(PriorityQueue.class);
 
-    @Mock
-    private PriorityQueue<MyBeacon> mockNoVisibleBeacons;
+    //@Mock
+    private PriorityQueue<MyBeacon> mockNoVisibleBeacons = Mockito.mock(PriorityQueue.class);
 
-    @Mock
-    private MyBeacon mockNearBeacon;
+    //@Mock
+    private MyBeacon mockNearBeacon = Mockito.mock(MyBeacon.class);
 
-    @Mock
-    private MyBeacon mockNoNearBeacon;
+    //@Mock
+    private MyBeacon mockNoNearBeacon = Mockito.mock(MyBeacon.class);
 
-    @Mock
-    private MapGraph mockMapGraph;
+    //@Mock
+    private MapGraph mockMapGraph = Mockito.mock(MapGraph.class);
 
-    @Mock
-    private DijkstraPathFinder mockDijkstraPathFinder;
+    //@Mock
+    private DijkstraPathFinder mockDijkstraPathFinder = Mockito.mock(DijkstraPathFinder.class);
 
     private List<EnrichedEdge> fakeShortestPath;
 
-    @Mock
-    private EnrichedEdge mockEnrichedEdge;
+    //@Mock
+    private EnrichedEdge mockEnrichedEdge = Mockito.mock(EnrichedEdge.class);
 
-    @Mock
-    private EnrichedEdge mockEnrichedEdge2;
+    //@Mock
+    private EnrichedEdge mockEnrichedEdge2 = Mockito.mock(EnrichedEdge.class);
 
-    @Mock
-    private PointOfInterest mockEndPoi;
+    //@Mock
+    private PointOfInterest mockEndPoi = Mockito.mock(PointOfInterest.class);
 
     private List<RegionOfInterest> fakeBelongingRoi;
 
     private List<ProcessedInformation> fakeProcessedInformation;
 
-    @Mock
-    private RegionOfInterest mockRoiInPoi;
+    //@Mock
+    private RegionOfInterest mockRoiInPoi = Mockito.mock(RegionOfInterest.class);
 
-    @Mock
-    private RegionOfInterest mockRoiWithBeacon;
+    //@Mock
+    private RegionOfInterest mockRoiWithBeacon = Mockito.mock(RegionOfInterest.class);
 
     @Before
     public void setUp() throws Exception {
@@ -129,6 +131,9 @@ public class NavigatorImpTest {
         fakeProcessedInformation = new ArrayList<>();
         fakeProcessedInformation.add(new ProcessedInformationImp(mockEnrichedEdge));
         fakeProcessedInformation.add(new ProcessedInformationImp(mockEnrichedEdge2));
+        //destinazione
+        fakeProcessedInformation.add(new ProcessedInformationImp());
+
     }
 
     /**
@@ -191,6 +196,7 @@ public class NavigatorImpTest {
         List<ProcessedInformation> resultFakeProcessedInformation =
                 navigatorImp.getAllInstructions();
         if ( resultFakeProcessedInformation.size() != fakeProcessedInformation.size()) {
+            assertEquals(fakeProcessedInformation.size(), resultFakeProcessedInformation.size());
             fail("List of ProcessedInformation don't have same size");
         }
         else {
@@ -205,7 +211,8 @@ public class NavigatorImpTest {
                 if (!resultEdge.getProcessedBasicInstruction().equals(compareEdge.getProcessedBasicInstruction())) {
                     fail("Basic processed information is different from expected");
                 }
-                if (!resultEdge.getPhotoInstruction().equals(compareEdge.getPhotoInstruction())) {
+                if (resultEdge.getPhotoInstruction() != null && !resultEdge.getPhotoInstruction().
+                        equals(compareEdge.getPhotoInstruction())) {
                     fail("Photo processed information is different from expected");
                 }
             }

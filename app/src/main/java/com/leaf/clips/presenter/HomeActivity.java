@@ -76,34 +76,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                 .add(R.id.linear_layout_home, blankHomeFragment)
                 .commit();
 
-        if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M ){
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED) {
 
-                // Should we show an explanation?
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION)) {
-
-                    // Show an expanation to the user *asynchronously* -- don't block
-                    // this thread waiting for the user's response! After the user
-                    // sees the explanation, try again to request the permission.
-
-                } else {
-
-                    // No explanation needed, we can request the permission.
-
-                    ActivityCompat.requestPermissions(this,
-                            new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                            0);
-
-                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                    // app-defined int constant. The callback method gets the
-                    // result of the request.
-                }
-            }
-        }
-        checkStoragePermissions();
     }
 
     /**
@@ -131,9 +104,41 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     @Override
     protected void onStart() {
         super.onStart();
+        checkLocationPermissions();
+        checkLocationService();
+        checkStoragePermissions();
         checkBluetoothConnection();
     }
 
+    public void checkLocationPermissions(){
+        if(Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M ){
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                // Should we show an explanation?
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION)) {
+
+                    // Show an expanation to the user *asynchronously* -- don't block
+                    // this thread waiting for the user's response! After the user
+                    // sees the explanation, try again to request the permission.
+
+                } else {
+
+                    // No explanation needed, we can request the permission.
+
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                            0);
+
+                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                    // app-defined int constant. The callback method gets the
+                    // result of the request.
+                }
+            }
+        }
+    }
     /**
      * Controlla che la connettività Bluetoooth sia attiva. In caso negativo domanda il permesso di
      * attivarla.
@@ -151,7 +156,6 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             mBluetoothAdapter.enable();
-                            checkLocationService();
                         }
                     });
 
@@ -357,7 +361,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                         informationManager.downloadMapOfVisibleBeacons(true);
                     }
                 })
-                .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         informationManager.downloadMapOfVisibleBeacons(false);
                     }
@@ -475,4 +479,5 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         startActivity(intent);
     }
 
+    //TODO: astah - rimosso enableSuggestion()
 }

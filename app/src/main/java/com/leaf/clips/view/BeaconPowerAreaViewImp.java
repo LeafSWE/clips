@@ -14,6 +14,13 @@ import java.util.Collection;
  * @version 0.01
  * @since 0.00
  */
+
+//TODO: astah - aggiungere classe
+/**
+ * Classe che implementa BeaconPowerView e fornisce una vista alla classe BeaconPowerActivity. Essa
+ * è in grado di rappresentare una mappa dell'edificio in cui si sta navigando e l'area coperta dal
+ * segnale dei beacon sottoforma di cerchio.
+ */
 public class BeaconPowerAreaViewImp implements BeaconPowerAreaView {
     /**
      * Bottone per avviare o interrompere la scansione del segnale dei Beacon

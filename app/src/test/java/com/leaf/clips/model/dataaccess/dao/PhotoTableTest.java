@@ -14,6 +14,10 @@ import static org.junit.Assert.*;
  *
  */
 
+/**
+ * TU78
+ */
+
 public class PhotoTableTest {
 
     private int edgeId;

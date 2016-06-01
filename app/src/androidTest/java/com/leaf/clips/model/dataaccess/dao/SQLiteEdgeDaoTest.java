@@ -28,6 +28,9 @@ import static org.junit.Assert.*;
  * @since 0.01
  */
 
+/**
+ * TU89 & TU90
+ */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class SQLiteEdgeDaoTest extends InstrumentationTestCase {

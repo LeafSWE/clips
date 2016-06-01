@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
  * @version 0.01
  * @since 0.01
  *
- * TU127
+ * TU126
  * Viene verificato che sia possibile aggiornare o rimuovere una mappa già presente sul
  * dispostivo utilizzando la classe LocalMapActvitiy utilizzando LocalMapActivity.
  */

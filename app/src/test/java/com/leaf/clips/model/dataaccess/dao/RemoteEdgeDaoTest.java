@@ -17,6 +17,9 @@ import static org.junit.Assert.*;
  *
  */
 
+/**
+ * TU67
+ */
 public class RemoteEdgeDaoTest {
 
     private JsonObject js;

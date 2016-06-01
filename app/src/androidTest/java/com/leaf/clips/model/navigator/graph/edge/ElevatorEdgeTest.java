@@ -1,5 +1,7 @@
 package com.leaf.clips.model.navigator.graph.edge;
 
+import android.support.test.runner.AndroidJUnit4;
+
 import com.leaf.clips.model.beacon.MyBeacon;
 import com.leaf.clips.model.beacon.MyBeaconImp;
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
@@ -10,10 +12,17 @@ import com.leaf.clips.model.navigator.graph.navigationinformation.NavigationInfo
 import com.leaf.clips.model.navigator.graph.navigationinformation.NavigationInformationImp;
 import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoInformation;
 import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoRef;
+import com.leaf.clips.model.usersetting.PathPreference;
+import com.leaf.clips.model.usersetting.Setting;
+import com.leaf.clips.presenter.MyApplication;
+
+import junit.framework.Assert;
 
 import org.altbeacon.beacon.AltBeacon;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -30,8 +39,9 @@ import static org.junit.Assert.*;
  * @since 0.00
  */
 
-public class StairEdgeTest {
-    private StairEdge stairEdge;
+@RunWith(AndroidJUnit4.class)
+public class ElevatorEdgeTest {
+    private ElevatorEdge elevatorEdge;
 
     int startId = 46;
     String startUuid = "DF7E1C79-43E9-44FF-886F-1D1F7DA6997A".toLowerCase();
@@ -88,30 +98,35 @@ public class StairEdgeTest {
 
         this.navInfo = new NavigationInformationImp(basicInformation, detailedInformation, photoInformation);
 
-        stairEdge = new StairEdge(startROI, endROI, distance, coordinate, edgeID, navInfo);
+        elevatorEdge = new ElevatorEdge(startROI, endROI, distance, coordinate, edgeID, navInfo);
     }
 
     /*
-     * TU18
+     * TU19
      */
     @Test
     public void testGetBasicInformation() throws Exception {
-        assertEquals("Basic Instruction", stairEdge.getBasicInformation());
+        assertEquals("Basic Instruction", elevatorEdge.getBasicInformation());
     }
 
     /*
-     * TU18
+     * TU19
      */
     @Test
     public void testGetDetailedInformation() throws Exception {
-        assertEquals("Detailed Instruction", stairEdge.getDetailedInformation());
+        assertEquals("Detailed Instruction",elevatorEdge.getDetailedInformation());
     }
 
     /*
-     * TU20
+     * TU21
      */
     @Test
     public void testGetWeight() throws Exception {
-        //TODO da implementare quando sarà deciso il peso
+        Setting mockSetting = Mockito.mock(Setting.class);
+        Mockito.when(mockSetting.getPathPreference()).thenReturn(PathPreference.ELEVATOR_PREFERENCE);
+        elevatorEdge.setUserPreference(mockSetting);
+        double elevatorFactor = MyApplication.getConfiguration().getElevatorFactor();
+        double value = Math.exp( -1 * ( elevatorEdge.getDistance() - elevatorFactor ) );
+        assertEquals(value,elevatorEdge.getWeight(),0.01f);
     }
 }

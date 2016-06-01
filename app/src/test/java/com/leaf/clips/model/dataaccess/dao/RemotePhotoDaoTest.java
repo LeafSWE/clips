@@ -12,6 +12,9 @@ import junit.framework.Assert;
  *
  */
 
+/**
+ * TU70
+ */
 public class RemotePhotoDaoTest {
 
     private JsonObject js;

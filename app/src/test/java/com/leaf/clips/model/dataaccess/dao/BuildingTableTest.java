@@ -14,6 +14,10 @@ import static org.junit.Assert.*;
  *
  */
 
+/**
+ * TU71
+ */
+
 public class BuildingTableTest {
     private String address;
     private String description;

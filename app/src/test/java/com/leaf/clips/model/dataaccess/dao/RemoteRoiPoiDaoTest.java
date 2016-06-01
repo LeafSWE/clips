@@ -17,6 +17,9 @@ import static org.junit.Assert.*;
  *
  */
 
+/**
+ * TU66
+ */
 public class RemoteRoiPoiDaoTest {
 
     private JsonObject js;

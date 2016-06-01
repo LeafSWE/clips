@@ -14,6 +14,9 @@ import static org.junit.Assert.*;
  *
  */
 
+/**
+ * TU77
+ */
 public class CategoryTableTest {
 
     private String description;

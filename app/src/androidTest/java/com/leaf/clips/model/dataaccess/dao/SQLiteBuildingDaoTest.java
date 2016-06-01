@@ -28,6 +28,10 @@ import static org.junit.Assert.*;
  * @since 0.01
  */
 
+/**
+ * TU80 & TU81 & TU82
+ */
+
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class SQLiteBuildingDaoTest extends InstrumentationTestCase {

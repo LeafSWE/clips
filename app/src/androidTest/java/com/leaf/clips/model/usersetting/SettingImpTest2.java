@@ -28,7 +28,7 @@ public class SettingImpTest2{
     @Before
     public void init(){
         setting = new SettingImp(InstrumentationRegistry.getTargetContext());
-        boolean isDev = setting.unlockDeveloper("");// TODO: 01/05/2016 decidere la stringa
+        boolean isDev = setting.unlockDeveloper("miriade");
         Assert.assertTrue(isDev);
     }
 
