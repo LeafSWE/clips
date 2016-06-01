@@ -27,7 +27,7 @@ public class NoInternetAlert {
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(presenter);
                 alertBuilder.setTitle(R.string.no_connection_title_alert_help);
                 alertBuilder.setMessage(R.string.navigation_internet_alert);
-                alertBuilder.setPositiveButton(context.getResources().getString(R.string.ok),
+                alertBuilder.setPositiveButton(presenter.getResources().getString(R.string.ok),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
