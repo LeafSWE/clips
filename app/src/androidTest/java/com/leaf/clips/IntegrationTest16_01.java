@@ -1,58 +1,31 @@
 package com.leaf.clips;
 /**
  * @author Federico Tavella
- * @version 0.00
- * @since 0.00
+ * @version 0.11
+ * @since 0.10
  */
 
-import android.app.Activity;
-import android.app.UiAutomation;
 import android.os.Build;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.Espresso;
-import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.action.GeneralLocation;
-import android.support.test.espresso.action.Press;
-import android.support.test.espresso.action.Tap;
+
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.intent.Intents;
-import android.support.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import android.support.test.rule.ActivityTestRule;
 
-
-import com.leaf.clips.model.InformationManagerImp;
-import com.leaf.clips.model.beacon.MyBeacon;
-import com.leaf.clips.model.beacon.MyBeaconImp;
-import com.leaf.clips.model.navigator.BuildingMap;
 import com.leaf.clips.presenter.HelpActivity;
 import com.leaf.clips.presenter.HomeActivity;
 import com.leaf.clips.presenter.LocalMapActivity;
 import com.leaf.clips.presenter.MainDeveloperPresenter;
 import com.leaf.clips.presenter.NearbyPoiActivity;
 import com.leaf.clips.presenter.PoiActivity;
-import com.leaf.clips.presenter.PoiCategoryActivity;
-import com.leaf.clips.view.HomeView;
-import com.leaf.clips.view.HomeViewImp;
 
-import org.altbeacon.beacon.Beacon;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import android.support.test.espresso.core.deps.guava.base.Optional;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.LinkedList;
-import java.util.PriorityQueue;
-
-import static android.support.test.espresso.Espresso.getIdlingResources;
-import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.actionWithAssertions;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
+
 import static android.support.test.espresso.contrib.DrawerActions.open;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
@@ -63,23 +36,20 @@ import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
-import android.test.InstrumentationTestCase;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.util.Log;
 import android.view.View;
 
-import junit.framework.Assert;
-
 /**
  * Class Description
  */
+
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class IntegrationTest16{
-
+public class IntegrationTest16_01{
 
     HomeActivity testActivity;
-    HomeView homeView;
+
     @Rule
     public ActivityTestRule<HomeActivity> mActivityRule =
             new ActivityTestRule<>(HomeActivity.class);
@@ -176,4 +146,5 @@ public class IntegrationTest16{
         intended(hasComponent(MainDeveloperPresenter.class.getName()));
         Intents.release();
     }
+
 }
