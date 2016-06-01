@@ -99,8 +99,13 @@ public class NavigationViewImp implements NavigationView {
             }
         }
         if (listView != null) {
-            for(int j = i+1; j < listView.getCount(); j++)
-                listView.getChildAt(j).setBackgroundColor(presenter.getResources().getColor(R.color.white));
+            for(int j = i+1; j < listView.getCount(); j++){
+                View child = listView.getChildAt(j);
+                if(child != null)
+                    child.setBackgroundColor(presenter.getResources().getColor(R.color.white));
+            }
+
+
         }
         lastRefresh = i;
     }

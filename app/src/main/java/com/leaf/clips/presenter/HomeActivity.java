@@ -85,8 +85,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     //TODO:astah
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
+    protected void onResumeFragments() {
+        super.onResumeFragments();
         informationManager.addListener(this);
         try {
             informationManager.getBuildingMap();
@@ -327,10 +327,12 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     @Override
     public void onDatabaseLoaded() {
         CompleteHomeFragment completeHomeFragment = new CompleteHomeFragment();
+
+        if(!isFinishing()){
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.linear_layout_home, completeHomeFragment, "COMPLETE_FRAGMENT")
                 .addToBackStack("COMPLETE_FRAGMENT")
-                .commit();
+                .commitAllowingStateLoss();
 
         getSupportFragmentManager().executePendingTransactions();
 
@@ -340,10 +342,11 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         }
 
         updateBuildingAddress();
-            updateBuildingName();
-            updateBuildingDescription();
-            updateBuildingOpeningHours();
-            updatePoiCategoryList();
+        updateBuildingName();
+        updateBuildingDescription();
+        updateBuildingOpeningHours();
+        updatePoiCategoryList();
+        }
     }
 
     /**
@@ -454,7 +457,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     }
 
     /**
-     * Avvia l'Activity deputata a gestire le mappe salvate sul dispositivo.
+     * Avvia l'Activity deputata a gestire le preferenze dell'utente.
      */
     public void showPreferences(){
         Intent intent = new Intent(this, PreferencesActivity.class);
@@ -478,6 +481,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         Intent intent = new Intent(this, MainDeveloperPresenter.class);
         startActivity(intent);
     }
+
 
     //TODO: astah - rimosso enableSuggestion()
 }
