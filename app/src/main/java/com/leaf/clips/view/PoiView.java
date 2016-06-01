@@ -11,7 +11,8 @@ import java.util.List;
 
 /**
 *Interfaccia che espone i metodi per aggiornare la UI contenente la lista dei POI appartenenti ad una data categoria
-*/ 
+*/
+//TODO:astah
 public interface PoiView {
 
  /**

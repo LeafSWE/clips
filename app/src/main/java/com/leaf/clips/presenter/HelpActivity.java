@@ -49,6 +49,7 @@ public class HelpActivity extends AppCompatActivity {
      * interroga la view per mostrare la guida, altrimenti viene mostrato un Alert che informa che
      * la connessione internet non è attiva
      */
+    //TODO:astah
     private void checkInternetConnection() {
         ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm.getActiveNetworkInfo() != null) {

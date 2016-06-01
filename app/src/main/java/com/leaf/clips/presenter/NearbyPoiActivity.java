@@ -5,6 +5,7 @@ package com.leaf.clips.presenter;
  * @since 0.00
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -22,6 +23,7 @@ import javax.inject.Inject;
 /**
  * Questa Activity si occupa di gestire i POI rilevati nelle vicinanze dell'utente.
  */
+//TODO:astah
 public class NearbyPoiActivity extends AppCompatActivity {
 
     /**
@@ -65,6 +67,22 @@ public class NearbyPoiActivity extends AppCompatActivity {
             view.setAdapter(nearbyPoiNames);
         } catch (NoBeaconSeenException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Matodo che recupera l'id del POI scelto e lo passa a DescriptionPoiActivity, in modo che essa
+     * possa visualizzare la descrizione del Poi scelto.
+     * @param selectedPoi POI di cui visualizzare la descrizione
+     */
+    public void showDescription(int selectedPoi){
+        Intent intent = new Intent(this, PoiDescriptionActivity.class);
+
+        if(pois != null){
+            int chosenPoiId = pois.get(selectedPoi).getId();
+            intent.putExtra("poi_id",chosenPoiId);
+
+            startActivity(intent);
         }
     }
 }

@@ -127,7 +127,8 @@
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.HomeActivity"/>
         </activity>
-        <activity android:name=".presenter.HelpActivity">
+        <activity android:name=".presenter.HelpActivity"
+                  android:label="@string/title_activity_help">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.HomeActivity"/>

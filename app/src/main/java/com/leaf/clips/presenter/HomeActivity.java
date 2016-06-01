@@ -83,9 +83,10 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      * Recupera le informazioni dell'edificio dal database ed utilizza la View associata per
      * mostrarle all'utente.
      */
+    //TODO:astah
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onPostResume() {
+        super.onPostResume();
         informationManager.addListener(this);
         try {
             informationManager.getBuildingMap();
@@ -99,6 +100,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      * Si occupa di controllare che Bluetooth e servizi di Localizzazione siano attivati sul
      * dispositivo.
      */
+    //TODO:astah
     @Override
     protected void onStart() {
         super.onStart();
@@ -141,6 +143,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      * Controlla che la connettività Bluetoooth sia attiva. In caso negativo domanda il permesso di
      * attivarla.
      */
+    //TODO:astah
     public void checkBluetoothConnection(){
         final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -164,6 +167,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      * Controlla che i servizi di Localizzazione siano attivi. In caso negativo chiede all'utente di
      * attivarli.
      */
+    //TODO:astah
     public void checkLocationService(){
         // Get Location Manager and check for GPS & Network location services
         LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -190,6 +194,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      * Controlla che i servizi di Localizzazione siano attivi. In caso negativo chiede all'utente di
      * attivarli.
      */
+    //TODO:astah
     public void checkStoragePermissions(){
         // Here, thisActivity is the current activity
         if (ContextCompat.checkSelfPermission(this,
@@ -217,32 +222,6 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                 // result of the request.
             }
         }
-
-        /*if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
-            } else {
-
-                // No explanation needed, we can request the permission.
-
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        0);
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
-        }*/
     }
 
     /**
@@ -350,7 +329,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         CompleteHomeFragment completeHomeFragment = new CompleteHomeFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.linear_layout_home, completeHomeFragment, "COMPLETE_FRAGMENT")
-                .addToBackStack("COMPLETE_FRAGMENT").commit();
+                .addToBackStack("COMPLETE_FRAGMENT")
+                .commit();
 
         getSupportFragmentManager().executePendingTransactions();
 
@@ -441,6 +421,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      * Metodo invocato ogni volta che vengono rilevati beacon
      * @param visibleBeacons lista di beacon rilevati
      */
+    //TODO:astah
     @Override
     public void getAllVisibleBeacons(PriorityQueue<MyBeacon> visibleBeacons) {
         //non necessario che sia implementato
@@ -449,6 +430,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     /**
      * @inheritDoc
      */
+    //TODO:astah
     @Override
     public void onDestroy(){
         super.onDestroy();
@@ -482,6 +464,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     /**
      * Avvia l'Activity deputata a mostrare al lista di tutti i POI dell'edificio.
      */
+    //TODO:astah
     public void showAllPois() {
         Intent intent = new Intent(this, PoiActivity.class);
         startActivity(intent);
@@ -490,6 +473,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     /**
      * Avvia l'Activity deputata alla gestione delle funzionalità sviluppatore.
      */
+    //TODO:astah
     public void showDeveloper() {
         Intent intent = new Intent(this, MainDeveloperPresenter.class);
         startActivity(intent);
