@@ -46,7 +46,7 @@ public class LoggingViewImp implements LoggingView {
         listLog = (ListView) presenter.findViewById(R.id.visible_beacons_list);
 
 
-        FloatingActionButton fab = (FloatingActionButton) presenter.findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) presenter.findViewById(R.id.fab_stop_logging);
         if (fab != null) {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override

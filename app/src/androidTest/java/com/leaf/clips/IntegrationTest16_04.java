@@ -15,9 +15,8 @@ import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
 import android.util.Log;
 
-import com.leaf.clips.presenter.LocalMapActivity;
-
-import com.leaf.clips.presenter.RemoteMapManagerActivity;
+import com.leaf.clips.presenter.DeveloperUnlockerActivity;
+import com.leaf.clips.presenter.LoggingActivity;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -27,15 +26,14 @@ import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 
 /**
- * Test che verifica l'apertura di tutte le activity apribili dalla LocalMapActivity tramite un click
+ * Test che verifica l'apertura di tutte le activity apribili dalla LoggingActivity tramite un click
  */
-public class IntegrationTest16_02 {
-
-    LocalMapActivity testActivity;
+public class IntegrationTest16_04 {
+    LoggingActivity testActivity;
 
     @Rule
-    public ActivityTestRule<LocalMapActivity> mActivityRule =
-            new ActivityTestRule<>(LocalMapActivity.class);
+    public ActivityTestRule<LoggingActivity> mActivityRule =
+            new ActivityTestRule<>(LoggingActivity.class);
 
     @Before
     public void init() throws InterruptedException {
@@ -84,11 +82,10 @@ public class IntegrationTest16_02 {
     }
 
     @Test
-    public void shouldLaunchDownloadNewMapIntent(){
+    public void shouldLaunchMainDeveloperIntent(){
         Intents.init();
-        testActivity.findViewById(R.id.fab_add_new_map).callOnClick();
-        intended(hasComponent(RemoteMapManagerActivity.class.getName()));
+        testActivity.findViewById(R.id.fab_stop_logging).callOnClick();
+        intended(hasComponent(DeveloperUnlockerActivity.class.getName()));
         Intents.release();
     }
-
 }
