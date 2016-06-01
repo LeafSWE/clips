@@ -457,7 +457,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     }
 
     /**
-     * Avvia l'Activity deputata a gestire le mappe salvate sul dispositivo.
+     * Avvia l'Activity deputata a gestire le preferenze dell'utente.
      */
     public void showPreferences(){
         Intent intent = new Intent(this, PreferencesActivity.class);

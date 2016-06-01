@@ -6,7 +6,6 @@ package com.leaf.clips.presenter;
  * @since 0.00
  */
 
-//TODO: astah - aggiungere classe
 /*
  *Classe che permette di rappresentare la posizione di un Beacon in base al minor
  */
@@ -51,7 +50,7 @@ public class BeaconPos{
     }
     /**
      * Metodo che permette di impostare il minor desiderato
-     * @
+     * @param minor minor del Beacon che deve essere impostato
      */
     public void setMinor(int minor) {
         this.minor = minor;
