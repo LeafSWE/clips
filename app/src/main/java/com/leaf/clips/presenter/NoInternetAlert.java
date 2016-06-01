@@ -18,13 +18,13 @@ import com.leaf.clips.R;
 public class NoInternetAlert {
     private static AlertDialog alert = null;
 
-    public void showIfNoConnection(Activity context){
+    public void showIfNoConnection(Activity presenter){
         ConnectivityManager connectivityManager =
-                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager)presenter.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (!(networkInfo != null && networkInfo.isConnected())){
             if (alert == null) {
-                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(presenter);
                 alertBuilder.setTitle(R.string.no_connection_title_alert_help);
                 alertBuilder.setMessage(R.string.navigation_internet_alert);
                 alertBuilder.setPositiveButton(context.getResources().getString(R.string.ok),
@@ -36,7 +36,7 @@ public class NoInternetAlert {
                         });
                 alert = alertBuilder.create();
             }
-            if(!context.isFinishing())
+            if(!presenter.isFinishing())
                 alert.show();
         }
     }
