@@ -2,7 +2,7 @@ package com.leaf.clips;
 /**
  * @author Federico Tavella
  * @version 0.11
- * @since 0.10
+ * @since 0.00
  */
 
 import android.os.Build;
@@ -41,7 +41,7 @@ import android.util.Log;
 import android.view.View;
 
 /**
- * Class Description
+ * Test che verifica l'apertura di tutte le activity apribili dalla HomeActivity tramite un click
  */
 
 @RunWith(AndroidJUnit4.class)
