@@ -153,7 +153,6 @@ public class IntegrationTest16{
     @Test
     public void shouldLaunchMapIntent() {
         Intents.init();
-        //making the button visible in order to click it
         onView(withId(R.id.drawer_layout_home)).perform(open());
         onView(withId(R.id.nav_view_home)).perform(NavigationViewActions.navigateTo(R.id.mapManager));
         intended(hasComponent(LocalMapActivity.class.getName()));
@@ -163,7 +162,6 @@ public class IntegrationTest16{
     @Test
     public void shouldLaunchShowHelpIntent(){
         Intents.init();
-        //making the button visible in order to click it
         onView(withId(R.id.drawer_layout_home)).perform(open());
         onView(withId(R.id.nav_view_home)).perform(NavigationViewActions.navigateTo(R.id.help));
         intended(hasComponent(HelpActivity.class.getName()));
@@ -173,7 +171,6 @@ public class IntegrationTest16{
     @Test
     public void shouldLaunchDeveloperIntent(){
         Intents.init();
-        //making the button visible in order to click it
         onView(withId(R.id.drawer_layout_home)).perform(open());
         onView(withId(R.id.nav_view_home)).perform(NavigationViewActions.navigateTo(R.id.nav_developer));
         intended(hasComponent(MainDeveloperPresenter.class.getName()));
