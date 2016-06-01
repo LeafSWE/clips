@@ -160,5 +160,15 @@ public class IntegrationTest16{
         Intents.release();
     }
 
+    @Test
+    public void shouldLaunchShowHelpIntent(){
+        Intents.init();
+        //making the button visible in order to click it
+        onView(withId(R.id.drawer_layout_home)).perform(open());
+        onView(withId(R.id.nav_view_home)).perform(NavigationViewActions.navigateTo(R.id.help));
+        intended(hasComponent(HelpActivity.class.getName()));
+        Intents.release();
+    }
+
 
 }
