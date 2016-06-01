@@ -1,14 +1,12 @@
 package com.leaf.clips;
 /**
  * @author Federico Tavella
- * @version 0.00
+ * @version 0.02
  * @since 0.00
  */
 
 import android.os.Build;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.Espresso;
-import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.uiautomator.UiDevice;
@@ -16,32 +14,20 @@ import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
 import android.util.Log;
-import android.view.View;
 
-import com.leaf.clips.presenter.HelpActivity;
-import com.leaf.clips.presenter.HomeActivity;
 import com.leaf.clips.presenter.LocalMapActivity;
-import com.leaf.clips.presenter.MainDeveloperPresenter;
-import com.leaf.clips.presenter.NearbyPoiActivity;
-import com.leaf.clips.presenter.PoiActivity;
+
 import com.leaf.clips.presenter.RemoteMapManagerActivity;
 
-import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import static android.support.test.espresso.Espresso.onData;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.contrib.DrawerActions.open;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static org.hamcrest.Matchers.anything;
 
 /**
- * Class Description
+ * Test che verifica l'apertura di tutte le activity apribili dalla LocalMapActivity tramite un click
  */
 public class IntegrationTest16_02 {
 
