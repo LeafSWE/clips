@@ -5,6 +5,7 @@ package com.leaf.clips.model.beacon;
  * @since 0.00
  */
 
+import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import org.altbeacon.beacon.AltBeacon;
@@ -12,7 +13,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.PriorityQueue;
 /**
  * Unit Test 37 & 38
  */
-@RunWith(JUnit4.class)
+@RunWith(AndroidJUnit4.class)
 @SmallTest
 public class LoggerImpTest {
 
