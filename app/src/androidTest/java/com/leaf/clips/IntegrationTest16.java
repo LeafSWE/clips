@@ -24,8 +24,13 @@ import com.leaf.clips.model.InformationManagerImp;
 import com.leaf.clips.model.beacon.MyBeacon;
 import com.leaf.clips.model.beacon.MyBeaconImp;
 import com.leaf.clips.model.navigator.BuildingMap;
+import com.leaf.clips.presenter.HelpActivity;
 import com.leaf.clips.presenter.HomeActivity;
+import com.leaf.clips.presenter.LocalMapActivity;
+import com.leaf.clips.presenter.MainDeveloperPresenter;
 import com.leaf.clips.presenter.NearbyPoiActivity;
+import com.leaf.clips.presenter.PoiActivity;
+import com.leaf.clips.presenter.PoiCategoryActivity;
 import com.leaf.clips.view.HomeView;
 import com.leaf.clips.view.HomeViewImp;
 
@@ -63,6 +68,8 @@ import android.test.suitebuilder.annotation.LargeTest;
 import android.util.Log;
 import android.view.View;
 
+import junit.framework.Assert;
+
 /**
  * Class Description
  */
@@ -72,8 +79,7 @@ public class IntegrationTest16{
 
 
     HomeActivity testActivity;
-    HomeView testView;
-
+    HomeView homeView;
     @Rule
     public ActivityTestRule<HomeActivity> mActivityRule =
             new ActivityTestRule<>(HomeActivity.class);
@@ -81,7 +87,6 @@ public class IntegrationTest16{
     @Before
     public void init() throws InterruptedException {
         testActivity = mActivityRule.getActivity();
-
 
         UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         if (Build.VERSION.SDK_INT >= 23) {
@@ -126,11 +131,22 @@ public class IntegrationTest16{
     }
 
     @Test
-    public void shouldLaunchNearbyPOIIntent() throws InterruptedException, UiObjectNotFoundException {
+    public void shouldLaunchNearbyPOIIntent(){
         Intents.init();
-        ((Activity)testActivity).findViewById(R.id.fab_explore_button).setVisibility(View.VISIBLE);
-        ((Activity)testActivity).findViewById(R.id.fab_explore_button).callOnClick();
+        //making the button visible in order to click it
+        testActivity.findViewById(R.id.fab_explore_button).setVisibility(View.VISIBLE);
+        testActivity.findViewById(R.id.fab_explore_button).callOnClick();
         intended(hasComponent(NearbyPoiActivity.class.getName()));
+        Intents.release();
+    }
+
+    @Test
+    public void shouldLaunchPOIIntent() {
+        Intents.init();
+        //making the button visible in order to click it
+        testActivity.findViewById(R.id.fab_all_poi_button).setVisibility(View.VISIBLE);
+        testActivity.findViewById(R.id.fab_all_poi_button).callOnClick();
+        intended(hasComponent(PoiActivity.class.getName()));
         Intents.release();
     }
 
