@@ -10,6 +10,7 @@ import com.leaf.clips.presenter.PoiDescriptionActivity;
  * @version 0.05
  * @since 0.02
  */
+//TODO:astah
 public class DescriptionViewImp implements DescriptionView {
 
     /**

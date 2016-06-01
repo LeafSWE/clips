@@ -20,6 +20,7 @@ import java.util.List;
 /**
     *Classe che si occupa di mostrare la lista dei POI relativi ad una certa categoria. La UI legata a questa classe permette all'utente di accedere alle informazioni di un certo POI appartenente alla categoria.
     */
+//TODO:astah
     public class PoiViewImp implements PoiView {
 
     /**

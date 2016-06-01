@@ -10,6 +10,7 @@ package com.leaf.clips.view;
  * DescriptionView espone i metodi utili per aggiornare la UI con le informazioni riguardanti un
  * singolo POI.
  */
+//TODO:astah
 public interface DescriptionView {
     /**
      * Imposta l'identificativo del piano nel widget deputato a mostrarlo.
