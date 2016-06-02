@@ -20,6 +20,7 @@ import javax.inject.Inject;
  * @since 0.01
  */
 //TODO: aggiungere intera classe ad astah
+
 public class PoiDescriptionActivity extends AppCompatActivity {
     /**
      * Riferimento utilizzato per accedere alle informazioni trattate dal Model.
