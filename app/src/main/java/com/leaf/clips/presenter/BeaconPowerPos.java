@@ -6,7 +6,7 @@ package com.leaf.clips.presenter;
  * @since 0.00
  */
 
-//TODO: astah - aggiungere classe
+//TODO: astah - aggiungere classe, Tracy Apposto
 /**
  * Classe che permette di rapperentare un Beacon con posizione,minor e valore RSSI associato
  */
