@@ -84,7 +84,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      * Recupera le informazioni dell'edificio dal database ed utilizza la View associata per
      * mostrarle all'utente.
      */
-    //TODO:astah
+    //TODO:astah, Tracy apposto
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
@@ -101,7 +101,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      * Si occupa di controllare che Bluetooth e servizi di Localizzazione siano attivati sul
      * dispositivo.
      */
-    //TODO:astah
+    //TODO:astah, tracy fatto
     @Override
     protected void onStart() {
         super.onStart();
@@ -141,10 +141,10 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         }
     }
     /**
-     * Controlla che la connettività Bluetoooth sia attiva. In caso negativo domanda il permesso di
+     * Controlla che la connettività Bluetoooth sia attiva. In caso negativo domanda il chiede di
      * attivarla.
      */
-    //TODO:astah
+    //TODO:astah, tracy fatto
     public void checkBluetoothConnection(){
         final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -168,7 +168,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      * Controlla che i servizi di Localizzazione siano attivi. In caso negativo chiede all'utente di
      * attivarli.
      */
-    //TODO:astah
+    //TODO:astah, tracy fatto
     public void checkLocationService(){
         // Get Location Manager and check for GPS & Network location services
         LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -195,7 +195,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      * Controlla che i servizi di Localizzazione siano attivi. In caso negativo chiede all'utente di
      * attivarli.
      */
-    //TODO:astah
+    //TODO:astah, tracy fatto
     public void checkStoragePermissions(){
         // Here, thisActivity is the current activity
         if (ContextCompat.checkSelfPermission(this,
@@ -434,7 +434,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     /**
      * @inheritDoc
      */
-    //TODO:astah
+    //TODO:astah, tracy Apposto
     @Override
     public void onDestroy(){
         super.onDestroy();
@@ -468,7 +468,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     /**
      * Avvia l'Activity deputata a mostrare al lista di tutti i POI dell'edificio.
      */
-    //TODO:astah
+    //TODO:astah, tracy apposto
     public void showAllPois() {
         Intent intent = new Intent(this, PoiActivity.class);
         startActivity(intent);
@@ -477,12 +477,12 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     /**
      * Avvia l'Activity deputata alla gestione delle funzionalità sviluppatore.
      */
-    //TODO:astah
+    //TODO:astah, tracy apposto
     public void showDeveloper() {
         Intent intent = new Intent(this, MainDeveloperPresenter.class);
         startActivity(intent);
     }
 
 
-    //TODO: astah - rimosso enableSuggestion()
+    //TODO: astah, tracy apposto - rimosso enableSuggestion()
 }
