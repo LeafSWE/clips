@@ -1,7 +1,7 @@
 package com.leaf.clips.model.compass;
 
 
-// TODO: 25/05/16 aggiongere tracy/uml
+// TODO: 25/05/16 aggiongere tracy
 /**
  * @author Marco Zanella
  * @version 0.01
