@@ -23,7 +23,7 @@ public class PreferencesActivity extends AppCompatActivity {
      */
     private PreferencesViewImp view;
 
-    // TODO: 17/05/16 aggiungere a tracy/uml se va bene
+    // TODO: 17/05/16 aggiungere a tracy apposto /uml se va bene
     /**
      * Riferimento alle preferenze utente
      */
@@ -47,7 +47,7 @@ public class PreferencesActivity extends AppCompatActivity {
         view.setPreferences(R.xml.preferences);
     }
 
-    // TODO: 17/05/16 se va bene aggiungere tracy/uml
+    // TODO: 17/05/16 se va bene aggiungere tracy apposto /uml
     /**
      * Metodo che viene invocato ogni volta che si accede all'activity. Ha il compito di impostare le
      * preferenze sulla view
