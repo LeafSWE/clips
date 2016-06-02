@@ -19,17 +19,16 @@ import java.util.Collection;
  * @since 0.00
  */
 
-//TODO: astah - aggiungere classe
 /**
- * Classe ausiliara che permette definire una View in grado di aggiornarsi in tempo reale attraverso
+ * Classe ausiliaria che permette definire una View in grado di aggiornarsi in tempo reale attraverso
  * l'aiuto dei Canvas. La classe in questione permette di visualizzare una mappa dell'edificio
- * sottoforma di immagine e i Beacon con i relativi segnali.
+ * sotto forma di immagine e i Beacon con i relativi segnali.
  */
 public class BeaconPowerArea extends View {
     /**
      * Booleano che indica se la mappa dell'edificio è stata caricata
      */
-    private boolean background=false;
+    private boolean background = false;
     /**
      * Mappa dei Beacon
      */
