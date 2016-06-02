@@ -152,6 +152,10 @@ public class DetailedInformationActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Metodo che viene invocato alla pressione del tasto indietro in alto
+     * @return true
+     */
     @Override
     //TODO:astah
     public boolean onSupportNavigateUp() {

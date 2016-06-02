@@ -39,7 +39,6 @@ import java.util.List;
 
 public class EdgeService {
 
-
     /**
      * Oggetto che si pone come layer Service tra gli oggetti PhotoRef e gli oggetti DAO
      * corrispettivi

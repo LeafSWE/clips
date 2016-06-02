@@ -8,10 +8,12 @@ import java.net.URI;
  * @since 0.00
  */
 public class PhotoRef {
+
     /**
      * Identificativo della fotografia
      */
     private final int id;
+
     /**
      * URL di una fotografia
      */
@@ -34,6 +36,7 @@ public class PhotoRef {
     public int getId(){
         return id;
     }
+
     /**
      * Metodo che restituisce l'URL per accedere alla fotografia che l'oggetto rappresenta
      * @return URI di una foto

@@ -80,45 +80,111 @@ public class MyApplication extends Application {
         return infoComponent;
     }
 
+    /**
+     * Riferimento alle configurazioni dell'applicazione
+     */
     private static Configuration configuration = null;
 
+    /**
+     * Classe che contiene le configurazioni dell'applciazione
+     */
     public static class Configuration {
+
+        /**
+         * URL del database remoto
+         */
         private String remoteDBPath;
+
+        /**
+         * URL per fare una richiesta di download di una mappa
+         */
         private String remoteDBMapRequest;
+
+        /**
+         * Stringa che rappresenta il formato dei dati trasportati dal segnale dei beacon
+         */
         private String beaconLayout;
+
+        /**
+         * UUID dei beacon riconosciuti dall'applicazione
+         */
         private String applicationUUID;
+
+        /**
+         * Cartella in cui vengono salvati i Log dell'applicazione
+         */
         private String logsDirectory;
+
+        /**
+         * Costante per il calcolo del peso degli archi che rappresentano ascensori
+         */
         private double elevatorFactor;
+
+        /**
+         * Costante per il calcolo del peso degli archi che rappresentano scale
+         */
         private double stairFactor;
 
+        /**
+         * Metodo che restituisce l'URL a cui recuperare la mappa dell'edificio associata ad un certo major
+         * @param major Major che identifica l'edificio di cui scaricare la mappa
+         * @return String
+         */
         public String getRemoteDBMapRequest(int major) {
             return remoteDBPath + remoteDBMapRequest + major;
         }
 
+        /**
+         * Metodo che permette di recuperare il formato dei beacon
+         * @return String
+         */
         public String getBeaconLayout() {
             return beaconLayout;
         }
 
+        /**
+         * Metodo che permette di recuperare l'UUID dei beacon riconosciuti dall'applicazione
+         * @return String
+         */
         public String getApplicationUUID() {
             return applicationUUID;
         }
 
+        /**
+         * Metodo che permette di recuperare il percorso della cartella in cui salvare i log
+         * @return String
+         */
         public String getLogsDirectory() {
             return Environment.getExternalStorageDirectory().toString() + logsDirectory;
         }
 
+        /**
+         * Metodo che permette di recuperare la costante per il calcolo del peso degli archi che rappresentano ascensori
+         * @return double
+         */
         public double getElevatorFactor() {
             return elevatorFactor;
         }
 
+        /**
+         * Metodo che permette di recuperare la costante per il calcolo del peso degli archi che rappresentano scale
+         * @return double
+         */
         public double getStairFactor() {
             return stairFactor;
         }
 
+        /**
+         * Metodo che permette di recuperare l'URL del database remoto
+         * @return String
+         */
         public String getRemoteDBPath() {
             return remoteDBPath;
         }
 
+        /**
+         * Costruttore di defaul della classe Configuration
+         */
         private Configuration() {}
 
     }

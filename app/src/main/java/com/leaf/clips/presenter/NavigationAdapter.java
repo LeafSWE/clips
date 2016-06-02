@@ -158,6 +158,11 @@ public class NavigationAdapter extends BaseAdapter {
 
     }
 
+    /**
+     * Metodo che permette di verificare se un certo elemento della lista è attivo oppure no
+     * @param position Posizione dell'elemento
+     * @return boolean
+     */
     @Override
     public boolean isEnabled(int position) {
         return position != (navigationInformation.size() - 1) && super.isEnabled(position);

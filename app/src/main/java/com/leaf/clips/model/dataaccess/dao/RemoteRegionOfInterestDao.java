@@ -13,8 +13,6 @@ import com.google.gson.JsonObject;
  */
 public class RemoteRegionOfInterestDao {
 
-
-
     /**
      * Costruttore di default per la classe RemoteRegionOfInterestDao
      */

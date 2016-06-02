@@ -45,6 +45,7 @@ import javax.inject.Inject;
  * @see InformationListener
  */
 public class HomeActivity extends AppCompatActivity implements InformationListener{
+
     /**
      * Riferimento utilizzato per accedere alle informazioni trattate dal Model
      */

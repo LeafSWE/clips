@@ -106,12 +106,22 @@ public class MainDeveloperActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Metodo che viene invocato alla creazione delle opzioni del menu
+     * @param menu Il menu che viene creato
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_developer, menu);
         return true;
     }
 
+    /**
+     * Metodo che viene invocato alla selezione di un item del menu
+     * @param item Item selezione
+     * @return boolean
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

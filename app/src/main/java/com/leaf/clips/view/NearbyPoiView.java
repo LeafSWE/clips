@@ -8,6 +8,9 @@ import java.util.ArrayList;
  * @since 0.00
  */
 
+/**
+ * Interfaccia che espone i metodi per mostrare tutti i POI nelle vicinanze
+ */
 public interface NearbyPoiView {
     /**
      * Metodo utilizzato per visualizzare tutti i POI nelle circostanze dell'utente
