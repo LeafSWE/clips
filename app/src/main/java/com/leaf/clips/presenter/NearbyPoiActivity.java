@@ -23,7 +23,6 @@ import javax.inject.Inject;
 /**
  * Questa Activity si occupa di gestire i POI rilevati nelle vicinanze dell'utente.
  */
-//TODO:astah, tracy apposto
 public class NearbyPoiActivity extends AppCompatActivity {
 
     /**

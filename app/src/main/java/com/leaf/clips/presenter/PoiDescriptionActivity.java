@@ -19,7 +19,7 @@ import javax.inject.Inject;
  * @version 0.01
  * @since 0.01
  */
-//TODO: aggiungere intera classe ad astah
+//TODO: aggiungere intera classe ad Tracy, astha ok
 
 public class PoiDescriptionActivity extends AppCompatActivity {
     /**

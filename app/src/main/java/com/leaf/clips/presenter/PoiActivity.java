@@ -23,7 +23,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-//TODO: aggiungere intera classe ad astah, tracy apposto
 /**
  * PoiCategoryActivity si occupa di gestire le categorie di POI presenti nell'edificio, in modo che
  * l'utente possa effettuare la ricerca della destinazione per categoria.

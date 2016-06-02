@@ -76,8 +76,6 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      */
     private int poiId;
 
-    // TODO: 5/24/16 Aggiornare Asta, Tracy apposto,  per i due campi privati sottostanti + OnDestroy()
-
     /**
      * Alert che viene mostrato nel caso un cui l'utente sbagli percorso
      */

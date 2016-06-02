@@ -128,7 +128,6 @@ public class DetailedInformationActivity extends AppCompatActivity {
      * Controlla che sia disponibile una connessione ad Internet.
      * @return true se e solo se è disponibile una connessione ad Internet.
      */
-    //TODO:astah
     private boolean checkConnection(){
         ConnectivityManager connectivityManager =
                 (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
@@ -157,7 +156,6 @@ public class DetailedInformationActivity extends AppCompatActivity {
      * @return true
      */
     @Override
-    //TODO:astah
     public boolean onSupportNavigateUp() {
         Log.i("state%", "onNavigateup");
         onBackPressed();

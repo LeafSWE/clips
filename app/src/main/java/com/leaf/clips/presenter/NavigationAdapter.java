@@ -21,8 +21,6 @@ import java.util.List;
  * @since 0.00
  */
 
-// TODO: 25/05/16 aggiornare uml, tracy apposto
-
 /**
  * Si occupa del binding tra le informazioni di navigazione fornite dal Model e la View deputata
  * a mostrarle.
