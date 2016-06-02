@@ -14,7 +14,7 @@ public class BeaconPowerPos extends BeaconPos {
     /**
      * Valore RSSI associato. Valore di default 0.
      */
-    int rssi=0;
+    private int rssi=0;
 
     /**
      * Costruttore della classe
