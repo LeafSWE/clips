@@ -26,8 +26,6 @@ public class RemoteRoiPoiDao {
      */
     public RemoteRoiPoiDao() {}
 
-
-
     /**
      * Metodo utilizzato per la conversione di un oggetto JsonObject in un oggetto RoiPoiTable, che viene ritornato
      * @param object Oggetto JSON che rappresenta un oggetto di tipo RoiPoiTable

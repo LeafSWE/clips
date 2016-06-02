@@ -6,7 +6,6 @@ package com.leaf.clips.presenter;
  * @since 0.00
  */
 
-//TODO: astah - aggiungere classe
 /**
  * Classe che permette di rapperentare un Beacon con posizione,minor e valore RSSI associato
  */

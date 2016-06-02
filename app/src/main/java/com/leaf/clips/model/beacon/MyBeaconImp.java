@@ -59,7 +59,6 @@ public class MyBeaconImp extends Beacon implements MyBeacon, Comparable {
     /**
      * Metodo che permette di ricalcolare la distanza tra il beacon e il dispositivo
      */
-
     private void recalculateDistance(){
         calculateDistance(this.getTxPower(), this.getRssi());
     }

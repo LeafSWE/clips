@@ -32,13 +32,15 @@ public class LoggerImp implements Logger {
      */
     StringBuffer data;
 
+    /**
+     * Costruttore di default della classe LoggerImp
+     */
     public LoggerImp(){
         data = new StringBuffer();
     }
 
     /**
-     * Metodo che restituisce il path della directory in cui vengono salvati
-     i log
+     * Metodo che restituisce il path della directory in cui vengono salvati i log
      * @return String Path della directory in cui vengono salvati i log
      */
     public static String getPath(){

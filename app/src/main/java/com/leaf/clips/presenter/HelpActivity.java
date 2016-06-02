@@ -22,7 +22,6 @@ import com.leaf.clips.view.HelpViewImp;
  */
 public class HelpActivity extends AppCompatActivity {
 
-    // TODO: 17/05/16 aggiungere tracy/uml se va bene
     /**
      * Stringa che rappresenta l'URL a cui è possibile recuperare la guida
      */
@@ -49,7 +48,6 @@ public class HelpActivity extends AppCompatActivity {
      * interroga la view per mostrare la guida, altrimenti viene mostrato un Alert che informa che
      * la connessione internet non è attiva
      */
-    //TODO:astah
     private void checkInternetConnection() {
         ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm.getActiveNetworkInfo() != null) {
