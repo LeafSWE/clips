@@ -62,6 +62,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
 
     @Inject
     Compass compass;
+
     /**
      * Riferimento alla lista di istruzioni di navigazione.
      */
@@ -76,6 +77,8 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
     private AlertDialog dialogPathError;
 
     private AlertDialog.Builder builder;
+
+    private AlertDialog noInternetConnection;
 
     /**
      *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
@@ -100,7 +103,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
             handleIntent(getIntent());
         Log.i("state%", "ONCREATE" + poiId);
 
-        new NoInternetAlert().showIfNoConnection(this);
+        noInternetConnection = new NoInternetAlert().showIfNoConnection(this);
         builder = new AlertDialog.Builder(this);
 
     }
@@ -141,7 +144,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                 }
 
             }else { //Se l'Intent è stato generato dalla PoiCategoryActivity
-                int destinationPOIid = getIntent().getIntExtra("poi_id",-1);
+                int destinationPOIid = getIntent().getIntExtra("poi_id", -1);
                 if(destinationPOIid != -1)
                     poiId = destinationPOIid;
                 else
@@ -161,7 +164,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
             if(destinationPoi != null) {
                 setTitle("Raggiungi " + destinationPoi.getName());
                 Log.d("NAVIGAZIONE", "OK");
-                new NoInternetAlert().showIfNoConnection(this);
+                noInternetConnection = new NoInternetAlert().showIfNoConnection(this);
                 navigationManager.startNavigation(destinationPoi);
                 navigationInstruction = navigationManager.getAllNavigationInstruction();
                 navigationManager.addListener(this);
@@ -320,6 +323,9 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
 
         if(dialogPathError != null)
             dialogPathError.dismiss();
+
+        if(noInternetConnection != null)
+            noInternetConnection.dismiss();
     }
 
     @Override

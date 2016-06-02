@@ -56,6 +56,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     private HomeView view;
 
+    private AlertDialog noInternetConnection;
+
     /**
      *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
      *i campi dati.
@@ -391,8 +393,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     @Override
     public void cannotRetrieveRemoteMapDetails() {
         Log.d("HOMEACTIVITY", "CAN'T RETRIEVE REMOTE DETAILS");
-        new NoInternetAlert().show(this);
-
+        noInternetConnection = new NoInternetAlert().show(this);
     }
 
     /**
@@ -438,6 +439,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     public void onDestroy(){
         super.onDestroy();
         informationManager = null;
+        if(noInternetConnection != null)
+            noInternetConnection.dismiss();
     }
 
     /**
