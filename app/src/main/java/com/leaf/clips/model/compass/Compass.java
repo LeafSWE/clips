@@ -13,7 +13,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 
-// TODO: 25/05/16 aggiornare tracy/uml
+// TODO: 25/05/16 aggiornare tracy
 /**
  *Classe che si occupa di gestire i dati ricavabili dai sensori e calcolare l'orientamento del device
  */
