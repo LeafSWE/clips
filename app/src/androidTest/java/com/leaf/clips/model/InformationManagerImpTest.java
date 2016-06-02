@@ -28,7 +28,7 @@ import java.util.LinkedList;
 import java.util.PriorityQueue;
 
 /**
- * Unit test 150
+ * TU150
  */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -39,16 +39,6 @@ public class InformationManagerImpTest {
     public void init(){
         informationManager = new InformationManagerImp(null, InstrumentationRegistry.getTargetContext());
         //no mock is needed
-    }
-
-    @Test(expected = NoBeaconSeenException.class)
-    public void shouldNotReturnMap() throws NoBeaconSeenException {
-        informationManager.getBuildingMap();
-    }
-
-    @Test(expected = NoBeaconSeenException.class)
-    public void shouldNotReturnNearbyPOIs() throws NoBeaconSeenException {
-        informationManager.getNearbyPOIs();
     }
 
     private InformationManagerImpExtended infomanager;
