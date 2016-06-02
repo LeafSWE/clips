@@ -9,7 +9,7 @@ import android.support.v7.app.AlertDialog;
 
 import com.leaf.clips.R;
 
-// TODO: 22/05/16 aggiungere uml/tracy
+// TODO: 22/05/16 aggiungere uml, tracy apposto
 /**
  * @author Marco Zanella
  * @version 0.01
