@@ -15,8 +15,6 @@ import com.leaf.clips.model.navigator.graph.edge.EnrichedEdge;
 import com.leaf.clips.model.navigator.graph.edge.StairEdge;
 import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoInformation;
 
-// TODO: 25/05/16 aggiornare tracy
-
 /**
  *Classe che rappresenta le informazioni di navigazione pronte per essere restituite ad un eventuale utilizzatore
  */
