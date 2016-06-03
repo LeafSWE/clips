@@ -101,6 +101,12 @@ public class LocalMapActivity extends AppCompatActivity {
         Intent intent = new Intent(this,RemoteMapManagerActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        LoadMaps();
+    }
 }
 
 
