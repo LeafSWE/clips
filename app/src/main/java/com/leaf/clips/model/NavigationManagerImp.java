@@ -36,7 +36,7 @@ import javax.inject.Inject;
  * Classe che si occupa della gestione della navigazione
  */
 
-// TODO: 25/05/16 aggiornare tracy/uml
+// TODO: 25/05/16 aggiornare tracy
 public class NavigationManagerImp extends AbsBeaconReceiverManager implements NavigationManager {
 
     /**
