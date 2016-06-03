@@ -9,8 +9,6 @@ import com.leaf.clips.model.navigator.ProcessedInformation;
 
 import java.util.List;
 
-// TODO: 25/05/16 aggiornare tracy/uml
-
 /**
  * NavigationView espone i metodi utili al binding della View con la lista di istruzioni di
  * navigazione utili per raggiungere una certa destinazione.

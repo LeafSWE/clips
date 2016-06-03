@@ -10,7 +10,6 @@ import java.util.Collection;
  * @since 0.00
  */
 
-//TODO: astah - aggiungere classe
 /**
  * Interfaccia che espone i metodi per poter aggiornare la mappa dei Beacon con il segnale rssi
  * rilevato
