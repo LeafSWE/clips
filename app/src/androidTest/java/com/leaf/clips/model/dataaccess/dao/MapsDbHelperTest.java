@@ -75,10 +75,5 @@ public class MapsDbHelperTest extends InstrumentationTestCase {
                 " AND name='delete_empty_edgetype'", null);
         Assert.assertEquals(1, c.getCount());
 
-        //database.rawQuery("INSERT INTO Building VALUES (0, 'f7826da6-4fa2-4e98-8024-bc5b71e0893e', 666, 'Torre Archimede', 'Descrizione', '07.30 - 19.00. Dal lunedì al venerdì.', 'Via Trieste 63 - 35121 Padova', 1, 'DimensioniMappa')",null);
-
-        c = database.rawQuery("SELECT * FROM Building ",null);
-        Assert.assertEquals(1, c.getCount());
-
     }
 }
