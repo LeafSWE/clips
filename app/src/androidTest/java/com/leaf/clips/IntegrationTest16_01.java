@@ -36,6 +36,7 @@ import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
+import android.test.InstrumentationTestCase;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.util.Log;
 import android.view.View;
@@ -46,7 +47,7 @@ import android.view.View;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class IntegrationTest16_01{
+public class IntegrationTest16_01 extends InstrumentationTestCase{
 
     HomeActivity testActivity;
 
