@@ -19,7 +19,8 @@ import javax.inject.Inject;
  * @version 0.01
  * @since 0.01
  */
-//TODO: aggiungere intera classe ad astah
+//TODO: aggiungere intera classe ad Tracy, astha ok
+
 public class PoiDescriptionActivity extends AppCompatActivity {
     /**
      * Riferimento utilizzato per accedere alle informazioni trattate dal Model.
@@ -78,6 +79,10 @@ public class PoiDescriptionActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Metodo che ridefinisce il comportamento del bottone di navigazione
+     * @return true
+     */
     @Override
     public boolean onNavigateUp() {
         onBackPressed();

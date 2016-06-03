@@ -31,7 +31,6 @@ public class MapGraph {
         graph = new SimpleDirectedWeightedGraph<>(EnrichedEdge.class);
     }
 
-
     /**
      * Metodo che permette di aggiungere più archi al grafo che rappresenta l'edificio
      * @param edges Archi da aggiungere al grafo che rappresenta l'edificio

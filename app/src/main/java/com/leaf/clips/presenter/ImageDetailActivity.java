@@ -56,6 +56,10 @@ public class ImageDetailActivity extends AppCompatActivity {
         return listPhotos;
     }
 
+    /**
+     * Metodo che viene invocato alla pressione del tasto indietro in alto
+     * @return true
+     */
     @Override
     public boolean onSupportNavigateUp() {
         Log.i("state%", "onNavigateup");

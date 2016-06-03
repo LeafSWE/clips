@@ -6,7 +6,6 @@ package com.leaf.clips.presenter;
  * @since 0.00
  */
 
-//TODO: astah - aggiungere classe
 /**
  * Classe che permette di rapperentare un Beacon con posizione,minor e valore RSSI associato
  */
@@ -14,7 +13,7 @@ public class BeaconPowerPos extends BeaconPos {
     /**
      * Valore RSSI associato. Valore di default 0.
      */
-    int rssi=0;
+    private int rssi=0;
 
     /**
      * Costruttore della classe

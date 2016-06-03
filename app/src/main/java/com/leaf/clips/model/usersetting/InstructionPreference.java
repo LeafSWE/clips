@@ -18,7 +18,6 @@ public enum InstructionPreference {
      * @param i Intero da convertire a InstructionPreference
      * @return InstructionPreference Preferenza dell'utente
      */
-
     public static InstructionPreference fromInt(int i){
         switch (i){
             case 0:
@@ -36,7 +35,6 @@ public enum InstructionPreference {
      * @param instructionPreference PathPreference da convertire ad un intero
      * @return int Intero rappresentante la preferenza dell'utente
      */
-
     public static int toInt(InstructionPreference instructionPreference){
         switch (instructionPreference){
             case DEFAULT:

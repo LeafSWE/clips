@@ -450,7 +450,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         super.removeListener(listener);
     }
 
-    // TODO aggiungere asta/travis/test
+    // TODO aggiungere tracy/test
     /**
      * Metodo che ritorna tutti i PointOfInterest appartenenti ad una certa categoria
      * @param category Nome della categoria di cui si vogliono recupoerare tutti i PointOfInterest

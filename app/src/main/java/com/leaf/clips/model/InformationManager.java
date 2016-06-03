@@ -92,7 +92,7 @@ public interface InformationManager {
      */
     void removeListener(InformationListener listener);
 
-    // TODO aggiungere asta/travis
+    // TODO aggiungere asta
     /**
      * Metodo che ritorna tutti i PointOfInterest appartenenti ad una certa categoria
      * @param category Nome della categoria di cui si vogliono recupoerare tutti i PointOfInterest

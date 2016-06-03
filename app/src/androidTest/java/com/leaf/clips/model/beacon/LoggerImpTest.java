@@ -7,6 +7,7 @@ package com.leaf.clips.model.beacon;
 
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
+import android.util.Log;
 
 import org.altbeacon.beacon.AltBeacon;
 import org.junit.Assert;
@@ -63,7 +64,7 @@ public class LoggerImpTest {
 
     @Test
     public void shouldSaveLogAndContainSavedInformation(){
-       /* MyBeacon beacon;
+        MyBeacon beacon;
         List<Long> data = new LinkedList<>();
         data.add((long) 88);
         PriorityQueue<MyBeacon> beacons = new PriorityQueue<>();
@@ -77,9 +78,12 @@ public class LoggerImpTest {
 
         log.add(beacons);
         String logInfo = log.getData().toString();
+        Log.d("DATALOG", logInfo);
         String name = "beacon";
         log.save(name);
         String savedLog = log.open(name).trim();
-        Assert.assertEquals("Log saved correctly",logInfo,savedLog);*/
+        logInfo = savedLog.substring(0,logInfo.length()-3);
+        Log.d("SAVEDLOG", savedLog);
+        Assert.assertEquals("Log saved correctly",logInfo,savedLog);
     }
 }

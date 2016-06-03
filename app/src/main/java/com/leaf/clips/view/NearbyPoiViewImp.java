@@ -16,6 +16,9 @@ import java.util.ArrayList;
  * @since 0.00
  */
 
+/**
+ * Classe che permette di mostrare i POI nelle vicinanze
+ */
 public class NearbyPoiViewImp implements NearbyPoiView{
     /**
      * View che mostra la lista di POI nelle vicinanze dell'utente 
