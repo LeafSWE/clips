@@ -35,7 +35,8 @@
         <activity
                 android:name=".presenter.HomeActivity"
                 android:theme="@style/AppTheme.NoActionBar"
-                android:windowSoftInputMode="stateHidden|adjustPan">
+                android:windowSoftInputMode="stateHidden|adjustPan"
+                android:configChanges="orientation|screenSize|keyboardHidden">
             <meta-data
                     android:name="android.app.default_searchable"
                     android:value=".presenter.NavigationActivity"/>
@@ -60,7 +61,8 @@
                 android:name=".presenter.LoggingActivity"
                 android:label="@string/title_activity_logging"
                 android:parentActivityName=".presenter.MainDeveloperActivity"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:theme="@style/AppTheme.NoActionBar"
+                android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.MainDeveloperActivity"/>
@@ -122,7 +124,8 @@
                 android:parentActivityName=".presenter.HomeActivity"/>
         <activity
                 android:name=".presenter.PreferencesActivity"
-                android:label="@string/title_activity_preferences">
+                android:label="@string/title_activity_preferences"
+                android:configChanges="orientation|screenSize|keyboardHidden">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.HomeActivity"/>
@@ -157,7 +160,8 @@
                 android:name=".presenter.BeaconPowerAreaActivity"
                 android:hardwareAccelerated="true"
                 android:label="@string/title_activity_beacon_power_area"
-                android:parentActivityName=".presenter.MainDeveloperActivity">
+                android:parentActivityName=".presenter.MainDeveloperActivity"
+                android:screenOrientation="portrait">
 
             <!-- android:theme="@style/AppTheme.NoActionBar" -->
             <meta-data
