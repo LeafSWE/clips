@@ -8,7 +8,7 @@ package com.leaf.clips.model.navigator;
  */
 
 import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoInformation;
-// TODO: 25/05/16 aggiornare tracy
+
 /**
  * Interfaccia che espone i metodi per l'accesso alle informazioni di navigazione, pronte per essere
  * restituite ad un utilizzatore di tali informazioni
@@ -37,7 +37,7 @@ public interface ProcessedInformation /*extends Comparable<ProcessedInformation>
 
     /**
      * Metodo che ritorna la direzione verso cui dirigersi.
-     * @return  int
+     * @return  NavigationDirection
      */
     NavigationDirection getDirection();
 
