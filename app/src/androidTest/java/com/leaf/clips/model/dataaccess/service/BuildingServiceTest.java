@@ -442,6 +442,6 @@ public class BuildingServiceTest {
     public void shouldRetrieveAllRemoteBuildingsInformation() throws Exception {
         setUp();
         Collection<BuildingTable> tables = buildingService.findAllRemoteBuildings();
-        Assert.assertEquals(tables.size(), 1);
+        Assert.assertTrue(tables.size()>0);
     }
 }
