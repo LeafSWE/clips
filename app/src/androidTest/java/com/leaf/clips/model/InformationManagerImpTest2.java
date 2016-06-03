@@ -12,7 +12,6 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import com.leaf.clips.model.beacon.MyBeacon;
-import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 import com.leaf.clips.model.dataaccess.service.DatabaseService;
 import com.leaf.clips.model.navigator.BuildingMap;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
@@ -22,17 +21,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.PriorityQueue;
 
 import static junit.framework.Assert.*;
 
 /**
- * TU41
+ * TU41 & TU43
  */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -97,6 +95,17 @@ public class InformationManagerImpTest2 {
         Collection<PointOfInterest> poisReceived = informationManager.getNearbyPOIs();
         assertEquals(mockPOIList.size(),poisReceived.size());
         assertEquals(mockPOIList,poisReceived);
+    }
+
+    @Test
+    public void testSaveRecordedBeaconInformation() throws Exception {
+        boolean shouldLog = true;
+        Field field1 = informationManager.getClass().getDeclaredField("shouldLog");
+        field1.setAccessible(true);
+        field1.set(informationManager, shouldLog);
+        informationManager.saveRecordedBeaconInformation("test");
+        boolean result = (boolean) field1.get(informationManager);
+        assertFalse(result);
     }
 
 }
