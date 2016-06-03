@@ -102,11 +102,12 @@ public class LocalMapActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Override del metodo onResume per ricaricare le mappe dopo che l'activy è passata in background
+     */
     @Override
-    public void onResume(){
+    protected void onResume(){
         super.onResume();
         LoadMaps();
     }
 }
-
-
