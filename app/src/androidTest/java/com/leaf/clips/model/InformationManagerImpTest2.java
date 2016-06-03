@@ -30,7 +30,7 @@ import java.util.PriorityQueue;
 import static junit.framework.Assert.*;
 
 /**
- * TU41 & TU43
+ * TU41 & TU43 & TU149
  */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
