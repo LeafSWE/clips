@@ -35,7 +35,8 @@
         <activity
                 android:name=".presenter.HomeActivity"
                 android:theme="@style/AppTheme.NoActionBar"
-                android:windowSoftInputMode="stateHidden|adjustPan">
+                android:windowSoftInputMode="stateHidden|adjustPan"
+                android:configChanges="orientation|screenSize|keyboardHidden">
             <meta-data
                     android:name="android.app.default_searchable"
                     android:value=".presenter.NavigationActivity"/>
@@ -122,7 +123,8 @@
                 android:parentActivityName=".presenter.HomeActivity"/>
         <activity
                 android:name=".presenter.PreferencesActivity"
-                android:label="@string/title_activity_preferences">
+                android:label="@string/title_activity_preferences"
+                android:configChanges="orientation|screenSize|keyboardHidden">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.leaf.clips.presenter.HomeActivity"/>
