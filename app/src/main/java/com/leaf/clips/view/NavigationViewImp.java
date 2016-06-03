@@ -20,8 +20,6 @@ import java.util.List;
  * @since 0.00
  */
 
-// TODO: 25/05/16 aggiornare tracy/uml
-
 /**
  * INavigationViewImp si occupa di gestire direttamente i widget della UI deputati a mostrare
  * la lista di istruzioni di navigazione utili per raggiungere una certa destinazione.
