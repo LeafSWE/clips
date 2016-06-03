@@ -54,6 +54,9 @@ public class NavigatorImp implements Navigator {
      */
     private Iterator<EnrichedEdge> progress;
 
+    /**
+     * Oggetto che rappresenta le impostazioni dell'applicazione
+     */
     private Setting setting;
 
     /**
