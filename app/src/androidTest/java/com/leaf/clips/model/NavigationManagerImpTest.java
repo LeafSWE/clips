@@ -11,34 +11,20 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import com.leaf.clips.model.beacon.MyBeacon;
-import com.leaf.clips.model.navigator.NavigationExceptions;
 import com.leaf.clips.model.navigator.Navigator;
-import com.leaf.clips.model.navigator.NoNavigationInformationException;
 import com.leaf.clips.model.navigator.ProcessedInformation;
 import com.leaf.clips.model.navigator.graph.MapGraph;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
-import com.leaf.clips.model.navigator.graph.edge.AbsEnrichedEdge;
-import com.leaf.clips.model.navigator.graph.edge.EnrichedEdge;
-import com.leaf.clips.model.navigator.graph.navigationinformation.NavigationInformation;
-import com.leaf.clips.model.navigator.graph.navigationinformation.NavigationInformationImp;
-import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoInformation;
-import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoRef;
-import com.leaf.clips.model.navigator.graph.vertex.VertexImp;
-import com.leaf.clips.model.usersetting.Setting;
-import com.leaf.clips.model.usersetting.SettingImp;
 
 import junit.framework.Assert;
 
-import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.lang.reflect.Field;
-import java.net.URI;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
