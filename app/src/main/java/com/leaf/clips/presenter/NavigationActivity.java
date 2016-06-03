@@ -102,8 +102,8 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         else
             handleIntent(getIntent());
         Log.i("state%", "ONCREATE" + poiId);
-
-        noInternetConnection = new NoInternetAlert().showIfNoConnection(this);
+        if (noInternetConnection == null || !noInternetConnection.isShowing())
+            noInternetConnection = new NoInternetAlert().showIfNoConnection(this);
         builder = new AlertDialog.Builder(this);
 
     }
@@ -161,10 +161,11 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                         }
                     }
             }
-            if(destinationPoi != null) {
+            if (destinationPoi != null) {
                 setTitle("Raggiungi " + destinationPoi.getName());
                 Log.d("NAVIGAZIONE", "OK");
-                noInternetConnection = new NoInternetAlert().showIfNoConnection(this);
+                if (noInternetConnection == null || !noInternetConnection.isShowing())
+                    noInternetConnection = new NoInternetAlert().showIfNoConnection(this);
                 navigationManager.startNavigation(destinationPoi);
                 navigationInstruction = navigationManager.getAllNavigationInstruction();
                 navigationManager.addListener(this);

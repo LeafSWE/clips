@@ -393,7 +393,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     @Override
     public void cannotRetrieveRemoteMapDetails() {
         Log.d("HOMEACTIVITY", "CAN'T RETRIEVE REMOTE DETAILS");
-        noInternetConnection = new NoInternetAlert().show(this);
+        if (noInternetConnection == null || !noInternetConnection.isShowing())
+            noInternetConnection = new NoInternetAlert().show(this);
     }
 
     /**

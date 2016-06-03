@@ -16,47 +16,40 @@ import com.leaf.clips.R;
  * @since 0.01
  */
 public class NoInternetAlert {
-    private static AlertDialog alert = null;
 
-    public AlertDialog showIfNoConnection(Activity presenter){
+    public AlertDialog showIfNoConnection(Activity activity){
+        AlertDialog alert = null;
         ConnectivityManager connectivityManager =
-                (ConnectivityManager)presenter.getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager)activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (!(networkInfo != null && networkInfo.isConnected())){
-            if (alert == null) {
-                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(presenter);
-                alertBuilder.setTitle(R.string.no_connection_title_alert_help);
-                alertBuilder.setMessage(R.string.navigation_internet_alert);
-                alertBuilder.setPositiveButton(presenter.getResources().getString(R.string.ok),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //not implemented -> it is only an advise
-                            }
-                        });
-                alert = alertBuilder.create();
-            }
-            if(!presenter.isFinishing())
+            alert = alertSetUp(activity);
+            if(!activity.isFinishing()) {
                 alert.show();
+            }
         }
         return alert;
     }
-    public AlertDialog show(Activity context){
-        if (alert == null) {
-            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
-            alertBuilder.setTitle(R.string.no_connection_title_alert_help);
-            alertBuilder.setMessage(R.string.navigation_internet_alert);
-            alertBuilder.setPositiveButton(context.getResources().getString(R.string.ok),
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //not implemented -> it is only an advise
-                        }
-                    });
-            alert = alertBuilder.create();
-        }
-        if(!context.isFinishing())
+    public AlertDialog show(Activity activity){
+        AlertDialog alert = null;
+        alert = alertSetUp(activity);
+        if(!activity.isFinishing()) {
             alert.show();
+        }
         return alert;
+    }
+
+    private AlertDialog alertSetUp(Activity activity) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(activity);
+        alertBuilder.setTitle(R.string.no_connection_title_alert_help);
+        alertBuilder.setMessage(R.string.navigation_internet_alert);
+        alertBuilder.setPositiveButton(activity.getResources().getString(R.string.ok),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //not implemented -> it is only an advise
+                    }
+                });
+        return alertBuilder.create();
     }
 }
