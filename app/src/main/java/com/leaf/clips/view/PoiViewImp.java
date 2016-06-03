@@ -20,7 +20,7 @@ import java.util.List;
 /**
     *Classe che si occupa di mostrare la lista dei POI relativi ad una certa categoria. La UI legata a questa classe permette all'utente di accedere alle informazioni di un certo POI appartenente alla categoria.
     */
-//TODO:astah
+
     public class PoiViewImp implements PoiView {
 
     /**
@@ -58,6 +58,7 @@ import java.util.List;
      * Metodo utilizzato per visualizzare tutti i POI
      * @param poiList lista di stringhe che rappresentano tutti i POI
      */
+    @Override
     public void setPoiListAdapter(List<String> poiList){
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(presenter, android.R.layout.simple_list_item_1, poiList);
