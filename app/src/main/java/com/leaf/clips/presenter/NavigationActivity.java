@@ -35,8 +35,6 @@ import java.util.ListIterator;
 
 import javax.inject.Inject;
 
-// TODO: 25/05/16 aggiornare tracy/uml
-
 /**
  * Una NavigationActivity si occupa di recuperare e gestire le istruzioni di navigazione utili perchè
  * l'utente possa raggiungere la destinazione scelta.
