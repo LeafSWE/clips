@@ -15,7 +15,6 @@ import android.hardware.SensorManager;
 import java.util.Collection;
 import java.util.HashSet;
 
-// TODO: 25/05/16 aggiornare tracy
 /**
  *Classe che si occupa di gestire i dati ricavabili dai sensori e calcolare l'orientamento del device
  */
