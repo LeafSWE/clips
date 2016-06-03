@@ -15,11 +15,10 @@ import java.util.Collection;
  * @since 0.00
  */
 
-//TODO: astah - aggiungere classe
 /**
  * Classe che implementa BeaconPowerView e fornisce una vista alla classe BeaconPowerActivity. Essa
  * è in grado di rappresentare una mappa dell'edificio in cui si sta navigando e l'area coperta dal
- * segnale dei beacon sottoforma di cerchio.
+ * segnale dei beacon sotto forma di cerchio.
  */
 public class BeaconPowerAreaViewImp implements BeaconPowerAreaView {
     /**
@@ -72,6 +71,7 @@ public class BeaconPowerAreaViewImp implements BeaconPowerAreaView {
      * Metodo che permette di impostare la mappa dei Beacon
      * @param map mappa dei Beacon
      */
+    @Override
     public void setBeaconMap(Collection<BeaconPowerPos> map ){
         BeaconPowerArea.setMap(map);
     }
@@ -80,6 +80,7 @@ public class BeaconPowerAreaViewImp implements BeaconPowerAreaView {
      * Metodo che permette di impostare la mappa dei Beacon rilevati con il segnale rssi aggiornato
      * @param updateMap mappa dei Beacon rilevati con valore rssi aggiornato
      */
+    @Override
     public void setBeaconPowerMap(Collection<BeaconPowerPos> updateMap ){
         BeaconPowerArea.setUpdateMap(updateMap);
     }
