@@ -1,6 +1,5 @@
 package com.leaf.clips.model.navigator;
 
-// TODO: 25/05/16 aggiungere tracy
 /**
  * @author Marco Zanella
  * @version 0.01
