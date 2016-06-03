@@ -19,8 +19,6 @@ import java.util.ArrayList;
  * @since 0.00
  */
 
-// TODO: 5/6/16 Codify
-
 public class MainDeveloperViewImp implements MainDeveloperView {
     /**
      * View che mostra la lista dei log
