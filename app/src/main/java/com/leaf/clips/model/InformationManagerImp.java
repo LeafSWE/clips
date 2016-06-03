@@ -362,6 +362,8 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
      * contenente gli ultimi beacon rilevati. Nel caso in cui non sia stata ancora caricata una
      * mappa dal database locale si occupa di caricare la mappa dell'edificio che contiene
      * i beacon rilevati
+     * @param context Contesto dell'applicazione
+     * @param intent Intent contenente le informazioni del messaggio
      */
     @Override
     public void onReceive(Context context, Intent intent){
@@ -450,7 +452,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         super.removeListener(listener);
     }
 
-    // TODO aggiungere tracy/test
+    // TODO aggiungere test
     /**
      * Metodo che ritorna tutti i PointOfInterest appartenenti ad una certa categoria
      * @param category Nome della categoria di cui si vogliono recupoerare tutti i PointOfInterest
