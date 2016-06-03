@@ -1,6 +1,7 @@
 package com.leaf.clips.presenter;
 
 import android.app.NotificationManager;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
@@ -11,6 +12,7 @@ import com.leaf.clips.view.RemoteMapManagerView;
 import com.leaf.clips.view.RemoteMapManagerViewImp;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
 
@@ -40,12 +42,15 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
         MyApplication.getInfoComponent().inject(this);
         this.view = new RemoteMapManagerViewImp(this);
 
+        AsyncFindRemoteBuilding aSyncFindRemoteBuilding = new AsyncFindRemoteBuilding();
+        aSyncFindRemoteBuilding.execute();
         try {
-            view.setRemoteMaps(databaseService.findAllRemoteBuildings());
-        } catch (IOException e) {
+            aSyncFindRemoteBuilding.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -79,11 +84,11 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
                                 mNotifyManager.notify(id, mBuilder.build());
                                 // Sleeps the thread, simulating an operation
                                 // that takes time
-                                try {
-                                    databaseService.findRemoteBuildingByMajor(major);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
+                            try {
+                                databaseService.findRemoteBuildingByMajor(Integer.valueOf(major));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
 
                             // When the loop is finished, updates the notification
                             mBuilder.setContentText(getString(R.string.map_downloaded)).setProgress(0,0,false).setSmallIcon(R.drawable.ic_vertical_align_bottom_white_24dp);
@@ -95,5 +100,33 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
         }
 
     }
+
+
+    private class AsyncFindRemoteBuilding extends AsyncTask {
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            try {
+                view.setRemoteMaps(databaseService.findAllRemoteBuildings());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+
+    private class AsyncDownloadRemoteBuilding extends AsyncTask {
+        @Override
+        protected Object doInBackground(Object[] params) {
+            try {
+                databaseService.findRemoteBuildingByMajor((Integer)params[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
 
 }
