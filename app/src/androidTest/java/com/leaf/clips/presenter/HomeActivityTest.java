@@ -23,7 +23,7 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 import static org.mockito.Mockito.when;
 
 /**
- * TU105 & TU106 & TU107 & TU108 & TU109 & TU111
+ * TU105 & TU106 & TU107 & TU108 & TU109 & TU111 & TU112 & TU113 & TU114 & TU115
  */
 
 @RunWith(AndroidJUnit4.class)
@@ -71,6 +71,14 @@ public class HomeActivityTest {
     }
 
     @Test
+    public void isBuildingDescriptionBeingUpdated() throws Exception{
+
+        testActivity.updateBuildingDescription();
+
+        Mockito.verify(testView).setBuildingDescription(Matchers.anyString());
+    }
+
+    @Test
     public void isBuildingNameBeingUpdated() throws Exception{
 
         testActivity.updateBuildingName();
@@ -101,4 +109,38 @@ public class HomeActivityTest {
         intended(hasComponent(PoiCategoryActivity.class.getName()));
         Intents.release();
     }
+
+    @Test
+    public void isPreferencesBeingShowed() throws Exception{
+        Intents.init();
+        testActivity.showPreferences();
+        intended(hasComponent(PreferencesActivity.class.getName()));
+        Intents.release();
+    }
+
+    @Test
+    public void isHelpBeingShowed() throws Exception{
+        Intents.init();
+        testActivity.showHelp();
+        intended(hasComponent(HelpActivity.class.getName()));
+        Intents.release();
+    }
+
+    @Test
+    public void areAllPOIBeingShowed() throws Exception{
+        Intents.init();
+        testActivity.showAllPois();
+        intended(hasComponent(PoiActivity.class.getName()));
+        Intents.release();
+    }
+
+    @Test
+    public void isLocalMapsBeingShowed() throws Exception{
+        Intents.init();
+        testActivity.showLocalMaps();
+        intended(hasComponent(LocalMapActivity.class.getName()));
+        Intents.release();
+    }
+
+
 }
