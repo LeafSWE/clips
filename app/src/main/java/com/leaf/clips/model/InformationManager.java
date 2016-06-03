@@ -91,17 +91,16 @@ public interface InformationManager {
      * @param listener Listener che deve essere rimosso dalla lista di InformationListener
      */
     void removeListener(InformationListener listener);
-
-    // TODO aggiungere asta
+    
     /**
      * Metodo che ritorna tutti i PointOfInterest appartenenti ad una certa categoria
-     * @param category Nome della categoria di cui si vogliono recupoerare tutti i PointOfInterest
+     * @param category Nome della categoria di cui si vogliono recuperare tutti i PointOfInterest
      * @return Collection<PointOfInterest>
      */
     Collection<PointOfInterest> getPOIsByCategory(String category);
 
     /**
-     * Metodo che permette di scaricare lla mappa associata ai beacon visibili
+     * Metodo che permette di scaricare la mappa associata ai beacon visibili
      * @param remoteSearch boolean che indica se scaricare la mappa associata ai beacon visibili oppure no
      */
     void downloadMapOfVisibleBeacons(Boolean remoteSearch);
