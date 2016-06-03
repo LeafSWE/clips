@@ -372,10 +372,6 @@ public class BuildingService implements DatabaseService {
     @Override
     public boolean isBuildingMapUpdated(int major) throws IOException {
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
-
         String url = MyApplication.getConfiguration().getRemoteDBMapRequest(major);
         try (
                 InputStream input = new URL(url).openStream();
