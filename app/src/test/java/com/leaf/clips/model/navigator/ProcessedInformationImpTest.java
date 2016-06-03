@@ -68,7 +68,7 @@ public class ProcessedInformationImpTest {
         assertEquals("Different PhotoInformation info", processedInformation.getPhotoInstruction(),
                 mockPhotoInformation);
         assertEquals("Different direction", processedInformation.getDirection(),
-                NavigationDirection.fromInt(FAKE_DIRECTION));
+                NavigationDirection.STRAIGHT);
     }
 
     @Test
