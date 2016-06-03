@@ -36,7 +36,6 @@ import javax.inject.Inject;
  * Classe che si occupa della gestione della navigazione
  */
 
-// TODO: 25/05/16 aggiornare tracy
 public class NavigationManagerImp extends AbsBeaconReceiverManager implements NavigationManager {
 
     /**
@@ -103,7 +102,7 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
 
     /**
      * Metodo che permette di recuperare tutte le istruzioni di navigazione per un percorso calcolato
-     * in base al beacon più potente ricavato dalla PriorityQueue<MyBeacon> passata come argomento.
+     * in base al beacon più potente ricavato da una PriorityQueue<MyBeacon>.
      * Viene lanciata una eccezione di tipo NoNavigationInformationException nel caso in cui venga
      * richiamato questo metodo senza aver prima avviato la navigazione.
      * @return  ProcessedInformation
@@ -150,7 +149,7 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
     }
 
     /**
-     *
+     * Metodo che permette di avviare la navigazione verso uno specifico POI
      * @param endPOI POI da raggiungere tramite navigazione
      * @return ProcessedInformation Informazioni necessarie per avviare la navigazione
      */
