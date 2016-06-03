@@ -8,6 +8,8 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.InstrumentationTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
+import com.leaf.clips.presenter.MyApplication;
+
 import junit.framework.Assert;
 
 import org.junit.Before;
@@ -21,7 +23,7 @@ import org.junit.runner.RunWith;
  */
 
 /**
- * TU98
+ * TU98 & TU100
  */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -76,4 +78,11 @@ public class MapsDbHelperTest extends InstrumentationTestCase {
         Assert.assertEquals(1, c.getCount());
 
     }
+
+    @Test
+    public void testGetRemoteDatabaseURL() {
+        String remoteURL = MyApplication.getConfiguration().getRemoteDBPath();
+        assertEquals(remoteURL,dbHelper.getRemoteDatabaseURL());
+    }
+
 }
