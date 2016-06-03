@@ -58,6 +58,11 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     private HomeView view;
 
     /**
+     * Alert da mostrare nel caso in cui non sia presente connessione internet
+     */
+    private AlertDialog noInternetConnection;
+
+    /**
      *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
      *i campi dati.
      *@param savedInstanceState se l'Actvity viene re-inizializzata dopo essere stata chiusa, allora
@@ -387,8 +392,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     @Override
     public void cannotRetrieveRemoteMapDetails() {
         Log.d("HOMEACTIVITY", "CAN'T RETRIEVE REMOTE DETAILS");
-        new NoInternetAlert().show(this);
-
+        if (noInternetConnection == null || !noInternetConnection.isShowing())
+            noInternetConnection = new NoInternetAlert().show(this);
     }
 
     /**
@@ -432,6 +437,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     public void onDestroy(){
         super.onDestroy();
         informationManager = null;
+        if(noInternetConnection != null)
+            noInternetConnection.dismiss();
     }
 
     /**
