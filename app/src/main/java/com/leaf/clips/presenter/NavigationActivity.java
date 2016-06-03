@@ -87,6 +87,11 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
     private AlertDialog.Builder builder;
 
     /**
+     * Alert che viene mostrato nel caso in cui non sia presente internet
+     */
+    private AlertDialog noInternetConnection;
+
+    /**
      *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
      * i campi dati.
      *@param savedInstanceState se l'Actvity viene re-inizializzata dopo essere stata chiusa, allora
@@ -108,8 +113,8 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         else
             handleIntent(getIntent());
         Log.i("state%", "ONCREATE" + poiId);
-
-        new NoInternetAlert().showIfNoConnection(this);
+        if (noInternetConnection == null || !noInternetConnection.isShowing())
+            noInternetConnection = new NoInternetAlert().showIfNoConnection(this);
         builder = new AlertDialog.Builder(this);
 
     }
@@ -150,7 +155,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                 }
 
             }else { //Se l'Intent è stato generato dalla PoiCategoryActivity
-                int destinationPOIid = getIntent().getIntExtra("poi_id",-1);
+                int destinationPOIid = getIntent().getIntExtra("poi_id", -1);
                 if(destinationPOIid != -1)
                     poiId = destinationPOIid;
                 else
@@ -167,10 +172,11 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                         }
                     }
             }
-            if(destinationPoi != null) {
+            if (destinationPoi != null) {
                 setTitle("Raggiungi " + destinationPoi.getName());
                 Log.d("NAVIGAZIONE", "OK");
-                new NoInternetAlert().showIfNoConnection(this);
+                if (noInternetConnection == null || !noInternetConnection.isShowing())
+                    noInternetConnection = new NoInternetAlert().showIfNoConnection(this);
                 navigationManager.startNavigation(destinationPoi);
                 navigationInstruction = navigationManager.getAllNavigationInstruction();
                 navigationManager.addListener(this);
@@ -339,6 +345,9 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
 
         if(dialogPathError != null)
             dialogPathError.dismiss();
+
+        if(noInternetConnection != null)
+            noInternetConnection.dismiss();
     }
 
     /**
