@@ -129,13 +129,13 @@ public class AbsEnrichedEdgeTest {
         //ElevatorPreference
         setting.setPathPreference(PathPreference.ELEVATOR_PREFERENCE);
         defaultEdgeTest.setUserPreference(setting);
-        assertEquals(1, defaultEdgeTest.getElevatorPreference());
-        assertEquals(0, defaultEdgeTest.getStairPreference());
+        assertEquals(0, defaultEdgeTest.getElevatorPreference());
+        assertEquals(1, defaultEdgeTest.getStairPreference());
         //StairPreference
         setting.setPathPreference(PathPreference.STAIR_PREFERENCE);
         defaultEdgeTest.setUserPreference(setting);
-        assertEquals(0, defaultEdgeTest.getElevatorPreference());
-        assertEquals(1, defaultEdgeTest.getStairPreference());
+        assertEquals(1, defaultEdgeTest.getElevatorPreference());
+        assertEquals(0, defaultEdgeTest.getStairPreference());
     }
 
 
