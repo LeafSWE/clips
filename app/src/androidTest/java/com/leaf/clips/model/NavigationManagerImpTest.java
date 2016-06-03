@@ -12,7 +12,9 @@ import android.test.suitebuilder.annotation.SmallTest;
 
 import com.leaf.clips.model.beacon.MyBeacon;
 import com.leaf.clips.model.navigator.NavigationExceptions;
+import com.leaf.clips.model.navigator.Navigator;
 import com.leaf.clips.model.navigator.NoNavigationInformationException;
+import com.leaf.clips.model.navigator.ProcessedInformation;
 import com.leaf.clips.model.navigator.graph.MapGraph;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
@@ -32,7 +34,10 @@ import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
+import java.lang.reflect.Field;
 import java.net.URI;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -40,7 +45,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 /**
- * TU42
+ * TU42 & TU44
  */
 // TODO: 05/05/2016 associare ad un test? Unit o Integration
 // TODO: 5/6/16 Controllare perché è stato dato un conflitto. Ho preso la version f/model 
@@ -48,324 +53,40 @@ import java.util.PriorityQueue;
 @SmallTest
 public class NavigationManagerImpTest {
 
-    NavigationManager navigationManager;
-
-    MapGraph map = new MapGraphMock();
-
-    RegionOfInterest r1 = new RegionOfInterestMock(1);
-    RegionOfInterest r2 = new RegionOfInterestMock(2);
-    RegionOfInterest r3 = new RegionOfInterestMock(3);
-
-    EnrichedEdge e1 = new EnrichedEdgeMock(r1,r2,1,0,1,new NavigationInformationImp(null, null, null));
-    EnrichedEdge e2 = new EnrichedEdgeMock(r2,r3,1,0,1,new NavigationInformationImp(null, null, null));
-
-    PointOfInterest endPOI = new PointOfInterestMock();
-
-    @Before
-    public void init(){
-
-        List<RegionOfInterest> roiList = new LinkedList<>();
-        roiList.add(r1);
-        roiList.add(r2);
-        roiList.add(r3);
-        map.addAllRegions(roiList);
-
-        List<EnrichedEdge> edgeList = new LinkedList<>();
-        edgeList.add(e1);
-        edgeList.add(e2);
-        map.getGraph().addEdge(r1, r2, e1);
-        map.getGraph().addEdge(r2, r3, e2);
-
-
-        map.setSettingAllEdge(new SettingImp(InstrumentationRegistry.getTargetContext()));
-        map.addAllEdges(edgeList);
-        map.addAllRegions(roiList);
-
-        List<RegionOfInterest> belong = new LinkedList<>();
-
-        belong.add(r3);
-
-        endPOI.setBelongingROIs(belong);
-
-        navigationManager = new NavigationManagerImp(map, InstrumentationRegistry.getTargetContext());
-
-        try {
-            navigationManager.startNavigation(endPOI);
-        } catch (NavigationExceptions navigationExceptions) {
-            navigationExceptions.printStackTrace();
-        }
-    }
-
-    @Test(expected = NavigationExceptions.class)
-    public void shouldNotReturnNavigationInstructions() throws NavigationExceptions {
-        navigationManager.getAllNavigationInstruction();
-    }
-
-    @Test(expected = NoNavigationInformationException.class)
-    public void shouldNotReturnNextNavigationInstruction() throws NoNavigationInformationException {
-        navigationManager.getNextInstruction();
-    }
-
-
-
-    class MapGraphMock extends MapGraph{
-        /**
-         * Rappresentazione a grafo dell'edificio
-         */
-        private SimpleDirectedWeightedGraph<RegionOfInterest, EnrichedEdge> graph;
-
-        /**
-         * Costruttore della classe
-         */
-        public MapGraphMock(){
-            graph = new SimpleDirectedWeightedGraph<RegionOfInterest, EnrichedEdge>(EnrichedEdge.class);
-        }
-
-
-        /**
-         * Metodo che permette di aggiungere più archi al grafo che rappresenta l'edificio
-         * @param edges Archi da aggiungere al grafo che rappresenta l'edificio
-         */
-        @Override
-        public void addAllEdges(Collection<EnrichedEdge> edges) {
-            for(EnrichedEdge edge: edges){
-                graph.addEdge(edge.getStarterPoint(),edge.getEndPoint(),edge);
-            }
-        }
-
-        /**
-         * Metodo che permette di aggiungere più RegionOfInterest al grafo che rappresenta l'edificio
-         * @param regions Collezione di RegionOfInterest da aggiungere al grafo che rappresenta l'edificio
-         */
-        @Override
-        public void addAllRegions(Collection<RegionOfInterest> regions) {
-            for(RegionOfInterest regionOfInterest: regions){
-                graph.addVertex(regionOfInterest);
-            }
-        }
-
-        /**
-         * Metodo che permette di aggiungere un arco al grafo che rappresenta l'edificio
-         * @param edge Arco da aggiungere al grafo che rappresenta l'edificio
-         */
-        @Override
-        public void addEdge(EnrichedEdge edge) {
-            graph.addEdge(edge.getStarterPoint(),edge.getEndPoint(),edge);
-        }
-
-        /**
-         * Metodo che permette di aggiungere una RegionOfInterest al grafo che rappresenta l'edificio
-         * @param roi RegionOfInterest da aggiungere al grafo che rappresenta l'edificio
-         */
-        @Override
-        public void addRegionOfInterest(RegionOfInterest roi) {
-            graph.addVertex(roi);
-        }
-
-        /**
-         * Metodo che permette di restituire il grafo che rappresenta la distribuzione
-         * degli oggetti RegionOfInterest ed EnrichedEdge
-         * @return SimpleDirectedWeightedGraph<RegionOfInterest,EnrichedEdge>
-         */
-        @Override
-        public SimpleDirectedWeightedGraph<RegionOfInterest, EnrichedEdge> getGraph() {
-            return graph;
-        }
-
-        /**
-         * Metodo che permette di impostare le setting passate come parametro a tutti gli edge all'interno del graph
-         * @param setting Impostazioni di preferenza dell'applicazione
-         */
-        @Override
-        public void setSettingAllEdge(Setting setting) {
-            Collection<EnrichedEdge> allEdges = graph.edgeSet();
-            for (EnrichedEdge edge : allEdges) {
-                edge.setUserPreference(setting);
-            }
-        }
-
-    }
-
-    private class RegionOfInterestMock extends VertexImp implements RegionOfInterest{
-
-        public RegionOfInterestMock(int id){
-            super(id);
-        }
-
-        @Override
-        public boolean contains(MyBeacon beacon) {
-            return false;
-        }
-
-        @Override
-        public Collection<PointOfInterest> getAllNearbyPOIs() {
-            return null;
-        }
-
-        @Override
-        public int getFloor() {
-            return 0;
-        }
-
-        @Override
-        public int getId() {
-            return 0;
-        }
-
-        @Override
-        public int getMajor() {
-            return 0;
-        }
-
-        @Override
-        public int getMinor() {
-            return 0;
-        }
-
-        @Override
-        public String getUUID() {
-            return null;
-        }
-
-        @Override
-        public void setNearbyPOIs(Collection<PointOfInterest> pois) {
-
-        }
-    }
-
-    private class PointOfInterestMock implements PointOfInterest{
-
-        Collection<RegionOfInterest> rois = new LinkedList<>();
-
-        @Override
-        public Collection<RegionOfInterest> getAllBelongingROIs() {
-            return rois;
-        }
-
-        @Override
-        public String getCategory() {
-            return null;
-        }
-
-        @Override
-        public String getDescription() {
-            return null;
-        }
-
-        @Override
-        public int getId() {
-            return 0;
-        }
-
-        @Override
-        public String getName() {
-            return null;
-        }
-
-        @Override
-        public void setBelongingROIs(Collection<RegionOfInterest> rois) {
-            rois.addAll(rois);
-        }
-    }
-
-    private class EnrichedEdgeMock extends AbsEnrichedEdge{
-
-        public EnrichedEdgeMock(RegionOfInterest start, RegionOfInterest end, double distance,
-                                int coordinate,int id, NavigationInformation navigationInformation){
-            super(start, end, distance, coordinate, id, navigationInformation);
-        }
-
-        @Override
-        public String getBasicInformation() {
-            return "";
-        }
-
-        @Override
-        public String getDetailedInformation() {
-            return "";
-        }
-
-        @Override
-        public double getWeight() {
-            return 1;
-        }
-    }
-
-    private class NavigationInformationMock implements NavigationInformation{
-
-        public NavigationInformationMock(){
-
-        }
-
-        @Override
-        public String getBasicInformation() {
-            return "";
-        }
-
-        @Override
-        public String getDetailedInformation() {
-            return "";
-        }
-
-        @Override
-        public PhotoInformation getPhotoInformation() {
-            List list = new LinkedList<>();
-            list.add(new PhotoRefMock(1,URI.create("http://www.google.com")));
-            return new PhotoInformationMock(list);
-        }
-    }
-
-    private class PhotoInformationMock extends PhotoInformation {
-        /**
-         * Costruttore della classe PhotoInformation
-         *
-         * @param photoURLs A list of all the photosUrls of one Navigation Instruction
-         */
-        public PhotoInformationMock(Collection<PhotoRef> photoURLs) {
-            super(photoURLs);
-        }
-    }
-
-    private class PhotoRefMock extends PhotoRef{
-
-        /**
-         * Costruttore della classe PhotoRef
-         *
-         * @param id     Identificativo della fotografia
-         * @param source URL di una fotografia
-         */
-        public PhotoRefMock(int id, URI source) {
-            super(id, source);
-        }
-    }
-
     private NavigationManagerImpExtended navmanager;
-
     private Context context;
+    private MapGraph graph = Mockito.mock(MapGraph.class,Mockito.RETURNS_DEEP_STUBS);
+    private Listener listener = Mockito.mock(Listener.class);
+    private Navigator navigator = Mockito.mock(Navigator.class);
 
-    private MapGraph graph;
-
-    private InformationListener listener;
+    private MyBeacon mockBeacon = Mockito.mock(MyBeacon.class);
+    private RegionOfInterest mockRegion = Mockito.mock(RegionOfInterest.class);
+    private PriorityQueue<MyBeacon> mockBeaconList = Mockito.mock(PriorityQueue.class);
+    private ProcessedInformation mockProcessedInfo = Mockito.mock(ProcessedInformation.class);
+    private PointOfInterest mockPOI = Mockito.mock(PointOfInterest.class);
+    private NavigationListener mockNv = Mockito.mock(NavigationListener.class);
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception{
         context = InstrumentationRegistry.getTargetContext();
-        graph = new MockMapGraph();
         navmanager = new NavigationManagerImpExtended(graph, context);
-        listener = new MockInformationListener();
+        Field field1 = navmanager.getClass().getSuperclass().getDeclaredField("navigator");
+        field1.setAccessible(true);
+        field1.set(navmanager, navigator);
+        Field field = navmanager.getClass().getSuperclass().getSuperclass().getDeclaredField("lastBeaconsSeen");
+        field.setAccessible(true);
+        field.set(navmanager, mockBeaconList);
     }
 
     @Test
     public void TestAddListener() {
-        setUp();
         navmanager.addListener(listener);
-        Collection<InformationListener> collection = navmanager.getAllListener();
+        Collection<Listener> collection = navmanager.getAllListener();
         Assert.assertTrue(collection.contains(listener));
     }
 
     @Test
     public void TestRemoveListener() {
-        setUp();
         Collection<Listener> collection = navmanager.getAllRawListener();
         collection.add(listener);
         Assert.assertTrue(collection.contains(listener));
@@ -373,59 +94,69 @@ public class NavigationManagerImpTest {
         Assert.assertTrue(!collection.contains(listener));
     }
 
+    @Test
+    public void TestStartNavigation() throws Exception {
+
+        Collection<RegionOfInterest> regionOfInterests = new LinkedList<>();
+
+        regionOfInterests.add(mockRegion);
+        //Risposta lastBeaconSeen
+        Mockito.when(mockBeaconList.peek()).thenReturn(mockBeacon);
+        Mockito.when(graph.getGraph().vertexSet().iterator()).thenReturn(regionOfInterests.iterator());
+        Mockito.when(mockRegion.contains(mockBeacon)).thenReturn(true);
+        Mockito.doNothing().when(navigator).calculatePath(mockRegion, mockPOI);
+        Mockito.when(navigator.toNextRegion(mockBeaconList)).thenReturn(mockProcessedInfo);
+        Mockito.doNothing().when(mockNv).informationUpdate(mockProcessedInfo);
+
+        ProcessedInformation processedInformationReceived = navmanager.startNavigation(mockPOI);
+        Assert.assertEquals(mockProcessedInfo, processedInformationReceived);
+
+    }
+
+    @Test
+    public void TestGetAllNavigationInstruction() throws Exception {
+        List<ProcessedInformation> mockList = new LinkedList<>();
+        mockList.add(mockProcessedInfo);
+        ProcessedInformation mockProcessedInfo2 = Mockito.mock(ProcessedInformation.class);
+        mockList.add(mockProcessedInfo2);
+        Mockito.when(navigator.getAllInstructions()).thenReturn(mockList);
+        List<ProcessedInformation> listReceived = navmanager.getAllNavigationInstruction();
+        Assert.assertEquals(mockList.size(),listReceived.size());
+        Assert.assertEquals(mockList, listReceived);
+    }
+
+    @Test
+    public void TestGetNextInstruction() throws Exception {
+        Mockito.when(navigator.toNextRegion(mockBeaconList)).thenReturn(mockProcessedInfo);
+        ProcessedInformation processedInformationReceived = navmanager.getNextInstruction();
+        Assert.assertEquals(mockProcessedInfo, processedInformationReceived);
+    }
+
+    @Test
+    public void TestStopNavigation() throws Exception {
+        navmanager.addListener(listener);
+        Assert.assertTrue(navmanager.getAllListener().size()>0);
+        navmanager.stopNavigation();
+        Assert.assertEquals(navmanager.getAllListener().size(),0);
+    }
+
+
     class NavigationManagerImpExtended extends NavigationManagerImp{
 
         public NavigationManagerImpExtended(MapGraph graph, Context context) {
             super(graph, context);
         }
 
-        public Collection<InformationListener> getAllListener(){
-            Collection<InformationListener> collection = new LinkedList<>();
+        public Collection<Listener> getAllListener(){
+            Collection<Listener> collection = new LinkedList<>();
             for(Listener listener : listeners){
-                collection.add((InformationListener)listener);
+                collection.add(listener);
             }
             return collection;
         }
 
         public Collection<Listener> getAllRawListener(){
             return listeners;
-        }
-    }
-
-    class MockMapGraph extends MapGraph {
-
-    }
-
-    class MockInformationListener implements InformationListener {
-
-        @Override
-        public void onDatabaseLoaded() {
-
-        }
-
-        @Override
-        public boolean onLocalMapNotFound() {
-            return false;
-        }
-
-        @Override
-        public void onRemoteMapNotFound() {
-
-        }
-
-        @Override
-        public void cannotRetrieveRemoteMapDetails() {
-
-        }
-
-        @Override
-        public boolean noLastMapVersion() {
-            return false;
-        }
-
-        @Override
-        public void getAllVisibleBeacons(PriorityQueue<MyBeacon> visibleBeacons) {
-
         }
     }
 
