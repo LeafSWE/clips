@@ -70,7 +70,7 @@ import java.util.Collection;
  */
 
 /**
- * TU57 & TU58 & TU59 & TU60 & TU156
+ * TU57 & TU58 & TU59 & TU60 & TU155
  */
 @RunWith(AndroidJUnit4.class)
 @SmallTest

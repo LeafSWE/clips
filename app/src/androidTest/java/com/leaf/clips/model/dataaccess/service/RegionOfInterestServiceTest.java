@@ -40,7 +40,7 @@ import java.util.List;
  */
 
 /**
- * TU48 & TU49 & & TU152 & TU153 & TU154
+ * TU48 & TU49 & & TU151 & TU152 & TU153
  */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
