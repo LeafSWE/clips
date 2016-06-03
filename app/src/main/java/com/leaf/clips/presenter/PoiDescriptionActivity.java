@@ -19,8 +19,10 @@ import javax.inject.Inject;
  * @version 0.01
  * @since 0.01
  */
-//TODO: aggiungere intera classe ad Tracy, astha ok
 
+/**
+ * PoiDescriptionActivity è la classe che si occupa di gestire la descrizione di un POI presente nell'edificio associato al beacon rilevato, in modo che vengano fornite all'utente le informazioni presenti nel database associate a quello specifico POI
+ */
 public class PoiDescriptionActivity extends AppCompatActivity {
     /**
      * Riferimento utilizzato per accedere alle informazioni trattate dal Model.
