@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout="@layout/preferences_layout">
+
+
+        <ListPreference
+                android:key="path_pref"
+                android:title="@string/path_preferences"
+                android:entries="@array/path_preferences"
+                android:entryValues="@array/path_preferences"
+                android:defaultValue="Default" />
+
+        <!--<ListPreference
+                android:key="instr_pref"
+                android:title="@string/instruction_preferences"
+                android:dialogTitle="@string/instruction_preferences"
+                android:entries="@array/instruction_preferences"
+                android:entryValues="@array/instruction_preferences"
+                android:defaultValue="Default" />-->
+
+</PreferenceScreen>
