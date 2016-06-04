@@ -357,9 +357,9 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
         int orientationInt = (int)orientation;
         NavigationDirection direction;
         if (orientationInt > 20 && orientationInt < 150)
-            direction = NavigationDirection.RIGHT;
-        else if (orientationInt >= 210 && orientationInt < 340)
             direction = NavigationDirection.LEFT;
+        else if (orientationInt >= 210 && orientationInt < 340)
+            direction = NavigationDirection.RIGHT;
         else if (orientationInt >= 150 && orientationInt <210)
             direction = NavigationDirection.TURN;
         else
