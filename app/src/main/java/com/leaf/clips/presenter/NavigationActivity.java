@@ -356,6 +356,12 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
     public void changed(float orientation) {
         int orientationInt = (int)orientation;
         NavigationDirection direction;
+        if(getResources().getConfiguration().orientation ==
+                getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
+            orientationInt += 90;
+            if (orientationInt > 360)
+                orientationInt -= 360;
+        }
         if (orientationInt > 20 && orientationInt < 150)
             direction = NavigationDirection.LEFT;
         else if (orientationInt >= 210 && orientationInt < 340)
