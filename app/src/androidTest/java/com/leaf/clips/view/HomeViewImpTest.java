@@ -96,7 +96,7 @@ public class HomeViewImpTest {
     }
 
     @Test
-    public void shouldShowTheGuide() throws InterruptedException {
+    public void shouldShowBuildingInformation() throws InterruptedException {
         // Ottengo la mappa usata per il testing
         DatabaseService dbService = ServiceHelper.getService(DaoFactoryHelper.getInstance()
                         .getSQLiteDaoFactory(new MapsDbHelper(testActivity.getApplicationContext())
