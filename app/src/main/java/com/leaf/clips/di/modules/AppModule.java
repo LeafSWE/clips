@@ -18,7 +18,6 @@ import dagger.Provides;
  * @since 0.01
  */
 
-// TODO: 25/05/16 aggiornare tracy/uml
 /**
  * Classe nella quale vengono dichiarate le dipendenze verso oggetti di tipo Context e Application
  */
