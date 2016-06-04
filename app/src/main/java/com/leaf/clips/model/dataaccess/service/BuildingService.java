@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 
+import android.os.AsyncTask;
 import android.os.StrictMode;
 
 import com.leaf.clips.model.dataaccess.dao.BuildingTable;
@@ -27,6 +28,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Davide Castello
@@ -152,40 +154,66 @@ public class BuildingService implements DatabaseService {
      */
     @Override
     public Collection<BuildingTable> findAllRemoteBuildings() throws IOException {
-        /**
-         * Contatto il db remoto su "/allMaps" e ottengo tutte le istanze della tabella Building.
-         * Poi procedo al parsing del risultato (recupero un JsonArray chiamato "building")
-         * e per ogni JsonObject che rappresenta una BuildingTable invoco
-         * remoteBuildingDao.fromJSONToTable() che mi ritorna una BuildingTable.
-         * Raccolgo tutti gli oggetti BuildingTable in una lista che ritorno.
-         */
+        AsyncFindRemoteBuilding asyncFindRemoteBuilding = new AsyncFindRemoteBuilding();
+        asyncFindRemoteBuilding.execute();
 
-        String url = databaseURL+"allMaps";
-        try (
-                InputStream input = new URL(url).openStream();
-                BufferedReader streamReader = new BufferedReader(new InputStreamReader(input));
-        ) {
-            String inputStr;
-            StringBuilder responseStrBuilder = new StringBuilder();
-            while ((inputStr = streamReader.readLine()) != null)
-                responseStrBuilder.append(inputStr);
+        Collection<BuildingTable> buildingTables = null;
 
-            JsonParser parser = new JsonParser();
-            JsonObject js = parser.parse(responseStrBuilder.toString()).getAsJsonObject();
+        try {
+            buildingTables = (Collection<BuildingTable>) asyncFindRemoteBuilding.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return  buildingTables;
+    }
 
-            // recupero e inserisco nel db tutte le entry della tabella Building
-            JsonArray buildingArray = js.get("building").getAsJsonArray();
-            List<BuildingTable> tables = new LinkedList<>();
-            for (int i = 0; i < buildingArray.size(); i++) {
-                // costruisco una BuildingTable e la inserisco nella lista
-                JsonObject object = buildingArray.get(i).getAsJsonObject();
-                BuildingTable table = remoteBuildingDao.fromJSONToTable(object);
-                tables.add(table);
+    // TODO: 04/06/2016 Classe nuova
+    private class AsyncFindRemoteBuilding extends AsyncTask {
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            /**
+             * Contatto il db remoto su "/allMaps" e ottengo tutte le istanze della tabella Building.
+             * Poi procedo al parsing del risultato (recupero un JsonArray chiamato "building")
+             * e per ogni JsonObject che rappresenta una BuildingTable invoco
+             * remoteBuildingDao.fromJSONToTable() che mi ritorna una BuildingTable.
+             * Raccolgo tutti gli oggetti BuildingTable in una lista che ritorno.
+             */
+
+            String url = databaseURL+"allMaps";
+            try (
+                    InputStream input = new URL(url).openStream();
+                    BufferedReader streamReader = new BufferedReader(new InputStreamReader(input));
+            ) {
+                String inputStr;
+                StringBuilder responseStrBuilder = new StringBuilder();
+                while ((inputStr = streamReader.readLine()) != null)
+                    responseStrBuilder.append(inputStr);
+
+                JsonParser parser = new JsonParser();
+                JsonObject js = parser.parse(responseStrBuilder.toString()).getAsJsonObject();
+
+                // recupero e inserisco nel db tutte le entry della tabella Building
+                JsonArray buildingArray = js.get("building").getAsJsonArray();
+                List<BuildingTable> tables = new LinkedList<>();
+                for (int i = 0; i < buildingArray.size(); i++) {
+                    // costruisco una BuildingTable e la inserisco nella lista
+                    JsonObject object = buildingArray.get(i).getAsJsonObject();
+                    BuildingTable table = remoteBuildingDao.fromJSONToTable(object);
+                    tables.add(table);
+                }
+                return tables;
+
+            } catch (IOException exc) {
+                try {
+                    throw exc;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-            return tables;
-
-        } catch (IOException exc) {
-            throw exc;
+            return null;
         }
     }
 
@@ -200,6 +228,18 @@ public class BuildingService implements DatabaseService {
         return fromTableToBo(table);
     }
 
+    // TODO: 04/06/2016 Classe nuova
+    private class AsyncFindRemoteBuildingByMajor extends AsyncTask {
+        @Override
+        protected Object doInBackground(Object[] params) {
+            try {
+                retrieveAndInsertMap((int)params[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return findBuildingByMajor((int) params[0]);
+        }
+    }
     /**
      * Metodo per recuperare la mappa di un edificio ricercandola nel database remoto
      * @param major Major dell'edificio
@@ -207,8 +247,20 @@ public class BuildingService implements DatabaseService {
      */
     @Override
     public BuildingMap findRemoteBuildingByMajor(int major) throws IOException {
-        retrieveAndInsertMap(major);
-        return findBuildingByMajor(major);
+        AsyncFindRemoteBuildingByMajor asyncFindRemoteBuildingByMajor = new AsyncFindRemoteBuildingByMajor();
+        asyncFindRemoteBuildingByMajor.execute(major);
+
+        BuildingMap buildingMap = null;
+
+        try {
+            buildingMap = (BuildingMap) asyncFindRemoteBuildingByMajor.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return buildingMap;
     }
 
     /**
@@ -333,6 +385,39 @@ public class BuildingService implements DatabaseService {
         return sqliteBuildingDao.isBuildingMapPresent(major);
     }
 
+    // TODO: 04/06/2016 Classe nuova
+    private class AsyncIsRemoteMapPresent extends AsyncTask {
+        @Override
+        protected Object doInBackground(Object[] params) {
+            int mapVersion = 0;
+            String url = MyApplication.getConfiguration().getRemoteDBMapRequest((int)params[0]);
+            try (
+                    InputStream input = new URL(url).openStream();
+                    BufferedReader streamReader = new BufferedReader(new InputStreamReader(input));
+            ) {
+                String inputStr;
+                StringBuilder responseStrBuilder = new StringBuilder();
+                while ((inputStr = streamReader.readLine()) != null)
+                    responseStrBuilder.append(inputStr);
+
+                JsonParser parser = new JsonParser();
+                JsonObject object = parser.parse(responseStrBuilder.toString()).getAsJsonObject();
+
+                // recupero l'ultima versione disponibile della mappa
+                 mapVersion = object.get("mapVersion").getAsInt();
+
+            } catch (IOException exc) {
+                try {
+                    throw exc;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return mapVersion != -1;
+
+        }
+    }
     /**
      * Metodo per verificare la presenza di una mappa di un edificio nel database remoto
      * @param major Major dell'edificio
@@ -340,29 +425,56 @@ public class BuildingService implements DatabaseService {
      */
     @Override
     public boolean isRemoteMapPresent(int major) throws IOException {
-        String url = MyApplication.getConfiguration().getRemoteDBMapRequest(major);
-        try (
-                InputStream input = new URL(url).openStream();
-                BufferedReader streamReader = new BufferedReader(new InputStreamReader(input));
-        ) {
-            String inputStr;
-            StringBuilder responseStrBuilder = new StringBuilder();
-            while ((inputStr = streamReader.readLine()) != null)
-                responseStrBuilder.append(inputStr);
-
-            JsonParser parser = new JsonParser();
-            JsonObject object = parser.parse(responseStrBuilder.toString()).getAsJsonObject();
-
-            // recupero l'ultima versione disponibile della mappa
-            int mapVersion = object.get("mapVersion").getAsInt();
-
-            return mapVersion != -1;
-
-        } catch (IOException exc) {
-            throw exc;
+        AsyncIsRemoteMapPresent asyncIsRemoteMapPresent = new AsyncIsRemoteMapPresent();
+        boolean isRemoteMapPresent = false;
+        asyncIsRemoteMapPresent.execute(major);
+        try {
+            isRemoteMapPresent = (boolean) asyncIsRemoteMapPresent.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
+        return isRemoteMapPresent;
     }
 
+    // TODO: 04/06/2016 Classe nuova
+    private class AsyncIsBuildingMapUpdated extends AsyncTask {
+        @Override
+        protected Object doInBackground(Object[] params) {
+            int actualVersion = 0;
+            int updatedVersion = 0;
+            String url = MyApplication.getConfiguration().getRemoteDBMapRequest((int)params[0]);
+            try (
+                    InputStream input = new URL(url).openStream();
+                    BufferedReader streamReader = new BufferedReader(new InputStreamReader(input));
+            ) {
+                String inputStr;
+                StringBuilder responseStrBuilder = new StringBuilder();
+                while ((inputStr = streamReader.readLine()) != null)
+                    responseStrBuilder.append(inputStr);
+
+                JsonParser parser = new JsonParser();
+                JsonObject object = parser.parse(responseStrBuilder.toString()).getAsJsonObject();
+
+                // recupero l'ultima versione disponibile della mappa
+                updatedVersion = object.get("mapVersion").getAsInt();
+
+                // recupero la versione della mappa sul database locale
+                BuildingTable table = sqliteBuildingDao.findBuildingByMajor((int)params[0]);
+                actualVersion = table.getVersion();
+
+            } catch (IOException exc) {
+                try {
+                    throw exc;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return actualVersion == updatedVersion;
+        }
+    }
     /**
      * Metodo per verificare se la mappa di un edificio è aggiornata all'ultima versione
      * @param major Major dell'edificio
@@ -371,33 +483,18 @@ public class BuildingService implements DatabaseService {
      */
     @Override
     public boolean isBuildingMapUpdated(int major) throws IOException {
-
-        String url = MyApplication.getConfiguration().getRemoteDBMapRequest(major);
-        try (
-                InputStream input = new URL(url).openStream();
-                BufferedReader streamReader = new BufferedReader(new InputStreamReader(input));
-        ) {
-            String inputStr;
-            StringBuilder responseStrBuilder = new StringBuilder();
-            while ((inputStr = streamReader.readLine()) != null)
-                responseStrBuilder.append(inputStr);
-
-            JsonParser parser = new JsonParser();
-            JsonObject object = parser.parse(responseStrBuilder.toString()).getAsJsonObject();
-
-            // recupero l'ultima versione disponibile della mappa
-            int updatedVersion = object.get("mapVersion").getAsInt();
-
-            // recupero la versione della mappa sul database locale
-            BuildingTable table = sqliteBuildingDao.findBuildingByMajor(major);
-            int actualVersion = table.getVersion();
-
-            return actualVersion == updatedVersion;
-
-        } catch (IOException exc) {
-            throw exc;
+        AsyncIsBuildingMapUpdated asyncIsBuildingMapUpdated = new AsyncIsBuildingMapUpdated();
+        asyncIsBuildingMapUpdated.execute(major);
+        boolean isBuilingMapUpdated = false;
+        try {
+            isBuilingMapUpdated = (boolean) asyncIsBuildingMapUpdated.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
 
+        return isBuilingMapUpdated;
     }
 
     /**
@@ -478,15 +575,34 @@ public class BuildingService implements DatabaseService {
         }
     }
 
+    private class AsyncUpdateBuildingMap extends AsyncTask {
+        @Override
+        protected Object doInBackground(Object[] params) {
+            BuildingMap map = findBuildingByMajor((int)params [0]);
+            deleteBuilding(map);
+            try {
+                retrieveAndInsertMap((int)params[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
     /**
      * Metodo per aggiornare la mappa di un edificio all'ultima versione disponibile
      * @param major Major dell'edificio
      */
     @Override
     public void updateBuildingMap(int major) throws IOException {
-        BuildingMap map = findBuildingByMajor(major);
-        deleteBuilding(map);
-        retrieveAndInsertMap(major);
+        AsyncUpdateBuildingMap asyncUpdateBuildingMap = new AsyncUpdateBuildingMap();
+        asyncUpdateBuildingMap.execute(major);
+        try {
+            asyncUpdateBuildingMap.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
 }

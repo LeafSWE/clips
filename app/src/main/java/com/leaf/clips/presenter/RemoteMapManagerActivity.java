@@ -41,7 +41,12 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
         super.onCreate(bundle);
         MyApplication.getInfoComponent().inject(this);
         this.view = new RemoteMapManagerViewImp(this);
-
+        try {
+            view.setRemoteMaps(databaseService.findAllRemoteBuildings());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+/*
         AsyncFindRemoteBuilding aSyncFindRemoteBuilding = new AsyncFindRemoteBuilding();
         aSyncFindRemoteBuilding.execute();
         try {
@@ -51,6 +56,7 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+*/
     }
 
     /**
