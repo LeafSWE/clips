@@ -34,8 +34,6 @@ import dagger.Component;
  * @since 0.01
  */
 
-// TODO: 25/05/16 aggiornare tracy/uml
-
 /**
  * Interfaccia che viene implementata in autonomia da Dagger2 nella quale devono essere dichiarati
  * i metodi inject che richiedono come parametro la classe in cui sono presenti campi dati annotati
@@ -47,9 +45,9 @@ import dagger.Component;
 public interface InfoComponent {
     /**
      * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo HomeActivity
-     * @param mainActivity Oggetto in cui devono essere iniettate le dipendenze
+     * @param homeActivity Oggetto in cui devono essere iniettate le dipendenze
      */
-    void inject(HomeActivity mainActivity);
+    void inject(HomeActivity homeActivity);
 
     /**
      * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo DeveloperUnlockerActivity
@@ -128,8 +126,6 @@ public interface InfoComponent {
      * @param poiActivity Oggetto in cui devono essere iniettate le dipendenze
      */
     void inject(PoiActivity poiActivity);
-
-    // TODO: 5/27/16 Aggiungere tracy + asta
 
     /**
      * Metodo che permette di iniettare i campi annotati con Inject negli oggetti di tipo RemoteMapManagerActivity
