@@ -99,22 +99,24 @@ public class SQLiteEdgeDao implements EdgeDao, CursorConverter {
             RegionOfInterestContract.TABLE_NAME + "." + RegionOfInterestContract.COLUMN_ID + ") AND "
             + RegionOfInterestContract.TABLE_NAME + "." + RegionOfInterestContract.COLUMN_MAJOR + "=" + major, null);
         int edgeNumber = cursor.getCount();
-        PriorityQueue<EdgeTable> edgeTables = new PriorityQueue<>(edgeNumber,
-                new Comparator<EdgeTable>() {
-                    @Override
-                    public int compare(EdgeTable lhs, EdgeTable rhs) {
-                        if (lhs.getId() > rhs.getId())
-                            return 1;
-                        else if (lhs.getId() == rhs.getId())
-                            return 0;
-                        else
-                            return -1;
-                    }
-                });
-        for (int i = 0; i < edgeNumber; i++)
-            edgeTables.add(cursorToType(cursor));
-        return edgeTables;
-
+        if(edgeNumber > 0) {
+            PriorityQueue<EdgeTable> edgeTables = new PriorityQueue<>(edgeNumber,
+                    new Comparator<EdgeTable>() {
+                        @Override
+                        public int compare(EdgeTable lhs, EdgeTable rhs) {
+                            if (lhs.getId() > rhs.getId())
+                                return 1;
+                            else if (lhs.getId() == rhs.getId())
+                                return 0;
+                            else
+                                return -1;
+                        }
+                    });
+            for (int i = 0; i < edgeNumber; i++)
+                edgeTables.add(cursorToType(cursor));
+            return edgeTables;
+        } else
+            return new PriorityQueue<>();
     }
 
     /**
