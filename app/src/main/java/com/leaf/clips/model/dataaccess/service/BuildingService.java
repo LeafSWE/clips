@@ -575,6 +575,7 @@ public class BuildingService implements DatabaseService {
         }
     }
 
+    // TODO: 6/4/16 Classe nuova 
     private class AsyncUpdateBuildingMap extends AsyncTask {
         @Override
         protected Object doInBackground(Object[] params) {
