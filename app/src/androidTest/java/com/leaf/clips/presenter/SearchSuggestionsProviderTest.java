@@ -63,9 +63,12 @@ public class SearchSuggestionsProviderTest extends ProviderTestCase2<SearchSugge
         mockBM = Mockito.mock(BuildingMap.class);
 
         //costruzione lista di poi
-        PointOfInterestInformation info1 = new PointOfInterestInformation("1C150","Descrizione POI 1","Aule");
-        PointOfInterestInformation info2 = new PointOfInterestInformation("2C150","Descrizione POI 2","Aule");
-        PointOfInterestInformation info3 = new PointOfInterestInformation("4B150","Descrizione POI 3","Aule");
+        PointOfInterestInformation info1 =
+                new PointOfInterestInformation("1C150","Descrizione POI 1","Aule");
+        PointOfInterestInformation info2 =
+                new PointOfInterestInformation("2C150","Descrizione POI 2","Aule");
+        PointOfInterestInformation info3 =
+                new PointOfInterestInformation("4B150","Descrizione POI 3","Aule");
         PointOfInterest p1 = new PointOfInterestImp(1,info1);
         PointOfInterest p2 = new PointOfInterestImp(2,info2);
         PointOfInterest p3 = new PointOfInterestImp(3,info3);
@@ -104,7 +107,10 @@ public class SearchSuggestionsProviderTest extends ProviderTestCase2<SearchSugge
         String[] selectionArgs = {query};
         String sortOrder = null;
 
-        Cursor result = provider.query(Uri.parse("content://com.leaf.clips.presenter.SearchSuggestionsProvider"), projection, selection, selectionArgs, sortOrder);
+        Cursor result =
+                provider.query(Uri
+                        .parse("content://com.leaf.clips.presenter.SearchSuggestionsProvider"),
+                        projection, selection, selectionArgs, sortOrder);
         assertEquals(1,result.getCount());
         assertEquals(3, result.getColumnCount());
 

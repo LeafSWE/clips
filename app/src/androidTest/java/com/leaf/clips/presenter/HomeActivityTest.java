@@ -33,7 +33,8 @@ public class HomeActivityTest {
     InformationManager mockIM;
 
     @Rule
-    public ActivityTestRule<HomeActivity> mActivityRule = new ActivityTestRule<>(HomeActivity.class);
+    public ActivityTestRule<HomeActivity> mActivityRule =
+            new ActivityTestRule<>(HomeActivity.class);
 
     @Before
     public void setUp() throws Exception {
@@ -41,8 +42,10 @@ public class HomeActivityTest {
 
         testView = Mockito.mock(HomeViewImp.class);
         mockIM = Mockito.mock(InformationManager.class);
-        BuildingInformation bi = new BuildingInformation("Torre","Descrizione Torre","Apertura","Indirizzo");
-        when(mockIM.getBuildingMap()).thenReturn(new BuildingMapImp(null, 0, 0, null, null, bi, "0MB"));
+        BuildingInformation bi =
+                new BuildingInformation("Torre","Descrizione Torre","Apertura","Indirizzo");
+        when(mockIM.getBuildingMap())
+                .thenReturn(new BuildingMapImp(null, 0, 0, null, null, bi, "0MB"));
         Field field = testActivity.getClass().getDeclaredField("view");
         Field field2 = testActivity.getClass().getDeclaredField("informationManager");
 

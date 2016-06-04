@@ -52,7 +52,8 @@ public class LocalMapActivityTest {
         map = new BuildingMapImp(null, 1, 1, null, null, null, null);
 
         // I need to define the actions for updateBuildingMap and deleteBuildingMap
-        Mockito.doThrow(new ArrayIndexOutOfBoundsException()).when(dbService).updateBuildingMap(major);
+        Mockito.doThrow(new ArrayIndexOutOfBoundsException()).when(dbService)
+                .updateBuildingMap(major);
         Mockito.doThrow(new ArrayIndexOutOfBoundsException()).when(dbService).deleteBuilding(map);
         when(dbService.findBuildingByMajor(major)).thenReturn(map);
 

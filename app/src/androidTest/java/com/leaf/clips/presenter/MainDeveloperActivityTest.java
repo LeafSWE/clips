@@ -41,7 +41,8 @@ public class MainDeveloperActivityTest {
     InformationManager mockIM;
 
     @Rule
-    public ActivityTestRule<MainDeveloperActivity> mActivityRule = new ActivityTestRule<>(MainDeveloperActivity.class);
+    public ActivityTestRule<MainDeveloperActivity> mActivityRule =
+            new ActivityTestRule<>(MainDeveloperActivity.class);
 
     @Before
     public void setUp() throws Exception {

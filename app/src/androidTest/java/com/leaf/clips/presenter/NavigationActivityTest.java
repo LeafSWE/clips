@@ -60,7 +60,8 @@ public class NavigationActivityTest {
     private NavigationActivity navigationActivity;
 
     @Rule
-    public ActivityTestRule<NavigationActivity> mActivityRule = new ActivityTestRule<>(NavigationActivity.class);
+    public ActivityTestRule<NavigationActivity> mActivityRule =
+            new ActivityTestRule<>(NavigationActivity.class);
 
     @Before
     public void setUp() throws Exception {
@@ -81,7 +82,8 @@ public class NavigationActivityTest {
         Field field = null;
         try {
             field = NavigationActivity.class.getDeclaredField("informationManager");
-            InformationManager informationManager = (InformationManager)field.get(navigationActivity);
+            InformationManager informationManager =
+                    (InformationManager)field.get(navigationActivity);
             if(!informationManager.getDatabaseService().isBuildingMapPresent(666))
                 informationManager.getDatabaseService().findRemoteBuildingByMajor(666);
             BuildingMap buildingMap = informationManager.getBuildingMap();
@@ -135,7 +137,8 @@ public class NavigationActivityTest {
         PhotoInformation photoInformation = new PhotoInformation(photoRefs);
 
 
-        NavigationInformation navigationInformation = new NavigationInformationImp(basicInformation,detailedInformation,photoInformation);
+        NavigationInformation navigationInformation =
+                new NavigationInformationImp(basicInformation,detailedInformation,photoInformation);
         EnrichedEdge enrichedEdge = new StairEdge(starROI,endROI,15,15,15,navigationInformation);
         ProcessedInformation processedInformation = new ProcessedInformationImp(enrichedEdge);
         List<ProcessedInformation> processedInformations = new ArrayList<>();
@@ -151,7 +154,8 @@ public class NavigationActivityTest {
             fieldNavView.setAccessible(true);
             fieldNavView.set(navigationActivity, mockNavigationView);
             Field fieldNavigationInstruction;
-            fieldNavigationInstruction = navigationActivity.getClass().getDeclaredField("navigationInstruction");
+            fieldNavigationInstruction =
+                    navigationActivity.getClass().getDeclaredField("navigationInstruction");
             fieldNavigationInstruction.setAccessible(true);
             fieldNavigationInstruction.set(navigationActivity, processedInformations);
         } catch (NoSuchFieldException e) {
@@ -185,7 +189,8 @@ public class NavigationActivityTest {
         PhotoInformation photoInformation = new PhotoInformation(photoRefs);
 
 
-        NavigationInformation navigationInformation = new NavigationInformationImp(basicInformation,detailedInformation,photoInformation);
+        NavigationInformation navigationInformation =
+                new NavigationInformationImp(basicInformation,detailedInformation,photoInformation);
         EnrichedEdge enrichedEdge = new StairEdge(starROI,endROI,15,15,15,navigationInformation);
         ProcessedInformation processedInformation = new ProcessedInformationImp(enrichedEdge);
         List<ProcessedInformation> processedInformations = new ArrayList<>();

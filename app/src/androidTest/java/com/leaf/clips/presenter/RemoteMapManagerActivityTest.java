@@ -62,7 +62,10 @@ public class RemoteMapManagerActivityTest {
         testActivity = mActivityRule.getActivity();
 
         testView = Mockito.mock(RemoteMapManagerViewImp.class);
-        dbService = ServiceHelper.getService(DaoFactoryHelper.getInstance().getSQLiteDaoFactory(new MapsDbHelper(testActivity.getApplicationContext()).getWritableDatabase()), DaoFactoryHelper.getInstance().getRemoteDaoFactory(), MapsDbHelper.REMOTE_DB_URL);
+        dbService = ServiceHelper.getService(DaoFactoryHelper.getInstance()
+                .getSQLiteDaoFactory(new MapsDbHelper(testActivity.getApplicationContext())
+                        .getWritableDatabase()),
+                DaoFactoryHelper.getInstance().getRemoteDaoFactory(), MapsDbHelper.REMOTE_DB_URL);
 
         Field field = testActivity.getClass().getDeclaredField("databaseService");
         Field field2 = testActivity.getClass().getDeclaredField("view");

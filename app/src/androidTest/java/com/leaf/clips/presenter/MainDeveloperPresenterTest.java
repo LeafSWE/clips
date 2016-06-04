@@ -33,7 +33,8 @@ public class MainDeveloperPresenterTest {
     Setting mockSetting;
 
     @Rule
-    public ActivityTestRule<MainDeveloperPresenter> mActivityRule = new ActivityTestRule<>(MainDeveloperPresenter.class);
+    public ActivityTestRule<MainDeveloperPresenter> mActivityRule =
+            new ActivityTestRule<>(MainDeveloperPresenter.class);
 
     @Before
     public void setUp() throws Exception {

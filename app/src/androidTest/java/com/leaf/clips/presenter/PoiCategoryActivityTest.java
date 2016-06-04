@@ -42,7 +42,8 @@ public class PoiCategoryActivityTest {
     private List<PointOfInterest> mockPoiList;
 
     @Rule
-    public ActivityTestRule<PoiCategoryActivity> mActivityRule = new ActivityTestRule<>(PoiCategoryActivity.class);
+    public ActivityTestRule<PoiCategoryActivity> mActivityRule =
+            new ActivityTestRule<>(PoiCategoryActivity.class);
 
     @Before
     public void setUp() throws Exception {
@@ -51,7 +52,8 @@ public class PoiCategoryActivityTest {
         testView = Mockito.mock(PoiCategoryViewImp.class);
         mockIM = Mockito.mock(InformationManager.class);
         mockPoiList = new ArrayList<>();
-        PointOfInterestInformation info = new PointOfInterestInformation("1C150","Descrizione POI","Aule");
+        PointOfInterestInformation info =
+                new PointOfInterestInformation("1C150","Descrizione POI","Aule");
         mockPoiList.add(new PointOfInterestImp(0, info));
 
         when(mockIM.getPOIsByCategory(anyString())).thenReturn(mockPoiList);
