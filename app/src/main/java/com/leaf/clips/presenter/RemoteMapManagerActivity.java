@@ -1,7 +1,6 @@
 package com.leaf.clips.presenter;
 
 import android.app.NotificationManager;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
@@ -12,7 +11,6 @@ import com.leaf.clips.view.RemoteMapManagerView;
 import com.leaf.clips.view.RemoteMapManagerViewImp;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
 
@@ -46,17 +44,6 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-/*
-        AsyncFindRemoteBuilding aSyncFindRemoteBuilding = new AsyncFindRemoteBuilding();
-        aSyncFindRemoteBuilding.execute();
-        try {
-            aSyncFindRemoteBuilding.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-*/
     }
 
     /**
@@ -106,33 +93,4 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
         }
 
     }
-
-
-    private class AsyncFindRemoteBuilding extends AsyncTask {
-
-        @Override
-        protected Object doInBackground(Object[] params) {
-            try {
-                view.setRemoteMaps(databaseService.findAllRemoteBuildings());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-    }
-
-
-    private class AsyncDownloadRemoteBuilding extends AsyncTask {
-        @Override
-        protected Object doInBackground(Object[] params) {
-            try {
-                databaseService.findRemoteBuildingByMajor((Integer)params[0]);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-    }
-
-
 }
