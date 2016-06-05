@@ -61,7 +61,7 @@ public class IntegrationTest11 extends TestCase {
 
     @Test
     public void shouldPreferDetailedInformation(){
-        assertEquals("B",navigationInformation.getBasicInformation());
+        assertEquals("B",navigationInformation.getDetailedInformation());
     }
 
     @Test
