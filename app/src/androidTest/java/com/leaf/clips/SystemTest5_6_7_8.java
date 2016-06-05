@@ -3,6 +3,7 @@ package com.leaf.clips;
 import android.support.test.rule.ActivityTestRule;
 import android.widget.TextView;
 
+import com.leaf.clips.model.AbsBeaconReceiverManager;
 import com.leaf.clips.model.InformationManagerImp;
 import com.leaf.clips.model.beacon.MyBeacon;
 import com.leaf.clips.model.beacon.MyBeaconImp;
@@ -16,6 +17,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -53,7 +55,7 @@ public class SystemTest5_6_7_8 {
                     e.printStackTrace();
                 }
                 try {
-                    field = InformationManagerImp.class.getDeclaredField("lastBeaconsSeen");
+                    field = AbsBeaconReceiverManager.class.getDeclaredField("lastBeaconsSeen");
                 } catch (NoSuchFieldException e) {
                     e.printStackTrace();
                 }
@@ -91,6 +93,13 @@ public class SystemTest5_6_7_8 {
                     e.printStackTrace();
                 }
 
+                if (!informationManager.getDatabaseService().isBuildingMapPresent(666)) {
+                    try {
+                        informationManager.getDatabaseService().findRemoteBuildingByMajor(666);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
                 map = informationManager.getDatabaseService().findBuildingByMajor(666);
 
             }}).run();
