@@ -25,7 +25,7 @@ public class ProcessedInformationImpTest {
 
     private static final String FAKE_BASIC_INFORMATION = "FakeBasicInformation";
     private static final String FAKE_DETAIL_INFORMATION = "FakeDetailInformation";
-    private static final String FAKE_STARTER_INFORMATION = "FakeStartInformation";
+    private static final NavigationDirection FAKE_STARTER_INFORMATION = NavigationDirection.TURN;
     private static final int FAKE_DIRECTION = -1;
     @Mock
     private PhotoInformation mockPhotoInformation;
@@ -47,7 +47,7 @@ public class ProcessedInformationImpTest {
 
         processedInformation = new ProcessedInformationImp(mockEnrichedEdge);
         processedInformationWithStart = new ProcessedInformationImp(mockEnrichedEdge,
-                1);
+                180);
     }
 
     /*@Test
@@ -73,8 +73,7 @@ public class ProcessedInformationImpTest {
 
     @Test
     public void testShouldGetBasicWithStartInfo() throws Exception {
-        assertEquals("Different start + basic info",
-                processedInformationWithStart.getProcessedBasicInstruction(),
-                FAKE_STARTER_INFORMATION + " " + FAKE_BASIC_INFORMATION);
+        assertEquals(FAKE_BASIC_INFORMATION, processedInformationWithStart.getProcessedBasicInstruction());
+        assertEquals(FAKE_STARTER_INFORMATION, processedInformationWithStart.getDirection());
     }
 }

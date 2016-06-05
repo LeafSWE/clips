@@ -16,12 +16,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.when;
 /**
  * TU5 TU6
  */
@@ -131,7 +131,7 @@ public class BuildingMapImpTest {
         }
 
         Collection<PointOfInterest> nullResult = buildingMapImp.getNearbyPOIs(mockBeaconFalse);
-        assertEquals("Result not NULL", null, nullResult);
+        assertEquals("Result not NULL", 0, nullResult.size());
     }
 
     /**
