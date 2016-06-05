@@ -180,7 +180,7 @@ public class BuildingService implements DatabaseService {
              * remoteBuildingDao.fromJSONToTable() che mi ritorna una BuildingTable.
              * Raccolgo tutti gli oggetti BuildingTable in una lista che ritorno.
              */
-
+            Log.i("Async", "AsyncFindRemoteBuilding: doInBackground");
             String url = databaseURL+"allMaps";
             try (
                     InputStream input = new URL(url).openStream();
@@ -213,6 +213,12 @@ public class BuildingService implements DatabaseService {
                 }
             }
             return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.i("Async", "AsyncFindRemoteBuilding: onPostExecute");
         }
     }
 
@@ -388,7 +394,7 @@ public class BuildingService implements DatabaseService {
     private class AsyncIsRemoteMapPresent extends AsyncTask {
         @Override
         protected Object doInBackground(Object[] params) {
-            Log.i("Async", "doInBackground");
+            Log.i("Async", "isRemoteMapPresent: doInBackground");
             int mapVersion = 0;
             String url = MyApplication.getConfiguration().getRemoteDBMapRequest((int)params[0]);
             try (
@@ -415,7 +421,12 @@ public class BuildingService implements DatabaseService {
             }
 
             return mapVersion != -1;
+        }
 
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.i("Async", "isRemoteMapPresent: onPostExecute");
         }
     }
     /**

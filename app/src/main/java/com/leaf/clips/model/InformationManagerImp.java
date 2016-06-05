@@ -487,7 +487,13 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
                     for (Listener listener : listeners)
                         ((InformationListener) listener).onRemoteMapNotFound();
                 } else {
-                    dbService.findRemoteBuildingByMajor(major);
+                    map = dbService.findRemoteBuildingByMajor(major);
+                    Log.i("Async", "dopo findRemoteBuildingByMajor");
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     for (Listener listener : listeners)
                         ((InformationListener) listener).onDatabaseLoaded();
                 }
