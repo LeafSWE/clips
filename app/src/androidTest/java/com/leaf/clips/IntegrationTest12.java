@@ -1,16 +1,8 @@
 package com.leaf.clips;
-/**
- * @author Federico Tavella
- * @version 0.00
- * @since 0.00
- */
-
-import android.test.suitebuilder.annotation.SmallTest;
 
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterest;
 import com.leaf.clips.model.navigator.graph.area.RegionOfInterestImp;
 import com.leaf.clips.model.navigator.graph.edge.DefaultEdge;
-import com.leaf.clips.model.navigator.graph.edge.Edge;
 import com.leaf.clips.model.navigator.graph.edge.ElevatorEdge;
 import com.leaf.clips.model.navigator.graph.edge.EnrichedEdge;
 import com.leaf.clips.model.navigator.graph.edge.StairEdge;
@@ -21,12 +13,10 @@ import com.leaf.clips.model.navigator.graph.navigationinformation.NavigationInfo
 import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoInformation;
 import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoRef;
 
-import junit.framework.TestCase;
+import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -34,12 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class Description
+ * @author Marco Zanella
+ * @version 0.01
+ * @since 0.01
  */
-@RunWith(JUnit4.class)
-@SmallTest
-public class IntegrationTest12 extends TestCase {
-
+public class IntegrationTest12 {
     DefaultEdge defaultEdge;
     ElevatorEdge elevatorEdge;
     EnrichedEdge enrichedEdge;
@@ -73,29 +62,29 @@ public class IntegrationTest12 extends TestCase {
     @Test
     public void shouldAccessDefaultEdgeInfo(){
         enrichedEdge = new DefaultEdge(startROI,endROI,1,0,0,navigationInformation);
-        assertEquals(enrichedEdge.getBasicInformation(),"A");
-        assertEquals(enrichedEdge.getCoordinate(),0);
-        assertEquals(enrichedEdge.getDetailedInformation(),"B");
-        assertEquals(enrichedEdge.getDistance(),1.0);
-        assertEquals(enrichedEdge.getPhotoInformation(),photoInformation);
-        assertEquals(enrichedEdge.getId(),0);
-        assertEquals(enrichedEdge.getStarterPoint(),startROI);
-        assertEquals(enrichedEdge.getEndPoint(),endROI);
+        Assert.assertEquals(enrichedEdge.getBasicInformation(), "A");
+        Assert.assertEquals(enrichedEdge.getCoordinate(), 0);
+        Assert.assertEquals(enrichedEdge.getDetailedInformation(), "B");
+        Assert.assertEquals(enrichedEdge.getDistance(), 1.0);
+        Assert.assertEquals(enrichedEdge.getPhotoInformation(), photoInformation);
+        Assert.assertEquals(enrichedEdge.getId(), 0);
+        Assert.assertEquals(enrichedEdge.getStarterPoint(), startROI);
+        Assert.assertEquals(enrichedEdge.getEndPoint(), endROI);
     }
 
     @Test
     public void shouldAccessStairEdgeInfo(){
         enrichedEdge = new StairEdge(startROI,endROI,1,0,0,navigationInformation);
 
-        enrichedEdge = new DefaultEdge(startROI,endROI,1,0,0,navigationInformation);
-        assertEquals(enrichedEdge.getBasicInformation(),"A");
-        assertEquals(enrichedEdge.getCoordinate(),0);
-        assertEquals(enrichedEdge.getDetailedInformation(),"B");
-        assertEquals(enrichedEdge.getDistance(),1.0);
-        assertEquals(enrichedEdge.getPhotoInformation(),photoInformation);
-        assertEquals(enrichedEdge.getId(),0);
-        assertEquals(enrichedEdge.getStarterPoint(),startROI);
-        assertEquals(enrichedEdge.getEndPoint(),endROI);
+        //enrichedEdge = new DefaultEdge(startROI,endROI,1,0,0,navigationInformation);
+        Assert.assertEquals(enrichedEdge.getBasicInformation(), "A");
+        Assert.assertEquals(enrichedEdge.getCoordinate(), 0);
+        Assert.assertEquals(enrichedEdge.getDetailedInformation(), "B");
+        Assert.assertEquals(enrichedEdge.getDistance(), 1.0);
+        Assert.assertEquals(enrichedEdge.getPhotoInformation(), photoInformation);
+        Assert.assertEquals(enrichedEdge.getId(), 0);
+        Assert.assertEquals(enrichedEdge.getStarterPoint(), startROI);
+        Assert.assertEquals(enrichedEdge.getEndPoint(), endROI);
 
     }
 
@@ -103,15 +92,14 @@ public class IntegrationTest12 extends TestCase {
     public void shouldAccessElevatorEdgeInfo(){
         enrichedEdge = new ElevatorEdge(startROI,endROI,1,0,0,navigationInformation);
 
-        enrichedEdge = new DefaultEdge(startROI,endROI,1,0,0,navigationInformation);
-        assertEquals(enrichedEdge.getBasicInformation(),"A");
-        assertEquals(enrichedEdge.getCoordinate(),0);
-        assertEquals(enrichedEdge.getDetailedInformation(),"B");
-        assertEquals(enrichedEdge.getDistance(),1.0);
-        assertEquals(enrichedEdge.getPhotoInformation(),photoInformation);
-        assertEquals(enrichedEdge.getId(),0);
-        assertEquals(enrichedEdge.getStarterPoint(),startROI);
-        assertEquals(enrichedEdge.getEndPoint(),endROI);
+        //enrichedEdge = new DefaultEdge(startROI,endROI,1,0,0,navigationInformation);
+        Assert.assertEquals(enrichedEdge.getBasicInformation(), "A");
+        Assert.assertEquals(enrichedEdge.getCoordinate(), 0);
+        Assert.assertEquals(enrichedEdge.getDetailedInformation(), "B");
+        Assert.assertEquals(enrichedEdge.getDistance(), 1.0);
+        Assert.assertEquals(enrichedEdge.getPhotoInformation(), photoInformation);
+        Assert.assertEquals(enrichedEdge.getId(), 0);
+        Assert.assertEquals(enrichedEdge.getStarterPoint(), startROI);
+        Assert.assertEquals(enrichedEdge.getEndPoint(), endROI);
     }
-
 }
