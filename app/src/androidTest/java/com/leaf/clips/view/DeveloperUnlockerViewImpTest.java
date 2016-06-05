@@ -3,6 +3,7 @@ package com.leaf.clips.view;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.test.espresso.contrib.NavigationViewActions;
+import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
@@ -10,6 +11,7 @@ import android.test.suitebuilder.annotation.LargeTest;
 import com.leaf.clips.R;
 import com.leaf.clips.presenter.DeveloperUnlockerActivity;
 import com.leaf.clips.presenter.HomeActivity;
+import com.leaf.clips.presenter.MainDeveloperActivity;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -22,6 +24,8 @@ import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.DrawerActions.open;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -63,5 +67,18 @@ public class DeveloperUnlockerViewImpTest {
                 closeSoftKeyboard());
         onView(withId(R.id.developer_login_button)).perform(click());
         onView(withText(R.string.dialog_dev_code_error)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void shouldShowMainDeveloperView() {
+        Intents.init();
+        onView(withId(R.id.drawer_layout_home)).perform(open());
+        onView(withId(R.id.nav_view_home))
+                .perform(NavigationViewActions.navigateTo(R.id.nav_developer));
+        onView(withId(R.id.developer_code)).perform(typeText("miriade"),
+                closeSoftKeyboard());
+        onView(withId(R.id.developer_login_button)).perform(click());
+        intended(hasComponent(MainDeveloperActivity.class.getName()));
+        Intents.release();
     }
 }
