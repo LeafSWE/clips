@@ -4,9 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-
 import android.os.AsyncTask;
-import android.os.StrictMode;
+import android.util.Log;
 
 import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 import com.leaf.clips.model.dataaccess.dao.RemoteBuildingDao;
@@ -389,6 +388,7 @@ public class BuildingService implements DatabaseService {
     private class AsyncIsRemoteMapPresent extends AsyncTask {
         @Override
         protected Object doInBackground(Object[] params) {
+            Log.i("Async", "doInBackground");
             int mapVersion = 0;
             String url = MyApplication.getConfiguration().getRemoteDBMapRequest((int)params[0]);
             try (

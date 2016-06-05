@@ -22,14 +22,11 @@ import com.leaf.clips.model.navigator.BuildingMap;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.usersetting.SettingImp;
 
-import junit.framework.Assert;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
-import java.util.concurrent.ExecutionException;
 
 /**
  *Classe che permette l'accesso alle informazioni trattate nel package Model
@@ -317,15 +314,21 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
             final int major = lastBeaconsSeen.peek().getMajor();
 
             if (dbService.isBuildingMapPresent(major)) {
-                AsyncUpdateControl asyncUpdateControl = new AsyncUpdateControl();
-                asyncUpdateControl.execute(major);
+                //AsyncUpdateControl asyncUpdateControl = new AsyncUpdateControl();
+                //asyncUpdateControl.execute(major);
                 boolean isUpdate = false;
-                try {
+                //try {
                     ConnectivityManager connectivityManager =
                             (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
                     NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
                     if (networkInfo != null && networkInfo.isConnected()) {
-                        isUpdate = asyncUpdateControl.get();
+                        try {
+                            isUpdate = dbService.isBuildingMapUpdated(major);
+                        } catch (IOException e) {
+                            for (Listener listener : listeners)
+                                ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
+                        }
+                        //asyncUpdateControl.get();
                         if (!isUpdate) {
                             for (Listener listener : listeners) {
                                 ((InformationListener) listener).noLastMapVersion();
@@ -342,11 +345,11 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
                         for (Listener listener : listeners)
                             ((InformationListener) listener).onDatabaseLoaded();
                     }
-                } catch (InterruptedException e) {
+                /*} catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
-                }
+                }*/
             } else {
                 for (Listener listener : listeners)
                     ((InformationListener) listener).onLocalMapNotFound();
@@ -477,32 +480,20 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     public void downloadMapOfVisibleBeacons(Boolean remoteSearch) {
         final int major = lastBeaconsSeen.peek().getMajor();
         if (remoteSearch) {
-            AsyncRemoteIsPresent asyncRemoteIsPresent = new AsyncRemoteIsPresent();
-            asyncRemoteIsPresent.execute(major);
-            boolean isRemotePresent = true;
             try {
-                isRemotePresent = asyncRemoteIsPresent.get();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Assert.assertNotNull(isRemotePresent);
-            if (!isRemotePresent) {
-                for (Listener listener : listeners)
-                    ((InformationListener) listener).onRemoteMapNotFound();
-            } else {
-                AsyncDownload asyncDownload = new AsyncDownload();
-                asyncDownload.execute(major);
-                try {
-                    asyncDownload.get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
+                boolean isRemotePresent = true;
+                isRemotePresent = dbService.isRemoteMapPresent(major);
+                if (!isRemotePresent) {
+                    for (Listener listener : listeners)
+                        ((InformationListener) listener).onRemoteMapNotFound();
+                } else {
+                    dbService.findRemoteBuildingByMajor(major);
+                    for (Listener listener : listeners)
+                        ((InformationListener) listener).onDatabaseLoaded();
                 }
+            } catch (IOException e) {
                 for (Listener listener : listeners)
-                    ((InformationListener) listener).onDatabaseLoaded();
+                    ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
             }
         } else {
             for (Listener listener : listeners)
@@ -518,14 +509,14 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     public void updateMapOfVisibleBeacons(Boolean update) {
         final int major = lastBeaconsSeen.peek().getMajor();
         if(update) {
-            AsyncUpdateDownload asyncUpdateDownload = new AsyncUpdateDownload();
-            asyncUpdateDownload.execute(major);
+            //AsyncUpdateDownload asyncUpdateDownload = new AsyncUpdateDownload();
+            //asyncUpdateDownload.execute(major);
             try {
-                asyncUpdateDownload.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
+                //asyncUpdateDownload.get();
+                dbService.updateBuildingMap(major);
+            } catch (IOException e) {
+                for (Listener listener : listeners)
+                    ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
             }
         }
         map = dbService.findBuildingByMajor(major);
