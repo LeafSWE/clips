@@ -25,9 +25,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.anything;
 
 /**
  * @author Marco Zanella
@@ -96,7 +99,10 @@ public class DetailedInformationViewImpTest {
     @Test
     public void shouldSetPhotosAndDescription() throws Exception {
         Assert.assertEquals("DetailedDescription", ((TextView) testActivity.findViewById(R.id.detailed_description)).getText().toString());
-
+        onData(anything())
+                .inAdapterView(withId(R.id.gridView_images))
+                .atPosition(0)
+                .perform(click());
     }
 }
 
