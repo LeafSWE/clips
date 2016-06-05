@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Surface;
 
 import com.leaf.clips.R;
 import com.leaf.clips.model.InformationManager;
@@ -356,12 +357,20 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
     public void changed(float orientation) {
         int orientationInt = (int)orientation;
         NavigationDirection direction;
-        if(getResources().getConfiguration().orientation ==
-                getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
-            orientationInt += 90;
-            if (orientationInt > 360)
-                orientationInt -= 360;
+        int rotation = getWindowManager().getDefaultDisplay().getRotation();
+        switch (rotation) {
+            case Surface.ROTATION_90:
+                orientationInt += 90;
+                break;
+            case Surface.ROTATION_180:
+                orientationInt += 180;
+                break;
+            case Surface.ROTATION_270:
+                orientationInt += 270;
+                break;
         }
+        if (orientationInt > 360)
+            orientationInt -= 360;
         if (orientationInt > 20 && orientationInt < 150)
             direction = NavigationDirection.LEFT;
         else if (orientationInt >= 210 && orientationInt < 340)
