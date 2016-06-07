@@ -6,7 +6,6 @@ package com.leaf.clips.presenter;
  * @since 0.00
  */
 
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -117,21 +116,18 @@ public class BeaconPowerAreaActivity extends AppCompatActivity implements Inform
      * Metodo che permette di creare la mappa dei Beacon
      */
     public void buildMap(){
-        Point size = new Point();
-        getWindowManager().getDefaultDisplay().getSize(size);
-        //rendere relativi i punti all'immagine
-        map.add(new BeaconPowerPos(new float[]{(float)size.x*0.85f,(float)size.y*0.52f, 0.0f},0)); //Entrata A
-        map.add(new BeaconPowerPos(new float[]{(float)size.x*0.15f,(float)size.y*0.52f,0.0f},1)); //Entrata B
-        map.add(new BeaconPowerPos(new float[]{(float)size.x*0.15f,(float)size.y*0.08f,0.0f},2)); //Entrata C
-        map.add(new BeaconPowerPos(new float[]{(float)size.x*0.85f,(float)size.y*0.08f,0.0f},3)); //Entrata D
-        map.add(new BeaconPowerPos(new float[]{(float)size.x*0.75f,(float)size.y*0.475f,0.0f}, 1000)); //Region A
-        map.add(new BeaconPowerPos(new float[]{(float) size.x*0.25f ,(float)size.y*0.475f ,0.0f},1001)); //Region B
-        map.add(new BeaconPowerPos(new float[]{(float) size.x*0.25f ,(float)size.y*0.125f ,0.0f},1002)); //Region C
-        map.add(new BeaconPowerPos(new float[]{(float) size.x*0.75f ,(float)size.y*0.125f , 0.0f}, 1003)); //Region D
-        map.add(new BeaconPowerPos(new float[]{(float)size.x*0.95f,(float)size.y*0.52f,0.0f},1004)); //Scala A
-        map.add(new BeaconPowerPos(new float[]{(float)size.x*0.05f,(float)size.y*0.52f,0.0f},1005)); // Scala B
-        map.add(new BeaconPowerPos(new float[]{(float)size.x*0.05f,(float)size.y*0.08f,0.0f},1006)); // Scala C
-        map.add(new BeaconPowerPos(new float[]{(float)size.x*0.95f,(float)size.y*0.08f, 0.0f}, 1007)); //Scala D
+        map.add(new BeaconPowerPos(new float[]{0.85f, 0.86f, 0.0f}, 0)); //Entrata A
+        map.add(new BeaconPowerPos(new float[]{0.15f,0.86f,0.0f},1)); //Entrata B
+        map.add(new BeaconPowerPos(new float[]{0.15f,0.14f,0.0f},2)); //Entrata C
+        map.add(new BeaconPowerPos(new float[]{0.85f,0.14f,0.0f},3)); //Entrata D
+        map.add(new BeaconPowerPos(new float[]{0.75f,0.79f,0.0f}, 1000)); //Region A
+        map.add(new BeaconPowerPos(new float[]{0.25f,0.79f ,0.0f},1001)); //Region B
+        map.add(new BeaconPowerPos(new float[]{0.25f,0.21f ,0.0f},1002)); //Region C
+        map.add(new BeaconPowerPos(new float[]{0.75f,0.21f , 0.0f}, 1003)); //Region D
+        map.add(new BeaconPowerPos(new float[]{0.95f,0.86f,0.0f},1004)); //Scala A
+        map.add(new BeaconPowerPos(new float[]{0.05f,0.86f,0.0f},1005)); // Scala B
+        map.add(new BeaconPowerPos(new float[]{0.05f,0.14f,0.0f},1006)); // Scala C
+        map.add(new BeaconPowerPos(new float[]{0.95f,0.14f, 0.0f}, 1007)); //Scala D
         view.setBeaconMap(map);
     }
 
@@ -148,7 +144,6 @@ public class BeaconPowerAreaActivity extends AppCompatActivity implements Inform
             stopScan();
             ((BeaconPowerAreaViewImp) view).changeIcon(1);
         }
-
     }
 
     /**
