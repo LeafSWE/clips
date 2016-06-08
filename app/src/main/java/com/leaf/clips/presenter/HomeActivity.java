@@ -57,6 +57,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     private HomeView view;
 
+    private boolean loadMap;
+
     /**
      * Alert da mostrare nel caso in cui non sia presente connessione internet
      */
@@ -71,6 +73,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        loadMap = true;
         MyApplication.getInfoComponent().inject(this);
         FragmentManager fragmentManager = getSupportFragmentManager();
         BlankHomeFragment blankHomeFragment = new BlankHomeFragment();
@@ -144,7 +147,24 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         }
     }
     /**
-     * Controlla che la connettività Bluetoooth sia attiva. In caso negativo domanda il chiede di
+     * Recupera le informazioni dell'edificio dal database ed utilizza la View associata per
+     * mostrarle all'utente.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        informationManager.addListener(this);
+        try {
+            informationManager.getBuildingMap();
+            onDatabaseLoaded();
+        } catch (NoBeaconSeenException e) {
+            informationManager.haveToLoadMap(true);
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Controlla che la connettività Bluetoooth sia attiva. In caso negativo domanda il permesso di
      * attivarla.
      */
     public void checkBluetoothConnection(){
@@ -349,6 +369,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         updateBuildingOpeningHours();
         updatePoiCategoryList();
         }
+
+        loadMap = false;
     }
 
     /**
@@ -428,7 +450,7 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     @Override
     public void getAllVisibleBeacons(PriorityQueue<MyBeacon> visibleBeacons) {
-        //non necessario che sia implementato
+        //non implementata
     }
 
     /**
@@ -480,5 +502,12 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     public void showDeveloper() {
         Intent intent = new Intent(this, MainDeveloperPresenter.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        informationManager.removeListener(this);
+        informationManager.haveToLoadMap(false);
     }
 }

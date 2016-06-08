@@ -60,7 +60,7 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     /**
      * Variabile che rappresenta se è già in download una mappa oppure no
      */
-    boolean proc = false;
+    boolean proc = true;
 
     /**
      * Costruttore della classe InformationManagerImp
@@ -68,7 +68,6 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
      *                 delle mappe nel database remoto
      * @param context Contesto dell'applicazione
      */
-
     public InformationManagerImp(DatabaseService dbService, Context context){
         super(context);
         this.dbService = dbService;
@@ -218,8 +217,8 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
             ((InformationListener)listener).getAllVisibleBeacons(lastBeaconsSeen);
         }
         if(map == null) {
-            if (!proc) {
-                proc = true;
+            if (proc) {
+                proc = false;
                 loadMap();
             }
         }
@@ -362,5 +361,9 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
      */
     private boolean isDeveloper(){
         return new SettingImp(getContext()).isDeveloper();
+    }
+
+    public void haveToLoadMap(boolean load){
+        this.proc = load;
     }
 }

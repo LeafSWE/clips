@@ -110,5 +110,7 @@ public interface InformationManager {
      * @param update boolean che indica se aggiornare la mappa associata ai beacon visibili oppure no
      */
     void updateMapOfVisibleBeacons(Boolean update);
+
+    void haveToLoadMap(boolean load);
 }
 
