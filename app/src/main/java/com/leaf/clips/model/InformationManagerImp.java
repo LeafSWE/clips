@@ -11,7 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.leaf.clips.model.beacon.Logger;
@@ -22,14 +21,11 @@ import com.leaf.clips.model.navigator.BuildingMap;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.usersetting.SettingImp;
 
-import junit.framework.Assert;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
-import java.util.concurrent.ExecutionException;
 
 /**
  *Classe che permette l'accesso alle informazioni trattate nel package Model
@@ -154,161 +150,6 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         return list;
 
     }
-
-    /**
-     * Classe che estende AsyncTask per il controllo se una mappa è aggiornata
-     */
-    private class AsyncUpdateControl extends AsyncTask<Integer, Void, Boolean> {
-
-        /**
-         * Variabile che indica se si sono verificati errori di connessione
-         */
-        private Boolean remoteError = false;
-
-        /**
-         * Metodo svolto in background per il controllo della versione della mappa
-         * @param params identificativo della mappa
-         * @return Boolean
-         */
-        @Override
-        protected Boolean doInBackground(Integer... params) {
-            try {
-                return dbService.isBuildingMapUpdated(params[0]);
-            } catch (IOException e) {
-                e.printStackTrace();
-                remoteError = true;
-            }
-            return false;
-        }
-
-        /**
-         * Metodo eseguito alla fine dell'AsyncTask che avverte di eventuali errori
-         * @param aBoolean Risultato del metodo doInBackground
-         */
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
-            if(remoteError)
-                for (Listener listener : listeners)
-                    ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
-        }
-    }
-
-    /**
-     * Classe che estende AsyncTask per l'aggiornamento di una mappa
-     */
-    private class AsyncUpdateDownload extends AsyncTask<Integer, Void, Boolean> {
-
-        /**
-         * Variabile che indica se si sono verificati errori di connessione
-         */
-        private Boolean remoteError = false;
-
-        /**
-         * Metodo svolto in background per l'aggiornamento della mappa
-         * @param params identificativo della mappa
-         * @return Boolean
-         */
-        @Override
-        protected Boolean doInBackground(Integer... params) {
-            try {
-                 dbService.updateBuildingMap(params[0]);
-                return true;
-            } catch (IOException e) {
-                e.printStackTrace();
-                remoteError = true;
-            }
-            return false;
-        }
-
-        /**
-         * Metodo eseguito alla fine dell'AsyncTask che avverte di eventuali errori
-         * @param aBoolean Risultato del metodo doInBackground
-         */
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
-            if(remoteError)
-                for (Listener listener : listeners)
-                    ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
-        }
-    }
-
-    /**
-     * Classe che estende AsyncTask per il download di una mappa
-     */
-    private class AsyncDownload extends AsyncTask<Integer, Void, Boolean> {
-
-        /**
-         * Variabile che indica se si sono verificati errori di connessione
-         */
-        private Boolean remoteError = false;
-
-        /**
-         * Metodo svolto in background per il download della mappa
-         * @param params identificativo della mappa
-         * @return Boolean
-         */
-        @Override
-        protected Boolean doInBackground(Integer... params) {
-            try {
-                map = dbService.findRemoteBuildingByMajor(params[0]);
-                return true;
-            } catch (IOException e) {
-                e.printStackTrace();
-                remoteError = true;
-            }
-            return false;
-        }
-
-        /**
-         * Metodo eseguito alla fine dell'AsyncTask che avverte di eventuali errori
-         * @param aBoolean Risultato del metodo doInBackground
-         */
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
-            if(remoteError)
-                for (Listener listener : listeners)
-                    ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
-        }
-    }
-
-    /**
-     * Classe che estende AsyncTask per verificcare se una mappa è presente in remoto
-     */
-    private class AsyncRemoteIsPresent extends AsyncTask<Integer, Void, Boolean> {
-        private Boolean remoteError = false;
-
-        /**
-         * Metodo svolto in background per la verifica se una mappa è presente nel database remoto
-         * @param params identificativo della mappa
-         * @return Boolean
-         */
-        @Override
-        protected Boolean doInBackground(Integer... params) {
-            try {
-                return dbService.isRemoteMapPresent(params[0]);
-            } catch (IOException e) {
-                e.printStackTrace();
-                remoteError = true;
-            }
-            return false;
-        }
-
-        /**
-         * Metodo eseguito alla fine dell'AsyncTask che avverte di eventuali errori
-         * @param aBoolean Risultato del metodo doInBackground
-         */
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
-            if (remoteError)
-                for (Listener listener : listeners)
-                    ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
-        }
-    }
-
     /**
      * Metodo che permette di recuperare una mappa dal database in base al major dei beacon rilevati
      */
@@ -317,15 +158,17 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
             final int major = lastBeaconsSeen.peek().getMajor();
 
             if (dbService.isBuildingMapPresent(major)) {
-                AsyncUpdateControl asyncUpdateControl = new AsyncUpdateControl();
-                asyncUpdateControl.execute(major);
                 boolean isUpdate = false;
-                try {
                     ConnectivityManager connectivityManager =
                             (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
                     NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
                     if (networkInfo != null && networkInfo.isConnected()) {
-                        isUpdate = asyncUpdateControl.get();
+                        try {
+                            isUpdate = dbService.isBuildingMapUpdated(major);
+                        } catch (IOException e) {
+                            for (Listener listener : listeners)
+                                ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
+                        }
                         if (!isUpdate) {
                             for (Listener listener : listeners) {
                                 ((InformationListener) listener).noLastMapVersion();
@@ -342,11 +185,6 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
                         for (Listener listener : listeners)
                             ((InformationListener) listener).onDatabaseLoaded();
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
             } else {
                 for (Listener listener : listeners)
                     ((InformationListener) listener).onLocalMapNotFound();
@@ -384,8 +222,6 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
                 proc = true;
                 loadMap();
             }
-            /*if (map != null)
-                */
         }
 
         if(shouldLog) {
@@ -479,32 +315,20 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     public void downloadMapOfVisibleBeacons(Boolean remoteSearch) {
         final int major = lastBeaconsSeen.peek().getMajor();
         if (remoteSearch) {
-            AsyncRemoteIsPresent asyncRemoteIsPresent = new AsyncRemoteIsPresent();
-            asyncRemoteIsPresent.execute(major);
-            boolean isRemotePresent = true;
             try {
-                isRemotePresent = asyncRemoteIsPresent.get();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Assert.assertNotNull(isRemotePresent);
-            if (!isRemotePresent) {
-                for (Listener listener : listeners)
-                    ((InformationListener) listener).onRemoteMapNotFound();
-            } else {
-                AsyncDownload asyncDownload = new AsyncDownload();
-                asyncDownload.execute(major);
-                try {
-                    asyncDownload.get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
+                boolean isRemotePresent = true;
+                isRemotePresent = dbService.isRemoteMapPresent(major);
+                if (!isRemotePresent) {
+                    for (Listener listener : listeners)
+                        ((InformationListener) listener).onRemoteMapNotFound();
+                } else {
+                    map = dbService.findRemoteBuildingByMajor(major);
+                    for (Listener listener : listeners)
+                        ((InformationListener) listener).onDatabaseLoaded();
                 }
+            } catch (IOException e) {
                 for (Listener listener : listeners)
-                    ((InformationListener) listener).onDatabaseLoaded();
+                    ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
             }
         } else {
             for (Listener listener : listeners)
@@ -520,14 +344,11 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
     public void updateMapOfVisibleBeacons(Boolean update) {
         final int major = lastBeaconsSeen.peek().getMajor();
         if(update) {
-            AsyncUpdateDownload asyncUpdateDownload = new AsyncUpdateDownload();
-            asyncUpdateDownload.execute(major);
             try {
-                asyncUpdateDownload.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
+                dbService.updateBuildingMap(major);
+            } catch (IOException e) {
+                for (Listener listener : listeners)
+                    ((InformationListener) listener).cannotRetrieveRemoteMapDetails();
             }
         }
         map = dbService.findBuildingByMajor(major);

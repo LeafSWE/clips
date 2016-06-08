@@ -39,13 +39,11 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
         super.onCreate(bundle);
         MyApplication.getInfoComponent().inject(this);
         this.view = new RemoteMapManagerViewImp(this);
-
         try {
             view.setRemoteMaps(databaseService.findAllRemoteBuildings());
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -79,11 +77,11 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
                                 mNotifyManager.notify(id, mBuilder.build());
                                 // Sleeps the thread, simulating an operation
                                 // that takes time
-                                try {
-                                    databaseService.findRemoteBuildingByMajor(major);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
+                            try {
+                                databaseService.findRemoteBuildingByMajor(Integer.valueOf(major));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
 
                             // When the loop is finished, updates the notification
                             mBuilder.setContentText(getString(R.string.map_downloaded)).setProgress(0,0,false).setSmallIcon(R.drawable.ic_vertical_align_bottom_white_24dp);
@@ -95,5 +93,4 @@ public class RemoteMapManagerActivity extends AppCompatActivity {
         }
 
     }
-
 }
