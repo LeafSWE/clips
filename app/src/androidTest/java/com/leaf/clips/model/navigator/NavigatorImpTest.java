@@ -41,9 +41,6 @@ public class NavigatorImpTest {
 
     final static String FAKE_BASIC_INFO = "FakeBasicInfo";
     final static String FAKE_DETAILED_INFO = "FakeDetailedInfo";
-    final static String FAKE_WRONG_DIRECTION_INFO = "Direzione sbagliata, voltati";
-    final static String FAKE_CORRECT_DIRECTION_INFO = "Direzione corretta";
-
 
     //@Mock
     private PhotoInformation mockEdgePhotos = Mockito.mock(PhotoInformation.class);
@@ -118,6 +115,7 @@ public class NavigatorImpTest {
         when(mockEndPoi.getAllBelongingROIs()).thenReturn(fakeBelongingRoi);
 
         for (EnrichedEdge mockEE : fakeShortestPath) {
+            when(mockEE.getStarterPoint()).thenReturn(mockRoiWithBeacon);
             when(mockEE.getBasicInformation()).thenReturn(FAKE_BASIC_INFO);
             when(mockEE.getDetailedInformation()).thenReturn(FAKE_DETAILED_INFO);
             when(mockEE.getPhotoInformation()).thenReturn(mockEdgePhotos);
@@ -176,10 +174,13 @@ public class NavigatorImpTest {
         }
     }
 
-    @Test(expected = PathException.class)
+    @Test
     public void testSetGraph() throws Exception {
         navigatorImp.setGraph(mockMapGraph);
-        navigatorImp.calculatePath(mockStartRoi, mockNullEndPoi);
+        //Verifica del grafo settato
+        List<ProcessedInformation> processedInformations = navigatorImp.getAllInstructions();
+        assertTrue(processedInformations.size()>0);
+        assertEquals(new ProcessedInformationImp(),processedInformations.get(0));
     }
 
     /**
@@ -246,8 +247,7 @@ public class NavigatorImpTest {
         if (!resultProcessedInfo.getDetailedInstruction().equals(FAKE_DETAILED_INFO)) {
             fail("Result processed detailed info not equal as expected");
         }
-        if (!resultProcessedInfo.getProcessedBasicInstruction().equals(
-                FAKE_WRONG_DIRECTION_INFO + " " + FAKE_BASIC_INFO)) {
+        if (!resultProcessedInfo.getProcessedBasicInstruction().equals(FAKE_BASIC_INFO)) {
             fail("Result processed basic info not equal as expected");
         }
     }
@@ -271,6 +271,7 @@ public class NavigatorImpTest {
      */
     @Test (expected = PathException.class)
     public void testToNextRegionWrongBeacon() throws Exception {
+        when(mockRoiWithBeacon.contains(mockVisibleBeacons.peek())).thenReturn(false);
         navigatorImp.setGraph(mockMapGraph);
         navigatorImp.calculatePath(mockStartRoi, mockEndPoi);
         navigatorImp.toNextRegion(mockNoVisibleBeacons);

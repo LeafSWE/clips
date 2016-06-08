@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.leaf.clips.R;
@@ -86,7 +87,7 @@ public class BeaconPowerArea extends View {
         paint.setColor(Color.BLACK);
         if(map != null) {
             for (BeaconPowerPos bp : map) {
-                canvas.drawCircle(bp.getPosition()[0], bp.getPosition()[1], 5.0f, paint);
+                canvas.drawCircle(bp.getPosition()[0]*getWidth(), bp.getPosition()[1]*getHeight(), 5.0f, paint);
             }
         }
     }
@@ -103,7 +104,7 @@ public class BeaconPowerArea extends View {
                 float radius=0.0f;
                 if(bp.getRssi() != 0)
                     radius = -1.0f/((float) bp.getRssi());
-                canvas.drawCircle(bp.getPosition()[0], bp.getPosition()[1] ,radius*10000.0f,paint);
+                canvas.drawCircle(bp.getPosition()[0]*getWidth(), bp.getPosition()[1]*getHeight() ,radius*10000.0f,paint);
             }
         }
     }
