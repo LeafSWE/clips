@@ -64,6 +64,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     private AlertDialog noInternetConnection;
 
+    private AlertDialog downloadMap;
+
     /**
      *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
      *i campi dati.
@@ -380,6 +382,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     @Override
     public boolean onLocalMapNotFound() {
+
+        if (downloadMap == null || !downloadMap.isShowing()) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.dialog_title_map_not_found)
                 .setMessage(R.string.dialog_map_not_found)
@@ -394,8 +398,12 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                     }
                 });
 
-        if(!isFinishing()){
-            builder.create().show();
+            if(downloadMap != null) {
+                downloadMap.dismiss();
+            }
+            downloadMap = builder.create();
+            if(!this.isFinishing())
+                downloadMap.show();
         }
         return true;
     }
@@ -426,21 +434,28 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     @Override
     public boolean noLastMapVersion() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.dialog_title_not_updated_map)
-                .setMessage(R.string.dialog_not_updated_map)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        informationManager.updateMapOfVisibleBeacons(true);
-                    }
-                })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        informationManager.updateMapOfVisibleBeacons(false);
-                    }
-                });
-
-        builder.create().show();
+        if (downloadMap == null || !downloadMap.isShowing()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.dialog_title_not_updated_map)
+                    .setMessage(R.string.dialog_not_updated_map)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            informationManager.updateMapOfVisibleBeacons(true);
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            informationManager.updateMapOfVisibleBeacons(false);
+                        }
+                    });
+            if(downloadMap != null) {
+                downloadMap.hide();
+                downloadMap.dismiss();
+            }
+            downloadMap = builder.create();
+            if(!this.isFinishing())
+                downloadMap.show();
+        }
         return true;
     }
 
