@@ -1,15 +1,14 @@
 package com.leaf.clips;
 
-import android.support.test.espresso.NoMatchingViewException;
+import android.content.Intent;
 import android.support.test.espresso.contrib.NavigationViewActions;
 import android.support.test.rule.ActivityTestRule;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.leaf.clips.model.InformationManager;
-import com.leaf.clips.model.InformationManagerImp;
 import com.leaf.clips.model.beacon.MyBeacon;
 import com.leaf.clips.model.beacon.MyBeaconImp;
 import com.leaf.clips.model.dataaccess.dao.BuildingTable;
-import com.leaf.clips.model.navigator.BuildingMap;
 import com.leaf.clips.presenter.HomeActivity;
 
 import junit.framework.Assert;
@@ -19,6 +18,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -48,52 +48,67 @@ public class SystemTest15 {
     @Before
     public void setUp() throws Exception {
         testActivity = mActivityRule.getActivity();
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Field field = null;
-                    field = HomeActivity.class.getDeclaredField("informationManager");
-                    field.setAccessible(true);
-                    InformationManagerImp informationManager = null;
+        Thread t = new Thread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        Field field = null;
+                        try {
+                            field = HomeActivity.class.getDeclaredField("informationManager");
+                        } catch (NoSuchFieldException e) {
+                            e.printStackTrace();
+                        }
+                        field.setAccessible(true);
+                        InformationManager informationManager = null;
+                        try {
+                            informationManager = (InformationManager) field.get(testActivity);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                        if(!informationManager.getDatabaseService().isBuildingMapPresent(666))
+                            try {
+                                informationManager.getDatabaseService().findRemoteBuildingByMajor(666);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        try {
+                            Thread.sleep(1*1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        LinkedList<Long> l = new LinkedList<Long>();
+                        l.add((long) 0);
+                        l.add((long) 0);
+                        l.add((long) 0);
+                        l.add((long) 0);
+                        l.add((long) 0);
+                        l.add((long) 0);
+                        l.add((long) 0);
+                        l.add((long) 0);
+                        MyBeacon b = new MyBeaconImp(new Beacon.Builder()
+                                .setId1("19235dd2-574a-4702-a42e-caccac06e325")
+                                .setId2("666").setId3("0").setDataFields(l).build());
+                        PriorityQueue<MyBeacon> p = new PriorityQueue<>();
+                        p.add(b);
+                        Intent msg = new Intent("beaconsDetected");
+                        msg.putExtra("queueOfBeacons", p);
+                        for(int i = 0; i < 3; i++) {
+                            LocalBroadcastManager.getInstance(testActivity).sendBroadcast(msg);
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
 
-                    informationManager = (InformationManagerImp) field.get(testActivity);
-                    if (!informationManager.getDatabaseService().isBuildingMapPresent(666))
-                        informationManager.getDatabaseService().findRemoteBuildingByMajor(666);
-                    field = InformationManagerImp.class.getDeclaredField("lastBeaconsSeen");
-                    field.setAccessible(true);
-                    PriorityQueue<MyBeacon> lastBeaconsSeen = null;
-                    lastBeaconsSeen = (PriorityQueue<MyBeacon>) field.get(informationManager);
-                    LinkedList<Long> l = new LinkedList<Long>();
-                    l.add((long) 0);
-                    l.add((long) 0);
-                    l.add((long) 0);
-                    l.add((long) 0);
-                    l.add((long) 0);
-                    l.add((long) 0);
-                    l.add((long) 0);
-                    l.add((long) 0);
-                    MyBeacon b = new MyBeaconImp(new Beacon.Builder()
-                            .setId1("19235dd2-574a-4702-a42e-caccac06e325")
-                            .setId2("666").setId3("0").setDataFields(l).build());
-                    lastBeaconsSeen.add(b);
-                    field = InformationManagerImp.class.getDeclaredField("map");
-                    field.setAccessible(true);
-                    BuildingMap map = null;
-                    map = (BuildingMap) field.get(informationManager);
-
-                    map = informationManager.getDatabaseService().findBuildingByMajor(666);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }});
+                });
         t.start();
         Thread.sleep(5000);
         t.join();
         try {
-            onView(withText(R.string.ok)).perform(click());;
-        } catch (NoMatchingViewException e) {}
+            onView(withText(R.string.ok)).perform(click());
+        } catch (Exception e){}
     }
 
     //TS15.1
@@ -264,7 +279,7 @@ public class SystemTest15 {
         onView(withId(R.id.nav_view_home)).perform(NavigationViewActions.navigateTo(R.id.mapManager));
         Thread.sleep(1000);
         onView(withId(R.id.fab_add_new_map)).perform(click());
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         onData(anything())
                 .inAdapterView(withId(R.id.listViewRemoteMaps))
                 .atPosition(0)

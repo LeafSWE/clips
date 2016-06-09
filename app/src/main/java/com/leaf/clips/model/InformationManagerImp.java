@@ -21,6 +21,8 @@ import com.leaf.clips.model.navigator.BuildingMap;
 import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.model.usersetting.SettingImp;
 
+import junit.framework.Assert;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -153,9 +155,9 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
      * Metodo che permette di recuperare una mappa dal database in base al major dei beacon rilevati
      */
     private void loadMap(){
+        Assert.assertNotNull(lastBeaconsSeen.peek());
 
-            final int major = lastBeaconsSeen.peek().getMajor();
-
+        final int major = lastBeaconsSeen.peek().getMajor();
             if (dbService.isBuildingMapPresent(major)) {
                 boolean isUpdate = false;
                     ConnectivityManager connectivityManager =
@@ -210,9 +212,10 @@ public class InformationManagerImp extends AbsBeaconReceiverManager implements I
         p = ((PriorityQueue<MyBeacon>)intent.getSerializableExtra("queueOfBeacons"));
         for(MyBeacon beacon : p)
             Log.i("P", beacon.toString());
-        if(!p.containsAll(lastBeaconsSeen) || lastBeaconsSeen.containsAll(p))
-            setVisibleBeacon(p);
-        lastBeaconsSeen = p;
+        /*if((!p.containsAll(lastBeaconsSeen) || lastBeaconsSeen.containsAll(p)) && p.size()>0)
+            setVisibleBeacon(p);*/
+        if(p.size()>0)
+            lastBeaconsSeen = p;
         for(Listener listener : listeners) {
             ((InformationListener)listener).getAllVisibleBeacons(lastBeaconsSeen);
         }

@@ -10,8 +10,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import junit.framework.Assert;
-
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -163,7 +161,8 @@ public class SQLiteBuildingDao implements BuildingDao, CursorConverter {
         Cursor cursor = sqlDao.query(true, BuildingContract.TABLE_NAME, columns,
                 BuildingContract.COLUMN_MAJOR + "=" + major, null, null, null, null, null);
 
-        Assert.assertEquals(1, cursor.getCount());
+        if (cursor.getCount() == 0)
+            return null;
         return cursorToType(cursor);
     }
 

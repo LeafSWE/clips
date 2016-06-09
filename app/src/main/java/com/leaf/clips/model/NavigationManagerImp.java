@@ -162,7 +162,7 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
         Iterator<RegionOfInterest> iterator = graph.getGraph().vertexSet().iterator();
         boolean found = false;
         RegionOfInterest startROI = null;
-
+        Assert.assertNotNull(beacon);
         while(!found && iterator.hasNext()){
             startROI = iterator.next();
             found = startROI.contains(beacon);
@@ -233,8 +233,9 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
 
         p = ((PriorityQueue<MyBeacon>)intent.getSerializableExtra("queueOfBeacons"));
 
-        if(!lastBeaconsSeen.containsAll(p) || !p.containsAll(lastBeaconsSeen))
-            setVisibleBeacon(p);
+        /*if((!p.containsAll(lastBeaconsSeen) || lastBeaconsSeen.containsAll(p)) && p.size()>0)
+            setVisibleBeacon(p);*/
+        if(p.size()>0)
         lastBeaconsSeen = p;
         for(Listener listener : super.listeners){
                 NavigationListener nv = (NavigationListener) listener;
