@@ -1,5 +1,8 @@
 package com.leaf.clips.view;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.ListView;
@@ -8,6 +11,7 @@ import com.leaf.clips.R;
 import com.leaf.clips.model.dataaccess.dao.BuildingTable;
 import com.leaf.clips.presenter.LocalMapActivity;
 import com.leaf.clips.presenter.LocalMapAdapter;
+import com.leaf.clips.presenter.NoInternetAlert;
 
 import java.util.Collection;
 
@@ -40,7 +44,13 @@ public class LocalMapManagerViewImp implements LocalMapManagerView {
             btnAddNewMap.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    presenter.DownloadNewMap();
+                    ConnectivityManager connectivityManager =
+                            (ConnectivityManager)presenter.getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+                    if (!(networkInfo != null && networkInfo.isConnected())){
+                        new NoInternetAlert().show(presenter);
+                    } else
+                        presenter.DownloadNewMap();
                 }
             });
         }

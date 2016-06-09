@@ -1,5 +1,8 @@
 package com.leaf.clips.presenter;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.widget.AppCompatImageButton;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -104,7 +107,14 @@ public class RemoteMapManagerAdapter extends BaseAdapter {
         btnUpdateMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.downloadMap(buildingTable.getMajor());
+                ConnectivityManager connectivityManager =
+                        (ConnectivityManager)presenter.getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+                if (!(networkInfo != null && networkInfo.isConnected())){
+                    new NoInternetAlert().show(presenter);
+                } else {
+                    presenter.downloadMap(buildingTable.getMajor());
+                }
             }
         });
 

@@ -96,7 +96,7 @@
     <string name="title_activity_remote_map_manager">Download new maps</string>
     <string name="remote_map_already_downloaded">Map already downloaded</string>
     <string name="no_nearby_building_message">No nearby buildings</string>
-
+    <string name="map_internet_alert">You can not download any map because there is no internet connection available</string>
 
     <!--MapDownload-->
     <string name="map_download">Downloading map</string>
