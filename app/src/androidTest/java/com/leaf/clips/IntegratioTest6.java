@@ -5,8 +5,12 @@ package com.leaf.clips;
  * @since 0.00
  */
 
+import com.google.common.reflect.Reflection;
+
+import android.content.Intent;
 import android.os.Parcel;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.InstrumentationTestCase;
 import android.test.suitebuilder.annotation.LargeTest;
@@ -38,14 +42,17 @@ import com.leaf.clips.model.navigator.graph.navigationinformation.PhotoRef;
 import com.leaf.clips.model.usersetting.PathPreference;
 import com.leaf.clips.model.usersetting.Setting;
 import com.leaf.clips.model.usersetting.SettingImp;
+import com.leaf.clips.presenter.NavigationActivity;
 
 import junit.framework.Assert;
 
 import org.altbeacon.beacon.AltBeacon;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.lang.reflect.Field;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
@@ -67,13 +74,22 @@ public class IntegratioTest6 extends InstrumentationTestCase{
     RegionOfInterest a;
     PointOfInterest u;
     Setting setting;
+    NavigationActivity navigationActivity;
 
-    @Inject
+    @Rule
+    public ActivityTestRule<NavigationActivity> mActivityRule =
+            new ActivityTestRule<>(NavigationActivity.class);
     Compass compass;
 
     @Before
-    public void init(){
+    public void init() throws NoSuchFieldException, IllegalAccessException {
 
+        navigationActivity = mActivityRule.getActivity();
+        Field field = NavigationActivity.class.getDeclaredField("compass");
+        field.setAccessible(true);
+        compass = (Compass) field.get(navigationActivity);
+        Intent i = new Intent(InstrumentationRegistry.getTargetContext(), NavigationActivity.class);
+        mActivityRule.launchActivity(i);
         setting = new SettingImp(InstrumentationRegistry.getTargetContext());
         PointOfInterest z = new PointOfInterestImp(0,new PointOfInterestInformation("z","z","z"));
         PointOfInterest y = new PointOfInterestImp(1,new PointOfInterestInformation("y","y","y"));
@@ -217,10 +233,15 @@ public class IntegratioTest6 extends InstrumentationTestCase{
     public void shouldAccessAllInformations() throws NavigationExceptions {
         navigator.calculatePath(a,u);
         List<ProcessedInformation> info = navigator.getAllInstructions();
-        for(ProcessedInformation information : info){
+
+        for(int i = 0; i < info.size()-1; i++){
+            ProcessedInformation information = info.get(i);
             Assert.assertEquals(information.getDetailedInstruction(),"DETAILED");
             Assert.assertEquals(information.getPhotoInstruction().getPhotoInformation().iterator()
                     .next().getPhotoUri().toString(),"http://www.no.com");
         }
+
+        Assert.assertEquals(info.get(info.size()-1).getDetailedInstruction(),
+                "Hai raggiunto la tua destinazione. Questa dovrebbe trovarsi intorna a te.");
     }
 }
