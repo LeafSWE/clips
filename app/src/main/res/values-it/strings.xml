@@ -84,6 +84,7 @@
     <!--RemoteMapManager-->
     <string name="title_activity_remote_map_manager">Scarica mappa</string>
     <string name="remote_map_already_downloaded">Mappa già scaricata</string>
+    <string name="map_internet_alert">Non è possibile effettuare il download di alcuna mappa, perché non vi è una connessione internet attiva</string>
 
     <!--MapDownload-->
     <string name="map_download">Download in corso</string>

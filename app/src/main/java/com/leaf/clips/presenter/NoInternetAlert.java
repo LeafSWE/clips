@@ -57,7 +57,10 @@ public class NoInternetAlert {
     private AlertDialog alertSetUp(Activity activity) {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(activity);
         alertBuilder.setTitle(R.string.no_connection_title_alert_help);
-        alertBuilder.setMessage(R.string.navigation_internet_alert);
+        if (activity instanceof RemoteMapManagerActivity || activity instanceof  LocalMapActivity)
+            alertBuilder.setMessage(R.string.map_internet_alert);
+        else
+            alertBuilder.setMessage(R.string.navigation_internet_alert);
         alertBuilder.setPositiveButton(activity.getResources().getString(R.string.ok),
                 new DialogInterface.OnClickListener() {
                     @Override
