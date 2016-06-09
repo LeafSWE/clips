@@ -7,6 +7,7 @@ package com.leaf.clips.presenter;
  */
 
 import android.app.SearchManager;
+import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -161,21 +162,47 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                     poiId = Integer.valueOf(getIntent().getDataString());
                 Log.d("DEST_POI_ID", Integer.toString(poiId));
 
-                    boolean found = false;
-                    //Trova il POI all'id scelto
-                    for(ListIterator<PointOfInterest> i = poiList.listIterator(); i.hasNext() && !found;){
-                        PointOfInterest poi = i.next();
-                        if(poi.getId() == poiId){
-                            destinationPoi = poi;
-                            found = true;
-                        }
+                boolean found = false;
+                //Trova il POI all'id scelto
+                for(ListIterator<PointOfInterest> i = poiList.listIterator(); i.hasNext() && !found;){
+                    PointOfInterest poi = i.next();
+                    if(poi.getId() == poiId){
+                        destinationPoi = poi;
+                        found = true;
                     }
+                }
             }
             if (destinationPoi != null) {
                 setTitle("Raggiungi " + destinationPoi.getName());
                 Log.d("NAVIGAZIONE", "OK");
                 if (noInternetConnection == null || !noInternetConnection.isShowing())
                     noInternetConnection = new NoInternetAlert().showIfNoConnection(this);
+                final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                //Abilita Bluetooth se disabilitato
+                if (!mBluetoothAdapter.isEnabled()) {
+
+                    builder.setTitle(R.string.dialog_title_bluetooth_not_enabled)
+                            .setMessage(R.string.dialog_bluetooth_not_enabled)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    mBluetoothAdapter.enable();
+                                }
+                            })
+                            .setNegativeButton(R.string.back_to_home, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    NavigationActivity.this.startActivity(new
+                                            Intent(NavigationActivity.this, HomeActivity.class));
+                                }
+                            });
+                    if (!isFinishing()) {
+                        AlertDialog bluetoothDialog = builder.create();
+                        bluetoothDialog.setCanceledOnTouchOutside(false);
+                        bluetoothDialog.show();
+                    }
+                }
                 navigationManager.startNavigation(destinationPoi);
                 navigationInstruction = navigationManager.getAllNavigationInstruction();
                 navigationManager.addListener(this);
@@ -226,7 +253,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                                 navigationManager.addListener(NavigationActivity.this);
                                 view.setInstructionAdapter(navigationInstruction);
                             }catch (NavigationExceptions e){
-                                    e.printStackTrace();
+                                e.printStackTrace();
                             }
                             catch (NoBeaconSeenException e) {
                                 e.printStackTrace();
