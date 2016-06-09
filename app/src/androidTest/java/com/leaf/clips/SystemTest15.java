@@ -277,7 +277,7 @@ public class SystemTest15 {
     public void shouldAccessRemoteMapName() throws Exception {
         onView(withId(R.id.drawer_layout_home)).perform(open());
         onView(withId(R.id.nav_view_home)).perform(NavigationViewActions.navigateTo(R.id.mapManager));
-        Thread.sleep(1000);
+        Thread.sleep(10000);
         onView(withId(R.id.fab_add_new_map)).perform(click());
         Thread.sleep(2000);
         onData(anything())
