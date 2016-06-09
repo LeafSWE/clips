@@ -40,10 +40,9 @@ import java.lang.reflect.Field;
  * @since 0.01
  */
 
-/*forse questo test può valere anche per 19 e 18*/
 @RunWith(AndroidJUnit4.class)
 @SmallTest
-public class IntegrationTest20 extends InstrumentationTestCase {
+public class IntegrationTest17_18_19 extends InstrumentationTestCase {
     private HomeActivity homeActivity;
     private DeveloperUnlockerActivity developerUnlockerActivity;
     private PoiCategoryActivity poiCategoryActivity;
