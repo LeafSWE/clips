@@ -57,13 +57,14 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     private HomeView view;
 
-    private boolean loadMap;
-
     /**
      * Alert da mostrare nel caso in cui non sia presente connessione internet
      */
     private AlertDialog noInternetConnection;
 
+    /**
+     * Alert da mostrare nel caso in cui non sia presenta la mappa in locale
+     */
     private AlertDialog downloadMap;
 
     /**
@@ -75,7 +76,6 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        loadMap = true;
         MyApplication.getInfoComponent().inject(this);
         FragmentManager fragmentManager = getSupportFragmentManager();
         BlankHomeFragment blankHomeFragment = new BlankHomeFragment();
@@ -372,7 +372,6 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         updatePoiCategoryList();
         }
 
-        loadMap = false;
     }
 
     /**
@@ -477,6 +476,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
         informationManager = null;
         if(noInternetConnection != null)
             noInternetConnection.dismiss();
+        if(downloadMap != null)
+            downloadMap.dismiss();
     }
 
     /**
