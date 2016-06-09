@@ -332,6 +332,8 @@ public class NavigatorImp implements Navigator {
         }*/
         MyBeacon beacon = getMostPowerfulBeacon(visibleBeacons);
         Log.i("MostPowBeacon", beacon.toString());
+        if (path == null)
+            throw new NoNavigationInformationException();
         Iterator<EnrichedEdge> newIt = path.iterator();
         if (newIt.hasNext()) {
             EnrichedEdge e = newIt.next();
