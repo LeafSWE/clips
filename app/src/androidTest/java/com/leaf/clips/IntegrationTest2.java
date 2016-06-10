@@ -13,6 +13,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.content.LocalBroadcastManager;
 import android.test.InstrumentationTestCase;
+import android.test.suitebuilder.annotation.LargeTest;
 import android.util.Log;
 
 import com.leaf.clips.model.InformationManager;
@@ -45,6 +46,7 @@ import java.util.UUID;
  * Integration Test 2 (needs WiFi)
  */
 @RunWith(AndroidJUnit4.class)
+@LargeTest
 public class IntegrationTest2 extends InstrumentationTestCase{
 
     InformationManager informationManager;
@@ -66,17 +68,6 @@ public class IntegrationTest2 extends InstrumentationTestCase{
         field.setAccessible(true);
         navigationManager = (NavigationManager) field.get(navigationActivity);
 
-        PriorityQueue<MyBeacon> p = new PriorityQueue<>();
-
-        List<Long> list = new LinkedList<>();
-        list.add((long) 12);
-        UUID uuid = UUID.fromString(MyApplication.getConfiguration().getApplicationUUID());
-
-        p.add(new MyBeaconImp(new Beacon.Builder().setId1(uuid.toString()).setId2("666").setId3("0").setDataFields(list).build()));
-
-        Intent msg = new Intent("beaconsDetected");
-        msg.putExtra("queueOfBeacons", p);
-        LocalBroadcastManager.getInstance(InstrumentationRegistry.getTargetContext()).sendBroadcast(msg);
     }
 
 
