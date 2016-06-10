@@ -25,8 +25,10 @@ import android.view.View;
 
 import com.leaf.clips.model.InformationManager;
 import com.leaf.clips.model.NavigationManager;
+import com.leaf.clips.model.NoBeaconSeenException;
 import com.leaf.clips.model.beacon.MyBeacon;
 import com.leaf.clips.model.beacon.MyBeaconImp;
+import com.leaf.clips.model.navigator.graph.area.PointOfInterest;
 import com.leaf.clips.presenter.HomeActivity;
 import com.leaf.clips.presenter.MyApplication;
 import com.leaf.clips.presenter.NavigationActivity;
@@ -39,8 +41,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.UUID;
 
@@ -114,7 +118,7 @@ public class IntegrationTest1 extends InstrumentationTestCase {
     }
 
     @Test
-    public void testWholeSystem() throws InterruptedException, UiObjectNotFoundException {
+    public void testWholeSystem() throws InterruptedException, UiObjectNotFoundException, NoBeaconSeenException {
 
         PriorityQueue<MyBeacon> p = new PriorityQueue<>();
 
@@ -145,9 +149,19 @@ public class IntegrationTest1 extends InstrumentationTestCase {
         appViews1.scrollForward();
         appViews1.scrollTextIntoView("La struttura");
 
+        Collection<String> categories = informationManager.getBuildingMap().getAllPOIsCategories();
+        assertTrue(categories.contains("Entrate"));
+
         UiObject category = device.findObject(new UiSelector().text("Entrate"));
         category.click();
 
+        Collection<PointOfInterest> start = informationManager.getBuildingMap().getAllPOIs();
+        PointOfInterest poi = null;
+        for(PointOfInterest item : start){
+            if(Objects.equals(item.getName(), "Entrata torre D"))
+                poi = item;
+        }
+        assertNotNull(poi);
 
         UiObject item = device.findObject(new UiSelector().text("Entrata torre D"));
         item.click();
