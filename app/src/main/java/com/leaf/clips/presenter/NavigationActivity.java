@@ -356,6 +356,13 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
     @Override
     public void changed(float orientation) {
         int orientationInt = (int)orientation;
+        int calculateOrientation = view.getActualInformation().getCoordinate();
+        if (calculateOrientation >= 0) {
+            orientationInt = orientationInt - calculateOrientation;
+        }
+        if (orientationInt < 0) {
+            orientationInt += 360;
+        }
         NavigationDirection direction;
         int rotation = getWindowManager().getDefaultDisplay().getRotation();
         switch (rotation) {

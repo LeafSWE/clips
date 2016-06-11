@@ -149,4 +149,9 @@ public class NavigationViewImp implements NavigationView {
             }
         }
     }
+
+    @Override
+    public ProcessedInformation getActualInformation() {
+        return (ProcessedInformation)instructionAdapter.getItem(lastRefresh);
+    }
 }

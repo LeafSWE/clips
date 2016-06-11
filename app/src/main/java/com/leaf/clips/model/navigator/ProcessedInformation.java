@@ -46,5 +46,7 @@ public interface ProcessedInformation /*extends Comparable<ProcessedInformation>
      * @return String
      */
     String getDistance();
+
+    int getCoordinate();
 }
 
