@@ -90,6 +90,9 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      */
     private AlertDialog noInternetConnection;
 
+    /**
+     * Informazione attuale mostrata
+     */
     private ProcessedInformation actualInformation;
 
     /**

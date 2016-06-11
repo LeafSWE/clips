@@ -41,6 +41,4 @@ public interface NavigationView {
      * @param direction Direzione in cui la freccia deve puntare
      */
     void updateArrow(NavigationDirection direction);
-
-    ProcessedInformation getActualInformation();
 }
