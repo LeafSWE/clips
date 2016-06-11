@@ -60,7 +60,7 @@ public interface NavigationManager {
      * @param endPOI POI da raggiungere tramite navigazione
      * @return  ProcessedInformation
      */
-    ProcessedInformation startNavigation(PointOfInterest endPOI) throws NavigationExceptions;
+    ProcessedInformation startNavigation(PointOfInterest endPOI) throws NavigationExceptions, NoBeaconSeenException;
 
     /**
      * Metodo che permette di fermare il rilevamento dei dati ottenuti dalla bussola

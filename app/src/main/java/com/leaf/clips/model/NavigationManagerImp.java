@@ -1,8 +1,8 @@
 package com.leaf.clips.model;
 /**
  * @author Federico Tavella
- * @version 0.11
- * @since 0.09
+ * @version 0.12
+ * @since 0.11
  *
  */
 
@@ -156,22 +156,24 @@ public class NavigationManagerImp extends AbsBeaconReceiverManager implements Na
 
     @Override
     public ProcessedInformation startNavigation(PointOfInterest endPOI)
-            throws NoNavigationInformationException {
+            throws NoNavigationInformationException, NoBeaconSeenException {
         //navigator = new NavigatorImp(compass, new SettingImp(getContext()));
         MyBeacon beacon = lastBeaconsSeen.peek();
         Iterator<RegionOfInterest> iterator = graph.getGraph().vertexSet().iterator();
         boolean found = false;
         RegionOfInterest startROI = null;
-        Assert.assertNotNull(beacon);
+        if(beacon == null)
+            throw new NoBeaconSeenException();
+
         while(!found && iterator.hasNext()){
             startROI = iterator.next();
             found = startROI.contains(beacon);
         }
 
+        if(!found)
+            throw new NoNavigationInformationException();
+
         try {
-            Assert.assertNotNull(startROI);
-            Assert.assertNotNull(endPOI);
-            Assert.assertNotNull(navigator);
             navigator.calculatePath(startROI, endPOI);
         } catch (NavigationExceptions navigationExceptions) {
             navigationExceptions.printStackTrace();
