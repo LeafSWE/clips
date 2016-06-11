@@ -186,8 +186,8 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
     public void onBeaconServiceConnect() {
         try {
             Log.i("SERVICE", "STARTING MONITORING");
-            //beaconManager.startRangingBeaconsInRegion(region);
-            beaconManager.startMonitoringBeaconsInRegion(region);
+            beaconManager.startRangingBeaconsInRegion(region);
+            //beaconManager.startMonitoringBeaconsInRegion(region);
         } catch (RemoteException e) {
             e.printStackTrace();
             Log.i("SERVICE", "NOT MONITORING");
@@ -224,8 +224,10 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
      */
     @Override
     public void didExitRegion(Region region) {
+        Log.i("SERVICE", "start monitoring");
         try {
             beaconManager.stopRangingBeaconsInRegion(region);
+            beaconManager.startMonitoringBeaconsInRegion(region);
 
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -251,6 +253,7 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
         else{
             try {
                 beaconManager.stopRangingBeaconsInRegion(region);
+                beaconManager.startMonitoringBeaconsInRegion(region);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -281,8 +284,15 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
             msg.putExtra("queueOfBeacons", p);
             LocalBroadcastManager.getInstance(BeaconManagerAdapter.this).sendBroadcast(msg);
         }
-        else
-            Log.i("SERVICE","COLLECTION EMPTY");
+        else {
+            Log.i("SERVICE", "COLLECTION EMPTY");
+            try {
+                beaconManager.stopRangingBeaconsInRegion(region);
+                beaconManager.startMonitoringBeaconsInRegion(region);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
