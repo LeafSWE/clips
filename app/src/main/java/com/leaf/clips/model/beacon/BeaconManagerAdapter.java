@@ -250,7 +250,7 @@ public class BeaconManagerAdapter extends Service implements BeaconRanger, Beaco
         }
         else{
             try {
-                beaconManager.stopRangingBeaconsInRegion(region);
+                beaconManager.startMonitoringBeaconsInRegion(region);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }

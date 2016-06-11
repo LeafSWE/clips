@@ -8,10 +8,13 @@ package com.leaf.clips.presenter;
 
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -388,7 +391,15 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                 .setMessage(R.string.dialog_map_not_found)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        informationManager.downloadMapOfVisibleBeacons(true);
+                        ConnectivityManager connectivityManager =
+                                (ConnectivityManager)HomeActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+                        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+                        if (!(networkInfo != null && networkInfo.isConnected())) {
+                            if (noInternetConnection == null || !noInternetConnection.isShowing())
+                                noInternetConnection = new NoInternetAlert().show(HomeActivity.this);
+                            else
+                                informationManager.downloadMapOfVisibleBeacons(true);
+                        }
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
