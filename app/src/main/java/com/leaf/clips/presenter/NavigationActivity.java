@@ -90,6 +90,8 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      */
     private AlertDialog noInternetConnection;
 
+    private ProcessedInformation actualInformation;
+
     /**
      *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
      * i campi dati.
@@ -161,15 +163,15 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                     poiId = Integer.valueOf(getIntent().getDataString());
                 Log.d("DEST_POI_ID", Integer.toString(poiId));
 
-                    boolean found = false;
-                    //Trova il POI all'id scelto
-                    for(ListIterator<PointOfInterest> i = poiList.listIterator(); i.hasNext() && !found;){
-                        PointOfInterest poi = i.next();
-                        if(poi.getId() == poiId){
-                            destinationPoi = poi;
-                            found = true;
-                        }
+                boolean found = false;
+                //Trova il POI all'id scelto
+                for(ListIterator<PointOfInterest> i = poiList.listIterator(); i.hasNext() && !found;){
+                    PointOfInterest poi = i.next();
+                    if(poi.getId() == poiId){
+                        destinationPoi = poi;
+                        found = true;
                     }
+                }
             }
             if (destinationPoi != null) {
                 setTitle("Raggiungi " + destinationPoi.getName());
@@ -223,10 +225,11 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                                 }
                                 navigationManager.startNavigation(destinationPoi);
                                 navigationInstruction = navigationManager.getAllNavigationInstruction();
+                                actualInformation = navigationInstruction.get(0);
                                 navigationManager.addListener(NavigationActivity.this);
                                 view.setInstructionAdapter(navigationInstruction);
                             }catch (NavigationExceptions e){
-                                    e.printStackTrace();
+                                e.printStackTrace();
                             }
                             catch (NoBeaconSeenException e) {
                                 e.printStackTrace();
@@ -265,8 +268,10 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                 i++;
         }
         Log.i("informationUpdate", i + "");
-        if(found)
+        if(found) {
             view.refreshInstructions(i);
+            actualInformation = info;
+        }
     }
 
     /**
@@ -355,37 +360,39 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      */
     @Override
     public void changed(float orientation) {
-        int orientationInt = (int)orientation;
-        int calculateOrientation = view.getActualInformation().getCoordinate();
-        if (calculateOrientation >= 0) {
-            orientationInt = orientationInt - calculateOrientation;
+        if (actualInformation != null) {
+            int orientationInt = (int) orientation;
+            int calculateOrientation = actualInformation.getCoordinate();
+            if (calculateOrientation >= 0) {
+                orientationInt = orientationInt - calculateOrientation;
+            }
+            if (orientationInt < 0) {
+                orientationInt += 360;
+            }
+            NavigationDirection direction;
+            int rotation = getWindowManager().getDefaultDisplay().getRotation();
+            switch (rotation) {
+                case Surface.ROTATION_90:
+                    orientationInt += 90;
+                    break;
+                case Surface.ROTATION_180:
+                    orientationInt += 180;
+                    break;
+                case Surface.ROTATION_270:
+                    orientationInt += 270;
+                    break;
+            }
+            if (orientationInt > 360)
+                orientationInt -= 360;
+            if (orientationInt > 20 && orientationInt < 150)
+                direction = NavigationDirection.LEFT;
+            else if (orientationInt >= 210 && orientationInt < 340)
+                direction = NavigationDirection.RIGHT;
+            else if (orientationInt >= 150 && orientationInt < 210)
+                direction = NavigationDirection.TURN;
+            else
+                direction = NavigationDirection.STRAIGHT;
+            view.updateArrow(direction);
         }
-        if (orientationInt < 0) {
-            orientationInt += 360;
-        }
-        NavigationDirection direction;
-        int rotation = getWindowManager().getDefaultDisplay().getRotation();
-        switch (rotation) {
-            case Surface.ROTATION_90:
-                orientationInt += 90;
-                break;
-            case Surface.ROTATION_180:
-                orientationInt += 180;
-                break;
-            case Surface.ROTATION_270:
-                orientationInt += 270;
-                break;
-        }
-        if (orientationInt > 360)
-            orientationInt -= 360;
-        if (orientationInt > 20 && orientationInt < 150)
-            direction = NavigationDirection.LEFT;
-        else if (orientationInt >= 210 && orientationInt < 340)
-            direction = NavigationDirection.RIGHT;
-        else if (orientationInt >= 150 && orientationInt <210)
-            direction = NavigationDirection.TURN;
-        else
-            direction = NavigationDirection.STRAIGHT;
-        view.updateArrow(direction);
     }
 }
