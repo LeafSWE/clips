@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!PreferenceManager.getDefaultSharedPreferences(this).contains("path_pref")) {
+        if ((!PreferenceManager.getDefaultSharedPreferences(this).contains("path_pref")) ||
+                PreferenceManager.getDefaultSharedPreferences(this).getString("path_pref", "").equals("Default")){
             PreferenceManager.getDefaultSharedPreferences(this).edit()
                     .putString("path_pref", getResources().getString(R.string.default_path_preferences)).commit();
         }
