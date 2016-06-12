@@ -397,9 +397,8 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                         if (!(networkInfo != null && networkInfo.isConnected())) {
                             if (noInternetConnection == null || !noInternetConnection.isShowing())
                                 noInternetConnection = new NoInternetAlert().show(HomeActivity.this);
-                            else
-                                informationManager.downloadMapOfVisibleBeacons(true);
-                        }
+                        } else
+                            informationManager.downloadMapOfVisibleBeacons(true);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
