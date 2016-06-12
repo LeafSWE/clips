@@ -168,9 +168,15 @@ public class BuildingService implements DatabaseService {
         return  buildingTables;
     }
 
-    // TODO: 04/06/2016 Classe nuova
+    /**
+     * Classe che estende AsyncTask per il download di una mappa
+     */
     private class AsyncFindRemoteBuilding extends AsyncTask {
-
+        /**
+         * Metodo svolto in background per il download della mappa
+         * @param params identificativo della mappa
+         * @return Boolean
+         */
         @Override
         protected Object doInBackground(Object[] params) {
             /**
@@ -233,8 +239,15 @@ public class BuildingService implements DatabaseService {
         return fromTableToBo(table);
     }
 
-    // TODO: 04/06/2016 Classe nuova
+    /**
+     * Classe che estende AsyncTask per recuperare la mappa di un edificio ricercandola nel database remoto
+     */
     private class AsyncFindRemoteBuildingByMajor extends AsyncTask {
+        /**
+         * Metodo svolto in background per la ricerca della mappa in remoto
+         * @param params identificativo della mappa
+         * @return Boolean
+         */
         @Override
         protected Object doInBackground(Object[] params) {
             try {
@@ -390,8 +403,15 @@ public class BuildingService implements DatabaseService {
         return sqliteBuildingDao.isBuildingMapPresent(major);
     }
 
-    // TODO: 04/06/2016 Classe nuova
+    /**
+     * Classe che estende AsyncTask per controllare la presenza di una mappa nel database remoto
+     */
     private class AsyncIsRemoteMapPresent extends AsyncTask {
+        /**
+         * Metodo svolto in background per il controllo della presenza della mappa in remoto
+         * @param params identificativo della mappa
+         * @return Boolean
+         */
         @Override
         protected Object doInBackground(Object[] params) {
             Log.i("Async", "isRemoteMapPresent: doInBackground");
@@ -449,8 +469,15 @@ public class BuildingService implements DatabaseService {
         return isRemoteMapPresent;
     }
 
-    // TODO: 04/06/2016 Classe nuova
+    /**
+     * Classe che estende AsyncTask per il controllo della versione della mappa locale rispetto alla mappa remota
+     */
     private class AsyncIsBuildingMapUpdated extends AsyncTask {
+        /**
+         * Metodo eseguito in background per il controllo della versione della mappa locale rispetto alla mappa remota
+         * @param params identificativo della mappa
+         * @return Boolean
+         */
         @Override
         protected Object doInBackground(Object[] params) {
             int actualVersion = 0;
@@ -586,8 +613,15 @@ public class BuildingService implements DatabaseService {
         }
     }
 
-    // TODO: 6/4/16 Classe nuova 
+    /**
+     * Classe che estende AsyncTask per l'aggiornamento di una mappa locale
+     */
     private class AsyncUpdateBuildingMap extends AsyncTask {
+        /**
+         * Metodo eseguito in background per l'aggiornamento di una mappa locale
+         * @param params identificativo della mappa
+         * @return Boolean
+         */
         @Override
         protected Object doInBackground(Object[] params) {
             BuildingMap map = findBuildingByMajor((int)params [0]);
