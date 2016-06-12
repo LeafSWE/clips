@@ -92,6 +92,11 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
     private AlertDialog noInternetConnection;
 
     /**
+     * Informazione attuale mostrata
+     */
+    private ProcessedInformation actualInformation;
+
+    /**
      *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
      * i campi dati.
      *@param savedInstanceState se l'Actvity viene re-inizializzata dopo essere stata chiusa, allora
@@ -250,6 +255,7 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                                 }
                                 navigationManager.startNavigation(destinationPoi);
                                 navigationInstruction = navigationManager.getAllNavigationInstruction();
+                                actualInformation = navigationInstruction.get(0);
                                 navigationManager.addListener(NavigationActivity.this);
                                 view.setInstructionAdapter(navigationInstruction);
                             }catch (NavigationExceptions e){
@@ -292,8 +298,10 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                 i++;
         }
         Log.i("informationUpdate", i + "");
-        if(found)
+        if(found) {
             view.refreshInstructions(i);
+            actualInformation = info;
+        }
     }
 
     /**
@@ -382,30 +390,39 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      */
     @Override
     public void changed(float orientation) {
-        int orientationInt = (int)orientation;
-        NavigationDirection direction;
-        int rotation = getWindowManager().getDefaultDisplay().getRotation();
-        switch (rotation) {
-            case Surface.ROTATION_90:
-                orientationInt += 90;
-                break;
-            case Surface.ROTATION_180:
-                orientationInt += 180;
-                break;
-            case Surface.ROTATION_270:
-                orientationInt += 270;
-                break;
+        if (actualInformation != null) {
+            int orientationInt = (int) orientation;
+            int calculateOrientation = actualInformation.getCoordinate();
+            if (calculateOrientation >= 0) {
+                orientationInt = orientationInt - calculateOrientation;
+            }
+            if (orientationInt < 0) {
+                orientationInt += 360;
+            }
+            NavigationDirection direction;
+            int rotation = getWindowManager().getDefaultDisplay().getRotation();
+            switch (rotation) {
+                case Surface.ROTATION_90:
+                    orientationInt += 90;
+                    break;
+                case Surface.ROTATION_180:
+                    orientationInt += 180;
+                    break;
+                case Surface.ROTATION_270:
+                    orientationInt += 270;
+                    break;
+            }
+            if (orientationInt > 360)
+                orientationInt -= 360;
+            if (orientationInt > 20 && orientationInt < 150)
+                direction = NavigationDirection.LEFT;
+            else if (orientationInt >= 210 && orientationInt < 340)
+                direction = NavigationDirection.RIGHT;
+            else if (orientationInt >= 150 && orientationInt < 210)
+                direction = NavigationDirection.TURN;
+            else
+                direction = NavigationDirection.STRAIGHT;
+            view.updateArrow(direction);
         }
-        if (orientationInt > 360)
-            orientationInt -= 360;
-        if (orientationInt > 20 && orientationInt < 150)
-            direction = NavigationDirection.LEFT;
-        else if (orientationInt >= 210 && orientationInt < 340)
-            direction = NavigationDirection.RIGHT;
-        else if (orientationInt >= 150 && orientationInt <210)
-            direction = NavigationDirection.TURN;
-        else
-            direction = NavigationDirection.STRAIGHT;
-        view.updateArrow(direction);
     }
 }
