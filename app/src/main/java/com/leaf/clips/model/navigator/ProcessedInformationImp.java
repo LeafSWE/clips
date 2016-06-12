@@ -46,6 +46,11 @@ public class ProcessedInformationImp implements ProcessedInformation {
     private PhotoInformation photos;
 
     /**
+     * coordinate
+     */
+    private int coordinate;
+
+    /**
      * Costruttore della classe ProcessedInformationImp
      */
     public ProcessedInformationImp(){
@@ -54,6 +59,7 @@ public class ProcessedInformationImp implements ProcessedInformation {
         this.photos = null;
         this.direction = NavigationDirection.DESTINATION;
         this.distance = "La destinazione dovrebbe essere vicino a te";
+        this.coordinate = -1;
     }
 
     /**
@@ -82,6 +88,7 @@ public class ProcessedInformationImp implements ProcessedInformation {
             this.distance = dist+" m";
         else
             this.distance = dist+" piano";
+        this.coordinate = edge.getCoordinate();
     }
 
     /**
@@ -120,6 +127,7 @@ public class ProcessedInformationImp implements ProcessedInformation {
             this.distance = dist+" m";
         else
             this.distance = dist+" piano";
+        this.coordinate = edge.getCoordinate();
     }
 
     /**
@@ -186,6 +194,11 @@ public class ProcessedInformationImp implements ProcessedInformation {
             rx = false;
         Log.i("EQUALSRX", rx+"");
         return rx;
+    }
+
+    @Override
+    public int getCoordinate() {
+        return this.coordinate;
     }
 }
 

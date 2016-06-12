@@ -7,6 +7,7 @@ package com.leaf.clips.presenter;
  */
 
 import android.app.SearchManager;
+import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -91,6 +92,11 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
     private AlertDialog noInternetConnection;
 
     /**
+     * Informazione attuale mostrata
+     */
+    private ProcessedInformation actualInformation;
+
+    /**
      *Chiamato quando si sta avviando l'activity. Questo metodo si occupa di inizializzare
      * i campi dati.
      *@param savedInstanceState se l'Actvity viene re-inizializzata dopo essere stata chiusa, allora
@@ -161,21 +167,47 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                     poiId = Integer.valueOf(getIntent().getDataString());
                 Log.d("DEST_POI_ID", Integer.toString(poiId));
 
-                    boolean found = false;
-                    //Trova il POI all'id scelto
-                    for(ListIterator<PointOfInterest> i = poiList.listIterator(); i.hasNext() && !found;){
-                        PointOfInterest poi = i.next();
-                        if(poi.getId() == poiId){
-                            destinationPoi = poi;
-                            found = true;
-                        }
+                boolean found = false;
+                //Trova il POI all'id scelto
+                for(ListIterator<PointOfInterest> i = poiList.listIterator(); i.hasNext() && !found;){
+                    PointOfInterest poi = i.next();
+                    if(poi.getId() == poiId){
+                        destinationPoi = poi;
+                        found = true;
                     }
+                }
             }
             if (destinationPoi != null) {
                 setTitle("Raggiungi " + destinationPoi.getName());
                 Log.d("NAVIGAZIONE", "OK");
                 if (noInternetConnection == null || !noInternetConnection.isShowing())
                     noInternetConnection = new NoInternetAlert().showIfNoConnection(this);
+                final BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                //Abilita Bluetooth se disabilitato
+                if (!mBluetoothAdapter.isEnabled()) {
+
+                    builder.setTitle(R.string.dialog_title_bluetooth_not_enabled)
+                            .setMessage(R.string.dialog_bluetooth_not_enabled)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    mBluetoothAdapter.enable();
+                                }
+                            })
+                            .setNegativeButton(R.string.back_to_home, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    NavigationActivity.this.startActivity(new
+                                            Intent(NavigationActivity.this, HomeActivity.class));
+                                }
+                            });
+                    if (!isFinishing()) {
+                        AlertDialog bluetoothDialog = builder.create();
+                        bluetoothDialog.setCanceledOnTouchOutside(false);
+                        bluetoothDialog.show();
+                    }
+                }
                 navigationManager.startNavigation(destinationPoi);
                 navigationInstruction = navigationManager.getAllNavigationInstruction();
                 navigationManager.addListener(this);
@@ -223,10 +255,11 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                                 }
                                 navigationManager.startNavigation(destinationPoi);
                                 navigationInstruction = navigationManager.getAllNavigationInstruction();
+                                actualInformation = navigationInstruction.get(0);
                                 navigationManager.addListener(NavigationActivity.this);
                                 view.setInstructionAdapter(navigationInstruction);
                             }catch (NavigationExceptions e){
-                                    e.printStackTrace();
+                                e.printStackTrace();
                             }
                             catch (NoBeaconSeenException e) {
                                 e.printStackTrace();
@@ -265,8 +298,10 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
                 i++;
         }
         Log.i("informationUpdate", i + "");
-        if(found)
+        if(found) {
             view.refreshInstructions(i);
+            actualInformation = info;
+        }
     }
 
     /**
@@ -355,30 +390,39 @@ public class NavigationActivity extends AppCompatActivity implements NavigationL
      */
     @Override
     public void changed(float orientation) {
-        int orientationInt = (int)orientation;
-        NavigationDirection direction;
-        int rotation = getWindowManager().getDefaultDisplay().getRotation();
-        switch (rotation) {
-            case Surface.ROTATION_90:
-                orientationInt += 90;
-                break;
-            case Surface.ROTATION_180:
-                orientationInt += 180;
-                break;
-            case Surface.ROTATION_270:
-                orientationInt += 270;
-                break;
+        if (actualInformation != null) {
+            int orientationInt = (int) orientation;
+            int calculateOrientation = actualInformation.getCoordinate();
+            if (calculateOrientation >= 0) {
+                orientationInt = orientationInt - calculateOrientation;
+            }
+            if (orientationInt < 0) {
+                orientationInt += 360;
+            }
+            NavigationDirection direction;
+            int rotation = getWindowManager().getDefaultDisplay().getRotation();
+            switch (rotation) {
+                case Surface.ROTATION_90:
+                    orientationInt += 90;
+                    break;
+                case Surface.ROTATION_180:
+                    orientationInt += 180;
+                    break;
+                case Surface.ROTATION_270:
+                    orientationInt += 270;
+                    break;
+            }
+            if (orientationInt > 360)
+                orientationInt -= 360;
+            if (orientationInt > 20 && orientationInt < 150)
+                direction = NavigationDirection.LEFT;
+            else if (orientationInt >= 210 && orientationInt < 340)
+                direction = NavigationDirection.RIGHT;
+            else if (orientationInt >= 150 && orientationInt < 210)
+                direction = NavigationDirection.TURN;
+            else
+                direction = NavigationDirection.STRAIGHT;
+            view.updateArrow(direction);
         }
-        if (orientationInt > 360)
-            orientationInt -= 360;
-        if (orientationInt > 20 && orientationInt < 150)
-            direction = NavigationDirection.LEFT;
-        else if (orientationInt >= 210 && orientationInt < 340)
-            direction = NavigationDirection.RIGHT;
-        else if (orientationInt >= 150 && orientationInt <210)
-            direction = NavigationDirection.TURN;
-        else
-            direction = NavigationDirection.STRAIGHT;
-        view.updateArrow(direction);
     }
 }
