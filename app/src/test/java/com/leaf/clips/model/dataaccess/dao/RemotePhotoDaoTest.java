@@ -2,6 +2,9 @@ package com.leaf.clips.model.dataaccess.dao;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
 import com.google.gson.*;
 import junit.framework.Assert;
 /**
@@ -15,6 +18,7 @@ import junit.framework.Assert;
 /**
  * TU70
  */
+@RunWith(JUnit4.class)
 public class RemotePhotoDaoTest {
 
     private JsonObject js;
