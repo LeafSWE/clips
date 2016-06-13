@@ -3,6 +3,8 @@ package com.leaf.clips.model.dataaccess.dao;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import static org.junit.Assert.*;
 
@@ -15,6 +17,7 @@ import static org.junit.Assert.*;
 /**
  * TU62
  */
+@RunWith(JUnit4.class)
 public class RemoteDaoFactoryTest {
 
     private RemoteBuildingDao remoteBuildingDao;
