@@ -2,6 +2,8 @@ package com.leaf.clips.presenter;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import static org.junit.Assert.*;
 
@@ -10,6 +12,7 @@ import static org.junit.Assert.*;
  * @version 0.01
  * @since 0.00
  */
+@RunWith(JUnit4.class)
 public class BeaconPowerPosTest {
     private BeaconPowerPos beaconPos;
 
