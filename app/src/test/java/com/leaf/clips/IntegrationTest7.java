@@ -11,6 +11,8 @@ import com.leaf.clips.model.navigator.graph.edge.EnrichedEdge;
 import junit.framework.Assert;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -21,6 +23,7 @@ import java.util.List;
  * @version 0.01
  * @since 0.01
  */
+@RunWith(JUnit4.class)
 public class IntegrationTest7 {
     @Test
     public void shouldCalculateTheRightPath() {
