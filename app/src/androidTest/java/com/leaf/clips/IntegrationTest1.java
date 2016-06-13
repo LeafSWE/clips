@@ -5,7 +5,9 @@ package com.leaf.clips;
  * @since 0.00
  */
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
@@ -35,6 +37,7 @@ import com.leaf.clips.presenter.NavigationActivity;
 import com.leaf.clips.presenter.NearbyPoiActivity;
 
 import org.altbeacon.beacon.Beacon;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -66,7 +69,7 @@ public class IntegrationTest1 extends InstrumentationTestCase {
             new ActivityTestRule<>(HomeActivity.class);
 
     @Before
-    public void init() throws NoSuchFieldException, IllegalAccessException {
+    public void init() throws NoSuchFieldException, IllegalAccessException, InterruptedException {
 
         testActivity = mActivityRule.getActivity();
         testActivity = mActivityRule.getActivity();
@@ -115,10 +118,17 @@ public class IntegrationTest1 extends InstrumentationTestCase {
                 }
             }
         }
+        WifiManager wifiManager = (WifiManager) InstrumentationRegistry.getTargetContext()
+                .getSystemService(Context.WIFI_SERVICE);
+        if(!wifiManager.isWifiEnabled())
+            wifiManager.setWifiEnabled(true);
+        Thread.sleep(5000);
+        assertTrue(wifiManager.isWifiEnabled());
     }
 
     @Test
     public void testWholeSystem() throws InterruptedException, UiObjectNotFoundException, NoBeaconSeenException {
+
 
         PriorityQueue<MyBeacon> p = new PriorityQueue<>();
 
@@ -133,9 +143,7 @@ public class IntegrationTest1 extends InstrumentationTestCase {
         msg.putExtra("queueOfBeacons", p);
         LocalBroadcastManager.getInstance(InstrumentationRegistry.getTargetContext()).sendBroadcast(msg);
 
-        Thread.sleep(5000);
-
-
+        Thread.sleep(3000);
 
         UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         UiObject allowDownloadOfMap = device.findObject(new UiSelector().text("OK"));
@@ -168,5 +176,14 @@ public class IntegrationTest1 extends InstrumentationTestCase {
 
         UiObject lastListItem = device.findObject(new UiSelector().text("Destinazione Raggiunta"));
         assertTrue(lastListItem.exists());
+    }
+
+    @After
+    public void shutDown(){
+        WifiManager wifiManager = (WifiManager) InstrumentationRegistry.getTargetContext()
+                .getSystemService(Context.WIFI_SERVICE);
+        if(!wifiManager.isWifiEnabled())
+            wifiManager.setWifiEnabled(false);
+
     }
 }
