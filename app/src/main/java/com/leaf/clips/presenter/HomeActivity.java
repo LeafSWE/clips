@@ -432,8 +432,13 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
     @Override
     public void cannotRetrieveRemoteMapDetails() {
         Log.d("HOMEACTIVITY", "CAN'T RETRIEVE REMOTE DETAILS");
-        if (noInternetConnection == null || !noInternetConnection.isShowing())
-            noInternetConnection = new NoInternetAlert().show(this);
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager)HomeActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (!(networkInfo != null && networkInfo.isConnected())) {
+            if (noInternetConnection == null || !noInternetConnection.isShowing())
+                noInternetConnection = new NoInternetAlert().show(this);
+        }
     }
 
     /**
@@ -449,7 +454,14 @@ public class HomeActivity extends AppCompatActivity implements InformationListen
                     .setMessage(R.string.dialog_not_updated_map)
                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            informationManager.updateMapOfVisibleBeacons(true);
+                            ConnectivityManager connectivityManager =
+                                    (ConnectivityManager)HomeActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+                            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+                            if (!(networkInfo != null && networkInfo.isConnected())) {
+                                if (noInternetConnection == null || !noInternetConnection.isShowing())
+                                    noInternetConnection = new NoInternetAlert().show(HomeActivity.this);
+                            } else
+                                informationManager.updateMapOfVisibleBeacons(true);
                         }
                     })
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
