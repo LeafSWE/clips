@@ -32,6 +32,8 @@ registrare i valori di:
   - livello della batteria;
   - distanza approssimativa del dispositivo dal beacon;
   - area coperta e formato dei beacon rilevati dal dispositivo.
+
+
 I primi utilizzatori di queste funzionalità saranno i componenti
 del gruppo Leaf che le adopereranno per creare l'infrastruttura beacon necessaria
 al funzionamento dell’applicazione ed ottimizzarne l’interazione con
