@@ -1,4 +1,4 @@
-# CLIPS:
+# CLIPS: Communication & Localization with Indoor Positioning Systems
 Clips è un'applicazione di tipo prototipale creata con l'intento di sperimentare scenari alternativi per la Navigazione indoor 
 su smartphone facendo uso della tecnologia Beacon.
 
