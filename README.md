@@ -5,7 +5,8 @@ su smartphone facendo uso della tecnologia Beacon.
 Il progetto è stato sviluppato dal team **Leaf** come progetto didattico proposto da Miriade S.p.A. per il corso di 
 Ingegneria del software 2015/2016 della laurea triennale in Scienze Informatiche.
 
-
+Ecco un video dimostrativo di come funziona:
+https://www.youtube.com/watch?v=BKfkuLjoLb0&feature=youtu.be
 
 
 # Funzioni del prodotto
